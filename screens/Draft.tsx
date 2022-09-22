@@ -6,32 +6,16 @@ import { getAuth, signOut } from "firebase/auth";
 
 const auth = getAuth();
 
-const HomeScreen = ({ navigation }: any) => {
+const DraftScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
 
   return (
     <View style={styles.container}>
-      <Text>Welcome {user?.email}!</Text>
-
+      <Text>Job post drafting</Text>
       <Button
-        title="Sign Out"
+        title="Back"
         style={styles.button}
-        onPress={() => signOut(auth)}
-      />
-      <Button
-        title="Job Feed"
-        style={styles.button}
-        onPress={() => navigation.navigate("Feed")}
-      />
-      <Button
-        title="Job post drafting"
-        style={styles.button}
-        onPress={() => navigation.navigate("Draft")}
-      />
-      <Button
-        title="Sign In"
-        style={styles.button}
-        onPress={() => navigation.navigate("Signin")}
+        onPress={() => navigation.navigate("Home")}
       />
     </View>
   );
@@ -49,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default DraftScreen;
