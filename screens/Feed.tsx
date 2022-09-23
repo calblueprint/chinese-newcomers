@@ -11,7 +11,7 @@ const FeedScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text>Job Feed</Text>
+      <Text>Job Feedssssss</Text>
       <Button
         title="Back"
         style={styles.button}

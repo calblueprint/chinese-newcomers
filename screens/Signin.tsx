@@ -11,7 +11,7 @@ const SigninScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text>Sign in</Text>
+      <Text>Sign in Aniie</Text>
       <Button
         title="Back"
         style={styles.button}
