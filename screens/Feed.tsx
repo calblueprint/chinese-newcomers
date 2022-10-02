@@ -12,10 +12,11 @@ const FeedScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <View style= {styles.feedHeader}>
-        <Text>Job Feed</Text>
+        <Text>CNSC Job Postings</Text>
       </View>
+      <JobCard title = 'job title' description= 'description'></JobCard>
+      <JobCard title = 'job title' description= 'description'></JobCard>
 
-      <JobCard></JobCard>
       <Button
         title="Back"
         style={styles.button}
@@ -26,43 +27,52 @@ const FeedScreen = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
-  
   container: {
+    height: '100%',
     width: '100%',
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'column'
   },
 
   feedHeader: {
-
-    width: '80%',
+    height: '8%',
+    width: '100%',
     backgroundColor: 'blue',
+    textColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
-  button: {
-    marginTop: 10,
+
+  createPosting: {
+    width: '100%',
+    height: '30%',
+    alignContent: 'center',
   },
   cardContainer: {
+    marginTop: '3%',
     width: "80%",
     height: '30%',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    backgroundColor: 'red' 
+    backgroundColor: '#C2B4B4',
 
   },
   cardHeader: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: 'black',
+    backgroundColor: 'grey',
     height: '15%',
-
   },
   cardFooter: {
     alignItems: "flex-end",
 
   },
   description: {
+    display: 'flex',
+    justifyContent: 'center',
     alignItems: "center",
     backgroundColor: 'black',
   },
