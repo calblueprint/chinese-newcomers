@@ -24,10 +24,15 @@ export default StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: "center",
-        backgroundColor: 'black',
       },
       moreInfoButton: {
-        width: '40%'
-      }
+        width: '30%',
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginBottom: '5%',
+        marginRight: '5%'
+      },
 
 });
