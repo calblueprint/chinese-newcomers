@@ -17,7 +17,6 @@ const FeedScreen = ({ navigation }: any) => {
         <Text>CNSC Job Postings</Text>
       </View>
         <JobCard title = 'job title' description= 'description'></JobCard>
-        <JobCard title = 'job title' description= 'description'></JobCard>
       <Button
         title="Back"
         onPress={() => navigation.navigate("Home")}
@@ -25,17 +24,5 @@ const FeedScreen = ({ navigation }: any) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    marginTop: 10,
-  },
-});
 
 export default FeedScreen;
