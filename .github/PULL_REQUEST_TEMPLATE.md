@@ -4,4 +4,4 @@
 
 ## Screenshots
 
-CC: @alliu879 @surajr10
+CC: @alliu879 @surajr10 @cecilia-gao3
