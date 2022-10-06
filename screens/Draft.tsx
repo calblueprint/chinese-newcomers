@@ -19,58 +19,76 @@ const DraftScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text>Job post drafting</Text>
+      {/* <Text>Job post drafting</Text> */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>CNSC Job Postings</Text>
+      </View>
+
       <View style={styles.jobListing}>
         <View style={styles.title}>
-          <Text style={styles.title}>New Job Listing</Text>
+          <Text style={styles.titleText}>New Job Listing</Text>
         </View>
         <View style = {styles.form}>
-          <View style={styles.employer}>
-            <Text>employer: </Text>
-            <TextInput
-              style={styles.employer}
-              onChangeText={onChangeEmployer}
-              placeholder="employer" // ?
-            />
-          </View>
-          <View style={styles.hours}>
-            <Text>hours: </Text>
-            <TextInput
-              style={styles.hours}
-              onChangeText={onChangeHours}
-              placeholder="hours"
-            />
-          </View>
-          <View style={styles.description}>
-            <Text>description: </Text>
-            <TextInput
-              style={styles.description}
-              onChangeText={onChangeDescription}
-              placeholder="description"
-            />
-          </View>
-          <View style={styles.contact}>
-            <Text>contact: </Text>
-            <TextInput
-              style={styles.contact}
-              onChangeText={onChangeContact}
-              placeholder="contact"
-            />
+          <View style={styles.topEntries}>
+            <View style={styles.formEntries}>
+              <Text>employer: </Text>
+              <TextInput
+                style={styles.smallInput}
+                // onChangeText={onChangeEmployer}
+                placeholder="employer" 
+              />
+            </View>
+            <View style={styles.formEntries}>
+              <Text>hours: </Text>
+              <TextInput
+                style={styles.smallInput}
+                // onChangeText={onChangeHours}
+                placeholder="hours"
+              />
+            </View>
+            <View style={styles.formEntries}>
+                <Text>salary: </Text>
+                <TextInput
+                  style={styles.smallInput}
+                  // onChangeText={onChangeSalary}
+                  placeholder="salary"
+                />
+            </View>
           </View>
 
+          <View style={styles.description}>
+            <View style={styles.formEntries}> 
+              <TextInput
+                  style={styles.largeInput}
+                  // onChangeText={onChangeDescription}
+                  placeholder="description"
+                  multiline={true} 
+                />
+            </View>
+          </View>
+
+          <View style={styles.bottomEntry}>
+            <View style={styles.formEntries}>
+              <Text>contact: </Text>
+              <TextInput
+                style={styles.smallInput}
+                // onChangeText={onChangeContact}
+                placeholder="contact"
+              />
+            </View>
+          </View>
         </View>
-        <View> 
-          {/* add onPress inside pressable, need to use react hook form inside onPress */}
+        <View style={styles.post}> 
           <Pressable style={styles.postButton} >
             <Text>post</Text>
           </Pressable>
         </View>
       </View>
-      <Button
+      {/* <Button
         title="Back"
         style={styles.button}
         onPress={() => navigation.navigate("Home")}
-      />
+      /> */}
     </View>
   );
 };
@@ -80,41 +98,79 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
   },
   button: {
     marginTop: 10,
   },
+  header:{
+    backgroundColor: "#E13C3C",
+    height: "10%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: "15%"
+  },
+  headerText: {
+    color: "#fff",
+    fontSize: 30,
+  },
   jobListing: {
     backgroundColor: "#C2B4B4",
     width: "80%",
-    height: "60%",
+    height: "70%",
+    marginBottom: "0%",
   }, 
   title: {
     backgroundColor: "#717171",
     color: "#fff",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center",
+    height: "8%"
+  },
+  titleText: {
+    color: "#fff",
+    fontSize: 28
   },
   form: {
     backgroundColor: "#fff",
+    margin: "5%",
+    height: "75%",
+    justifyContent: "center",
+    borderRadius: 5
+  },
+  formEntries: {
+    flexDirection: "row",
     margin: "5%"
-    
   },
-  employer: {
-
+  topEntries: {
+    flexDirection: "column",
+    justifyContent: "space-around",
+    height: "35%",
   },
-  hours: {
-
+  description: { // how do i get it to not go out of the view/box if text input is too long
+    height: "50%" 
   },
-  description: {
-
+  bottomEntry: {
+    justifyContent: "space-around",
+    height: "15%"
   },
-  contact: {
-
+  smallInput: {
+    width: "100%"
+  },
+  largeInput: {
+    width: "100%",
+    height: "100%"
+  },
+  post: {
+    alignItems: "flex-end",
+    marginEnd: "5%",
+    marginBottom: "100%", // if removed, button is off on web
   },
   postButton: {
     backgroundColor: "#fff",
-    alignItems: "flex-end"
+    alignItems: "center",
+    borderRadius: 20,
+    width: "20%",
   }
 });
 
