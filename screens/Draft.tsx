@@ -1,10 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import { useAuthentication } from "../utils/hooks/useAuthentication";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
-import { color } from "react-native-elements/dist/helpers";
-// import { useForm } from "react-hook-form";
+import theme from "../styles/theme";
 
 const auth = getAuth();
 
@@ -20,9 +19,9 @@ const DraftScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       {/* <Text>Job post drafting</Text> */}
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Text style={styles.headerText}>CNSC Job Postings</Text>
-      </View>
+      </View> */}
 
       <View style={styles.jobListing}>
         <View style={styles.title}>
@@ -79,16 +78,16 @@ const DraftScreen = ({ navigation }: any) => {
           </View>
         </View>
         <View style={styles.post}> 
-          <Pressable style={styles.postButton} >
+          <TouchableOpacity style={styles.postButton} >
             <Text>post</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
-      {/* <Button
+      <Button
         title="Back"
         style={styles.button}
         onPress={() => navigation.navigate("Home")}
-      /> */}
+      />
     </View>
   );
 };
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
+    justifyContent: "center"
   },
   button: {
     marginTop: 10,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#C2B4B4",
     width: "80%",
     height: "70%",
-    marginBottom: "0%",
+    // marginBottom: "0%",
   }, 
   title: {
     backgroundColor: "#717171",
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     height: "35%",
   },
-  description: { // how do i get it to not go out of the view/box if text input is too long
+  description: { 
     height: "50%" 
   },
   bottomEntry: {
@@ -171,6 +171,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 20,
     width: "20%",
+  },
+  buttonText: {
+    ...theme.textVariants.body,
+    alignSelf: "center"
   }
 });
 
