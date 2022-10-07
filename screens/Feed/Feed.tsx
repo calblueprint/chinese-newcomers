@@ -16,7 +16,7 @@ const FeedScreen = ({ navigation }: any) => {
       <View style= {styles.feedHeader}>
         <Text>CNSC Job Postings</Text>
       </View>
-        <JobCard title = 'job title' description= 'description'></JobCard>
+        <JobCard title = 'job title' description= 'description' salary="salary" hours='hours' employer='employer' contact='contact'></JobCard>
       <Button
         title="Back"
         onPress={() => navigation.navigate("Home")}

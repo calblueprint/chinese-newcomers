@@ -30,11 +30,10 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
         marginBottom: '5%',
-        marginRight: '5%'
+        marginRight: '5%',
+        borderRadius: 10,
       },
-
 
       centeredView: {
         flex: 1,
@@ -43,30 +42,25 @@ export default StyleSheet.create({
         marginTop: 22
       },
       modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
+        height: '40%',
+        width: "80%",
+        backgroundColor: "#C2B4B4",
+        alignItems: "flex-start",
         shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
       },
       button: {
-        borderRadius: 20,
         padding: 10,
         elevation: 2
       },
-      buttonOpen: {
-        backgroundColor: "#F194FF",
-      },
-      buttonClose: {
-        backgroundColor: "#2196F3",
+
+      hideButton: {
+        alignContent: 'center',
+        backgroundColor: "red",
+        height: '8%',
+        width: '30%',
       },
       textStyle: {
         color: "white",
@@ -75,7 +69,28 @@ export default StyleSheet.create({
       },
       modalText: {
         marginBottom: 15,
-        textAlign: "center"
-      }
+        textAlign: "left",
+        color: 'white',
+        fontSize: 18,
+      },
+      modalHeader: {
+        width: '100%',
+        height: '12%',
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: 'grey',
+      },
 
+      modalInfo: {
+        width: '100%',
+        height: '80%',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '5%',
+
+      },
+      titleText: {
+        color: 'white',
+        fontSize: 20,
+      },
 });
