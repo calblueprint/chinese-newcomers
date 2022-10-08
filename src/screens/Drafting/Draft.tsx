@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useAuthentication } from "../utils/hooks/useAuthentication";
+import { useAuthentication } from "../../utils/hooks/useAuthentication";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
 

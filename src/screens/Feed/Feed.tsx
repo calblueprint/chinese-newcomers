@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useAuthentication } from "../utils/hooks/useAuthentication";
+import { useAuthentication } from "../../utils/hooks/useAuthentication";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
-import { JobCard } from "../../components/JobCard/JobCard";
+import JobCard from "../../components/JobCard/JobCard";
 
 const auth = getAuth();
 
@@ -12,7 +12,7 @@ const FeedScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <JobCard>ayo</JobCard>
+      <JobCard></JobCard>
       <Text>Job Feed</Text>
 
       <Button
