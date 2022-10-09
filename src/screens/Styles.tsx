@@ -14,7 +14,6 @@ export default StyleSheet.create({
           height: '8%',
           width: '100%',
           backgroundColor: 'red',
-          textColor: 'black',
           alignItems: 'center',
           justifyContent: 'center',
           flexDirection: 'row',
@@ -25,5 +24,9 @@ export default StyleSheet.create({
           height: '30%',
           alignContent: 'center',
         },
+        feedTitle: {
+          color: 'white',
+          fontSize: 25,
+        }
 
 });

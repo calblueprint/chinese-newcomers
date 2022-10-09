@@ -1,6 +1,11 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import firebase from "firebase/app";
 import Constants from 'expo-constants';
+import { initializeApp } from "firebase/app";
+import {getFirestore} from "firebase/firestore"; 
+import { collection, getDocs } from "firebase/firestore"; 
+import "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,6 +21,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebaseApp = firebase;
 
-export default app;
+if (firebaseConfig?.projectId) {
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+  }
+
+export default firebaseApp;

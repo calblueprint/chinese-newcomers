@@ -93,4 +93,8 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 20,
       },
+      descriptionText: {
+        color: 'white',
+        fontsize: 30,
+      }
 });
