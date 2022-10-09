@@ -33,6 +33,11 @@ const HomeScreen = ({ navigation }: any) => {
         style={styles.button}
         onPress={() => navigation.navigate("Signin")}
       />
+      <Button
+        title="Admin Sign In"
+        style={styles.button}
+        onPress={() => navigation.navigate("AdminSignin")}
+      />
     </View>
   );
 };

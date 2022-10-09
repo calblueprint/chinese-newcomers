@@ -2260,6 +2260,19 @@
   resolved "https://registry.npmjs.org/@sideway/pinpoint/-/pinpoint-2.0.0.tgz"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
+"@typeform/embed-react@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@typeform/embed-react/-/embed-react-2.0.0.tgz#eaf3278360a10c43143c7316d69ef9070a45009d"
+  integrity sha512-RApBZ0+aj7IiZZiIyPjbSUU5up/RxiMfWYO1JsNpFlbIC9HTdMrdUMURFuIZ7zO3EKZuSrgzpSNnK9TAVnu+bg==
+  dependencies:
+    "@typeform/embed" "2.0.0"
+    fast-deep-equal "^3.1.3"
+
+"@typeform/embed@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@typeform/embed/-/embed-2.0.0.tgz#4502bb62a49ce9f8be98e138eccdfaf170275eb3"
+  integrity sha512-XWV+fmixXe5z10McHhg4hhZ3aDcnUwKeibIYV1qMI9GVNnup6DRupbLQx7Kq49q8xG8NGvNPHyYh3yhXCIWqRw==
+
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
   resolved "https://registry.npmjs.org/@types/graceful-fs/-/graceful-fs-4.1.5.tgz"
@@ -6167,6 +6180,11 @@ react-dom@17.0.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     scheduler "^0.20.2"
+
+react-hook-form@^7.36.1:
+  version "7.36.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.36.1.tgz#82a311fe8cbe75e689fd4529f083b7c983da6520"
+  integrity sha512-EbYYkCG2p8ywe7ikOH2l02lAFMrrrslZi1I8fqd8ifDGNAkhomHZQzQsP6ksvzrWBKntRe8b5L5L7Zsd+Gm02Q==
 
 "react-is@^16.12.0 || ^17.0.0", react-is@^16.13.0, react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
