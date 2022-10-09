@@ -62,6 +62,7 @@ const DraftScreen = ({ navigation }: any) => {
                   // onChangeText={onChangeDescription}
                   placeholder="description"
                   multiline={true} 
+                  // set text input
                 />
             </View>
           </View>
@@ -159,7 +160,9 @@ const styles = StyleSheet.create({
   },
   largeInput: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    maxHeight: "100%",
+    overflow: "scroll"
   },
   post: {
     alignItems: "flex-end",
