@@ -1,35 +1,150 @@
 <<<<<<< HEAD
 =======
 import React from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Modal } from "react-native";
 import { useAuthentication } from "../utils/hooks/useAuthentication";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
 import theme from "../styles/theme";
+import { rounded } from "../styles/buttons";
+import { useForm, Controller } from "react-hook-form";
 
 const auth = getAuth();
 
 const DraftScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
 
-  const [employer, onChangeEmployer] = React.useState();
-  const [hours, onChangeHours] = React.useState();
-  const [salary, onChangeSalary] = React.useState();
-  const [description, onChangeDescription] = React.useState();
-  const [contact, onChangeContact] = React.useState();
+
+  // where to use the useState variables
+  // const [employer, onChangeEmployer] = React.useState();
+  // const [hours, onChangeHours] = React.useState();
+  // const [salary, onChangeSalary] = React.useState();
+  // const [description, onChangeDescription] = React.useState();
+  // const [contact, onChangeContact] = React.useState();
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const { control, handleSubmit } = useForm();
+  const onSubmit = (data: any) => {
+    console.log(data);
+  }
+  // console.log(errors)
 
   return (
     <View style={styles.container}>
-      {/* <Text>Job post drafting</Text> */}
-      {/* <View style={styles.header}>
-        <Text style={styles.headerText}>CNSC Job Postings</Text>
-      </View> */}
-
       <View style={styles.jobListing}>
         <View style={styles.title}>
           <Text style={styles.titleText}>New Job Listing</Text>
         </View>
-        <View style = {styles.form}>
+
+        {/* TESTING FORM START */}
+        <View style={styles.form}>
+          <View style={styles.topEntries}>
+            <View style={styles.formEntries}>
+              <Text>employer: </Text>
+              <Controller 
+                name="employer"
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.smallInput}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+            </View>
+          </View>
+          <View style={styles.topEntries}>
+            <View style={styles.formEntries}>
+              <Text>hours: </Text>
+              <Controller 
+                name="hours"
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.smallInput}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+            </View>
+          </View>
+          <View style={styles.topEntries}>
+            <View style={styles.formEntries}>
+              <Text>salary: </Text>
+              <Controller 
+                name="salary"
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.smallInput}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+            </View>
+          </View>
+          <View style={styles.description}>
+            <View style={styles.formEntries}>
+              <Controller 
+                name="description"
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.largeInput}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    multiline={true} 
+                    placeholder="description"
+                  />
+                )}
+              />
+            </View>
+          </View>
+          <View style={styles.bottomEntry}>
+            <View style={styles.formEntries}>
+              <Text>contact: </Text>
+              <Controller 
+                name="contact"
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.smallInput}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* TESTING FORM END */}
+
+
+        {/* <View style = {styles.form}>
           <View style={styles.topEntries}>
             <View style={styles.formEntries}>
               <Text>employer: </Text>
@@ -68,7 +183,6 @@ const DraftScreen = ({ navigation }: any) => {
                 />
             </View>
           </View>
-
           <View style={styles.bottomEntry}>
             <View style={styles.formEntries}>
               <Text>contact: </Text>
@@ -79,12 +193,59 @@ const DraftScreen = ({ navigation }: any) => {
               />
             </View>
           </View>
-        </View>
+        </View> */}
+
+        <Modal
+          visible = {modalVisible}
+          animationType="slide"
+          transparent={true}
+        >
+          <View>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text>CONFIRMATION</Text>
+                <Text>Do you want to post this job?</Text>
+
+                <View style={styles.modalButtons}>
+
+                  <View>
+                    <TouchableOpacity 
+                      style={styles.modalButton}
+                      onPress={handleSubmit(onSubmit)}
+                    >
+                      <Text>yes</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <TouchableOpacity style={styles.modalButton}>
+                      <Text>save</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      style={styles.modalButton}
+                      onPress={()=>setModalVisible(!modalVisible)}
+                    >
+                      <Text>no</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                </View>
+
+              </View>
+            </View>
+          </View>
+        </Modal>
+
         <View style={styles.post}> 
-          <TouchableOpacity style={styles.postButton} >
+          <TouchableOpacity 
+            style={styles.postButton}
+            onPress={()=>setModalVisible(!modalVisible)}
+          >
             <Text>post</Text>
           </TouchableOpacity>
         </View>
+
       </View>
       <Button
         title="Back"
@@ -148,10 +309,10 @@ const styles = StyleSheet.create({
   topEntries: {
     flexDirection: "column",
     justifyContent: "space-around",
-    height: "35%",
+    height: "25%",
   },
   description: { 
-    height: "50%" 
+    height: "40%" 
   },
   bottomEntry: {
     justifyContent: "space-around",
@@ -176,6 +337,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 20,
     width: "20%",
+  },
+  centeredView: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 300,
+    width: "80%",
+    backgroundColor: "#C2B4B4",
+    height: "20%",
+    borderRadius: 20
+  },
+  modalView: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10
+  },
+  modalButtons: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    margin: 5
+  },
+  modalButton: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    borderRadius: 20,
+    width: "150%",
   },
   buttonText: {
     ...theme.textVariants.body,
