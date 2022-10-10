@@ -1,12 +1,12 @@
 import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
-import { Jobs, Users } from "../../types/schema";
-
+import { Job, User } from "../../types/types";
+import {getDoc, doc, collection, addDoc} from "firebase/firestore";
 
 const db = firebaseApp.firestore();
 const jobCardCollection = db.collection("jobs");
 
-export const getJob = async(id: string): Promise<Jobs> => {
+export const getJob = async(id: string): Promise<Job> => {
     const docRef = doc(db, "jobs", id);
     const docSnap = await getDoc(docRef);
     return await parseJob(docSnap)
@@ -26,6 +26,8 @@ const parseJob = async(doc) => {
     return job as Job;
 };
 export const createJob = async(job: Job): Promise<void> => {
+    const docRef = collection(db, "jobs");
+    await addDoc(docRef, job);
 }
 
 export const getAllJobs = async()
