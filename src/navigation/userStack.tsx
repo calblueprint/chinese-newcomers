@@ -8,6 +8,7 @@ import DraftScreen from "../screens/Draft";
 import SigninScreen from "../screens/Authentication/Signin";
 import FeedScreen from "../screens/Feed";
 import { RootStackParamList } from "../types/navigation";
+import AdminRegisterScreen from "../screens/Authentication/AdminRegister"
 
 const UserStack = () => {
   const Stack = createStackNavigator<RootStackParamList>();
@@ -18,6 +19,7 @@ const UserStack = () => {
         <Stack.Screen name="Draft" component={DraftScreen} />
         <Stack.Screen name="Feed" component={FeedScreen} />
         <Stack.Screen name="Signin" component={SigninScreen} />
+        <Stack.Screen name="AdminRegister" component={AdminRegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

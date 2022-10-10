@@ -38,7 +38,29 @@ export default StyleSheet.create({
     signintext3: {
       color: 'white',
       fontSize: 25, 
-  
     },
-
+    formtext: {
+      color: 'white',
+      fontSize: 25, 
+      padding: '5%',
+    },
+    input: {
+      borderColor: "#A1A1A1",
+      height: "5%",
+      width: "80%",
+      borderWidth: 0.5,
+      marginTop: "4%",
+      marginBottom: "4%",
+      alignItems: "center",
+    },
+    nextbutton: {
+      backgroundColor: "#E13C3C",
+      width: "40%",
+      height: "5%",
+      borderRadius: 5,
+      alignItems: "center",
+      justifyContent: "center",
+      marginLeft: "40%",
+      
+    }
 });
