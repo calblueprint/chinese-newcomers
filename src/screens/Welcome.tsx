@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Button } from 'react-native-elements';
+import { signOutUser } from '../firebase/auth';
 
 const WelcomeScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
   return (
@@ -9,12 +10,28 @@ const WelcomeScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
       <Text>Welcome screen!</Text>
 
       <View style={styles.buttons}>
-        <Button title="Sign in" buttonStyle={styles.button} onPress={() => navigation.navigate('Sign In')} />
-        <Button title="Sign up" type="outline" buttonStyle={styles.button} onPress={() => navigation.navigate('Sign Up')} />
+        <Button
+          title="Sign in"
+          buttonStyle={styles.button}
+          onPress={() => navigation.navigate('Sign In')}
+        />
+        <Button
+          title="Sign up"
+          type="outline"
+          buttonStyle={styles.button}
+          onPress={() => navigation.navigate('Sign Up')}
+        />
+
+        <Button
+          title="temp sign out"
+          type="outline"
+          buttonStyle={styles.button}
+          onPress={() => signOutUser()}
+        />
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -22,11 +39,11 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   buttons: {
-    flex: 1,
+    flex: 1
   },
 
   button: {
