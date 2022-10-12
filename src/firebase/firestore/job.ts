@@ -16,6 +16,7 @@ const parseJob = async(doc) => {
     const job_id = doc.id.toString();
     const data = doc.data();
     const job = {
+        job_id: job_id,
         apiKey: data.apiKey,
         authDomain: data.authDomain,
         projectId: data.projectId,
@@ -30,8 +31,14 @@ export const createJob = async(job: Job): Promise<void> => {
     await addDoc(docRef, job);
 }
 
-export const getAllJobs = async()
+export const getAllJobs = async(): Promise<Job[]> => {
+    try {
+        const allJobs = await jobCardCollection.orderBy('job_id').get();
+        const promises: Promise<Job> = allJobs.docs.map((doc) => parseJob(doc))
+    }
+}
 
 export const updateJob = async()
 
-export const deleteJob = async()
+export const deleteJob = async(job_id: string): Promise<void> => {
+}
