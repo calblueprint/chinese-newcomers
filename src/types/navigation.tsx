@@ -3,10 +3,12 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-export type RootStackParamList = {
+export interface RootStackParamList {
   Home: undefined;
   Feed: undefined;
   Draft: undefined;
   Signin: undefined;
   AdminRegister: undefined;
-};
+  PhoneNumberRegister: undefined;
+  VerificationCode: undefined;
+}

@@ -1,29 +1,24 @@
-/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import { StyleSheet, TextInput, Text, View, Image, Pressable } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { getAuth, signOut } from 'firebase/auth';
 import styles from './styles';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import PhoneInput from 'react-native-phone-number-input';
 
 const auth = getAuth();
 const logo = require('../../assets/favicon.png');
 
-const PhoneNumberScreen = ({ navigation }: any) => {
+const VerificationScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
-  const { ...phonenumber } = useForm();
+  const { ...verificationcode } = useForm();
 
   return (
     <View style={styles.logocontainer}>
       <Image source={logo} style={styles.logo} />
-      <FormProvider {...phonenumber}>
+      <FormProvider {...verificationcode}>
         <View style={styles.container}>
-          <Text style={styles.signintext1}>Enter your phone number: </Text>
-          <Text style={styles.signintext2}>
-            You'll receive a six-digit verification code to enter.{' '}
-          </Text>
-          <TextInput style={styles.input} placeholder=" phone number" />
+          <Text style={styles.signintext1}>Enter the six-digit code: </Text>
+          <TextInput style={styles.input} placeholder=" code" />
           <Pressable
             style={styles.nextbutton}
             // onPress={register.handleSubmit(onSubmit)}
@@ -36,4 +31,4 @@ const PhoneNumberScreen = ({ navigation }: any) => {
   );
 };
 
-export default PhoneNumberScreen;
+export default VerificationScreen;
