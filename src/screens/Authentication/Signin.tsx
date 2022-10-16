@@ -5,7 +5,8 @@ import { Pressable } from 'react-native';
 import styles from './styles';
 import { phoneGetConfirmation, confirmCode } from '../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import app from '../../firebase/config';
+import { firebaseApp } from '../../firebase/config';
+import { getUser, addUser } from '../../firebase/firestore/user';
 // import { getAuth, signOut } from "firebase/auth";
 
 // const auth = getAuth();
@@ -41,13 +42,36 @@ const SigninScreen = ({ navigation }: any) => {
               console.log(verificationId);
               const user = await confirmCode(verificationId, '123456');
               console.log(user);
+              const userObject = await getUser(user.uid);
+              if (userObject !== null) {
+                console.log('Got user from users collection. Name: ' + userObject.name);
+                // TODO: probably put user object into react context
+              } else {
+                console.log('Create new user flow');
+                // TODO: handle user not yet in users collection. check access collection to see what type of user to create
+                // below code just for testing
+                await addUser({
+                  id: user.uid,
+                  access: 'regular_user',
+                  createdJobs: [],
+                  email: user.email,
+                  likedJobs: [], //switched to string of jobIds to match Firebase
+                  name: 'test phone',
+                  phoneNumber: user.phoneNumber,
+                  verified: true,
+                  password: null
+                });
+              }
             } catch (error) {
               console.log(error);
             }
           }}>
           <Text style={styles.signintext3}> test phone number </Text>
         </Pressable>
-        <FirebaseRecaptchaVerifierModal ref={recaptchaVerifier} firebaseConfig={app.options} />
+        <FirebaseRecaptchaVerifierModal
+          ref={recaptchaVerifier}
+          firebaseConfig={firebaseApp.options}
+        />
       </View>
     </View>
   );
