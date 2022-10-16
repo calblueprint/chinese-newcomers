@@ -46,8 +46,7 @@ const parseUser = async (doc: any) => {
     likedJobs: data.likedJobs, //might need to map to job objects later
     name: data.name,
     phoneNumber: data.phoneNumber,
-    verified: data.verified,
-    password: data.password
+    verified: data.verified
   };
   return user as User;
 };

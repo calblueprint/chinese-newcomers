@@ -39,9 +39,7 @@ const SigninScreen = ({ navigation }: any) => {
 
               // case 2: fake phone number and code from firebase, working
               const verificationId = await phoneGetConfirmation('+11113334444', recaptchaVerifier);
-              console.log(verificationId);
               const user = await confirmCode(verificationId, '123456');
-              console.log(user);
               const userObject = await getUser(user.uid);
               if (userObject !== null) {
                 console.log('Got user from users collection. Name: ' + userObject.name);
@@ -55,11 +53,10 @@ const SigninScreen = ({ navigation }: any) => {
                   access: 'regular_user',
                   createdJobs: [],
                   email: user.email,
-                  likedJobs: [], //switched to string of jobIds to match Firebase
+                  likedJobs: [],
                   name: 'test phone',
                   phoneNumber: user.phoneNumber,
-                  verified: true,
-                  password: null
+                  verified: true
                 });
               }
             } catch (error) {
