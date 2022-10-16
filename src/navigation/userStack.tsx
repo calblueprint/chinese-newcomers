@@ -22,8 +22,6 @@ const UserStack = () => {
         <Stack.Screen name="Feed" component={FeedScreen} />
         <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="AdminRegister" component={AdminRegisterScreen} />
-        <Stack.Screen name="PhoneNumberRegister" component={PhoneNumberScreen} />
-        <Stack.Screen name="VerificationCode" component={VerificationCodeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
