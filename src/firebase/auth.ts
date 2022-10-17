@@ -11,6 +11,7 @@ export const phoneGetConfirmation = async (phoneNumber: string, appVerifier: any
     const verificationId = await phoneProvider.verifyPhoneNumber(phoneNumber, appVerifier.current);
     return verificationId;
   } catch (e) {
+    console.log(e);
     throw e;
   }
 };
@@ -22,6 +23,7 @@ export const confirmCode = async (verificationId: any, code: any) => {
     const result = await signInWithCredential(auth, credential);
     return result.user;
   } catch (e) {
+    console.log(e);
     throw e;
   }
 };

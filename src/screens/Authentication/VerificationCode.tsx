@@ -20,7 +20,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
   return (
     <View style={styles.logocontainer}>
       <Image source={logo} style={styles.logo} />
-      <View style={styles.container}>
+      <View style={styles.verificationcontainer}>
         <Text style={styles.signintext1}>Enter the six-digit code: </Text>
         <TextInput
           style={styles.input}
@@ -28,7 +28,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
           onChangeText={(text) => setVerificationCode(text)}
         />
         <Pressable
-          style={styles.signinbutton}
+          style={styles.nextbutton}
           onPress={async () => {
             try {
               // case 1: real phone number, working to send code
@@ -61,7 +61,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
               console.log(error);
             }
           }}>
-          <Text style={styles.signintext3}> test phone number </Text>
+          <Text style={styles.signintext3}> Next </Text>
         </Pressable>
       </View>
     </View>

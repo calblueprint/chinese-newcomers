@@ -9,6 +9,7 @@ import { phoneGetConfirmation, confirmCode } from '../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../firebase/config';
 import { getUser, addUser } from '../../firebase/firestore/user';
+import PhoneInput from 'react-native-phone-number-input';
 
 // const auth = getAuth();
 const logo = require('../../assets/favicon.png');
@@ -22,11 +23,17 @@ const PhoneNumberScreen = ({ navigation }: any) => {
   return (
     <View style={styles.logocontainer}>
       <Image source={logo} style={styles.logo} />
-      <View style={styles.container}>
+      <View style={styles.verificationcontainer}>
         <Text style={styles.signintext1}>Enter your phone number: </Text>
         <Text style={styles.signintext2}>
           You'll receive a six-digit verification code to enter.{' '}
         </Text>
+        {/* note: PhoneInput instead of TextInput ?  */}
+        {/* <PhoneInput
+          defaultCode="US"
+          placeholder="Enter Phone Number"
+          onChangeText={(text) => setPhoneNumber(text)}
+        /> */}
         <TextInput
           style={styles.input}
           placeholder=" phone number"
@@ -39,7 +46,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
           <Text style={styles.signintext3}> Next </Text>
         </Pressable> */}
         <Pressable
-          style={styles.signinbutton}
+          style={styles.nextbutton}
           onPress={async () => {
             try {
               // case 1: real phone number, working to send code
@@ -53,7 +60,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
               console.log(error);
             }
           }}>
-          <Text style={styles.signintext3}> test phone number </Text>
+          <Text style={styles.signintext3}> Next </Text>
         </Pressable>
         <FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}
