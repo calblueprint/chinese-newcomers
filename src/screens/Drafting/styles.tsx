@@ -50,14 +50,27 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     height: '15%'
   },
-  smallInput: {
-    width: '100%'
+  // smallInput: {
+  //   width: '100%',
+  //   borderWidth: 1
+  // },
+  employer: {
+    width: '72%'
+  },
+  hours: {
+    width: '82%'
+  },
+  salary: {
+    width: '81%'
   },
   largeInput: {
     width: '100%',
     height: '100%',
     maxHeight: '100%',
     overflow: 'scroll'
+  },
+  contact: {
+    width: '77%'
   },
   post: {
     alignItems: 'flex-end',
@@ -90,17 +103,23 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    width: '80%'
   },
   modalButtons: {
-    width: '75%',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     margin: 5
   },
   modalButton: {
-    borderRadius: 15,
+    backgroundColor: 'white',
+    borderRadius: 20,
     padding: 5,
-    backgroundColor: 'white'
+    elevation: 2
+  },
+  modalText: {
+    marginBottom: 5,
+    textAlign: 'center'
   }
 });

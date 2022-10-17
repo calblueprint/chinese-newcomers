@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, TouchableOpacity, Modal, Pressable } from 'react-native';
+import { Text, View, TextInput, Modal, Pressable } from 'react-native';
 // import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 // import { getAuth, signOut } from 'firebase/auth';
@@ -44,7 +44,7 @@ const DraftScreen: React.FC = ({ navigation }: any) => {
                 value={employer}
                 onChangeText={setEmployer}
                 placeholder="employer"
-                style={styles.smallInput}
+                style={styles.employer}
               />
             </View>
             <View style={styles.formEntries}>
@@ -53,7 +53,7 @@ const DraftScreen: React.FC = ({ navigation }: any) => {
                 value={hours}
                 onChangeText={setHours}
                 placeholder="hours"
-                style={styles.smallInput}
+                style={styles.hours}
               />
             </View>
             <View style={styles.formEntries}>
@@ -62,7 +62,7 @@ const DraftScreen: React.FC = ({ navigation }: any) => {
                 value={salary}
                 onChangeText={setSalary}
                 placeholder="salary"
-                style={styles.smallInput}
+                style={styles.salary}
               />
             </View>
           </View>
@@ -73,6 +73,7 @@ const DraftScreen: React.FC = ({ navigation }: any) => {
                 onChangeText={setDescription}
                 placeholder="description"
                 style={styles.largeInput}
+                multiline={true}
               />
             </View>
           </View>
@@ -83,7 +84,7 @@ const DraftScreen: React.FC = ({ navigation }: any) => {
                 value={contact}
                 onChangeText={setContact}
                 placeholder="contact"
-                style={styles.smallInput}
+                style={styles.contact}
               />
             </View>
           </View>
@@ -92,28 +93,22 @@ const DraftScreen: React.FC = ({ navigation }: any) => {
         <Modal visible={modalVisible} animationType="slide" transparent={true}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text>CONFIRMATION</Text>
-              <Text>Do you want to post this job?</Text>
+              <Text style={styles.modalText}>CONFIRMATION</Text>
+              <Text style={styles.modalText}>Do you want to post this job?</Text>
               <View style={styles.modalButtons}>
-                <View>
-                  <TouchableOpacity style={styles.modalButton} onPress={submit}>
-                    <Text>yes</Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    style={styles.modalButton}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Text>save</Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    style={styles.modalButton}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Text>no</Text>
-                  </TouchableOpacity>
-                </View>
+                <Pressable style={styles.modalButton} onPress={submit}>
+                  <Text>yes</Text>
+                </Pressable>
+                <Pressable
+                  style={styles.modalButton}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text>save</Text>
+                </Pressable>
+                <Pressable
+                  style={styles.modalButton}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text>no</Text>
+                </Pressable>
               </View>
             </View>
           </View>
