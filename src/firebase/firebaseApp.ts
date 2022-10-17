@@ -24,7 +24,7 @@ const firebaseConfig = {
 const firebaseApp = firebase;
 
 if (firebaseConfig?.projectId) {
-    const app = initializeApp(firebaseConfig);
+    const firebaseApp = initializeApp(firebaseConfig);
     const db = getFirestore();
   }
 

@@ -1,7 +1,7 @@
 import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Job, User } from "../../types/types";
-import {getDoc, doc, collection, addDoc} from "firebase/firestore";
+import {getDoc, doc, collection, addDoc, getDocs} from "firebase/firestore";
 
 const db = firebaseApp.firestore();
 const jobCardCollection = db.collection("jobs");
@@ -17,12 +17,14 @@ const parseJob = async(doc) => {
     const data = doc.data();
     const job = {
         job_id: job_id,
-        apiKey: data.apiKey,
-        authDomain: data.authDomain,
-        projectId: data.projectId,
-        storageBucket: data.storageBucket,
-        messagingSenderId: data.messagingSenderId,
-        appId: data.appId,
+        contact_info: data.contact_info,
+        description: data.description,
+        employer: data.employer,
+        end_date: data.end_date,
+        hours: data.hours,
+        job_creator: data.job_creator,
+        salary: data.salary,
+        start_date: data.start_date,
     };
     return job as Job;
 };
@@ -33,12 +35,30 @@ export const createJob = async(job: Job): Promise<void> => {
 
 export const getAllJobs = async(): Promise<Job[]> => {
     try {
-        const allJobs = await jobCardCollection.orderBy('job_id').get();
-        const promises: Promise<Job> = allJobs.docs.map((doc) => parseJob(doc))
+        const jobsRef = collection(db, "jobs");
+        const promises: Promise<Job>[] = [];
+        const docSnap = await getDocs(jobsRef);
+        docSnap.forEach((job) => {
+            promises.push(parseJob(job));
+        })
+        const allJobs = await Promise.all(promises);
+        return allJobs;
     }
-}
+    catch (e) {
+        console.error(e);
+        throw e;
+    }
+};
 
-export const updateJob = async()
+// export const updateJob = async(job_id: string): Promise<void> => {
+// }
 
 export const deleteJob = async(job_id: string): Promise<void> => {
-}
+    try {
+        await jobCardCollection.doc(job_id).delete();
+    }
+    catch(e) {
+        console.warn(e);
+        throw e;
+    }
+};
