@@ -83,7 +83,6 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     width: '20%'
   },
-  // TODO: blur background
   centeredView: {
     flex: 1,
     justifyContent: 'center',
