@@ -1,10 +1,9 @@
-import firebaseApp from "../firebaseApp";
+import {firebaseApp, db} from "../firebaseApp";
 import "firebase/firestore";
 import { Job, User } from "../../types/types";
 import {getDoc, doc, collection, addDoc, getDocs} from "firebase/firestore";
 
-const db = firebaseApp.firestore();
-const jobCardCollection = db.collection("jobs");
+const jobCardCollection = collection(db, "jobs");
 
 export const getJob = async(id: string): Promise<Job> => {
     const docRef = doc(db, "jobs", id);
@@ -12,7 +11,7 @@ export const getJob = async(id: string): Promise<Job> => {
     return await parseJob(docSnap)
 }
 
-const parseJob = async(doc) => {
+export const parseJob = async(doc) => {
     const job_id = doc.id.toString();
     const data = doc.data();
     const job = {
@@ -50,8 +49,8 @@ export const getAllJobs = async(): Promise<Job[]> => {
     }
 };
 
-// export const updateJob = async(job_id: string): Promise<void> => {
-// }
+export const updateJob = async(job_id: string): Promise<void> => {
+}
 
 export const deleteJob = async(job_id: string): Promise<void> => {
     try {

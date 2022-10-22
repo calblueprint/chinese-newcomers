@@ -21,8 +21,7 @@ const JobCard = ({title, description, employer, hours, salary, contact_info, end
   
   return (
     
-    <View style={styles.cardContainer}
-    >
+    <View style={styles.cardContainer}>
     <Modal
         transparent={true}
         visible={modalVisible}
