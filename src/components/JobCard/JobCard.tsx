@@ -1,12 +1,28 @@
-import { Text, View, Pressable, Modal } from "react-native";
+import { Text, View, Pressable, Modal, ImageBackground } from "react-native";
 import styles from './CardStyles'
 import React, {useState} from "react";
 
-const JobCard = ({title, description, employer, hours, salary, contact}:{title: string; description: string}) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  return (
-    <View style={styles.cardContainer}>
+type JobCardProps = {
+  title: string;
+  description: string;
+  employer: string;
+  hours: number;
+  salary: number;
+  contact_info: string;
+  end_date: Date;
+  job_creator: string;
+  start_date: string;
+};
 
+
+const JobCard = ({title, description, employer, hours, salary, contact_info, end_date, job_creator, start_date}: JobCardProps) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  
+  return (
+    
+    <View style={styles.cardContainer}
+    >
     <Modal
         transparent={true}
         visible={modalVisible}
@@ -24,7 +40,7 @@ const JobCard = ({title, description, employer, hours, salary, contact}:{title: 
               <Text style={styles.modalText}>hours: {hours}</Text>
               <Text style={styles.modalText}>salary: {salary}</Text>
               <Text style={styles.modalText}>{description}</Text>
-              <Text style={styles.modalText}>contact: {contact}</Text>
+              <Text style={styles.modalText}>contact: {contact_info}</Text>
             </View>
             <Pressable
             style={styles.hideButton}

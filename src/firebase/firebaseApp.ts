@@ -21,11 +21,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = firebase;
+export const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore(firebaseApp);
 
-if (firebaseConfig?.projectId) {
-    const firebaseApp = initializeApp(firebaseConfig);
-    const db = getFirestore();
-  }
-
-export default firebaseApp;
+export default firebaseApp

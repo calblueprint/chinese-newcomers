@@ -60,7 +60,7 @@ export default StyleSheet.create({
         alignContent: 'center',
         backgroundColor: "red",
         height: '8%',
-        width: '30%',
+        width: '10%',
       },
       textStyle: {
         color: "white",
