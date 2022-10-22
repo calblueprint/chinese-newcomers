@@ -1,3 +1,7 @@
 {
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "esbenp.prettier-vscode", // this is the prettier extension
+    "editor.codeActionsOnSave": {
+      "source.formatDocument": true, // this is exposed by rohit-gohri.format-code-action
+      "source.fixAll.eslint": true // this is exposed by dbaeumer.vscode-eslint
+    },
 }
