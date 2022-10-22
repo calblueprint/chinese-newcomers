@@ -1,6 +1,15 @@
 // Import the functions you need from the SDKs you need
+<<<<<<< HEAD:src/firebase/config.ts
 import { initializeApp } from 'firebase/app';
+=======
+import firebase from "firebase/app";
+>>>>>>> 7a59899 (Mia modular card (#16)):src/firebase/firebaseApp.ts
 import Constants from 'expo-constants';
+import { initializeApp } from "firebase/app";
+import {getFirestore} from "firebase/firestore"; 
+import { collection, getDocs } from "firebase/firestore"; 
+import "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,6 +25,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore(firebaseApp);
 
+<<<<<<< HEAD:src/firebase/config.ts
 export default app;
+=======
+export default firebaseApp
+>>>>>>> 7a59899 (Mia modular card (#16)):src/firebase/firebaseApp.ts
