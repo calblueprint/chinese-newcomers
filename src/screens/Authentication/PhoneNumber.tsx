@@ -11,21 +11,19 @@ import { firebaseApp } from '../../firebase/config';
 import { getUser, addUser } from '../../firebase/firestore/user';
 import PhoneInput from 'react-native-phone-number-input';
 
-// const auth = getAuth();
 const logo = require('../../assets/favicon.png');
 
 const PhoneNumberScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
-  // const { ...phonenumber } = useForm();
   const [phoneNumber, setPhoneNumber] = useState('');
 
   return (
-    <View style={styles.logocontainer}>
+    <View style={styles.logoContainer}>
       <Image source={logo} style={styles.logo} />
-      <View style={styles.verificationcontainer}>
-        <Text style={styles.signintext1}>Enter your phone number: </Text>
-        <Text style={styles.signintext2}>
+      <View style={styles.verificationContainer}>
+        <Text style={styles.signInText1}>Enter your phone number: </Text>
+        <Text style={styles.signInText2}>
           You'll receive a six-digit verification code to enter.{' '}
         </Text>
         {/* note: PhoneInput instead of TextInput ?  */}
@@ -39,14 +37,8 @@ const PhoneNumberScreen = ({ navigation }: any) => {
           placeholder=" phone number"
           onChangeText={(text) => setPhoneNumber(text)}
         />
-        {/* <Pressable
-          style={styles.nextbutton}
-          // onPress={register.handleSubmit(onSubmit)}
-        >
-          <Text style={styles.signintext3}> Next </Text>
-        </Pressable> */}
         <Pressable
-          style={styles.nextbutton}
+          style={styles.nextButton}
           onPress={async () => {
             try {
               // case 1: real phone number, working to send code
@@ -60,7 +52,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
               console.log(error);
             }
           }}>
-          <Text style={styles.signintext3}> Next </Text>
+          <Text style={styles.signInText3}> Next </Text>
         </Pressable>
         <FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}

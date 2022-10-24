@@ -1,41 +1,49 @@
-import React, { useState } from 'react';
-import { StyleSheet, TextInput, Text, View, Image, Pressable } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
-import { getAuth, signOut } from 'firebase/auth';
 import styles from './styles';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { phoneGetConfirmation, confirmCode } from '../../firebase/auth';
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../firebase/config';
 import { getUser, addUser } from '../../firebase/firestore/user';
-import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+// import { getAuth, signOut } from "firebase/auth";
 
-// const auth = getAuth();
 const logo = require('../../assets/favicon.png');
 
-const VerificationScreen = ({ route, navigation }: any) => {
+const WelcomeScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
-  const [verificationCode, setVerificationCode] = useState('');
-  const { verificationId } = route.params;
+  const recaptchaVerifier = useRef(null);
 
   return (
     <View style={styles.logoContainer}>
       <Image source={logo} style={styles.logo} />
-      <View style={styles.verificationContainer}>
-        <Text style={styles.signInText1}>Enter the six-digit code: </Text>
-        <TextInput
-          style={styles.input}
-          placeholder=" code"
-          onChangeText={(text) => setVerificationCode(text)}
-        />
+      <View style={styles.container}>
+        <Text style={styles.signInText1}>
+          Welcome to the Chinese Newcomers Service Center job portal!
+        </Text>
+        <Text style={styles.signInText2}>Let's get your account set up.</Text>
+
         <Pressable
-          style={styles.nextButton}
+          style={styles.signInButton}
+          onPress={() => navigation.navigate('PhoneNumberRegister')}>
+          <Text style={styles.signInText3}> SIGN UP </Text>
+        </Pressable>
+
+        <Pressable style={styles.signInButton} onPress={() => navigation.navigate('Signin')}>
+          <Text style={styles.signInText3}> SIGN IN </Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.signInButton}
           onPress={async () => {
             try {
               // case 1: real phone number, working to send code
               // const verificationId = await phoneGetConfirmation('+12014076687', recaptchaVerifier);
 
               // case 2: fake phone number and code from firebase, working
-              const user = await confirmCode(verificationId, verificationCode);
+              const verificationId = await phoneGetConfirmation('+11113334444', recaptchaVerifier);
+              console.log(verificationId);
+              const user = await confirmCode(verificationId, '123456');
               console.log(user);
               const userObject = await getUser(user.uid);
               if (userObject !== null) {
@@ -61,11 +69,14 @@ const VerificationScreen = ({ route, navigation }: any) => {
               console.log(error);
             }
           }}>
-          <Text style={styles.signInText3}> Next </Text>
+          <Text style={styles.signInText3}> test phone number </Text>
         </Pressable>
+        <FirebaseRecaptchaVerifierModal
+          ref={recaptchaVerifier}
+          firebaseConfig={firebaseApp.options}
+        />
       </View>
     </View>
   );
 };
-
-export default VerificationScreen;
+export default WelcomeScreen;

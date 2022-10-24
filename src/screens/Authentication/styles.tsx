@@ -7,13 +7,13 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
-  verificationcontainer: {
+  verificationContainer: {
     flex: 1,
     backgroundColor: '#ff',
     alignItems: 'flex-start',
     marginTop: '30%'
   },
-  logocontainer: {
+  logoContainer: {
     height: '100%',
     marginLeft: '10%',
     marginTop: '10%'
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     height: '17%',
     width: '17%'
   },
-  signinbutton: {
+  signInButton: {
     backgroundColor: '#E13C3C',
     width: '80%',
     height: '6.5%',
@@ -31,19 +31,19 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  signintext1: {
+  signInText1: {
     color: 'black',
     fontSize: 30
   },
-  signintext2: {
+  signInText2: {
     color: '#797979',
     fontSize: 15
   },
-  signintext3: {
+  signInText3: {
     color: 'white',
     fontSize: 25
   },
-  formtext: {
+  formText: {
     color: 'white',
     fontSize: 25,
     padding: '5%'
@@ -57,7 +57,7 @@ export default StyleSheet.create({
     marginBottom: '4%',
     alignItems: 'center'
   },
-  nextbutton: {
+  nextButton: {
     backgroundColor: '#E13C3C',
     width: '40%',
     height: '5%',

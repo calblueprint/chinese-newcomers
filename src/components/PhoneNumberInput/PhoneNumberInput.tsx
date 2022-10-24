@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableHighlight } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
+import styles from './PhoneNumberInputStyles';
 
 const PhoneNumberInput = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -32,21 +33,5 @@ const PhoneNumberInput = () => {
     </SafeAreaView>
   );
 };
-const styles = StyleSheet.create({
-  phoneInput: {
-    borderWidth: 1,
-    borderRadius: 25,
-    width: 250,
-    height: 50,
-    padding: 5
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: 'green',
-    borderRadius: 15,
-    marginTop: 25,
-    padding: 10,
-    alignItems: 'center'
-  }
-});
+
 export default PhoneNumberInput;
