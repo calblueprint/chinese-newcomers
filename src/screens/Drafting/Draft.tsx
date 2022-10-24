@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, View, TextInput, Modal, Pressable } from 'react-native';
-// import { useAuthentication } from '../../utils/hooks/useAuthentication';
+import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 // import { getAuth, signOut } from 'firebase/auth';
 import { styles } from './styles';
 
 // const auth = getAuth();
 
-const DraftScreen: React.FC = ({ navigation }: any) => {
-  // const { user } = useAuthentication();
+const DraftScreen = ({ navigation }: any): ReactElement => {
+  const { user } = useAuthentication();
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const [employer, setEmployer] = React.useState('');

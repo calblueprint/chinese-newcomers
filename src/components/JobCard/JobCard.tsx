@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 import React from 'react';
 import { Text } from 'react-native';
@@ -9,8 +10,13 @@ const JobCard = () => {
 import { Text, View, Pressable, Modal, ImageBackground } from "react-native";
 import styles from './CardStyles'
 import React, {useState} from "react";
+=======
+import { Text, View, Pressable, Modal, ImageBackground } from 'react-native';
+import styles from './CardStyles';
+import React, { useState } from 'react';
+>>>>>>> Stashed changes
 
-type JobCardProps = {
+interface JobCardProps {
   title: string;
   description: string;
   employer: string;
@@ -20,21 +26,33 @@ type JobCardProps = {
   end_date: Date;
   job_creator: string;
   start_date: string;
+<<<<<<< Updated upstream
 >>>>>>> 7a59899 (Mia modular card (#16))
 };
 
+=======
+}
+>>>>>>> Stashed changes
 
-const JobCard = ({title, description, employer, hours, salary, contact_info, end_date, job_creator, start_date}: JobCardProps) => {
+const JobCard = ({
+  title,
+  description,
+  employer,
+  hours,
+  salary,
+  contact_info,
+  end_date,
+  job_creator,
+  start_date
+}: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  
   return (
-    
     <View style={styles.cardContainer}>
-    <Modal
+      <Modal
         transparent={true}
         visible={modalVisible}
-        animationType = "slide"
+        animationType="slide"
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
@@ -50,11 +68,9 @@ const JobCard = ({title, description, employer, hours, salary, contact_info, end
               <Text style={styles.modalText}>{description}</Text>
               <Text style={styles.modalText}>contact: {contact_info}</Text>
             </View>
-            <Pressable
-            style={styles.hideButton}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text style={styles.textStyle}>x</Text>
-          </Pressable>
+            <Pressable style={styles.hideButton} onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>x</Text>
+            </Pressable>
           </View>
         </View>
       </Modal>
@@ -63,15 +79,19 @@ const JobCard = ({title, description, employer, hours, salary, contact_info, end
         <Text style={styles.titleText}>{title}</Text>
       </View>
       <View style={styles.description}>
-          <Text style = {styles.descriptionText}>{description}</Text>
+        <Text style={styles.descriptionText}>{description}</Text>
       </View>
       <View style={styles.cardFooter}>
-        <Pressable style={styles.moreInfoButton} onPress={() => {
-          setModalVisible(true)}}> 
-        <Text >More Info</Text> 
+        <Pressable
+          style={styles.moreInfoButton}
+          onPress={() => {
+            setModalVisible(true);
+          }}>
+          <Text>More Info</Text>
         </Pressable>
       </View>
-    </View> 
-  );}
+    </View>
+  );
+};
 
 export default JobCard;

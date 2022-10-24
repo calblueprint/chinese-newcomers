@@ -4,9 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/Home';
-import DraftScreen from '../screens/Draft';
+import DraftScreen from '../screens/Drafting/Draft';
 import SigninScreen from '../screens/Authentication/Signin';
 import FeedScreen from '../screens/Feed';
+import { RootStackParamList } from '../types/navigation';
 
 const UserStack = (): ReactElement => {
   const Stack = createStackNavigator();
