@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Text, View, TextInput, Modal, Pressable } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
-// import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import { styles } from './styles';
 
-// const auth = getAuth();
+const auth = getAuth();
 
 const DraftScreen = ({ navigation }: any): ReactElement => {
   const { user } = useAuthentication();
@@ -17,6 +17,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const [description, setDescription] = React.useState('');
   const [contact, setContact] = React.useState('');
 
+  // parseInt and parseFloat for hours and salary when using queries
   const submit: any = () => {
     const form = {
       employer,
