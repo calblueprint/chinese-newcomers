@@ -10,7 +10,6 @@ import { Job } from '../../types/types';
 
 const testFirebase = async () => {
   const jobs = await getAllJobs();
-  // console.log(list);
 };
 const auth = getAuth();
 
@@ -20,11 +19,7 @@ const FeedScreen = ({ navigation }: any) => {
   useEffect(() => {
     const fetchJobs = async () => {
       const data = await getAllJobs();
-      // console.log(data);
-      // console.log('this is the data');
       setList(data);
-      console.log(list);
-      console.log('this is the data');
     };
     void fetchJobs();
   }, []);
@@ -40,10 +35,13 @@ const FeedScreen = ({ navigation }: any) => {
           <JobCard
             title="hello"
             description={job.description}
-            // salary={job.description}
             hours={job.hours}
             employer={job.employer}
-            contact_info={job.contact_info}></JobCard>
+            contact_info={job.contact_info}
+            salary={0}
+            end_date={undefined}
+            job_creator={''}
+            start_date={''}></JobCard>
         );
       })}
       <Button title="Back" onPress={() => navigation.navigate('Home')} />
