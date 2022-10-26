@@ -8,9 +8,6 @@ import styles from './Styles';
 import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 
-const testFirebase = async () => {
-  const jobs = await getAllJobs();
-};
 const auth = getAuth();
 
 const FeedScreen = ({ navigation }: any) => {
@@ -45,7 +42,6 @@ const FeedScreen = ({ navigation }: any) => {
         );
       })}
       <Button title="Back" onPress={() => navigation.navigate('Home')} />
-      <Button title="TestFirebase" onPress={testFirebase} />
     </View>
   );
 };
