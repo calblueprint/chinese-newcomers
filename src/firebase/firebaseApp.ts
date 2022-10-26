@@ -4,7 +4,6 @@ import Constants from 'expo-constants';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import 'firebase/auth';
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,6 +19,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+
 export const firebaseApp = initializeApp(firebaseConfig);
 export const db = getFirestore(firebaseApp);
 
