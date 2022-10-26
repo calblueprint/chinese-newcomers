@@ -18,6 +18,7 @@ export interface Job {
   // note: look into what type the date should be in
   end_date: Date;
   hours: number;
+  // note: maybe set type to User
   job_creator: string;
   salary: number;
   start_date: string;

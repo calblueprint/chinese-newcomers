@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
-const DraftScreen = ({ navigation }: any): ReactElement => {
+const SigninScreen = ({ navigation }: any): ReactElement => {
   return (
     <View style={styles.container}>
-      <Text>Job post drafting</Text>
+      <Text>Sign in</Text>
       <Button title="Back" style={styles.button} onPress={() => navigation.navigate('Home')} />
     </View>
   );
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DraftScreen;
+export default SigninScreen;

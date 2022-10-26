@@ -6,9 +6,7 @@ import { signOutUser } from '../../firebase/auth';
 import styles from './styles';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 
-const SigninScreen = ({ navigation }: any) => {
-  const { user } = useAuthentication();
-
+const SigninScreen = ({ navigation }: any): ReactElement => {
   return (
     <View style={styles.container}>
       <Text>Sign in</Text>

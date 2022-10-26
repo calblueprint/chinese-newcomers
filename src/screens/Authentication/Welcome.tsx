@@ -4,7 +4,7 @@ import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import styles from './styles';
 import { phoneGetConfirmation, confirmCode } from '../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import { firebaseApp } from '../../firebase/config';
+import { firebaseApp } from '../../firebase/firestore';
 import { getUser, addUser } from '../../firebase/firestore/user';
 // import { getAuth, signOut } from "firebase/auth";
 

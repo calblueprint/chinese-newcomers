@@ -10,8 +10,8 @@ import FeedScreen from '../screens/Feed';
 import { RootStackParamList } from '../types/navigation';
 import AdminRegisterScreen from '../screens/Authentication/AdminRegister';
 
-const UserStack = () => {
-  const Stack = createStackNavigator<RootStackParamList>();
+const UserStack = (): ReactElement => {
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator>

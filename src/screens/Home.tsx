@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
 
-const auth = getAuth();
-
-const HomeScreen = ({ navigation }: any) => {
+const HomeScreen = ({ navigation }: any): ReactElement => {
   const { user } = useAuthentication();
 
   return (

@@ -9,6 +9,7 @@ import VerificationCodeScreen from '../screens/Authentication/VerificationCode';
 
 const Stack = createStackNavigator();
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function AuthStack() {
   const Stack = createStackNavigator<RootStackParamList>();
   return (
