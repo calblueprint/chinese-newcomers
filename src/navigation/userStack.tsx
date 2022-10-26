@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/Home';
 import DraftScreen from '../screens/Draft';
 import SigninScreen from '../screens/Authentication/Signin';
-import FeedScreen from '../screens/Feed';
+import FeedScreen from '../screens/Feed/FeedScreen';
 
 const UserStack = (): ReactElement => {
   const Stack = createStackNavigator();
