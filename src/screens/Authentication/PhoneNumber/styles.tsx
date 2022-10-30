@@ -1,12 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ff',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
   verificationContainer: {
     flex: 1,
     backgroundColor: '#ff',
@@ -23,14 +17,6 @@ export default StyleSheet.create({
     height: '17%',
     width: '17%'
   },
-  signInButton: {
-    backgroundColor: '#E13C3C',
-    width: '80%',
-    height: '6.5%',
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   signInText1: {
     color: 'black',
     fontSize: 30
@@ -42,20 +28,6 @@ export default StyleSheet.create({
   signInText3: {
     color: 'white',
     fontSize: 25
-  },
-  formText: {
-    color: 'white',
-    fontSize: 25,
-    padding: '5%'
-  },
-  input: {
-    borderColor: '#A1A1A1',
-    height: '5%',
-    width: '80%',
-    borderWidth: 0.5,
-    marginTop: '4%',
-    marginBottom: '4%',
-    alignItems: 'center'
   },
   nextButton: {
     backgroundColor: '#E13C3C',

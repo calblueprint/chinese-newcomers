@@ -1,12 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ff',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
   verificationContainer: {
     flex: 1,
     backgroundColor: '#ff',

@@ -1,14 +1,14 @@
+import firebase from 'firebase/app';
+
 export interface User {
   id: string;
   access: string;
-  createdJobs: Job[];
-  email: string;
-  likedJobs: Job[];
+  createdJobs: string[]; // switched to string of jobIds to match Firebase
+  email: string | null;
+  likedJobs: string[]; // switched to string of jobIds to match Firebase
   name: string;
-  phoneNumber: string;
+  phoneNumber: string | null;
   verified: boolean;
-  // note: is password necessary here or in firebase?
-  password: string;
 }
 
 export interface Job {
