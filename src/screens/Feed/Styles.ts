@@ -11,17 +11,21 @@ export default StyleSheet.create({
   },
 
   feedHeader: {
-    height: '8%',
+    height: '20%',
     width: '100%',
-    backgroundColor: 'red',
-    textColor: 'black',
+    backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignContent: 'center'
+    justifyContent: 'space-around',
+    flexDirection: 'row'
   },
   feedTitle: {
-    color: 'white',
-    fontSize: 25
+    color: '#49260C',
+    fontSize: 28
+  },
+  redSquare: {
+    height: '50%',
+    width: '20%',
+    backgroundColor: 'red',
+    borderRadius: 3
   }
 });

@@ -19,7 +19,11 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info }: 
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <View style={styles.cardContainer}>
+    <Pressable
+      style={styles.cardContainer}
+      onPress={() => {
+        setModalVisible(true);
+      }}>
       <Modal
         transparent={true}
         visible={modalVisible}
@@ -30,7 +34,8 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info }: 
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={styles.modalHeader}>
-              <Text style={styles.titleText}>{title}</Text>
+              <Text style={styles.modalJobRefText}>{title}</Text>
+              <Text style={styles.modalJobNameText}>{title}</Text>
             </View>
             <View style={styles.modalInfo}>
               <Text style={styles.modalText}>employer: {employer}</Text>
@@ -46,22 +51,14 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info }: 
         </View>
       </Modal>
 
-      <View style={styles.cardHeader}>
-        <Text style={styles.titleText}>{title}</Text>
+      <View style={styles.jobRef}>
+        <Text style={styles.jobRefText}>{title}</Text>
       </View>
-      <View style={styles.description}>
-        <Text style={styles.descriptionText}>{description}</Text>
+      <View style={styles.jobName}>
+        <Text style={styles.jobNameText}>{description}</Text>
       </View>
-      <View style={styles.cardFooter}>
-        <Pressable
-          style={styles.moreInfoButton}
-          onPress={() => {
-            setModalVisible(true);
-          }}>
-          <Text>More Info</Text>
-        </Pressable>
-      </View>
-    </View>
+      <View style={styles.cardFooter}></View>
+    </Pressable>
   );
 };
 

@@ -25,7 +25,8 @@ const FeedScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.feedHeader}>
-        <Text style={styles.feedTitle}>CNSC Job Postings</Text>
+        <View style={styles.redSquare}></View>
+        <Text style={styles.feedTitle}>Welcome!</Text>
       </View>
       {list.map((job) => {
         return (
