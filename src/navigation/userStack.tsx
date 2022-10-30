@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/Home';
 import DraftScreen from '../screens/Draft';
 import SignupScreen from '../screens/Authentication/Welcome';
-import FeedScreen from '../screens/Feed';
+import FeedScreen from '../screens/Feed/FeedScreen';
 import { RootStackParamList } from '../types/navigation';
 import AdminRegisterScreen from '../screens/Authentication/AdminRegister';
 

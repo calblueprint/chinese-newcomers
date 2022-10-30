@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
+import { signOutUser } from '../firebase/auth';
 
 const HomeScreen = ({ navigation }: any): ReactElement => {
   const { user } = useAuthentication();
@@ -10,7 +11,7 @@ const HomeScreen = ({ navigation }: any): ReactElement => {
     <View style={styles.container}>
       <Text>Welcome {user?.email}!</Text>
 
-      <Button title="Sign Out" style={styles.button} onPress={async () => await signOut(auth)} />
+      <Button title="Sign Out" style={styles.button} onPress={() => signOutUser} />
       <Button title="Job Feed" style={styles.button} onPress={() => navigation.navigate('Feed')} />
       <Button
         title="Job post drafting"
