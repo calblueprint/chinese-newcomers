@@ -3,12 +3,12 @@ import { TextInput, Text, View, Image, Pressable } from 'react-native';
 // import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { getAuth } from 'firebase/auth';
 import styles from './styles';
-import FormInput from '../../components/FormInput/FormInput';
+import FormInput from '../../../components/FormInput/FormInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 
 const auth = getAuth();
 
-const logo = require('../../assets/favicon.png');
+const logo = require('../../../assets/favicon.png');
 
 const AdminRegisterScreen = ({ navigation }: any) => {
   interface FormValues {

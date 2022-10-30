@@ -1,17 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useRef } from 'react';
 import { StyleSheet, TextInput, Text, View, Image, Pressable } from 'react-native';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
+import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import { getAuth, signOut } from 'firebase/auth';
 import styles from './styles';
+import FormInput from '../../../components/FormInput/FormInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import { phoneGetConfirmation, confirmCode } from '../../firebase/auth';
+import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import { firebaseApp } from '../../firebase/config';
-import { getUser, addUser } from '../../firebase/firestore/user';
+import { firebaseApp } from '../../../firebase/config';
+import { getUser, addUser } from '../../../firebase/firestore/user';
 import PhoneInput from 'react-native-phone-number-input';
 
-const logo = require('../../assets/favicon.png');
+const logo = require('../../../assets/favicon.png');
 
 const PhoneNumberScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
@@ -32,19 +33,11 @@ const PhoneNumberScreen = ({ navigation }: any) => {
           placeholder="Enter Phone Number"
           onChangeText={(text) => setPhoneNumber(text)}
         /> */}
-        <TextInput
-          style={styles.input}
-          placeholder=" phone number"
-          onChangeText={(text) => setPhoneNumber(text)}
-        />
+        <FormInput placeholder=" phone number" onChangeText={(text) => setPhoneNumber(text)} />
         <Pressable
           style={styles.nextButton}
           onPress={async () => {
             try {
-              // case 1: real phone number, working to send code
-              // const verificationId = await phoneGetConfirmation('+12014076687', recaptchaVerifier);
-
-              // case 2: fake phone number and code from firebase, working
               const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
               console.log(verificationId);
               navigation.navigate('VerificationCode', { verificationId });
