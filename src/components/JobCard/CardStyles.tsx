@@ -24,7 +24,7 @@ export default StyleSheet.create({
   jobName: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'left',
+    alignItems: 'flex-start',
     marginLeft: '10%',
     height: '30%'
   },
