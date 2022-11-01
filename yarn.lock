@@ -7136,6 +7136,11 @@ react-native-size-matters@^0.3.1:
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
   integrity sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw==
 
+react-native-swipe-down@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-down/-/react-native-swipe-down-1.0.4.tgz#1b9ffc6a6b3cb0f4564c0924f57318115eab1b5e"
+  integrity sha512-6m4EZwF6tRBjE/vMyNaHO7w25NaG561inpNlOtxvaeUdxz6HOdOJEYNXLRRwxZyXDrTnDo1JB6gcHbmoWEehDA==
+
 react-native-web@0.17.7:
   version "0.17.7"
   resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.17.7.tgz#038899dbc94467a0ca0be214b88a30e0c117b176"

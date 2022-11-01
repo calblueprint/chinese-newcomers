@@ -27,6 +27,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-safe-area-context": "4.2.4",
+    "react-native-swipe-down": "^1.0.4",
     "react-native-web": "0.17.7",
     "react-navigation": "^4.4.4"
   },
