@@ -4,6 +4,9 @@ import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
 import { styles } from './styles';
+import { Job } from '../../types/types';
+import { createJob } from '../../firebase/firestore/job';
+import { async } from '@firebase/util';
 
 const auth = getAuth();
 
@@ -17,16 +20,18 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const [description, setDescription] = React.useState('');
   const [contact, setContact] = React.useState('');
 
-  // parseInt and parseFloat for hours and salary when using queries
-  const submit: any = () => {
-    const form = {
-      employer,
-      hours,
-      salary,
+  const submit: any = async () => {
+    const job: Job = {
+      contact_info: contact,
       description,
-      contact
+      employer,
+      end_date: new Date(),
+      hours: parseInt(hours),
+      job_creator: String(user?.uid),
+      salary: parseFloat(salary),
+      start_date: ''
     };
-    console.log(form);
+    await createJob(job);
     setModalVisible(!modalVisible);
   };
 
