@@ -8,5 +8,5 @@ export default function RootNavigation() {
   const { user } = useAuthentication();
 
   // TODO: switch this order after authentication has been properly implemented
-  return user != null ? <AuthStack /> : <UserStack />;
+  return user != null ? <UserStack /> : <AuthStack />;
 }
