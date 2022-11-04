@@ -38,6 +38,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
           style={styles.nextButton}
           onPress={async () => {
             try {
+              console.log('phone:' + phoneNumber);
               const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
               console.log(verificationId);
               navigation.navigate('VerificationCode', { verificationId });

@@ -15,11 +15,13 @@ export interface Job {
   contact_info: string;
   description: string;
   employer: string;
-  // note: look into what type the date should be in
-  end_date: Date;
-  hours: number;
+  // note: date type depends on what's best for Stephanie to implement. string for now
+  start_date: string;
+  end_date: string;
+  hours: string;
   // note: maybe set type to User
   job_creator: string;
-  salary: number;
-  start_date: string;
+  salary: string;
+  other_info: string;
+  hidden: Map<string, boolean>;
 }
