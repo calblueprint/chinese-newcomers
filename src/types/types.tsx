@@ -11,17 +11,35 @@ export interface User {
   verified: boolean;
 }
 
+// export interface Job {
+//   contact_info: string;
+//   description: string;
+//   employer: string;
+//   // note: look into what type the date should be in
+//   end_date: Date;
+//   hours: number;
+//   // note: maybe set type to User
+//   job_creator: string;
+//   salary: number;
+//   start_date: string;
+// }
+
 export interface Job {
-  contact_info: string;
-  description: string;
-  employer: string;
-  // note: date type depends on what's best for Stephanie to implement. string for now
-  start_date: string;
-  end_date: string;
-  hours: string;
-  // note: maybe set type to User
-  job_creator: string;
+  // checked out from stephanie's branch to avoid conflicts later
+  // will work with her to finalize typing on her branch
+  id: string;
+  date: string;
+  companyName: string;
+  address: string;
+  contactPerson: string;
+  phone: string;
+  jobPosition: string;
+  languageRequirement: string;
+  workingHours: string;
+  workingDays: string;
   salary: string;
-  other_info: string;
+  probationPeriod: string;
+  employeeBenefit: string;
+  otherInfo: string;
   hidden: Map<string, boolean>;
 }

@@ -23,17 +23,8 @@ export const parseJob = async (doc: DocumentSnapshot<DocumentData>) => {
   const job_id = doc.id.toString();
   const data = doc.data();
   const job = {
-    job_id,
-    contact_info: data?.contact_info,
-    description: data?.description,
-    employer: data?.employer,
-    start_date: data?.start_date,
-    end_date: data?.end_date,
-    hours: data?.hours,
-    job_creator: data?.job_creator,
-    salary: data?.salary,
-    other_info: data?.other_info,
-    hidden: data?.hidden
+    id: job_id,
+    ...(data as Partial<Job>)
   };
   return job as Job;
 };

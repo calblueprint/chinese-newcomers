@@ -33,12 +33,11 @@ const PhoneNumberScreen = ({ navigation }: any) => {
           placeholder="Enter Phone Number"
           onChangeText={(text) => setPhoneNumber(text)}
         /> */}
-        <FormInput placeholder=" phone number" onChangeText={(text) => setPhoneNumber(text)} />
+        <FormInput placeholder=" phone number" value={phoneNumber} onChangeText={setPhoneNumber} />
         <Pressable
           style={styles.nextButton}
           onPress={async () => {
             try {
-              console.log('phone:' + phoneNumber);
               const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
               console.log(verificationId);
               navigation.navigate('VerificationCode', { verificationId });
