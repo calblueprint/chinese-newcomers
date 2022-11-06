@@ -4,12 +4,21 @@ import styles from './FormInputStyles';
 
 interface FormInputProps {
   placeholder: string;
+  value: string;
+  onChangeText: any;
 }
 
 const FormInput: React.FunctionComponent<FormInputProps> = (props: FormInputProps) => {
-  const { placeholder } = props;
+  const { placeholder, value, onChangeText } = props;
 
-  return <TextInput style={styles.input} placeholder={placeholder} />;
+  return (
+    <TextInput
+      style={styles.input}
+      placeholder={placeholder}
+      value={value}
+      onChangeText={onChangeText}
+    />
+  );
 };
 
 export default FormInput;
