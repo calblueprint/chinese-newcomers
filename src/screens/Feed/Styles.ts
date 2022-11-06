@@ -6,8 +6,9 @@ export default StyleSheet.create({
     width: '100%',
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    flexDirection: 'column'
+    alignContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: 'green'
   },
 
   feedHeader: {

@@ -2,25 +2,25 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   cardContainer: {
     marginTop: '3%',
-    width: '80%',
+    width: '100%',
     height: '15%',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    display: 'flex',
+    justifyContent: 'space-evenly',
     backgroundColor: 'white',
     borderRadius: 7,
     borderColor: '#C59675',
     borderWidth: 2
   },
   jobRef: {
-    marginTop: '5%',
     marginLeft: '10%',
-    alignItems: 'left',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     height: '15%'
   },
-  cardFooter: {
-    alignItems: 'flex-end'
-  },
+  // cardFooter: {
+  //   alignItems: 'flex-end'
+  // },
   jobName: {
     display: 'flex',
     justifyContent: 'center',

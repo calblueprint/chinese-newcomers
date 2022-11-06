@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
@@ -28,20 +28,27 @@ const FeedScreen = ({ navigation }: any) => {
         <View style={styles.redSquare}></View>
         <Text style={styles.feedTitle}>Welcome!</Text>
       </View>
-      {list.map((job) => {
-        return (
-          <JobCard
-            title="hello"
-            description={job.description}
-            hours={job.hours}
-            employer={job.employer}
-            contact_info={job.contact_info}
-            salary={0}
-            end_date={undefined}
-            job_creator={''}
-            start_date={''}></JobCard>
-        );
-      })}
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center'
+        }}>
+        {list.map((job) => {
+          return (
+            // eslint-disable-next-line react/jsx-key
+            <JobCard
+              title="hello"
+              description={job.description}
+              hours={job.hours}
+              employer={job.employer}
+              contact_info={job.contact_info}
+              salary={0}
+              end_date={undefined}
+              job_creator={''}
+              start_date={''}></JobCard>
+          );
+        })}
+      </ScrollView>
       <Button title="Back" onPress={() => navigation.navigate('Home')} />
     </View>
   );

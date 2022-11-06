@@ -1,6 +1,7 @@
 import { Text, View, Pressable, Modal } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 interface JobCardProps {
   title: string;
@@ -24,33 +25,35 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info }: 
       onPress={() => {
         setModalVisible(true);
       }}>
-      <Modal
-        transparent={true}
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={() => {
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeDown={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalJobRefText}>{title}</Text>
-              <Text style={styles.modalJobNameText}>{title}</Text>
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          animationType="slide"
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View style={styles.modalHeader}>
+                <Text style={styles.modalJobRefText}>{title}</Text>
+                <Text style={styles.modalJobNameText}>{title}</Text>
+              </View>
+              <View style={styles.modalInfo}>
+                <Text style={styles.modalText}>employer: {employer}</Text>
+                <Text style={styles.modalText}>hours: {hours}</Text>
+                <Text style={styles.modalText}>salary: {salary}</Text>
+                <Text style={styles.modalText}>{description}</Text>
+                <Text style={styles.modalText}>contact: {contact_info}</Text>
+              </View>
             </View>
-            <View style={styles.modalInfo}>
-              <Text style={styles.modalText}>employer: {employer}</Text>
-              <Text style={styles.modalText}>hours: {hours}</Text>
-              <Text style={styles.modalText}>salary: {salary}</Text>
-              <Text style={styles.modalText}>{description}</Text>
-              <Text style={styles.modalText}>contact: {contact_info}</Text>
-            </View>
-            <Pressable style={styles.hideButton} onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>x</Text>
-            </Pressable>
           </View>
-        </View>
-      </Modal>
-
+        </Modal>
+      </GestureRecognizer>
       <View style={styles.jobRef}>
         <Text style={styles.jobRefText}>{title}</Text>
       </View>
