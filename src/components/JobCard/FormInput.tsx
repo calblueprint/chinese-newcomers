@@ -1,12 +1,7 @@
 import * as React from 'react';
 
 import { TextInput, TextInputProps, StyleSheet, View } from 'react-native';
-import {
-  useController,
-  useFormContext,
-  ControllerProps,
-  UseControllerProps
-} from 'react-hook-form';
+import { useController, UseControllerProps } from 'react-hook-form';
 
 interface FormInputProps extends TextInputProps, UseControllerProps {
   label: string;
