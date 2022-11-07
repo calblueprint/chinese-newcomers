@@ -17,23 +17,37 @@ export const styles = StyleSheet.create({
   },
   form: {
     width: '80%',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginBottom: '10%'
   },
-  // formTop: {
-  //   flexDirection: 'row'
-  // },
-  formInput: {
-    backgroundColor: '#D3D3D3',
-    border: 1,
-    borderRadius: 5,
-    borderColor: '#A1A1A1'
-    // width: '100%',
-    // height: '20%'
+  formTop: {
+    flexDirection: 'row',
+    marginBottom: 5
   },
-  // formText: {
-  //   fontFamily: 'Quasimoda',
-  //   fontSize: 20
-  // }
+  formText: {
+    // fontStyle: 'Quasimoda',
+    // fontFamily: 'Quasimoda',
+    font: 'Quasimoda',
+    fontSize: 18,
+    marginLeft: 12
+  },
+  bottomButtons: {
+    flexDirection: 'row',
+    alignContent: 'space-around',
+    marginBottom: '10%'
+  },
+  buttons: {
+    width: '45%',
+    height: '100%',
+    margin: 5,
+    alignItems: 'center',
+    borderRadius: 5
+  },
+  buttonText: {
+    fontSize: 17,
+    color: '#fff',
+    fontWeight: 'bold'
+  },
   // jobListing: {
   //   backgroundColor: '#C2B4B4',
   //   width: '80%',

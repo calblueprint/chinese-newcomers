@@ -1,12 +1,8 @@
 import * as React from 'react';
 
-import { TextInput, TextInputProps, StyleSheet, View } from 'react-native';
-import {
-  useController,
-  useFormContext,
-  ControllerProps,
-  UseControllerProps
-} from 'react-hook-form';
+import { TextInput, TextInputProps, View } from 'react-native';
+import { useController, UseControllerProps } from 'react-hook-form';
+import styles from './JobPostFormInputStyle';
 
 interface FormInputProps extends TextInputProps, UseControllerProps {
   label: string;
@@ -21,8 +17,9 @@ const ControlledInput = (props: FormInputProps) => {
   const { field } = useController({ name, defaultValue });
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
+        style={styles.input}
         onChangeText={field.onChange}
         //   placeholderTextColor="#A9A9A9"
         value={field.value}
@@ -32,7 +29,7 @@ const ControlledInput = (props: FormInputProps) => {
   );
 };
 
-const FormInput = (props: FormInputProps) => {
+const JobPostFormInput = (props: FormInputProps) => {
   const { name } = props;
 
   //   const formContext = useFormContext();
@@ -45,4 +42,4 @@ const FormInput = (props: FormInputProps) => {
   return <ControlledInput {...props} />;
 };
 
-export default FormInput;
+export default JobPostFormInput;

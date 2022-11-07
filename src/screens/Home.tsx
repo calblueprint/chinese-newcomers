@@ -11,7 +11,7 @@ const HomeScreen = ({ navigation }: any): ReactElement => {
     <View style={styles.container}>
       <Text>Welcome {user?.email}!</Text>
 
-      <Button title="Sign Out" style={styles.button} onPress={() => signOutUser} />
+      <Button title="Sign Out" style={styles.button} onPress={signOutUser} />
       <Button title="Job Feed" style={styles.button} onPress={() => navigation.navigate('Feed')} />
       <Button
         title="Job post drafting"
