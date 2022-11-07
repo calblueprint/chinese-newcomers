@@ -38,10 +38,11 @@ export const styles = StyleSheet.create({
   },
   buttons: {
     width: '45%',
-    height: '100%',
+    height: '22%',
     margin: 5,
-    alignItems: 'center',
-    borderRadius: 5
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   buttonText: {
     fontSize: 17,

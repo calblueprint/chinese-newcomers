@@ -30,28 +30,8 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] = React.useState(false);
   const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(false);
 
-  // const submit: any = async () => {
-  //   const job: Job = {
-  //     date: new Date(),
-  //     companyName: 'company',
-  //     address: '123',
-  //     contactPerson: 'contact',
-  //     phone: '123-456-7890',
-  //     jobPosition: 'pos',
-  //     languageRequirement: 'req',
-  //     workingHours: '1',
-  //     workingDays: '1',
-  //     salary: parseFloat(salary),
-  //     probationPeriod: '',
-  //     employeeBenefit: '',
-  //     otherInfo: ''
-  //   };
-  //   await createJob(job);
-  //   setModalVisible(!modalVisible);
-  // };
-
-  type FormValues = () => {
-    date: String;
+  interface FormValues {
+    date: string;
     companyName: string;
     address: string;
     contactPerson: string;
@@ -64,12 +44,10 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     probationPeriod: string;
     employeeBenefit: string;
     otherInfo: string;
-  };
+  }
   const { ...methods } = useForm();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    // console.log(data.languageReq);
-    console.log('post');
     const map = new Map<string, boolean>();
     map.set('date', dateIsEnabled);
     map.set('companyName', companyNameIsEnabled);
@@ -78,7 +56,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     map.set('phone', phoneIsEnabled);
     map.set('jobPosition', jobPositionIsEnabled);
     map.set('languageRequirement', languageReqIsEnabled);
-    map.set('workingHours', workingDaysIsEnabled);
+    map.set('workingHours', workingHoursIsEnabled);
     map.set('workingDays', workingDaysIsEnabled);
     map.set('salary', salaryIsEnabled);
     map.set('probationPeriod', probationPeriodIsEnabled);
@@ -91,8 +69,8 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       address: data.address,
       contactPerson: data.contactPerson,
       phone: data.phone,
-      jobPosition: data.jobPostion,
-      languageRequirement: data.languageReq,
+      jobPosition: data.jobPosition,
+      languageRequirement: data.languageRequirement,
       workingHours: data.workingHours,
       workingDays: data.workingDays,
       salary: data.salary,
@@ -101,6 +79,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       otherInfo: data.otherInfo,
       visible: map
     };
+    console.log(job);
     await createJob(job);
   };
 
@@ -174,7 +153,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             />
             <Text style={styles.formText}>Language Requirement*</Text>
           </View>
-          <FormInput name="languageReq" label="languageReq" />
+          <FormInput name="languageRequirement" label="languageRequirement" />
 
           <View style={styles.formTop}>
             <Switch
