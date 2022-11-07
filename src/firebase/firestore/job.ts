@@ -30,18 +30,22 @@ export const parseJob = async (doc: DocumentSnapshot<DocumentData>) => {
 };
 
 export const getMonthlyCounter = async (): Promise<number> => {
-  const docRef = doc(db, 'jobs', 'metadata');
-  const docSnap = await getDoc(docRef);
-  const data = docSnap.data();
+  try {
+    const docRef = doc(db, 'jobs', 'metadata');
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    console.log('data: ', data);
+    // reset monthly counter if new month and not yet reset
+    const now = new Date();
+    if (now.getMonth() !== data?.lastReset.toDate().getMonth()) {
+      updateMonthlyCounter(now, 0);
+      return 0;
+    }
 
-  // reset monthly counter if new month and not yet reset
-  const now = new Date();
-  if (now.getMonth() !== data?.lastReset.getMonth()) {
-    updateMonthlyCounter(now, 0);
-    return 0;
+    return data?.monthlyCounter;
+  } catch (error) {
+    throw error;
   }
-
-  return data?.monthlyCounter;
 };
 
 export const updateMonthlyCounter = async (
@@ -57,17 +61,22 @@ export const updateMonthlyCounter = async (
   await updateDoc(docRef, data);
 };
 
-export const createJob = async (job: Job): Promise<void> => {
+export const createJob = async (job: Partial<Job>): Promise<void> => {
   const docRef = collection(db, 'jobs');
-  const monthlyCounter = await getMonthlyCounter();
-  const now = new Date();
-  await updateMonthlyCounter(now, monthlyCounter + 1);
+  try {
+    const monthlyCounter = await getMonthlyCounter();
+    const now = new Date();
 
-  const jobId =
-    now.getFullYear.toString().slice(-2) +
-    now.getMonth.toString() +
-    (monthlyCounter + 1).toString();
-  await setDoc(doc(db, 'jobs', jobId), job);
+    const jobId =
+      now.getFullYear().toString().slice(-2) +
+      now.getMonth().toString() +
+      (monthlyCounter + 1).toString();
+
+    await setDoc(doc(db, 'jobs', jobId), job);
+    await updateMonthlyCounter(now, monthlyCounter + 1);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getAllJobs = async (): Promise<Job[]> => {

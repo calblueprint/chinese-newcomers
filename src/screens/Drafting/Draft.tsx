@@ -62,22 +62,21 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     map.set('probationPeriod', probationPeriodIsEnabled);
     map.set('employeeBenefit', employeeBenefitIsEnabled);
     map.set('otherInfo', otherInfoIsEnabled);
-    const job: Job = {
-      id: 'id',
-      date: data.date,
-      companyName: data.companyName,
-      address: data.address,
-      contactPerson: data.contactPerson,
-      phone: data.phone,
-      jobPosition: data.jobPosition,
-      languageRequirement: data.languageRequirement,
-      workingHours: data.workingHours,
-      workingDays: data.workingDays,
-      salary: data.salary,
-      probationPeriod: data.probationPeriod,
-      employeeBenefit: data.employeeBenefit,
-      otherInfo: data.otherInfo,
-      visible: map
+    const job: Partial<Job> = {
+      date: data.date || '',
+      companyName: data.companyName || '',
+      address: data.address || '',
+      contactPerson: data.contactPerson || '',
+      phone: data.phone || '',
+      jobPosition: data.jobPosition || '',
+      languageRequirement: data.languageRequirement || '',
+      workingHours: data.workingHours || '',
+      workingDays: data.workingDays || '',
+      salary: data.salary || '',
+      probationPeriod: data.probationPeriod || '',
+      employeeBenefit: data.employeeBenefit || '',
+      otherInfo: data.otherInfo || '',
+      visible: Object.fromEntries(map)
     };
     console.log(job);
     await createJob(job);
