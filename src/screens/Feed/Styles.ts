@@ -6,9 +6,7 @@ export default StyleSheet.create({
     width: '100%',
     flex: 1,
     backgroundColor: '#fff',
-    alignContent: 'center',
-    flexDirection: 'column',
-    backgroundColor: 'green'
+    flexDirection: 'column'
   },
 
   feedHeader: {
@@ -28,5 +26,9 @@ export default StyleSheet.create({
     width: '20%',
     backgroundColor: 'red',
     borderRadius: 3
+  },
+  footer: {
+    width: '100%',
+    height: '8%'
   }
 });

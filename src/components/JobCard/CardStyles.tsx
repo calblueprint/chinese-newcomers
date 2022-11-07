@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   cardContainer: {
     marginTop: '3%',
-    width: '100%',
+    width: '85%',
     height: '15%',
     flexDirection: 'column',
     display: 'flex',
@@ -18,9 +18,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     height: '15%'
   },
-  // cardFooter: {
-  //   alignItems: 'flex-end'
-  // },
+
   jobName: {
     display: 'flex',
     justifyContent: 'center',

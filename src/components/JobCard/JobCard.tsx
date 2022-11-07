@@ -60,7 +60,6 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info }: 
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{description}</Text>
       </View>
-      <View style={styles.cardFooter}></View>
     </Pressable>
   );
 };

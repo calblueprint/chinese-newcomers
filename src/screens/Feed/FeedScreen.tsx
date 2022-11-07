@@ -31,7 +31,8 @@ const FeedScreen = ({ navigation }: any) => {
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          justifyContent: 'center'
+          alignItems: 'center',
+          width: '100%'
         }}>
         {list.map((job) => {
           return (
@@ -49,7 +50,9 @@ const FeedScreen = ({ navigation }: any) => {
           );
         })}
       </ScrollView>
-      <Button title="Back" onPress={() => navigation.navigate('Home')} />
+      <View style={styles.footer}>
+        <Button title="Back" onPress={() => navigation.navigate('Home')} />
+      </View>
     </View>
   );
 };
