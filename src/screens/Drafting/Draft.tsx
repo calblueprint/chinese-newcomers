@@ -50,8 +50,8 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   //   setModalVisible(!modalVisible);
   // };
 
-  type FormValues = () => {
-    date: String;
+  interface FormValues {
+    date: string;
     companyName: string;
     address: string;
     contactPerson: string;
@@ -64,7 +64,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     probationPeriod: string;
     employeeBenefit: string;
     otherInfo: string;
-  };
+  }
   const { ...methods } = useForm();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -91,8 +91,8 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       address: data.address,
       contactPerson: data.contactPerson,
       phone: data.phone,
-      jobPosition: data.jobPostion,
-      languageRequirement: data.languageReq,
+      jobPosition: data.jobPosition,
+      languageRequirement: data.languageRequirement,
       workingHours: data.workingHours,
       workingDays: data.workingDays,
       salary: data.salary,
@@ -101,6 +101,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       otherInfo: data.otherInfo,
       visible: map
     };
+    console.log(job);
     await createJob(job);
   };
 
@@ -174,7 +175,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             />
             <Text style={styles.formText}>Language Requirement*</Text>
           </View>
-          <FormInput name="languageReq" label="languageReq" />
+          <FormInput name="languageRequirement" label="languageRequirement" />
 
           <View style={styles.formTop}>
             <Switch
