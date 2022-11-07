@@ -25,7 +25,10 @@ export interface User {
 // }
 
 export interface Job {
-  date: Date;
+  // checked out from stephanie's branch to avoid conflicts later
+  // will work with her to finalize typing on her branch
+  id: string;
+  date: string;
   companyName: string;
   address: string;
   contactPerson: string;
@@ -34,8 +37,9 @@ export interface Job {
   languageRequirement: string;
   workingHours: string;
   workingDays: string;
-  salary: number;
+  salary: string;
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
+  visible: Map<string, boolean>;
 }
