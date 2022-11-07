@@ -30,26 +30,6 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] = React.useState(false);
   const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(false);
 
-  // const submit: any = async () => {
-  //   const job: Job = {
-  //     date: new Date(),
-  //     companyName: 'company',
-  //     address: '123',
-  //     contactPerson: 'contact',
-  //     phone: '123-456-7890',
-  //     jobPosition: 'pos',
-  //     languageRequirement: 'req',
-  //     workingHours: '1',
-  //     workingDays: '1',
-  //     salary: parseFloat(salary),
-  //     probationPeriod: '',
-  //     employeeBenefit: '',
-  //     otherInfo: ''
-  //   };
-  //   await createJob(job);
-  //   setModalVisible(!modalVisible);
-  // };
-
   interface FormValues {
     date: string;
     companyName: string;
@@ -68,8 +48,6 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const { ...methods } = useForm();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    // console.log(data.languageReq);
-    console.log('post');
     const map = new Map<string, boolean>();
     map.set('date', dateIsEnabled);
     map.set('companyName', companyNameIsEnabled);
@@ -78,7 +56,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     map.set('phone', phoneIsEnabled);
     map.set('jobPosition', jobPositionIsEnabled);
     map.set('languageRequirement', languageReqIsEnabled);
-    map.set('workingHours', workingDaysIsEnabled);
+    map.set('workingHours', workingHoursIsEnabled);
     map.set('workingDays', workingDaysIsEnabled);
     map.set('salary', salaryIsEnabled);
     map.set('probationPeriod', probationPeriodIsEnabled);
