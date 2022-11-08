@@ -43,14 +43,22 @@ const FeedScreen = ({ navigation }: any) => {
               hours={job.hours}
               employer={job.employer}
               contact_info={job.contact_info}
-              salary={0}
-              end_date={undefined}
-              job_creator={''}
+              phone={job.phone}
+              jobPosition={job.jobPosition}
+              languageRequirement={job.languageRequirement}
+              workingHours={job.workingHours}
+              workingDays={job.workingDays}
+              salary={job.salary}
+              probationPeriod={job.probationPeriod}
+              employeeBenefit={job.employeeBenefit}
+              otherInfo={job.otherInfo}
               start_date={''}></JobCard>
           );
         })}
       </ScrollView>
-      <Button title="Back" onPress={() => navigation.navigate('Home')} />
+      <View style={styles.footer}>
+        <Button title="Back" onPress={() => navigation.navigate('Home')} />
+      </View>
     </View>
   );
 };

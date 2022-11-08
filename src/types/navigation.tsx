@@ -8,4 +8,7 @@ export interface RootStackParamList {
   Feed: undefined;
   Draft: undefined;
   Signin: undefined;
+  AdminRegister: undefined;
+  PhoneNumberRegister: undefined;
+  VerificationCode: undefined;
 }

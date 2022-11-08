@@ -4,15 +4,25 @@ import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 interface JobCardProps {
-  title: string;
   description: string;
-  employer: string;
   hours: number;
-  salary: number;
+  employer: string;
   contact_info: string;
-  end_date: Date;
-  job_creator: string;
-  start_date: string;
+  id: string;
+  date: string;
+  companyName: string;
+  address: string;
+  contactPerson: string;
+  phone: string;
+  jobPosition: string;
+  languageRequirement: string;
+  workingHours: string;
+  workingDays: string;
+  salary: string;
+  probationPeriod: string;
+  employeeBenefit: string;
+  otherInfo: string;
+  hidden: Map<string, boolean>;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/naming-convention
