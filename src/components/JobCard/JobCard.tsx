@@ -54,7 +54,7 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info, hi
                 <Text style={styles.modalJobNameText}>{title}</Text>
               </View>
               <View style={styles.modalInfo}>
-              {hidden.get('employer') && <Text style={styles.modalText}>employer: {employer}</Text>}
+              <Text style={styles.modalText}>employer: {employer}</Text>
                <Text style={styles.modalText}>hours: {hours}</Text>
                 <Text style={styles.modalText}>salary: {salary}</Text>
                 <Text style={styles.modalText}>{description}</Text>
