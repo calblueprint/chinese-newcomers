@@ -50,9 +50,7 @@ const FeedScreen = ({ navigation }: any) => {
           );
         })}
       </ScrollView>
-      <View style={styles.footer}>
-        <Button title="Back" onPress={() => navigation.navigate('Home')} />
-      </View>
+      <Button title="Back" onPress={() => navigation.navigate('Home')} />
     </View>
   );
 };

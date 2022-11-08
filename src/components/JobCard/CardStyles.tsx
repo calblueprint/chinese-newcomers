@@ -18,7 +18,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     height: '15%'
   },
-
   jobName: {
     display: 'flex',
     justifyContent: 'center',
