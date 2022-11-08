@@ -26,7 +26,15 @@ interface JobCardProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/naming-convention
-const JobCard = ({ title, description, employer, hours, salary, contact_info, hidden }: JobCardProps) => {
+const JobCard = ({
+  title,
+  description,
+  employer,
+  hours,
+  salary,
+  contact_info,
+  visible
+}: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -54,11 +62,18 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info, hi
                 <Text style={styles.modalJobNameText}>{title}</Text>
               </View>
               <View style={styles.modalInfo}>
-              <Text style={styles.modalText}>employer: {employer}</Text>
-               <Text style={styles.modalText}>hours: {hours}</Text>
-                <Text style={styles.modalText}>salary: {salary}</Text>
-                <Text style={styles.modalText}>{description}</Text>
-                <Text style={styles.modalText}>contact: {contact_info}</Text>
+                {visible.get('employer') === true && (
+                  <Text style={styles.modalText}>employer: {employer}</Text>
+                )}
+                {visible.get('salary') === true && (
+                  <Text style={styles.modalText}>salary: {salary}</Text>
+                )}
+                {visible.get('description') === true && (
+                  <Text style={styles.modalText}>{description}</Text>
+                )}
+                {visible.get('contact') === true && (
+                  <Text style={styles.modalText}>contact: {contact_info}</Text>
+                )}
               </View>
             </View>
           </View>
