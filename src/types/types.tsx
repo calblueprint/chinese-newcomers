@@ -25,6 +25,10 @@ export interface User {
 // }
 
 export interface Job {
+  description: string;
+  hours: number;
+  employer: string;
+  contact_info: string;
   // checked out from stephanie's branch to avoid conflicts later
   // will work with her to finalize typing on her branch
   id: string;
