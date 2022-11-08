@@ -26,5 +26,9 @@ export default StyleSheet.create({
     width: '20%',
     backgroundColor: 'red',
     borderRadius: 3
+  },
+  footer: {
+    width: '100%',
+    height: '8%'
   }
 });
