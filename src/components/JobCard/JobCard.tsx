@@ -22,17 +22,28 @@ interface JobCardProps {
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
-  hidden: Map<string, boolean>;
+  visible: Object;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/naming-convention
 const JobCard = ({
-  title,
+  id,
   description,
+  date,
+  companyName,
+  address,
+  contactPerson,
+  phone,
+  jobPosition,
+  languageRequirement,
+  workingHours,
+  workingDays,
+  probationPeriod,
+  employeeBenefit,
+  otherInfo,
   employer,
   hours,
   salary,
-  contact_info,
   visible
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -58,21 +69,19 @@ const JobCard = ({
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
-                <Text style={styles.modalJobRefText}>{title}</Text>
-                <Text style={styles.modalJobNameText}>{title}</Text>
+                <Text style={styles.modalJobRefText}>{id}</Text>
+                <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {visible.get('employer') === true && (
+                {visible.employer === true && (
                   <Text style={styles.modalText}>employer: {employer}</Text>
                 )}
-                {visible.get('salary') === true && (
-                  <Text style={styles.modalText}>salary: {salary}</Text>
-                )}
-                {visible.get('description') === true && (
+                {visible.salary === true && <Text style={styles.modalText}>salary: {salary}</Text>}
+                {visible.description === true && (
                   <Text style={styles.modalText}>{description}</Text>
                 )}
-                {visible.get('contact') === true && (
-                  <Text style={styles.modalText}>contact: {contact_info}</Text>
+                {visible.contact === true && (
+                  <Text style={styles.modalText}>contact: {contactPerson}</Text>
                 )}
               </View>
             </View>
@@ -80,10 +89,10 @@ const JobCard = ({
         </Modal>
       </GestureRecognizer>
       <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>{title}</Text>
+        <Text style={styles.jobRefText}>{id}</Text>
       </View>
       <View style={styles.jobName}>
-        <Text style={styles.jobNameText}>{description}</Text>
+        <Text style={styles.jobNameText}>{jobPosition}</Text>
       </View>
     </Pressable>
   );
