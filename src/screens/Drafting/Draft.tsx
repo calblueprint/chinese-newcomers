@@ -77,7 +77,6 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       otherInfo: data.otherInfo || '',
       visible: Object.fromEntries(map)
     };
-    console.log(job);
     try {
       await createJob(job);
     } catch (e) {

@@ -30,22 +30,17 @@ export const parseJob = async (doc: DocumentSnapshot<DocumentData>) => {
 };
 
 export const getMonthlyCounter = async (): Promise<number> => {
-  try {
-    const docRef = doc(db, 'jobs', 'metadata');
-    const docSnap = await getDoc(docRef);
-    const data = docSnap.data();
-    console.log('data: ', data);
-    // reset monthly counter if new month and not yet reset
-    const now = new Date();
-    if (now.getMonth() !== data?.lastReset.toDate().getMonth()) {
-      updateMonthlyCounter(now, 0);
-      return 0;
-    }
-
-    return data?.monthlyCounter;
-  } catch (error) {
-    throw error;
+  const docRef = doc(db, 'jobs', 'metadata');
+  const docSnap = await getDoc(docRef);
+  const data = docSnap.data();
+  // reset monthly counter if new month and not yet reset
+  const now = new Date();
+  if (now.getMonth() !== data?.lastReset.toDate().getMonth()) {
+    await updateMonthlyCounter(now, 0);
+    return 0;
   }
+
+  return data?.monthlyCounter;
 };
 
 export const updateMonthlyCounter = async (
@@ -66,11 +61,8 @@ export const createJob = async (job: Partial<Job>): Promise<void> => {
   try {
     const monthlyCounter = await getMonthlyCounter();
     const now = new Date();
-
-    const jobId =
-      now.getFullYear().toString().slice(-2) +
-      now.getMonth().toString() +
-      (monthlyCounter + 1).toString();
+    const month = ('0' + now.getMonth().toString()).slice(-2);
+    const jobId = now.getFullYear().toString().slice(-2) + month + (monthlyCounter + 1).toString();
 
     await setDoc(doc(db, 'jobs', jobId), job);
     await updateMonthlyCounter(now, monthlyCounter + 1);
