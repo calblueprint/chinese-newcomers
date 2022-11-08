@@ -3,24 +3,30 @@ export default StyleSheet.create({
   cardContainer: {
     marginTop: '3%',
     width: '80%',
-    height: '30%',
+    height: '15%',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    backgroundColor: '#C2B4B4'
+    backgroundColor: 'white',
+    borderRadius: 7,
+    borderColor: '#C59675',
+    borderWidth: 2
   },
-  cardHeader: {
-    alignItems: 'center',
+  jobRef: {
+    marginTop: '5%',
+    marginLeft: '10%',
+    alignItems: 'left',
     justifyContent: 'center',
-    backgroundColor: 'grey',
     height: '15%'
   },
   cardFooter: {
     alignItems: 'flex-end'
   },
-  description: {
+  jobName: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'left',
+    marginLeft: '10%',
+    height: '30%'
   },
   moreInfoButton: {
     width: '30%',
@@ -38,13 +44,16 @@ export default StyleSheet.create({
     marginTop: 22
   },
   modalView: {
-    height: '40%',
-    width: '80%',
-    backgroundColor: '#C2B4B4',
+    marginTop: '70%',
+    height: '66%',
+    width: '100%',
+    backgroundColor: 'white',
     alignItems: 'flex-start',
     shadowColor: '#000',
+    borderRadius: 20,
+    borderColor: '#C59675',
+    borderWidth: 2,
     shadowOpacity: 0.25,
-    shadowRadius: 4,
     elevation: 5
   },
   button: {
@@ -54,40 +63,54 @@ export default StyleSheet.create({
   hideButton: {
     alignContent: 'center',
     backgroundColor: 'red',
-    height: '8%',
+    height: '5%',
     width: '30%'
   },
   textStyle: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     textAlign: 'center'
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'left',
-    color: 'white',
-    fontSize: 18
-  },
   modalHeader: {
+    marginTop: '5%',
     width: '100%',
     height: '12%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'grey'
+    alignItems: 'left',
+    marginLeft: '5%',
+    justifyContent: 'center'
+  },
+  modalText: {
+    marginTop: '5%',
+    marginBottom: 15,
+    textAlign: 'left',
+    color: 'black',
+    fontSize: 18,
+    marginLeft: '5%'
   },
   modalInfo: {
     width: '100%',
     height: '80%',
     display: 'flex',
-    flexDirection: 'column',
-    padding: '5%'
+    flexDirection: 'column'
   },
-  titleText: {
-    color: 'white',
+  jobRefText: {
+    color: 'black',
+    fontSize: 14
+  },
+  modalJobRefText: {
+    color: 'black',
     fontSize: 20
   },
-  descriptionText: {
-    color: 'white',
-    fontsize: 30
+
+  modalJobNameText: {
+    color: 'black',
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+
+  jobNameText: {
+    color: 'black',
+    fontsize: 30,
+    fontWeight: 'bold'
   }
 });
