@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
@@ -25,7 +26,6 @@ interface JobCardProps {
   visible: Object;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/naming-convention
 const JobCard = ({
   id,
   description,
@@ -43,8 +43,7 @@ const JobCard = ({
   otherInfo,
   employer,
   hours,
-  salary,
-  visible
+  salary
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -73,16 +72,21 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {visible.employer === true && (
-                  <Text style={styles.modalText}>employer: {employer}</Text>
-                )}
-                {visible.salary === true && <Text style={styles.modalText}>salary: {salary}</Text>}
-                {visible.description === true && (
-                  <Text style={styles.modalText}>{description}</Text>
-                )}
-                {visible.contact === true && (
-                  <Text style={styles.modalText}>contact: {contactPerson}</Text>
-                )}
+                <Text style={styles.modalText}>employer: {employer}</Text>
+                <Text style={styles.modalText}>salary: {salary}</Text>
+                <Text style={styles.modalText}>{description}</Text>
+                <Text style={styles.modalText}>contact: {contactPerson}</Text>
+                <Text style={styles.modalText}>contact: {date}</Text>
+                <Text style={styles.modalText}>contact: {companyName}</Text>
+                <Text style={styles.modalText}>contact: {address}</Text>
+                <Text style={styles.modalText}>contact: {phone}</Text>
+                <Text style={styles.modalText}>contact: {languageRequirement}</Text>
+                <Text style={styles.modalText}>contact: {workingHours}</Text>
+                <Text style={styles.modalText}>contact: {workingDays}</Text>
+                <Text style={styles.modalText}>contact: {probationPeriod}</Text>
+                <Text style={styles.modalText}>contact: {employeeBenefit}</Text>
+                <Text style={styles.modalText}>contact: {hours}</Text>
+                <Text style={styles.modalText}>contact: {otherInfo}</Text>
               </View>
               <Pressable style={styles.hideButton} onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.textStyle}>x</Text>
