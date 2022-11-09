@@ -107,7 +107,7 @@ export default StyleSheet.create({
 
   jobNameText: {
     color: 'black',
-    fontsize: 30,
+    fontSize: 30,
     fontWeight: 'bold'
   }
 });
