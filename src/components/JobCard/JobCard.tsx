@@ -60,6 +60,9 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info }: 
                 <Text style={styles.modalText}>{description}</Text>
                 <Text style={styles.modalText}>contact: {contact_info}</Text>
               </View>
+              <Pressable style={styles.hideButton} onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>x</Text>
+              </Pressable>
             </View>
           </View>
         </Modal>
