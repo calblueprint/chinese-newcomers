@@ -22,11 +22,30 @@ interface JobCardProps {
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
-  hidden: Map<string, boolean>;
+  visible: Object;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/naming-convention
-const JobCard = ({ title, description, employer, hours, salary, contact_info }: JobCardProps) => {
+const JobCard = ({
+  id,
+  description,
+  date,
+  companyName,
+  address,
+  contactPerson,
+  phone,
+  jobPosition,
+  languageRequirement,
+  workingHours,
+  workingDays,
+  probationPeriod,
+  employeeBenefit,
+  otherInfo,
+  employer,
+  hours,
+  salary,
+  visible
+}: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -50,15 +69,20 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info }: 
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
-                <Text style={styles.modalJobRefText}>{title}</Text>
-                <Text style={styles.modalJobNameText}>{title}</Text>
+                <Text style={styles.modalJobRefText}>{id}</Text>
+                <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                <Text style={styles.modalText}>employer: {employer}</Text>
-                <Text style={styles.modalText}>hours: {hours}</Text>
-                <Text style={styles.modalText}>salary: {salary}</Text>
-                <Text style={styles.modalText}>{description}</Text>
-                <Text style={styles.modalText}>contact: {contact_info}</Text>
+                {visible.employer === true && (
+                  <Text style={styles.modalText}>employer: {employer}</Text>
+                )}
+                {visible.salary === true && <Text style={styles.modalText}>salary: {salary}</Text>}
+                {visible.description === true && (
+                  <Text style={styles.modalText}>{description}</Text>
+                )}
+                {visible.contact === true && (
+                  <Text style={styles.modalText}>contact: {contactPerson}</Text>
+                )}
               </View>
               <Pressable style={styles.hideButton} onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.textStyle}>x</Text>
@@ -68,10 +92,10 @@ const JobCard = ({ title, description, employer, hours, salary, contact_info }: 
         </Modal>
       </GestureRecognizer>
       <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>{title}</Text>
+        <Text style={styles.jobRefText}>{id}</Text>
       </View>
       <View style={styles.jobName}>
-        <Text style={styles.jobNameText}>{description}</Text>
+        <Text style={styles.jobNameText}>{jobPosition}</Text>
       </View>
     </Pressable>
   );

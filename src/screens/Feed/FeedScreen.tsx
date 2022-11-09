@@ -38,11 +38,11 @@ const FeedScreen = ({ navigation }: any) => {
           return (
             // eslint-disable-next-line react/jsx-key
             <JobCard
-              title="hello"
-              description={job.description}
-              hours={job.hours}
-              employer={job.employer}
-              contact_info={job.contact_info}
+              id={job.id}
+              date={job.date}
+              companyName={job.companyName}
+              address={job.address}
+              contactPerson={job.contactPerson}
               phone={job.phone}
               jobPosition={job.jobPosition}
               languageRequirement={job.languageRequirement}
@@ -51,8 +51,7 @@ const FeedScreen = ({ navigation }: any) => {
               salary={job.salary}
               probationPeriod={job.probationPeriod}
               employeeBenefit={job.employeeBenefit}
-              otherInfo={job.otherInfo}
-              start_date={''}></JobCard>
+              otherInfo={job.otherInfo}></JobCard>
           );
         })}
       </ScrollView>

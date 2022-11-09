@@ -72,7 +72,7 @@ export default StyleSheet.create({
     marginTop: '5%',
     width: '100%',
     height: '12%',
-    alignItems: 'left',
+    alignItems: 'flex-start',
     marginLeft: '5%',
     justifyContent: 'center'
   },
@@ -107,7 +107,7 @@ export default StyleSheet.create({
 
   jobNameText: {
     color: 'black',
-    fontsize: 30,
+    fontSize: 30,
     fontWeight: 'bold'
   }
 });
