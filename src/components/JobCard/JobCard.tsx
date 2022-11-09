@@ -25,7 +25,6 @@ interface JobCardProps {
   visible: Object;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/naming-convention
 const JobCard = ({
   id,
   description,
