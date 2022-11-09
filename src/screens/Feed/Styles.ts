@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { withBadge } from 'react-native-elements';
 
 export default StyleSheet.create({
   container: {
@@ -26,5 +27,9 @@ export default StyleSheet.create({
     width: '20%',
     backgroundColor: 'red',
     borderRadius: 3
+  },
+  footer: {
+    height: '5%',
+    width: '100%'
   }
 });
