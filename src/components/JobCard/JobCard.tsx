@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
@@ -42,8 +43,7 @@ const JobCard = ({
   otherInfo,
   employer,
   hours,
-  salary,
-  visible
+  salary
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
