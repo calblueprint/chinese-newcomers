@@ -73,16 +73,21 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {visible.employer === true && (
-                  <Text style={styles.modalText}>employer: {employer}</Text>
-                )}
-                {visible.salary === true && <Text style={styles.modalText}>salary: {salary}</Text>}
-                {visible.description === true && (
-                  <Text style={styles.modalText}>{description}</Text>
-                )}
-                {visible.contact === true && (
-                  <Text style={styles.modalText}>contact: {contactPerson}</Text>
-                )}
+                <Text style={styles.modalText}>employer: {employer}</Text>
+                <Text style={styles.modalText}>salary: {salary}</Text>
+                <Text style={styles.modalText}>{description}</Text>
+                <Text style={styles.modalText}>contact: {contactPerson}</Text>
+                <Text style={styles.modalText}>contact: {date}</Text>
+                <Text style={styles.modalText}>contact: {companyName}</Text>
+                <Text style={styles.modalText}>contact: {address}</Text>
+                <Text style={styles.modalText}>contact: {phone}</Text>
+                <Text style={styles.modalText}>contact: {languageRequirement}</Text>
+                <Text style={styles.modalText}>contact: {workingHours}</Text>
+                <Text style={styles.modalText}>contact: {workingDays}</Text>
+                <Text style={styles.modalText}>contact: {probationPeriod}</Text>
+                <Text style={styles.modalText}>contact: {employeeBenefit}</Text>
+                <Text style={styles.modalText}>contact: {hours}</Text>
+                <Text style={styles.modalText}>contact: {otherInfo}</Text>
               </View>
             </View>
           </View>
