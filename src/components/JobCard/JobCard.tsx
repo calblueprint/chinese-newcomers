@@ -2,7 +2,7 @@
 import { Text, View, Pressable, Modal } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
-import GestureRecognizer from 'react-native-swipe-gestures';
+// import GestureRecognizer from 'react-native-swipe-gestures';
 
 interface JobCardProps {
   description: string;

@@ -1,4 +1,10 @@
-import { getAuth, PhoneAuthProvider, signInWithCredential, signOut } from 'firebase/auth';
+import {
+  getAuth,
+  PhoneAuthProvider,
+  signInWithCredential,
+  signOut,
+  createUserWithEmailAndPassword
+} from 'firebase/auth';
 
 const auth = getAuth();
 // TODO: CHANGE 'recaptcha-container' TO ID OF CAPTCHA CONTAINER
@@ -34,5 +40,30 @@ export const signOutUser = async () => {
     return result;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const registerWithEmailAndPassword = async (
+  email: string,
+  password: string
+): Promise<User> => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return userCredential;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+export const signInWithEmailAndPassword = async (
+  email: string,
+  password: string
+): Promise<void> => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (e) {
+    console.error(e.message);
+    throw e;
   }
 };
