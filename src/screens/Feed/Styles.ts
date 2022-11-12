@@ -29,12 +29,7 @@ export default StyleSheet.create({
     borderRadius: 3
   },
   footer: {
-<<<<<<< HEAD
-    width: '100%',
-    height: '8%'
-=======
     height: '5%',
     width: '100%'
->>>>>>> mia-jobcard-update
   }
 });
