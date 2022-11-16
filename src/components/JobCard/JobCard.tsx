@@ -4,10 +4,6 @@ import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 interface JobCardProps {
-  description: string;
-  hours: number;
-  employer: string;
-  contact_info: string;
   id: string;
   date: string;
   companyName: string;
@@ -22,12 +18,11 @@ interface JobCardProps {
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
-  visible: Object;
+  visible: object;
 }
 
 const JobCard = ({
   id,
-  description,
   date,
   companyName,
   address,
@@ -40,8 +35,6 @@ const JobCard = ({
   probationPeriod,
   employeeBenefit,
   otherInfo,
-  employer,
-  hours,
   salary,
   visible
 }: JobCardProps) => {
@@ -72,11 +65,7 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {employer != null && <Text style={styles.modalText}>employer: {employer}</Text>}
                 {salary != null && <Text style={styles.modalText}>salary: {salary}</Text>}
-                {description != null && (
-                  <Text style={styles.modalText}>description: {description}</Text>
-                )}
                 {contactPerson != null && (
                   <Text style={styles.modalText}>contact: {contactPerson}</Text>
                 )}
@@ -101,7 +90,6 @@ const JobCard = ({
                 {employeeBenefit != null && (
                   <Text style={styles.modalText}>employee benefits: {employeeBenefit}</Text>
                 )}
-                {hours != null && <Text style={styles.modalText}>hours: {hours}</Text>}
                 {otherInfo != null && <Text style={styles.modalText}>other info: {otherInfo}</Text>}
               </View>
             </View>
