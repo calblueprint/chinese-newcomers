@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
@@ -7,6 +7,7 @@ import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
+import Logo from '../../assets/cnsc-logo.png';
 
 const auth = getAuth();
 
@@ -25,7 +26,8 @@ const FeedScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.feedHeader}>
-        <View style={styles.redSquare}></View>
+        <Image source={Logo} style={{ width: 100, height: 100 }} />
+        {/* <View style={styles.redSquare}></View> */}
         <Text style={styles.feedTitle}>Welcome!</Text>
       </View>
       <ScrollView
