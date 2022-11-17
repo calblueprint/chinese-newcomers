@@ -51,7 +51,8 @@ const FeedScreen = ({ navigation }: any) => {
               salary={job.salary}
               probationPeriod={job.probationPeriod}
               employeeBenefit={job.employeeBenefit}
-              otherInfo={job.otherInfo}></JobCard>
+              otherInfo={job.otherInfo}
+              liked={job.liked}></JobCard>
           );
         })}
       </ScrollView>

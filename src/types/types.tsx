@@ -40,4 +40,5 @@ export interface Job {
   employeeBenefit: string;
   otherInfo: string;
   visible: object;
+  liked: boolean;
 }

@@ -23,7 +23,8 @@ interface JobCardProps {
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
-  visible: Object;
+  visible: object;
+  liked: boolean;
 }
 
 const JobCard = ({
@@ -41,9 +42,9 @@ const JobCard = ({
   probationPeriod,
   employeeBenefit,
   otherInfo,
-  employer,
-  hours,
-  salary
+  salary,
+  visible,
+  liked
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
