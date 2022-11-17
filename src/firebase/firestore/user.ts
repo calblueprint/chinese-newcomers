@@ -1,7 +1,6 @@
 import { db } from '../config';
-import 'firebase/firestore';
-import { User } from '../../types/types';
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { User } from '../../types/types';
 
 export const getUser = async (id: string): Promise<User | null> => {
   const docRef = doc(db, 'users', id);
@@ -41,9 +40,9 @@ const parseUser = async (doc: any) => {
   const user = {
     id: user_id,
     access: data.access,
-    createdJobs: data.createdJobs, //might need to map to job objects later
+    createdJobs: data.createdJobs, // might need to map to job objects later
     email: data.email,
-    likedJobs: data.likedJobs, //might need to map to job objects later
+    likedJobs: data.likedJobs, // might need to map to job objects later
     name: data.name,
     phoneNumber: data.phoneNumber,
     verified: data.verified,

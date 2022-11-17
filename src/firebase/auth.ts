@@ -3,7 +3,8 @@ import {
   PhoneAuthProvider,
   signInWithCredential,
   signOut,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from 'firebase/auth';
 import { getUser, addUser } from '../firebase/firestore/user';
 
@@ -78,7 +79,7 @@ export const registerWithEmailAndPassword = async (
   }
 };
 
-export const signInWithEmailAndPassword = async (
+export const adminSignInWithEmailAndPassword = async (
   email: string,
   password: string
 ): Promise<void> => {

@@ -6,6 +6,7 @@ import WelcomeScreen from '../screens/Authentication/Welcome/Welcome';
 import SigninScreen from '../screens/Authentication/Signin/Signin';
 import PhoneNumberScreen from '../screens/Authentication/PhoneNumber/PhoneNumber';
 import VerificationCodeScreen from '../screens/Authentication/VerificationCode/VerificationCode';
+import AdminSigninScreen from '../screens/Authentication/AdminSignin/AdminSignin';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ export default function AuthStack() {
         <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="PhoneNumberRegister" component={PhoneNumberScreen} />
         <Stack.Screen name="VerificationCode" component={VerificationCodeScreen} />
+        <Stack.Screen name="AdminSignin" component={AdminSigninScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

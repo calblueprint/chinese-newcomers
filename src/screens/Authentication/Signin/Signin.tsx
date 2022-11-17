@@ -9,7 +9,18 @@ import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 const SigninScreen = ({ navigation }: any): ReactElement => {
   return (
     <View style={styles.container}>
-      <Text>Sign in</Text>
+      <Text>What are you signing in as? </Text>
+      <Text> Admin </Text>
+      <Button
+        title="Admin"
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate('AdminSignin')}
+      />
+      <Button
+        title="Not Admin"
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate('PhoneNumberRegister')}
+      />
     </View>
   );
 };
