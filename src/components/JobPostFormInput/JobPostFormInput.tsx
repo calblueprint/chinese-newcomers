@@ -1,8 +1,10 @@
 import * as React from 'react';
 
-import { TextInput, TextInputProps, View } from 'react-native';
+import { Text, TextInput, TextInputProps, View } from 'react-native';
 import { useController, UseControllerProps } from 'react-hook-form';
-import styles from './JobPostFormInputStyle';
+import styles2 from './JobPostFormInputStyle';
+import { Switch } from 'react-native-elements';
+import { styles } from '../../screens/Drafting/styles';
 
 interface FormInputProps extends TextInputProps, UseControllerProps {
   label: string;
@@ -12,16 +14,26 @@ interface FormInputProps extends TextInputProps, UseControllerProps {
 const ControlledInput = (props: FormInputProps) => {
   const { name, label, defaultValue, ...inputProps } = props;
 
-  const { field } = useController({ name, defaultValue });
+  const { field: actualField } = useController({ name, defaultValue });
+  const { field: fieldEnable } = useController({ name: name + 'IsEnabled', defaultValue: false });
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        onChangeText={field.onChange}
-        value={field.value}
-        {...inputProps}
-      />
+    <View>
+      <View style={styles.formTop}>
+        <Switch
+          onValueChange={() => fieldEnable.onChange(!fieldEnable.value)}
+          value={fieldEnable.value}
+        />
+        <Text style={styles.formText}>{label}</Text>
+      </View>
+      <View style={styles2.container}>
+        <TextInput
+          style={styles2.input}
+          onChangeText={actualField.onChange}
+          value={actualField.value}
+          {...inputProps}
+        />
+      </View>
     </View>
   );
 };
