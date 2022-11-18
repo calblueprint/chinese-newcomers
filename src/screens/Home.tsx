@@ -3,13 +3,18 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { signOutUser } from '../firebase/auth';
+import { UserContext } from '../context/context';
+import { User } from '../types/types';
 
 const HomeScreen = ({ navigation }: any): ReactElement => {
-  const { user } = useAuthentication();
-
+  // const { user } = useAuthentication();
+  const { state } = React.useContext(UserContext);
+  const user: User = state;
+  console.log(user);
   return (
     <View style={styles.container}>
       <Text>Welcome {user?.email}!</Text>
+      <Text>Welcome {user?.phoneNumber}</Text>
 
       <Button title="Sign Out" style={styles.button} onPress={signOutUser} />
       <Button title="Job Feed" style={styles.button} onPress={() => navigation.navigate('Feed')} />
