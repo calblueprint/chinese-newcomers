@@ -29,7 +29,7 @@ const AdminRegisterScreen = ({ navigation }: any) => {
       console.error(e.message);
     }
   };
-
+  // To Do: change form inputs to different component
   return (
     <View style={styles.logoContainer}>
       <Image source={logo} style={styles.logo} />

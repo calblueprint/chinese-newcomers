@@ -1,15 +1,17 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
+  container: {
+    width: '100%',
+    // height: '100%',
+    marginTop: 3
+  },
   input: {
-    borderColor: '#A1A1A1',
-    height: '5%',
-    width: '80%',
-    borderWidth: 0.5,
-    marginTop: '4%',
-    marginBottom: '4%',
-    alignItems: 'center'
+    borderWidth: 2,
+    borderRadius: 3,
+    borderColor: '#49260C',
+    width: '100%',
+    height: 40,
+    marginBottom: 20
   }
 });
-
-export default styles;
