@@ -1,18 +1,15 @@
 import { React, useState } from 'react';
 import { TextInput, Text, View, Image, Pressable } from 'react-native';
-// import { useAuthentication } from '../../utils/hooks/useAuthentication';
-import { getAuth } from 'firebase/auth';
-import { registerWithEmailAndPassword } from '../../../firebase/auth';
 import styles from './styles';
-// import FormInput from '../../../components/FormInput/FormInput';
-import FormInput from '../../../components/JobPostFormInput/JobPostFormInput';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import FormInput from '../../../components/JobPostFormInput/JobPostFormInput';
 
 const auth = getAuth();
 
 const logo = require('../../../assets/favicon.png');
 
-const AdminRegisterScreen = ({ navigation }: any) => {
+const AdminSigninScreen = ({ navigation }: any) => {
   interface FormValues {
     email: string;
     password: string;
@@ -23,21 +20,21 @@ const AdminRegisterScreen = ({ navigation }: any) => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      await registerWithEmailAndPassword(email, password);
-      console.log('user made');
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('signed in');
+      navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
       console.error(e.message);
+      throw e;
     }
   };
-  // To Do: change form inputs to different component
+
   return (
     <View style={styles.logoContainer}>
       <Image source={logo} style={styles.logo} />
       <FormProvider {...methods}>
         <View style={styles.container}>
-          <Text style={styles.signInText1}>
-            Great! Now enter your email and create a password.{' '}
-          </Text>
+          <Text style={styles.signInText1}>Sign in here. </Text>
           <Text style={styles.signInText2}>Email </Text>
           <FormInput
             name="email"
@@ -45,17 +42,16 @@ const AdminRegisterScreen = ({ navigation }: any) => {
             placeholder=" email@email.com"
             onChangeText={setEmail}
           />
-          <Text style={styles.signInText2}>Create Password </Text>
+          <Text style={styles.signInText2}>Password </Text>
           <FormInput
             name="password"
             label="password"
             placeholder=" password"
             onChangeText={setPassword}
           />
-          <Text style={styles.signInText2}>Repeat Password </Text>
-          <FormInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
+
           <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit)}>
-            <Text style={styles.signInText3}> Next </Text>
+            <Text style={styles.signInText3}> Log in </Text>
           </Pressable>
         </View>
       </FormProvider>
@@ -63,4 +59,4 @@ const AdminRegisterScreen = ({ navigation }: any) => {
   );
 };
 
-export default AdminRegisterScreen;
+export default AdminSigninScreen;
