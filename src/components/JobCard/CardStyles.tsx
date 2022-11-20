@@ -3,7 +3,7 @@ export default StyleSheet.create({
   cardContainer: {
     marginTop: '3%',
     width: '85%',
-    height: '15%',
+    height: 100,
     flexDirection: 'column',
     display: 'flex',
     justifyContent: 'space-evenly',
@@ -13,6 +13,7 @@ export default StyleSheet.create({
     borderWidth: 2
   },
   jobRef: {
+    marginBottom: '3%',
     marginLeft: '10%',
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -23,16 +24,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '10%',
-    height: '30%'
-  },
-  moreInfoButton: {
-    width: '30%',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '5%',
-    marginRight: '5%',
-    borderRadius: 10
+    height: '30%',
+    marginBottom: '8%'
   },
   centeredView: {
     flex: 1,
@@ -56,12 +49,6 @@ export default StyleSheet.create({
   button: {
     padding: 10,
     elevation: 2
-  },
-  hideButton: {
-    alignContent: 'center',
-    backgroundColor: 'red',
-    height: '5%',
-    width: '30%'
   },
   textStyle: {
     color: 'black',
@@ -101,13 +88,12 @@ export default StyleSheet.create({
 
   modalJobNameText: {
     color: 'black',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold'
   },
-
   jobNameText: {
     color: 'black',
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: 'bold'
   }
 });
