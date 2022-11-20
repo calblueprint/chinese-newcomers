@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, TextInput, Text, View, Image, Pressable } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 // import { getAuth, signOut } from 'firebase/auth';
@@ -15,6 +15,7 @@ import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth'
 import { firebaseApp } from '../../../firebase/config';
 import { getUser, addUser } from '../../../firebase/firestore/user';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import { AuthContext } from '../../../context/authContext';
 
 const logo = require('../../../assets/favicon.png');
 
@@ -28,6 +29,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
   const { user } = useAuthentication();
   const [verificationCode, setVerificationCode] = useState('');
   const { verificationId } = route.params;
+  const { signIn } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
