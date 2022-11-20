@@ -9,7 +9,6 @@ import SigninScreen from '../screens/Authentication/Signin';
 import FeedScreen from '../screens/Feed/FeedScreen';
 import { RootStackParamList } from '../types/navigation';
 import AdminRegisterScreen from '../screens/Authentication/AdminRegister/AdminRegister';
-
 const UserStack = (): ReactElement => {
   const Stack = createStackNavigator();
   return (
