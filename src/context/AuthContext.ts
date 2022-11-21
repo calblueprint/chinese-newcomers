@@ -9,6 +9,7 @@ import {
   signOut
 } from 'firebase/auth';
 import firebaseApp from '../firebase/firebaseApp';
+import { getUser, checkAndAddUser } from '../firebase/firestore/user';
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
@@ -83,6 +84,7 @@ export const getAuthContext = (dispatch: React.Dispatch<AuthContextAction>): Aut
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
+        await checkAndAddUser(user, 'admin');
         console.log('Email sign up successful', user.email);
         await AsyncStorage.setItem('uid', user.uid);
         dispatch({ type: 'SIGN_IN', token: user.uid });
@@ -96,6 +98,7 @@ export const getAuthContext = (dispatch: React.Dispatch<AuthContextAction>): Aut
     try {
       const credential = await PhoneAuthProvider.credential(verficationId, verficationCode);
       const result = await signInWithCredential(auth, credential);
+      await checkAndAddUser(result.user, 'regular_user');
       console.log('Phone authentication successful', result.user.phoneNumber);
       await AsyncStorage.setItem('uid', result.user.uid);
       dispatch({ type: 'SIGN_IN', token: result.user.uid });

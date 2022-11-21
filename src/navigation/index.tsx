@@ -12,7 +12,7 @@ import {
   AuthContextType,
   useAuthReducer,
   getAuthContext
-} from '../context/authContext';
+} from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
