@@ -1,9 +1,10 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import { TextInput, Text, View, Image, Pressable } from 'react-native';
 import styles from './styles';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import FormInput from '../../../components/JobPostFormInput/JobPostFormInput';
+import { AuthContext } from '../../../context/AuthContext';
 
 const auth = getAuth();
 
@@ -17,12 +18,13 @@ const AdminSigninScreen = ({ navigation }: any) => {
   const { ...methods } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { signInEmail } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInEmail(email, password);
       console.log('signed in');
-      navigation.navigate('Root', { screen: 'Home' });
+      // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
       console.error(e.message);
       throw e;
