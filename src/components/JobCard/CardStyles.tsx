@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   modalView: {
     marginTop: '70%',
-    height: '80%',
+    height: '100%',
     width: '100%',
     backgroundColor: 'white',
     alignItems: 'flex-start',
