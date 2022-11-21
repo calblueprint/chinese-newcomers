@@ -79,14 +79,13 @@ export const getAllJobs = async (): Promise<Job[]> => {
       promises.push(parseJob(job));
     });
     const allJobs = await Promise.all(promises);
-    return allJobs;
+    return allJobs.filter((obj) => obj.hasOwnProperty('jobPosition')); // filter out metadata and anything w/o required description
   } catch (e) {
     console.error(e);
     throw e;
   }
 };
 
-// export const updateJob = async (job_id: string): Promise<void> => {};
 export const deleteJob = async (job_id: string): Promise<void> => {
   try {
     await jobCardCollection.doc(job_id).delete();
