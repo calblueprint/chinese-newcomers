@@ -18,7 +18,7 @@ interface JobCardProps {
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
-  visible: object;
+  visible: Object;
   liked: boolean;
 }
 
@@ -67,7 +67,9 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {salary != null && <Text style={styles.modalText}>salary: {salary}</Text>}
+                {visible.salary && salary != null && (
+                  <Text style={styles.modalText}>salary: {salary} </Text>
+                )}
                 {contactPerson != null && (
                   <Text style={styles.modalText}>contact: {contactPerson}</Text>
                 )}
@@ -76,6 +78,7 @@ const JobCard = ({
                   <Text style={styles.modalText}>companyName: {companyName}</Text>
                 )}
                 {address != null && <Text style={styles.modalText}>address: {address}</Text>}
+
                 {phone != null && <Text style={styles.modalText}>phone: {phone}</Text>}
                 {languageRequirement != null && (
                   <Text style={styles.modalText}>language requirement: {languageRequirement}</Text>
