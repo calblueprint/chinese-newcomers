@@ -9,16 +9,9 @@ interface FormInputProps {
 }
 
 const FormInput: React.FunctionComponent<FormInputProps> = (props: FormInputProps) => {
-  const { placeholder, value, onChangeText } = props;
+  const { placeholder, onChangeText } = props;
 
-  return (
-    <TextInput
-      style={styles.input}
-      placeholder={placeholder}
-      value={value}
-      onChangeText={onChangeText}
-    />
-  );
+  return <TextInput style={styles.input} placeholder={placeholder} onChangeText={onChangeText} />;
 };
 
 export default FormInput;

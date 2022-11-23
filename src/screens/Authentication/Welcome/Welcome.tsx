@@ -1,11 +1,10 @@
 import React, { useRef } from 'react';
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from '../styles';
-import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/firebaseApp';
-import { getUser, addUser } from '../../../firebase/firestore/user';
+import StyledButton from '../../../components/StyledButton/StyledButton';
 // import { getAuth, signOut } from "firebase/auth";
 
 const logo = require('../../../assets/favicon.png');
@@ -22,16 +21,21 @@ const WelcomeScreen = ({ navigation }: any) => {
           Welcome to the Chinese Newcomers Service Center job portal!
         </Text>
         <Text style={styles.signInText2}>Let's get your account set up.</Text>
+        <StyledButton
+          text="sign up"
+          onPress={() => navigation.navigate('PhoneNumberRegister')}
+          buttonStyle={{}}
+          textStyle={{}}
+        />
 
-        <Pressable
-          style={styles.signInButton}
-          onPress={() => navigation.navigate('PhoneNumberRegister')}>
-          <Text style={styles.signInText3}> SIGN UP </Text>
-        </Pressable>
+        <Text> OR </Text>
 
-        <Pressable style={styles.signInButton} onPress={() => navigation.navigate('Signin')}>
-          <Text style={styles.signInText3}> SIGN IN </Text>
-        </Pressable>
+        <StyledButton
+          text="sign in"
+          onPress={() => navigation.navigate('Signin')}
+          buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
+          textStyle={{ color: '#CC433C' }}
+        />
 
         <FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}

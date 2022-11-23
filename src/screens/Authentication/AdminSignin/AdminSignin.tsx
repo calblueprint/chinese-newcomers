@@ -50,6 +50,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
             label="password"
             placeholder=" password"
             onChangeText={setPassword}
+            secureTextEntry={true}
           />
 
           <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit)}>

@@ -1,57 +1,70 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useRef } from 'react';
-import { StyleSheet, TextInput, Text, View, Image, Pressable } from 'react-native';
+import { Text, View, Image, Pressable } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
-import { getAuth, signOut } from 'firebase/auth';
 import styles from './styles';
 import FormInput from '../../../components/FormInput/FormInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
-import { getUser, addUser } from '../../../firebase/firestore/user';
+import StyledButton from '../../../components/StyledButton/StyledButton';
 import PhoneInput from 'react-native-phone-number-input';
 
 const logo = require('../../../assets/favicon.png');
 
 const PhoneNumberScreen = ({ navigation }: any) => {
+  const { ...methods } = useForm();
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
+      console.log(verificationId);
+      navigation.navigate('VerificationCode', { verificationId, phoneNumber });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    return console.log(errors);
+  };
+
   return (
     <View style={styles.logoContainer}>
       <Image source={logo} style={styles.logo} />
-      <View style={styles.verificationContainer}>
-        <Text style={styles.signInText1}>Enter your phone number: </Text>
-        <Text style={styles.signInText2}>
-          You'll receive a six-digit verification code to enter.{' '}
-        </Text>
-        {/* note: PhoneInput instead of TextInput ?  */}
-        {/* <PhoneInput
+      <FormProvider {...methods}>
+        <View style={styles.verificationContainer}>
+          <Text style={styles.signInText1}>Enter your phone number: </Text>
+          <Text style={styles.signInText2}>
+            You'll receive a six-digit verification code to enter.{' '}
+          </Text>
+          {/* note: PhoneInput instead of TextInput ?  */}
+          {/* <PhoneInput
           defaultCode="US"
           placeholder="Enter Phone Number"
           onChangeText={(text) => setPhoneNumber(text)}
         /> */}
-        <FormInput placeholder=" phone number" value={phoneNumber} onChangeText={setPhoneNumber} />
-        <Pressable
-          style={styles.nextButton}
-          onPress={async () => {
-            try {
-              const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
-              console.log(verificationId);
-              navigation.navigate('VerificationCode', { verificationId, phoneNumber });
-            } catch (error) {
-              console.log(error);
-            }
-          }}>
-          <Text style={styles.signInText3}> Next </Text>
-        </Pressable>
-        <FirebaseRecaptchaVerifierModal
-          ref={recaptchaVerifier}
-          firebaseConfig={firebaseApp.options}
-        />
-      </View>
+          <FormInput
+            placeholder=" phone number"
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+          />
+          <StyledButton
+            text="next"
+            onPress={methods.handleSubmit(onSubmit, onError)}
+            buttonStyle={{ width: '50%' }}
+            textStyle={{}}
+          />
+          <FirebaseRecaptchaVerifierModal
+            ref={recaptchaVerifier}
+            firebaseConfig={firebaseApp.options}
+          />
+        </View>
+      </FormProvider>
     </View>
   );
 };

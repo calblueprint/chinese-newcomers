@@ -1,25 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import { signOutUser } from '../../../firebase/auth';
 import styles from '../styles';
-import { useAuthentication } from '../../../utils/hooks/useAuthentication';
+import StyledButton from '../../../components/StyledButton/StyledButton';
 
 const SigninScreen = ({ navigation }: any): ReactElement => {
   return (
     <View style={styles.container}>
       <Text>What are you signing in as? </Text>
-      <Text> Admin </Text>
-      <Button
-        title="Admin"
-        buttonStyle={styles.button}
+      <StyledButton
+        text="admin"
         onPress={() => navigation.navigate('AdminSignin')}
+        buttonStyle={{}}
+        textStyle={{}}
       />
-      <Button
-        title="Not Admin"
-        buttonStyle={styles.button}
+      <StyledButton
+        text="job seeker"
         onPress={() => navigation.navigate('PhoneNumberRegister')}
+        buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
+        textStyle={{ color: '#CC433C' }}
       />
     </View>
   );
