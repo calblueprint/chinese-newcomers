@@ -3,7 +3,6 @@ import { Text, View, Pressable, Modal } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
-
 interface JobCardProps {
   id: string;
   date: string;
@@ -68,32 +67,32 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {salary != null && <Text style={styles.modalText}>salary: {salary}</Text>}
-                {contactPerson != null && (
+                {salary !== '' && <Text style={styles.modalText}>salary: {salary}</Text>}
+                {contactPerson !== '' && (
                   <Text style={styles.modalText}>contact: {contactPerson}</Text>
                 )}
-                {date != null && <Text style={styles.modalText}>date: {date}</Text>}
-                {companyName != null && (
+                {date !== '' && <Text style={styles.modalText}>date: {date}</Text>}
+                {companyName !== '' && (
                   <Text style={styles.modalText}>companyName: {companyName}</Text>
                 )}
-                {address != null && <Text style={styles.modalText}>address: {address}</Text>}
-                {phone != null && <Text style={styles.modalText}>phone: {phone}</Text>}
-                {languageRequirement != null && (
+                {address !== '' && <Text style={styles.modalText}>address: {address}</Text>}
+                {phone !== '' && <Text style={styles.modalText}>phone: {phone}</Text>}
+                {languageRequirement !== '' && (
                   <Text style={styles.modalText}>language requirement: {languageRequirement}</Text>
                 )}
-                {workingHours != null && (
+                {workingHours !== '' && (
                   <Text style={styles.modalText}>working hours: {workingHours}</Text>
                 )}
-                {workingDays != null && (
+                {workingDays !== '' && (
                   <Text style={styles.modalText}>working days: {workingDays}</Text>
                 )}
-                {probationPeriod != null && (
+                {probationPeriod !== '' && (
                   <Text style={styles.modalText}>probation period: {probationPeriod}</Text>
                 )}
-                {employeeBenefit != null && (
+                {employeeBenefit !== '' && (
                   <Text style={styles.modalText}>employee benefits: {employeeBenefit}</Text>
                 )}
-                {otherInfo != null && <Text style={styles.modalText}>other info: {otherInfo}</Text>}
+                {otherInfo !== '' && <Text style={styles.modalText}>other info: {otherInfo}</Text>}
               </View>
             </View>
           </View>

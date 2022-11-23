@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, TextInput, Text, View, Image, Pressable } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 // import { getAuth, signOut } from 'firebase/auth';
@@ -9,12 +9,14 @@ import {
   phoneGetConfirmation,
   confirmCode,
   logInOrRegisterWithPhoneNumber,
-  getAccess
+  getAccess,
+  signUpPhoneAdmin
 } from '../../../firebase/auth';
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import { getUser, addUser } from '../../../firebase/firestore/user';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import { AuthContext } from '../../../context/AuthContext';
 
 const logo = require('../../../assets/favicon.png');
 
@@ -23,23 +25,22 @@ const VerificationScreen = ({ route, navigation }: any) => {
     phoneNumber: string;
     VerificationCode: string;
   }
-  const auth = getAuth();
   const { ...methods } = useForm();
-  const { user } = useAuthentication();
   const [verificationCode, setVerificationCode] = useState('');
-  const { verificationId } = route.params;
+  const { verificationId, phoneNumber } = route.params;
+  const { signInPhone } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      const user = await confirmCode(verificationId, verificationCode);
-      const access = await getAccess(user.phoneNumber);
+      const access = await getAccess(phoneNumber);
       if (access === false) {
-        await logInOrRegisterWithPhoneNumber(user);
+        await signInPhone(verificationId, verificationCode);
       } else {
+        await signUpPhoneAdmin(verificationId, verificationCode);
         navigation.navigate('AdminRegister');
       }
     } catch (e) {
-      console.error(e.message);
+      console.error(e);
     }
   };
 

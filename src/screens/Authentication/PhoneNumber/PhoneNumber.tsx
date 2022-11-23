@@ -40,7 +40,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
             try {
               const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
               console.log(verificationId);
-              navigation.navigate('VerificationCode', { verificationId });
+              navigation.navigate('VerificationCode', { verificationId, phoneNumber });
             } catch (error) {
               console.log(error);
             }

@@ -48,7 +48,6 @@ const FeedScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <View style={styles.feedHeader}>
         <Image source={Logo} style={{ width: 100, height: 100 }} />
-        {/* <View style={styles.redSquare}></View> */}
         <Text style={styles.feedTitle}>Welcome!</Text>
       </View>
       <SearchBar lightTheme={true} onChangeText={updateSearch} value={search} />
