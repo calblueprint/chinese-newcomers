@@ -1,9 +1,9 @@
 import { React, useState, useContext } from 'react';
-import { TextInput, Text, View, Image, Pressable } from 'react-native';
+import { Text, View, Image, Pressable } from 'react-native';
 import styles from './styles';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import FormInput from '../../../components/JobPostFormInput/JobPostFormInput';
+import FormInput from '../../../components/EmailPasswordInput/EmailPasswordInput';
 import { AuthContext } from '../../../context/AuthContext';
 
 const auth = getAuth();
@@ -31,6 +31,10 @@ const AdminSigninScreen = ({ navigation }: any) => {
     }
   };
 
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    return console.log(errors);
+  };
+
   return (
     <View style={styles.logoContainer}>
       <Image source={logo} style={styles.logo} />
@@ -53,7 +57,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
             secureTextEntry={true}
           />
 
-          <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit)}>
+          <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit, onError)}>
             <Text style={styles.signInText3}> Log in </Text>
           </Pressable>
         </View>

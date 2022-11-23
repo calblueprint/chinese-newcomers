@@ -1,11 +1,10 @@
 import { React, useState, useContext } from 'react';
-import { TextInput, Text, View, Image, Pressable } from 'react-native';
+import { Text, View, Image, Pressable } from 'react-native';
 // import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { getAuth } from 'firebase/auth';
-import { registerWithEmailAndPassword } from '../../../firebase/auth';
 import styles from './styles';
 // import FormInput from '../../../components/FormInput/FormInput';
-import FormInput from '../../../components/JobPostFormInput/JobPostFormInput';
+import FormInput from '../../../components/EmailPasswordInput/EmailPasswordInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthContext';
 
@@ -30,7 +29,11 @@ const AdminRegisterScreen = ({ navigation }: any) => {
       console.error(e);
     }
   };
-  // To Do: change form inputs to different component
+
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    return console.log(errors);
+  };
+
   return (
     <View style={styles.logoContainer}>
       <Image source={logo} style={styles.logo} />
@@ -55,7 +58,7 @@ const AdminRegisterScreen = ({ navigation }: any) => {
           />
           <Text style={styles.signInText2}>Repeat Password </Text>
           <FormInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
-          <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit)}>
+          <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit, onError)}>
             <Text style={styles.signInText3}> Next </Text>
           </Pressable>
         </View>
