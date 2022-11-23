@@ -3,6 +3,8 @@ import { Text, View, Pressable, Modal } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import Empty_heart from '../../assets/empty-heart.png';
+
 interface JobCardProps {
   id: string;
   date: string;
@@ -100,6 +102,7 @@ const JobCard = ({
       </GestureRecognizer>
       <View style={styles.jobRef}>
         <Text style={styles.jobRefText}>{id}</Text>
+        <Image source={Empty_heart} style={{ width: 100, height: 100 }} />
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{jobPosition}</Text>
