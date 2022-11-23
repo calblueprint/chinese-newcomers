@@ -3,6 +3,8 @@ import { Text, View, Pressable, Modal } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { objectToMap, mapToObject } from '../../firebase/helpers';
+
 interface JobCardProps {
   id: string;
   date: string;
@@ -41,6 +43,8 @@ const JobCard = ({
   liked
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const visible2 = objectToMap(visible);
+  const test = visible2.get();
 
   return (
     <Pressable
@@ -67,35 +71,43 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {visible.salary && salary != null && (
+                {visible2.get('salary') === true && salary != null && (
                   <Text style={styles.modalText}>salary: {salary} </Text>
                 )}
-                {contactPerson != null && (
+                {visible2.get('contactPerson') === true && contactPerson != null && (
                   <Text style={styles.modalText}>contact: {contactPerson}</Text>
                 )}
-                {date != null && <Text style={styles.modalText}>date: {date}</Text>}
-                {companyName != null && (
+                {visible2.get('date') === true && date != null && (
+                  <Text style={styles.modalText}>date: {date}</Text>
+                )}
+                {visible2.get('companyName') === true && companyName != null && (
                   <Text style={styles.modalText}>companyName: {companyName}</Text>
                 )}
-                {address != null && <Text style={styles.modalText}>address: {address}</Text>}
+                {visible2.get('address') === true && address != null && (
+                  <Text style={styles.modalText}>address: {address}</Text>
+                )}
 
-                {phone != null && <Text style={styles.modalText}>phone: {phone}</Text>}
-                {languageRequirement != null && (
+                {visible2.get('phone') === true && phone != null && (
+                  <Text style={styles.modalText}>phone: {phone}</Text>
+                )}
+                {visible2.get('languageRequirement') === true && languageRequirement != null && (
                   <Text style={styles.modalText}>language requirement: {languageRequirement}</Text>
                 )}
-                {workingHours != null && (
+                {visible2.get('workingHours') === true && workingHours != null && (
                   <Text style={styles.modalText}>working hours: {workingHours}</Text>
                 )}
-                {workingDays != null && (
+                {visible2.get('workingDays') === true && workingDays != null && (
                   <Text style={styles.modalText}>working days: {workingDays}</Text>
                 )}
-                {probationPeriod != null && (
+                {visible2.get('probationPeriod') === true && probationPeriod != null && (
                   <Text style={styles.modalText}>probation period: {probationPeriod}</Text>
                 )}
-                {employeeBenefit != null && (
+                {visible2.get('employeeBenefit') === true && employeeBenefit != null && (
                   <Text style={styles.modalText}>employee benefits: {employeeBenefit}</Text>
                 )}
-                {otherInfo != null && <Text style={styles.modalText}>other info: {otherInfo}</Text>}
+                {visible2.get('otherInfo') === true && otherInfo != null && (
+                  <Text style={styles.modalText}>other info: {otherInfo}</Text>
+                )}
               </View>
             </View>
           </View>

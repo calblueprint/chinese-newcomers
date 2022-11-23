@@ -42,20 +42,20 @@ export interface Job {
   visible: Object;
   liked: boolean;
 }
-export interface visible {
-  id: boolean;
-  date: boolean;
-  companyName: boolean;
-  address: boolean;
-  contactPerson: boolean;
-  phone: boolean;
-  jobPosition: boolean;
-  languageRequirement: boolean;
-  workingHours: boolean;
-  workingDays: boolean;
-  salary: boolean;
-  probationPeriod: boolean;
-  employeeBenefit: boolean;
-  otherInfo: boolean;
-  liked: boolean;
-}
+// export interface visible {
+//   id: boolean;
+//   date: boolean;
+//   companyName: boolean;
+//   address: boolean;
+//   contactPerson: boolean;
+//   phone: boolean;
+//   jobPosition: boolean;
+//   languageRequirement: boolean;
+//   workingHours: boolean;
+//   workingDays: boolean;
+//   salary: boolean;
+//   probationPeriod: boolean;
+//   employeeBenefit: boolean;
+//   otherInfo: boolean;
+//   liked: boolean;
+// }
