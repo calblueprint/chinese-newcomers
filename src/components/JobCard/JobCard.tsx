@@ -8,6 +8,8 @@ import filled_heart from '../../assets/filled-heart.png';
 import { objectToMap } from '../../firebase/helpers';
 import { updateJob } from '../../firebase/firestore/job';
 
+import Empty_heart from '../../assets/empty-heart.png';
+
 interface JobCardProps {
   id: string;
   date: string;
@@ -130,6 +132,7 @@ const JobCard = ({
       </GestureRecognizer>
       <View style={styles.jobRef}>
         <Text style={styles.jobRefText}>{id}</Text>
+        <Image source={Empty_heart} style={{ width: 100, height: 100 }} />
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{jobPosition}</Text>
