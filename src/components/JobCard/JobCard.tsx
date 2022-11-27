@@ -71,41 +71,41 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {visible2.get('salary') === true && salary != null && (
+                {visible2.get('salary') === true && salary != '' && (
                   <Text style={styles.modalText}>salary: {salary} </Text>
                 )}
-                {visible2.get('contactPerson') === true && contactPerson != null && (
+                {visible2.get('contactPerson') === true && contactPerson != '' && (
                   <Text style={styles.modalText}>contact: {contactPerson}</Text>
                 )}
-                {visible2.get('date') === true && date != null && (
+                {visible2.get('date') === true && date != '' && (
                   <Text style={styles.modalText}>date: {date}</Text>
                 )}
-                {visible2.get('companyName') === true && companyName != null && (
+                {visible2.get('companyName') === true && companyName != '' && (
                   <Text style={styles.modalText}>companyName: {companyName}</Text>
                 )}
-                {visible2.get('address') === true && address != null && (
+                {visible2.get('address') === true && address != '' && (
                   <Text style={styles.modalText}>address: {address}</Text>
                 )}
 
-                {visible2.get('phone') === true && phone != null && (
+                {visible2.get('phone') === true && phone !== '' && (
                   <Text style={styles.modalText}>phone: {phone}</Text>
                 )}
-                {visible2.get('languageRequirement') === true && languageRequirement != null && (
+                {visible2.get('languageRequirement') === true && languageRequirement !== '' && (
                   <Text style={styles.modalText}>language requirement: {languageRequirement}</Text>
                 )}
-                {visible2.get('workingHours') === true && workingHours != null && (
+                {visible2.get('workingHours') === true && workingHours !== '' && (
                   <Text style={styles.modalText}>working hours: {workingHours}</Text>
                 )}
-                {visible2.get('workingDays') === true && workingDays != null && (
+                {visible2.get('workingDays') === true && workingDays !== '' && (
                   <Text style={styles.modalText}>working days: {workingDays}</Text>
                 )}
-                {visible2.get('probationPeriod') === true && probationPeriod != null && (
+                {visible2.get('probationPeriod') === true && probationPeriod !== '' && (
                   <Text style={styles.modalText}>probation period: {probationPeriod}</Text>
                 )}
-                {visible2.get('employeeBenefit') === true && employeeBenefit != null && (
+                {visible2.get('employeeBenefit') === true && employeeBenefit !== '' && (
                   <Text style={styles.modalText}>employee benefits: {employeeBenefit}</Text>
                 )}
-                {visible2.get('otherInfo') === true && otherInfo != null && (
+                {visible2.get('otherInfo') === true && otherInfo !== '' && (
                   <Text style={styles.modalText}>other info: {otherInfo}</Text>
                 )}
 
