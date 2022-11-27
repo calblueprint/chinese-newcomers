@@ -66,7 +66,7 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   modalText: {
-    marginTop: '5%',
+    marginTop: '1%',
     marginBottom: 15,
     textAlign: 'left',
     color: 'black',

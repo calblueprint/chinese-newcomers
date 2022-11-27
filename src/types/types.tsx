@@ -11,19 +11,6 @@ export interface User {
   verified: boolean;
 }
 
-// export interface Job {
-//   contact_info: string;
-//   description: string;
-//   employer: string;
-//   // note: look into what type the date should be in
-//   end_date: Date;
-//   hours: number;
-//   // note: maybe set type to User
-//   job_creator: string;
-//   salary: number;
-//   start_date: string;
-// }
-
 export interface Job {
   id: string;
   date: string;
@@ -39,6 +26,6 @@ export interface Job {
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
-  visible: object;
+  visible: Object;
   liked: boolean;
 }
