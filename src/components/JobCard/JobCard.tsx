@@ -70,19 +70,19 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {visibleMap.get('salary') === true && salary != '' && (
+                {visibleMap.get('salary') === true && salary !== '' && (
                   <Text style={styles.modalText}>salary: {salary} </Text>
                 )}
-                {visibleMap.get('contactPerson') === true && contactPerson != '' && (
+                {visibleMap.get('contactPerson') === true && contactPerson !== '' && (
                   <Text style={styles.modalText}>contact: {contactPerson}</Text>
                 )}
-                {visibleMap.get('date') === true && date != '' && (
+                {visibleMap.get('date') === true && date !== '' && (
                   <Text style={styles.modalText}>date: {date}</Text>
                 )}
-                {visibleMap.get('companyName') === true && companyName != '' && (
+                {visibleMap.get('companyName') === true && companyName !== '' && (
                   <Text style={styles.modalText}>companyName: {companyName}</Text>
                 )}
-                {visibleMap.get('address') === true && address != '' && (
+                {visibleMap.get('address') === true && address !== '' && (
                   <Text style={styles.modalText}>address: {address}</Text>
                 )}
 
