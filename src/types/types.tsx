@@ -39,6 +39,6 @@ export interface Job {
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
-  visible: object;
+  visible: Object;
   liked: boolean;
 }
