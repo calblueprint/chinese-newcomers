@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal } from 'react-native';
+import { Text, View, Pressable, Modal, Image } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Empty_heart from '../../assets/empty-heart.png';
+import filled_heart from '../../assets/filled-heart.png';
 
 interface JobCardProps {
   id: string;
@@ -43,7 +44,7 @@ const JobCard = ({
   liked
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [likeValue, setLikeValue] = useState(visible);
   return (
     <Pressable
       style={styles.cardContainer}
@@ -66,7 +67,14 @@ const JobCard = ({
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalJobRefText}>{id}</Text>
-                <Text style={styles.modalJobNameText}>{jobPosition}</Text>
+                <View style={styles.nameAndHeart}>
+                  <Text style={styles.modalJobNameText}>{jobPosition}</Text>
+                  {liked ? (
+                    <Image source={filled_heart} style={styles.heart} />
+                  ) : (
+                    <Image source={Empty_heart} style={styles.heart} />
+                  )}
+                </View>
               </View>
               <View style={styles.modalInfo}>
                 {salary !== '' && <Text style={styles.modalText}>salary: {salary}</Text>}
@@ -102,10 +110,20 @@ const JobCard = ({
       </GestureRecognizer>
       <View style={styles.jobRef}>
         <Text style={styles.jobRefText}>{id}</Text>
-        <Image source={Empty_heart} style={{ width: 100, height: 100 }} />
       </View>
       <View style={styles.jobName}>
-        <Text style={styles.jobNameText}>{jobPosition}</Text>
+        {/* <Text style={styles.jobNameText}>{jobPosition}</Text>
+        {liked ? (
+          <Image source={filled_heart} style={styles.heart} />
+        ) : (
+          <Image source={Empty_heart} style={styles.heart} />
+        )} */}
+        <Pressable
+          onPress={() => {
+            setLikeValue((liked) => !liked);
+          }}>
+          <Image source={filled_heart} style={styles.heart} />
+        </Pressable>
       </View>
     </Pressable>
   );

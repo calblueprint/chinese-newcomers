@@ -14,18 +14,20 @@ export default StyleSheet.create({
   },
   jobRef: {
     marginBottom: '3%',
-    marginLeft: '10%',
+    marginLeft: '6%',
     alignItems: 'flex-start',
     justifyContent: 'center',
     height: '15%'
   },
   jobName: {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginLeft: '10%',
+    marginLeft: '6%',
     height: '30%',
-    marginBottom: '8%'
+    marginBottom: '10%',
+    marginRight: '10%'
   },
   centeredView: {
     flex: 1,
@@ -89,11 +91,24 @@ export default StyleSheet.create({
   modalJobNameText: {
     color: 'black',
     fontSize: 22,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   jobNameText: {
     color: 'black',
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: 'bold'
+  },
+  heart: {
+    width: 30,
+    height: 30,
+    marginLeft: '3%'
+  },
+  nameAndHeart: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   }
 });
