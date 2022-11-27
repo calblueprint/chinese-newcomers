@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import { TextInput, Text, View, Image, Pressable } from 'react-native';
 // import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { getAuth } from 'firebase/auth';
@@ -7,6 +7,7 @@ import styles from './styles';
 // import FormInput from '../../../components/FormInput/FormInput';
 import FormInput from '../../../components/JobPostFormInput/JobPostFormInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import { AuthContext } from '../../../context/AuthContext';
 
 const auth = getAuth();
 
@@ -17,16 +18,16 @@ const AdminRegisterScreen = ({ navigation }: any) => {
     email: string;
     password: string;
   }
+  const { signUpEmail } = useContext(AuthContext);
   const { ...methods } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      await registerWithEmailAndPassword(email, password);
-      console.log('user made');
+      await signUpEmail(email, password);
     } catch (e) {
-      console.error(e.message);
+      console.error(e);
     }
   };
   // To Do: change form inputs to different component

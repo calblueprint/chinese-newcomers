@@ -1,16 +1,19 @@
+import { FirebaseApp } from 'firebase/app';
 import {
   getAuth,
   PhoneAuthProvider,
   signInWithCredential,
   signOut,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  deleteUser
 } from 'firebase/auth';
 import { getUser, addUser } from '../firebase/firestore/user';
 import { db } from '../firebase/config';
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import firebaseApp from './firebaseApp';
 
-const auth = getAuth();
+const auth = getAuth(firebaseApp);
 // TODO: CHANGE 'recaptcha-container' TO ID OF CAPTCHA CONTAINER
 // window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
 
@@ -117,5 +120,24 @@ export const logInOrRegisterWithPhoneNumber = async (user: any): Promise<User> =
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const signUpPhoneAdmin = async (verficationId: any, code: any): Promise<void> => {
+  try {
+    const credential = await PhoneAuthProvider.credential(verficationId, code);
+    const result = await signInWithCredential(auth, credential);
+    console.log('Phone authentication successful', result.user.phoneNumber);
+    const user = auth.currentUser;
+    deleteUser(user)
+      .then(() => {
+        console.log('User successfully deleted');
+      })
+      .catch((error) => {
+        console.log('Error deleting user', error);
+      });
+  } catch (error) {
+    console.warn('Phone sign up error', error);
+    throw error;
   }
 };

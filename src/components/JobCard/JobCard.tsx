@@ -108,6 +108,7 @@ const JobCard = ({
                 {visible2.get('otherInfo') === true && otherInfo != null && (
                   <Text style={styles.modalText}>other info: {otherInfo}</Text>
                 )}
+
               </View>
             </View>
           </View>
