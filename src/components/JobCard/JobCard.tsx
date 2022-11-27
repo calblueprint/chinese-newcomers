@@ -3,7 +3,7 @@ import { Text, View, Pressable, Modal } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { objectToMap, mapToObject } from '../../firebase/helpers';
+import { objectToMap } from '../../firebase/helpers';
 
 interface JobCardProps {
   id: string;
@@ -43,8 +43,7 @@ const JobCard = ({
   liked
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const visible2 = objectToMap(visible);
-  const test = visible2.get();
+  const visibleMap = objectToMap(visible);
 
   return (
     <Pressable
@@ -71,44 +70,43 @@ const JobCard = ({
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
-                {visible2.get('salary') === true && salary != '' && (
+                {visibleMap.get('salary') === true && salary != '' && (
                   <Text style={styles.modalText}>salary: {salary} </Text>
                 )}
-                {visible2.get('contactPerson') === true && contactPerson != '' && (
+                {visibleMap.get('contactPerson') === true && contactPerson != '' && (
                   <Text style={styles.modalText}>contact: {contactPerson}</Text>
                 )}
-                {visible2.get('date') === true && date != '' && (
+                {visibleMap.get('date') === true && date != '' && (
                   <Text style={styles.modalText}>date: {date}</Text>
                 )}
-                {visible2.get('companyName') === true && companyName != '' && (
+                {visibleMap.get('companyName') === true && companyName != '' && (
                   <Text style={styles.modalText}>companyName: {companyName}</Text>
                 )}
-                {visible2.get('address') === true && address != '' && (
+                {visibleMap.get('address') === true && address != '' && (
                   <Text style={styles.modalText}>address: {address}</Text>
                 )}
 
-                {visible2.get('phone') === true && phone !== '' && (
+                {visibleMap.get('phone') === true && phone !== '' && (
                   <Text style={styles.modalText}>phone: {phone}</Text>
                 )}
-                {visible2.get('languageRequirement') === true && languageRequirement !== '' && (
+                {visibleMap.get('languageRequirement') === true && languageRequirement !== '' && (
                   <Text style={styles.modalText}>language requirement: {languageRequirement}</Text>
                 )}
-                {visible2.get('workingHours') === true && workingHours !== '' && (
+                {visibleMap.get('workingHours') === true && workingHours !== '' && (
                   <Text style={styles.modalText}>working hours: {workingHours}</Text>
                 )}
-                {visible2.get('workingDays') === true && workingDays !== '' && (
+                {visibleMap.get('workingDays') === true && workingDays !== '' && (
                   <Text style={styles.modalText}>working days: {workingDays}</Text>
                 )}
-                {visible2.get('probationPeriod') === true && probationPeriod !== '' && (
+                {visibleMap.get('probationPeriod') === true && probationPeriod !== '' && (
                   <Text style={styles.modalText}>probation period: {probationPeriod}</Text>
                 )}
-                {visible2.get('employeeBenefit') === true && employeeBenefit !== '' && (
+                {visibleMap.get('employeeBenefit') === true && employeeBenefit !== '' && (
                   <Text style={styles.modalText}>employee benefits: {employeeBenefit}</Text>
                 )}
-                {visible2.get('otherInfo') === true && otherInfo !== '' && (
+                {visibleMap.get('otherInfo') === true && otherInfo !== '' && (
                   <Text style={styles.modalText}>other info: {otherInfo}</Text>
                 )}
-
               </View>
             </View>
           </View>
