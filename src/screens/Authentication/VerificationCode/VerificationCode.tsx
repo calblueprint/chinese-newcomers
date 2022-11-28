@@ -39,16 +39,23 @@ const VerificationScreen = ({ route, navigation }: any) => {
   };
 
   return (
-    <View style={styles.logoContainer}>
-      <Image source={logo} style={styles.logo} />
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={logo} style={styles.logo} />
+      </View>
       <FormProvider {...methods}>
+        <View style={styles.textContainer}>
+          <Text style={styles.headingText}>Great! </Text>
+          <Text style={styles.subText}>Now, enter the six-digit verification code: </Text>
+        </View>
         <View style={styles.verificationContainer}>
-          <Text style={styles.signInText1}>Enter the six-digit code: </Text>
           <FormInput placeholder=" code" onChangeText={setVerificationCode} />
+        </View>
+        <View style={styles.buttonContainer}>
           <StyledButton
             text="NEXT"
             onPress={methods.handleSubmit(onSubmit, onError)}
-            buttonStyle={{ width: '50%' }}
+            buttonStyle={{ width: '45%', height: '100%' }}
             textStyle={{}}
           />
         </View>

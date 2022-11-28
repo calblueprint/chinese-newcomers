@@ -34,31 +34,39 @@ const PhoneNumberScreen = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.logoContainer}>
-      <Image source={logo} style={styles.logo} />
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={logo} style={styles.logo} />
+      </View>
       <FormProvider {...methods}>
-        <View style={styles.verificationContainer}>
-          <Text style={styles.signInText1}>Enter your phone number: </Text>
-          <Text style={styles.signInText2}>
-            You'll receive a six-digit verification code to enter.{' '}
+        <View style={styles.textContainer}>
+          <Text style={styles.headingText}>Enter your phone number: </Text>
+          <Text style={styles.subText}>
+            We'll send you a six-digit verification code to you via text.{' '}
           </Text>
+        </View>
+        <View>
           {/* note: PhoneInput instead of TextInput ?  */}
           {/* <PhoneInput
           defaultCode="US"
           placeholder="Enter Phone Number"
           onChangeText={(text) => setPhoneNumber(text)}
         /> */}
-          <FormInput
-            placeholder=" phone number"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-          />
-          <StyledButton
-            text="next"
-            onPress={methods.handleSubmit(onSubmit, onError)}
-            buttonStyle={{ width: '50%' }}
-            textStyle={{}}
-          />
+          <View style={styles.phonenumberContainer}>
+            <FormInput
+              placeholder=" phone number"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <StyledButton
+              text="next"
+              onPress={methods.handleSubmit(onSubmit, onError)}
+              buttonStyle={{ width: '45%', height: '100%' }}
+              textStyle={{ fontSize: 16 }}
+            />
+          </View>
           <FirebaseRecaptchaVerifierModal
             ref={recaptchaVerifier}
             firebaseConfig={firebaseApp.options}

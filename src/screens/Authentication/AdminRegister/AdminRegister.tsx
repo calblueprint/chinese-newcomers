@@ -7,6 +7,7 @@ import styles from './styles';
 import FormInput from '../../../components/EmailPasswordInput/EmailPasswordInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthContext';
+import StyledButton from '../../../components/StyledButton/StyledButton';
 
 const auth = getAuth();
 
@@ -35,32 +36,40 @@ const AdminRegisterScreen = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.logoContainer}>
-      <Image source={logo} style={styles.logo} />
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={logo} style={styles.logo} />
+      </View>
       <FormProvider {...methods}>
-        <View style={styles.container}>
-          <Text style={styles.signInText1}>
-            Great! Now enter your email and create a password.{' '}
-          </Text>
-          <Text style={styles.signInText2}>Email </Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.headingText}>Great! </Text>
+          <Text style={styles.subText}>Now, enter your email & create a password: </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.smallText}>Email address</Text>
           <FormInput
             name="email"
             label="email"
             placeholder=" email@email.com"
             onChangeText={setEmail}
           />
-          <Text style={styles.signInText2}>Create Password </Text>
+          <Text style={styles.smallText}>Create Password </Text>
           <FormInput
             name="password"
             label="password"
             placeholder=" password"
             onChangeText={setPassword}
           />
-          <Text style={styles.signInText2}>Repeat Password </Text>
+          <Text style={styles.smallText}>Verify Password </Text>
           <FormInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
-          <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit, onError)}>
-            <Text style={styles.signInText3}> Next </Text>
-          </Pressable>
+        </View>
+        <View style={styles.buttonContainer}>
+          <StyledButton
+            text="NEXT"
+            onPress={methods.handleSubmit(onSubmit, onError)}
+            buttonStyle={{ width: '45%', height: '100%' }}
+            textStyle={{}}
+          />
         </View>
       </FormProvider>
     </View>
