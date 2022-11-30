@@ -47,6 +47,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const { ...methods } = useForm();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    console.log('pressed');
     const map = new Map<string, boolean>();
     map.set('date', dateIsEnabled);
     map.set('companyName', companyNameIsEnabled);
@@ -78,6 +79,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       visible: Object.fromEntries(map)
     };
     try {
+      console.log('Posting');
       await createJob(job);
     } catch (e) {
       console.error(e);
@@ -100,7 +102,12 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch onValueChange={() => setDateIsEnabled(!dateIsEnabled)} value={dateIsEnabled} />
             <Text style={styles.formText}>Date*</Text>
           </View>
-          <FormInput name="date" label="date" placeholder=" 10/27/2022" />
+          <FormInput
+            name="date"
+            label="date"
+            placeholder=" 10/27/2022"
+            // rules={{ required: 'Date is required!' }}
+          />
 
           <View style={styles.formTop}>
             <Switch
@@ -145,7 +152,12 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             />
             <Text style={styles.formText}>Job Position*</Text>
           </View>
-          <FormInput name="jobPosition" label="jobPosition" placeholder=" Waiter, waitress" />
+          <FormInput
+            name="jobPosition"
+            label="jobPosition"
+            placeholder=" Waiter, waitress"
+            // rules={{ required: 'Job Position is required!' }}
+          />
 
           <View style={styles.formTop}>
             <Switch
@@ -158,6 +170,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             name="languageRequirement"
             label="languageRequirement"
             placeholder=" Cantonese, English"
+            // rules={{ required: 'Language Requirement is required!' }}
           />
 
           <View style={styles.formTop}>
