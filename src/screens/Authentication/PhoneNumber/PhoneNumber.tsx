@@ -9,7 +9,7 @@ import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import PhoneInput from 'react-native-phone-number-input';
+// import PhoneInput from 'react-native-phone-number-input';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
@@ -48,9 +48,11 @@ const PhoneNumberScreen = ({ navigation }: any) => {
         <View>
           {/* note: PhoneInput instead of TextInput ?  */}
           {/* <PhoneInput
+          placeholder=" +14151234567"
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
           defaultCode="US"
-          placeholder="Enter Phone Number"
-          onChangeText={(text) => setPhoneNumber(text)}
+        
         /> */}
           <View style={styles.phonenumberContainer}>
             <FormInput

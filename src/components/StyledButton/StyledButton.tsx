@@ -1,22 +1,27 @@
 import styles from './styles';
 import * as React from 'react';
-import { Text, Pressable } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 const StyledButton = ({
   text,
   buttonStyle,
   textStyle,
-  onPress
+  onPress,
+  activeOpacity
 }: {
   text: string;
   buttonStyle: any;
   textStyle: any;
   onPress: any;
+  activeOpacity: any;
 }) => {
   return (
-    <Pressable onPress={onPress} style={[styles.buttonContainer, buttonStyle]}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.buttonContainer, buttonStyle]}
+      activeOpacity={0.7}>
       <Text style={[styles.buttonText, textStyle]}>{text}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 export default StyledButton;
