@@ -6,10 +6,11 @@ import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-
 import FormInput from '../../../components/EmailPasswordInput/EmailPasswordInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const auth = getAuth();
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const AdminSigninScreen = ({ navigation }: any) => {
   interface FormValues {
@@ -45,6 +46,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
         <View style={styles.textContainer}>
           <Text style={styles.headingText}>Sign in here. </Text>
         </View>
+
         <View style={styles.inputContainer}>
           <Text style={styles.smallText}>Email address </Text>
           <FormInput

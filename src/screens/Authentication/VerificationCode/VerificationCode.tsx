@@ -8,7 +8,7 @@ import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const VerificationScreen = ({ route, navigation }: any) => {
   interface FormValues {
@@ -49,7 +49,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
           <Text style={styles.subText}>Now, enter the six-digit verification code: </Text>
         </View>
         <View style={styles.verificationContainer}>
-          <FormInput placeholder=" code" onChangeText={setVerificationCode} />
+          <FormInput placeholder=" 123456" onChangeText={setVerificationCode} />
         </View>
         <View style={styles.buttonContainer}>
           <StyledButton

@@ -11,7 +11,7 @@ import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import PhoneInput from 'react-native-phone-number-input';
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const PhoneNumberScreen = ({ navigation }: any) => {
   const { ...methods } = useForm();
@@ -54,7 +54,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
         /> */}
           <View style={styles.phonenumberContainer}>
             <FormInput
-              placeholder=" phone number"
+              placeholder=" +14151234567"
               value={phoneNumber}
               onChangeText={setPhoneNumber}
             />

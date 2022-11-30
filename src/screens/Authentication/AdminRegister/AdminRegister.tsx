@@ -11,7 +11,7 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 
 const auth = getAuth();
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const AdminRegisterScreen = ({ navigation }: any) => {
   interface FormValues {

@@ -3,7 +3,7 @@ import { Text, View, Image } from 'react-native';
 import styles from './styles';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const SigninScreen = ({ navigation }: any): ReactElement => {
   return (

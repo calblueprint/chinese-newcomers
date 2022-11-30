@@ -8,7 +8,7 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 
 // import { getAuth, signOut } from "firebase/auth";
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const WelcomeScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
