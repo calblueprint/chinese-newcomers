@@ -30,10 +30,10 @@ export default StyleSheet.create({
     marginTop: '11%'
   },
   phonenumberContainer: {
-    width: '80%',
+    width: '83%',
     height: '13%',
     marginTop: '5%',
-    alignSelf: 'center'
+    marginLeft: leftMargin
   },
   buttonContainer: {
     height: '14%',

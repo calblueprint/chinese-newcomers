@@ -4,12 +4,12 @@ import { TextInput, TextInputProps, View } from 'react-native';
 import { useController, UseControllerProps } from 'react-hook-form';
 import styles from './styles';
 
-interface FormInputProps extends TextInputProps, UseControllerProps {
+interface AuthInputProps extends TextInputProps, UseControllerProps {
   label: string;
   defaultValue?: string;
 }
 
-const ControlledInput = (props: FormInputProps) => {
+const ControlledInput = (props: AuthInputProps) => {
   const { name, label, defaultValue, ...inputProps } = props;
 
   const { field } = useController({ name, defaultValue });
@@ -26,7 +26,7 @@ const ControlledInput = (props: FormInputProps) => {
   );
 };
 
-const EmailPasswordInput = (props: FormInputProps) => {
+const AuthInput = (props: AuthInputProps) => {
   const { name } = props;
 
   if (name.length === 0) {
@@ -37,4 +37,4 @@ const EmailPasswordInput = (props: FormInputProps) => {
   return <ControlledInput {...props} />;
 };
 
-export default EmailPasswordInput;
+export default AuthInput;

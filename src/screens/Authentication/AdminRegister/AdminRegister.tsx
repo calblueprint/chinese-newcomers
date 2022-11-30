@@ -1,10 +1,8 @@
 import { React, useState, useContext } from 'react';
 import { Text, View, Image, Pressable } from 'react-native';
-// import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { getAuth } from 'firebase/auth';
 import styles from './styles';
-// import FormInput from '../../../components/FormInput/FormInput';
-import FormInput from '../../../components/EmailPasswordInput/EmailPasswordInput';
+import AuthInput from '../../../components/AuthInput/AuthInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
@@ -47,21 +45,21 @@ const AdminRegisterScreen = ({ navigation }: any) => {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.smallText}>Email address</Text>
-          <FormInput
+          <AuthInput
             name="email"
             label="email"
             placeholder=" email@email.com"
             onChangeText={setEmail}
           />
           <Text style={styles.smallText}>Create Password </Text>
-          <FormInput
+          <AuthInput
             name="password"
             label="password"
             placeholder=" password"
             onChangeText={setPassword}
           />
           <Text style={styles.smallText}>Verify Password </Text>
-          <FormInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
+          <AuthInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
         </View>
         <View style={styles.buttonContainer}>
           <StyledButton

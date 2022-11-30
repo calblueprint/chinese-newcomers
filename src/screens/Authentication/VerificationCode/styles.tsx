@@ -30,10 +30,10 @@ export default StyleSheet.create({
     marginTop: '11%'
   },
   verificationContainer: {
-    width: '80%',
+    width: '83%',
     height: '6%',
     marginTop: '6%',
-    alignSelf: 'center'
+    marginLeft: leftMargin
   },
   buttonContainer: {
     height: '5%',

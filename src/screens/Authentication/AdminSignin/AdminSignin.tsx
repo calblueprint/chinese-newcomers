@@ -3,7 +3,7 @@ import { Text, View, Image } from 'react-native';
 import styles from './styles';
 import { getAuth } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import FormInput from '../../../components/EmailPasswordInput/EmailPasswordInput';
+import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -49,14 +49,14 @@ const AdminSigninScreen = ({ navigation }: any) => {
 
         <View style={styles.inputContainer}>
           <Text style={styles.smallText}>Email address </Text>
-          <FormInput
+          <AuthInput
             name="email"
             label="email"
             placeholder=" email@email.com"
             onChangeText={setEmail}
           />
           <Text style={styles.smallText}>Password </Text>
-          <FormInput
+          <AuthInput
             name="password"
             label="password"
             placeholder=" password"

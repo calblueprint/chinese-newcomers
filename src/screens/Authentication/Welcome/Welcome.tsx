@@ -29,8 +29,8 @@ const WelcomeScreen = ({ navigation }: any) => {
         <StyledButton
           text="sign up"
           onPress={() => navigation.navigate('PhoneNumberRegister')}
-          buttonStyle={{}}
-          textStyle={{}}
+          // buttonStyle={{}}
+          // textStyle={{}}
         />
 
         <Text style={styles.orText}> OR </Text>
