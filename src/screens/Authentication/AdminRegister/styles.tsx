@@ -20,7 +20,7 @@ export default StyleSheet.create({
   logo: {
     resizeMode: 'contain',
     height: '100%',
-    width: '30%'
+    width: '22%'
   },
   textContainer: {
     width: '80%',

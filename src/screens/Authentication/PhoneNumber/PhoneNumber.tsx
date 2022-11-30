@@ -3,13 +3,13 @@ import React, { useState, useRef } from 'react';
 import { Text, View, Image, Pressable } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
-import FormInput from '../../../components/FormInput/FormInput';
+import NumberInput from '../../../components/NumberInput/NumberInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-// import PhoneInput from 'react-native-phone-number-input';
+import PhoneInput from 'react-native-phone-number-input';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
@@ -55,7 +55,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
         
         /> */}
           <View style={styles.phonenumberContainer}>
-            <FormInput
+            <NumberInput
               placeholder=" +14151234567"
               value={phoneNumber}
               onChangeText={setPhoneNumber}

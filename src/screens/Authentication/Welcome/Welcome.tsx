@@ -1,12 +1,10 @@
 import React, { useRef } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
-import styles from '../styles';
+import styles from './styles';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/firebaseApp';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-
-// import { getAuth, signOut } from "firebase/auth";
 
 const logo = require('../../../assets/cnsc-logo.png');
 
@@ -29,8 +27,9 @@ const WelcomeScreen = ({ navigation }: any) => {
         <StyledButton
           text="sign up"
           onPress={() => navigation.navigate('PhoneNumberRegister')}
-          // buttonStyle={{}}
-          // textStyle={{}}
+          buttonStyle={{}}
+          textStyle={{}}
+          activeOpacity={{}}
         />
 
         <Text style={styles.orText}> OR </Text>
@@ -40,6 +39,7 @@ const WelcomeScreen = ({ navigation }: any) => {
           onPress={() => navigation.navigate('Signin')}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}
+          activeOpacity={{}}
         />
       </View>
       <FirebaseRecaptchaVerifierModal

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
 // import { getAuth, signOut } from 'firebase/auth';
 import styles from './styles';
-import FormInput from '../../../components/FormInput/FormInput';
+import NumberInput from '../../../components/NumberInput/NumberInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
@@ -49,7 +49,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
           <Text style={styles.subText}>Now, enter the six-digit verification code: </Text>
         </View>
         <View style={styles.verificationContainer}>
-          <FormInput placeholder=" 123456" onChangeText={setVerificationCode} />
+          <NumberInput placeholder=" 123456" onChangeText={setVerificationCode} />
         </View>
         <View style={styles.buttonContainer}>
           <StyledButton
