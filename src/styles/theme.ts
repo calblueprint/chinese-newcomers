@@ -28,13 +28,40 @@ export const theme = {
     xl: 40
   },
   textVariants: {
-    header: {
-      fontFamily: 'Avenir',
-      fontSize: 36
+    h1: {
+      fontFamily: 'Quasimoda',
+      fontWeight: 600,
+      fontSize: 36,
+      lineHeight: 60,
+      color: '#49260C'
     },
-    body: {
-      fontFamily: 'Avenir',
-      fontSize: 16
+    h2: {
+      fontFamily: 'Quasimoda',
+      fontWeight: 600,
+      fontSize: 28,
+      lineHeight: 47,
+      color: '#49260C'
+    },
+    h3: {
+      fontFamily: 'Quasimoda',
+      fontWeight: 600,
+      fontSize: 24,
+      lineHeight: 40,
+      color: '#49260C'
+    },
+    body1: {
+      fontFamily: 'Quasimoda',
+      fontWeight: 500,
+      fontSize: 14,
+      lineHeight: 23,
+      color: '#49260C'
+    },
+    body2: {
+      fontFamily: 'Quasimoda',
+      fontWeight: 400,
+      fontSize: 12,
+      lineHeight: 20,
+      color: '#49260C'
     }
   },
   breakpoints: {
