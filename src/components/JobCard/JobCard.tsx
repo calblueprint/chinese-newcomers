@@ -137,7 +137,6 @@ const JobCard = ({
           onPress={() => {
             setLikeValue((liked) => !liked);
             updateFirebase();
-            setCard(this);
           }}>
           <Image source={liked ? filled_heart : Empty_heart} style={styles.heart} />
         </Pressable>
