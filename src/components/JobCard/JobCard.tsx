@@ -6,6 +6,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import Empty_heart from '../../assets/empty-heart.png';
 import filled_heart from '../../assets/filled-heart.png';
 import { objectToMap } from '../../firebase/helpers';
+import { updateJob } from '../../firebase/firestore/job';
 
 interface JobCardProps {
   id: string;
@@ -45,9 +46,12 @@ const JobCard = ({
   liked
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [likeValue, setLikeValue] = useState(visible);
+  const [likeValue, setLikeValue] = useState(liked);
   const visibleMap = objectToMap(visible);
 
+  async function updateFirebase() {
+    await updateJob(id, !likeValue);
+  }
   return (
     <Pressable
       style={styles.cardContainer}
@@ -72,11 +76,13 @@ const JobCard = ({
                 <Text style={styles.modalJobRefText}>{id}</Text>
                 <View style={styles.nameAndHeart}>
                   <Text style={styles.modalJobNameText}>{jobPosition}</Text>
-                  {liked ? (
-                    <Image source={filled_heart} style={styles.heart} />
-                  ) : (
-                    <Image source={Empty_heart} style={styles.heart} />
-                  )}
+                  <Pressable
+                    onPress={() => {
+                      setLikeValue((liked) => !liked);
+                      updateFirebase();
+                    }}>
+                    <Image source={liked ? filled_heart : Empty_heart} style={styles.heart} />
+                  </Pressable>
                 </View>
               </View>
               <View style={styles.modalInfo}>
@@ -126,17 +132,14 @@ const JobCard = ({
         <Text style={styles.jobRefText}>{id}</Text>
       </View>
       <View style={styles.jobName}>
-        {/* <Text style={styles.jobNameText}>{jobPosition}</Text>
-        {liked ? (
-          <Image source={filled_heart} style={styles.heart} />
-        ) : (
-          <Image source={Empty_heart} style={styles.heart} />
-        )} */}
+        <Text style={styles.jobNameText}>{jobPosition}</Text>
         <Pressable
           onPress={() => {
             setLikeValue((liked) => !liked);
+            updateFirebase();
+            setCard(this);
           }}>
-          <Image source={filled_heart} style={styles.heart} />
+          <Image source={liked ? filled_heart : Empty_heart} style={styles.heart} />
         </Pressable>
       </View>
     </Pressable>
