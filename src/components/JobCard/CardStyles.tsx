@@ -102,8 +102,8 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
   heart: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 4q0,
     marginLeft: '3%'
   },
   nameAndHeart: {
