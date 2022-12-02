@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal, Image } from 'react-native';
 import styles from './CardStyles';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { objectToMap } from '../../firebase/helpers';
 import Empty_heart from '../../assets/empty-heart.png';
