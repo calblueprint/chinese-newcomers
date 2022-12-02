@@ -15,7 +15,7 @@ export default StyleSheet.create({
     height: '13%',
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '15%'
   },
   logo: {
     resizeMode: 'contain',
@@ -24,22 +24,26 @@ export default StyleSheet.create({
   },
   textContainer: {
     width: '92%',
-    height: '18%',
+    height: '17%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '11%'
+    marginTop: '8%'
   },
   phonenumberContainer: {
     width: '83%',
     marginLeft: leftMargin,
-    marginTop: '3%'
+    marginTop: '4%'
   },
   buttonContainer: {
     height: '18%',
     width: '80%',
+    flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'flex-end',
-    marginTop: '5%'
+    justifyContent: 'space-between',
+    marginTop: '6%'
+    // color: 'black',
+    // borderWidth: 2
   },
   headingText: {
     color: '#49260C',

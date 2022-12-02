@@ -4,11 +4,12 @@ import { Text, View, Image } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import { phoneGetConfirmation, confirmCode, getActivationStatus } from '../../../firebase/auth';
+import { phoneGetConfirmation, getActivationStatus } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import PhoneInput from 'react-native-phone-number-input';
+import WelcomeScreen from '../Welcome/Welcome';
 const logo = require('../../../assets/cnsc-logo.png');
 
 const PhoneNumberScreen = ({ navigation }: any) => {
@@ -65,6 +66,17 @@ const PhoneNumberScreen = ({ navigation }: any) => {
             />
           </View>
           <View style={styles.buttonContainer}>
+            <StyledButton
+              text="back"
+              onPress={navigation.navigate(WelcomeScreen)}
+              buttonStyle={{
+                width: '45%',
+                height: '100%',
+                backgroundColor: '#FFFFFF',
+                borderColor: '#CC433C'
+              }}
+              textStyle={{ fontSize: 16, color: '#CC433C' }}
+            />
             <StyledButton
               text="next"
               onPress={methods.handleSubmit(onSubmit, onError)}

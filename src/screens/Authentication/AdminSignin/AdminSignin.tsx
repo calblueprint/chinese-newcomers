@@ -7,6 +7,7 @@ import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import SigninScreen from '../Signin/Signin';
 
 const auth = getAuth();
 
@@ -71,6 +72,17 @@ const AdminSigninScreen = ({ navigation }: any) => {
             onPress={methods.handleSubmit(onSubmit, onError)}
             buttonStyle={{ height: '100%', width: '100%' }}
             textStyle={{}}
+          />
+          <StyledButton
+            text="back"
+            onPress={navigation.navigate(SigninScreen)}
+            buttonStyle={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#FFFFFF',
+              borderColor: '#CC433C'
+            }}
+            textStyle={{ fontSize: 16, color: '#CC433C' }}
           />
         </View>
       </FormProvider>

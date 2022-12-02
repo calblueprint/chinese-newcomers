@@ -15,7 +15,7 @@ export default StyleSheet.create({
     height: '13%',
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '15%'
   },
   logo: {
     resizeMode: 'contain',
@@ -24,22 +24,24 @@ export default StyleSheet.create({
   },
   textContainer: {
     width: '60%',
-    height: '15%',
+    height: '17%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '11%'
+    marginTop: '8%'
   },
   verificationContainer: {
-    width: '83%',
+    width: '84%',
     height: '6%',
-    marginTop: '6%',
+    marginTop: '4%',
     marginLeft: leftMargin
   },
   buttonContainer: {
     height: '5%',
-    width: '80%',
+    width: '83%',
     alignSelf: 'center',
     alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: '8%'
   },
   headingText: {
