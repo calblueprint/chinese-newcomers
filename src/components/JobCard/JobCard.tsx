@@ -3,12 +3,10 @@ import { Text, View, Pressable, Modal, Image } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { objectToMap } from '../../firebase/helpers';
 import Empty_heart from '../../assets/empty-heart.png';
 import filled_heart from '../../assets/filled-heart.png';
-import { objectToMap } from '../../firebase/helpers';
 import { updateJob } from '../../firebase/firestore/job';
-
-import Empty_heart from '../../assets/empty-heart.png';
 
 interface JobCardProps {
   id: string;
@@ -49,11 +47,21 @@ const JobCard = ({
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [likeValue, setLikeValue] = useState(liked);
+  const [heart, setHeart] = useState(likeValue ? filled_heart : Empty_heart);
   const visibleMap = objectToMap(visible);
 
   async function updateFirebase() {
     await updateJob(id, !likeValue);
   }
+
+  const toggleLike = () => {
+    setLikeValue((likeValue) => !likeValue);
+  };
+
+  // useEffect(() => {
+  //   console.log(liked);
+  // }, [lik])
+
   return (
     <Pressable
       style={styles.cardContainer}
@@ -80,10 +88,15 @@ const JobCard = ({
                   <Text style={styles.modalJobNameText}>{jobPosition}</Text>
                   <Pressable
                     onPress={() => {
-                      setLikeValue((liked) => !liked);
-                      updateFirebase();
+                      // setLikeValue(!liked);
+                      toggleLike();
+                      console.log(liked);
+                      console.log(heart);
+                      // updateFirebase();
+                      setHeart(likeValue ? filled_heart : Empty_heart);
                     }}>
-                    <Image source={liked ? filled_heart : Empty_heart} style={styles.heart} />
+                    <Image source={heart} style={styles.heart}></Image>
+                    {/* <Image source={liked ? filled_heart : Empty_heart} style={styles.heart} /> */}
                   </Pressable>
                 </View>
               </View>
@@ -132,16 +145,18 @@ const JobCard = ({
       </GestureRecognizer>
       <View style={styles.jobRef}>
         <Text style={styles.jobRefText}>{id}</Text>
-        <Image source={Empty_heart} style={{ width: 100, height: 100 }} />
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{jobPosition}</Text>
         <Pressable
           onPress={() => {
-            setLikeValue((liked) => !liked);
-            updateFirebase();
+            setLikeValue(!liked);
+            console.log(liked);
+            // updateFirebase();
+            setHeart(liked ? filled_heart : Empty_heart);
           }}>
-          <Image source={liked ? filled_heart : Empty_heart} style={styles.heart} />
+          <Image source={heart} style={styles.heart}></Image>
+          {/* <Image source={liked ? filled_heart : Empty_heart} style={styles.heart} /> */}
         </Pressable>
       </View>
     </Pressable>

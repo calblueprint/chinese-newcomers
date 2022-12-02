@@ -35,10 +35,11 @@ const FeedScreen = ({ navigation }: any) => {
           alignItems: 'center',
           width: '100%'
         }}>
-        {list.map((job) => {
+        {list.map((job, index) => {
           return (
             // eslint-disable-next-line react/jsx-key
             <JobCard
+              key={index}
               id={job.id}
               date={job.date}
               companyName={job.companyName}
