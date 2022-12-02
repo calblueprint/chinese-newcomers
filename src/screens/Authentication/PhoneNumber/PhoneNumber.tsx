@@ -1,16 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useRef } from 'react';
-import { Text, View, Image, Pressable } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
-import NumberInput from '../../../components/NumberInput/NumberInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
+import { phoneGetConfirmation } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import PhoneInput from 'react-native-phone-number-input';
-
+import { PricingButton } from 'react-native-elements/dist/pricing/PricingCard';
 const logo = require('../../../assets/cnsc-logo.png');
 
 const PhoneNumberScreen = ({ navigation }: any) => {
@@ -18,9 +17,15 @@ const PhoneNumberScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [valid, setValid] = useState(false);
+  const phoneInput = useRef<PhoneInput>(null);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
+      const checkValid = phoneInput.current?.isValidNumber(phoneNumber);
+      console.log(valid);
+      setValid(checkValid ?? false);
+      // To Do: render error label
       const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
       console.log(verificationId);
       navigation.navigate('VerificationCode', { verificationId, phoneNumber });
@@ -46,24 +51,26 @@ const PhoneNumberScreen = ({ navigation }: any) => {
           </Text>
         </View>
         <View>
-          {/* note: PhoneInput instead of TextInput ?  */}
-          <PhoneInput
-            placeholder=" +14151234567"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            defaultCode="US"
-          />
           <View style={styles.phonenumberContainer}>
-            <NumberInput
-              placeholder=" +14151234567"
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
+            <PhoneInput
+              ref={phoneInput}
+              placeholder="4151234567"
+              defaultValue={phoneNumber}
+              onChangeFormattedText={(text) => {
+                setPhoneNumber(text);
+              }}
+              defaultCode="US"
             />
           </View>
           <View style={styles.buttonContainer}>
             <StyledButton
               text="next"
               onPress={methods.handleSubmit(onSubmit, onError)}
+              // onPressIn={() => {
+              //   const checkValid = phoneInput.current?.isValidNumber(phoneNumber);
+              //   console.log(valid);
+              //   setValid(checkValid ?? false);
+              // }}
               buttonStyle={{ width: '45%', height: '100%' }}
               textStyle={{ fontSize: 16 }}
             />

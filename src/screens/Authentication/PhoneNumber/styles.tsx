@@ -31,19 +31,17 @@ export default StyleSheet.create({
   },
   phonenumberContainer: {
     width: '83%',
-    height: '13%',
-    marginTop: '5%',
-    marginLeft: leftMargin
+    marginLeft: leftMargin,
+    marginTop: '3%'
   },
   buttonContainer: {
-    height: '14%',
+    height: '18%',
     width: '80%',
     alignSelf: 'center',
     alignItems: 'flex-end',
-    marginTop: '8%'
+    marginTop: '5%'
   },
   headingText: {
-    fontFamily: 'Quasimoda',
     color: '#49260C',
     fontSize: 31,
     fontWeight: '500',

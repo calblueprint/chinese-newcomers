@@ -37,7 +37,6 @@ export default StyleSheet.create({
     marginTop: '6%'
   },
   headingText: {
-    fontFamily: 'Quasimoda',
     color: '#49260C',
     fontSize: 31,
     fontWeight: '500',
