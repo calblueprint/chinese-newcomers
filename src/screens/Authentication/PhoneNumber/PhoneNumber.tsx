@@ -47,13 +47,12 @@ const PhoneNumberScreen = ({ navigation }: any) => {
         </View>
         <View>
           {/* note: PhoneInput instead of TextInput ?  */}
-          {/* <PhoneInput
-          placeholder=" +14151234567"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
-          defaultCode="US"
-        
-        /> */}
+          <PhoneInput
+            placeholder=" +14151234567"
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            defaultCode="US"
+          />
           <View style={styles.phonenumberContainer}>
             <NumberInput
               placeholder=" +14151234567"
