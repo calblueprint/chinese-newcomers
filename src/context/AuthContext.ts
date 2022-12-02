@@ -6,11 +6,11 @@ import {
   signInWithEmailAndPassword,
   PhoneAuthProvider,
   signInWithCredential,
-  signOut,
-  activatedAdmin
+  signOut
 } from 'firebase/auth';
 import firebaseApp from '../firebase/firebaseApp';
 import { getUser, checkAndAddUser } from '../firebase/firestore/user';
+import { activatedAdmin } from '../firebase/auth';
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
@@ -87,7 +87,7 @@ export const getAuthContext = (dispatch: React.Dispatch<AuthContextAction>): Aut
         const user = userCredential.user;
         await checkAndAddUser(user, 'admin', phoneNumber);
         console.log('Email sign up successful', user.email);
-        activatedAdmin(phoneNumber);
+        await activatedAdmin(phoneNumber);
         await AsyncStorage.setItem('uid', user.uid);
         dispatch({ type: 'SIGN_IN', token: user.uid });
       })

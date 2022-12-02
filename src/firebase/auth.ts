@@ -32,7 +32,7 @@ export const getAccess = async (id: string): Promise<User | null> => {
 export const activatedAdmin = async (phoneNumber: string): Promise<void> => {
   const docRef = doc(db, 'access', phoneNumber);
   const data = {
-    access: true
+    activated: true
   };
   await updateDoc(docRef, data);
 };
