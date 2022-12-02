@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
   },
   modal: {
     width: '80%',
-    height: '40%',
+    height: '50%',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -76,8 +76,8 @@ export const styles = StyleSheet.create({
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOpacity: 0.95,
+    shadowRadius: 200,
     elevation: 5
   },
   modalText: {

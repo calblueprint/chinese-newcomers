@@ -6,7 +6,8 @@ export default StyleSheet.create({
     color: '#FFFFFF',
     alignSelf: 'center',
     fontWeight: '600',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    fontFamily: 'DMSans_500Medium'
   },
   buttonContainer: {
     backgroundColor: '#CC433C',
