@@ -32,7 +32,6 @@ export const styles = StyleSheet.create({
     marginBottom: 5
   },
   formText: {
-    font: 'Quasimoda',
     fontSize: 18,
     marginLeft: 12
   },

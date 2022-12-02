@@ -1,43 +1,51 @@
 import React, { useRef } from 'react';
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
-import styles from '../styles';
-import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
+import styles from './styles';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/firebaseApp';
-import { getUser, addUser } from '../../../firebase/firestore/user';
-// import { getAuth, signOut } from "firebase/auth";
+import StyledButton from '../../../components/StyledButton/StyledButton';
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const WelcomeScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
 
   return (
-    <View style={styles.logoContainer}>
-      <Image source={logo} style={styles.logo} />
-      <View style={styles.container}>
-        <Text style={styles.signInText1}>
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={logo} style={styles.logo} />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.welcomeText}>
           Welcome to the Chinese Newcomers Service Center job portal!
         </Text>
-        <Text style={styles.signInText2}>Let's get your account set up.</Text>
+        <Text style={styles.subText}>Let's get your account set up.</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <StyledButton
+          text="sign up"
+          onPress={() => navigation.navigate('PhoneNumberRegister')}
+          buttonStyle={{}}
+          textStyle={{}}
+          activeOpacity={{}}
+        />
 
-        <Pressable
-          style={styles.signInButton}
-          onPress={() => navigation.navigate('PhoneNumberRegister')}>
-          <Text style={styles.signInText3}> SIGN UP </Text>
-        </Pressable>
+        <Text style={styles.orText}> OR </Text>
 
-        <Pressable style={styles.signInButton} onPress={() => navigation.navigate('Signin')}>
-          <Text style={styles.signInText3}> SIGN IN </Text>
-        </Pressable>
-
-        <FirebaseRecaptchaVerifierModal
-          ref={recaptchaVerifier}
-          firebaseConfig={firebaseApp.options}
+        <StyledButton
+          text="sign in"
+          onPress={() => navigation.navigate('Signin')}
+          buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
+          textStyle={{ color: '#CC433C' }}
+          activeOpacity={{}}
         />
       </View>
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebaseApp.options}
+      />
     </View>
   );
 };
