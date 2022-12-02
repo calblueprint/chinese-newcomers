@@ -9,7 +9,6 @@ import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import PhoneInput from 'react-native-phone-number-input';
-import { PricingButton } from 'react-native-elements/dist/pricing/PricingCard';
 const logo = require('../../../assets/cnsc-logo.png');
 
 const PhoneNumberScreen = ({ navigation }: any) => {
