@@ -43,8 +43,8 @@ export const theme = {
       color: '#49260C'
     },
     h3: {
-      fontFamily: 'Quasimoda',
-      fontWeight: 600,
+      // fontFamily: 'Quasimoda',
+      // fontWeight: 600,
       fontSize: 24,
       lineHeight: 40,
       color: '#49260C'
