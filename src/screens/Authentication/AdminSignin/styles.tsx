@@ -15,7 +15,7 @@ export default StyleSheet.create({
     height: '13%',
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '15%'
   },
   logo: {
     resizeMode: 'contain',
