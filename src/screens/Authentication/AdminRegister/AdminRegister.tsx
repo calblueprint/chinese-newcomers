@@ -11,7 +11,7 @@ const auth = getAuth();
 
 const logo = require('../../../assets/cnsc-logo.png');
 
-const AdminRegisterScreen = ({ navigation }: any) => {
+const AdminRegisterScreen = ({ route, navigation }: any) => {
   interface FormValues {
     email: string;
     password: string;
@@ -20,10 +20,11 @@ const AdminRegisterScreen = ({ navigation }: any) => {
   const { ...methods } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { phoneNumber } = route.params;
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      await signUpEmail(email, password);
+      await signUpEmail(email, password, phoneNumber);
     } catch (e) {
       console.error(e);
     }

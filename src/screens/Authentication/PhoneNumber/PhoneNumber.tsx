@@ -4,7 +4,7 @@ import { Text, View, Image } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import { phoneGetConfirmation } from '../../../firebase/auth';
+import { phoneGetConfirmation, confirmCode, getActivationStatus } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
@@ -25,9 +25,12 @@ const PhoneNumberScreen = ({ navigation }: any) => {
       console.log(valid);
       setValid(checkValid ?? false);
       // To Do: render error label
-      const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
-      console.log(verificationId);
-      navigation.navigate('VerificationCode', { verificationId, phoneNumber });
+      const activated = await getActivationStatus(phoneNumber);
+      if (!activated) {
+        const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
+        console.log(verificationId);
+        navigation.navigate('VerificationCode', { verificationId, phoneNumber });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -65,11 +68,6 @@ const PhoneNumberScreen = ({ navigation }: any) => {
             <StyledButton
               text="next"
               onPress={methods.handleSubmit(onSubmit, onError)}
-              // onPressIn={() => {
-              //   const checkValid = phoneInput.current?.isValidNumber(phoneNumber);
-              //   console.log(valid);
-              //   setValid(checkValid ?? false);
-              // }}
               buttonStyle={{ width: '45%', height: '100%' }}
               textStyle={{ fontSize: 16 }}
             />
