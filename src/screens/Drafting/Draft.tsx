@@ -108,126 +108,26 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
           </Text>
         </View>
         <FormProvider {...methods}>
-          {/* <View style={styles.formTop}>
-            <Switch onValueChange={() => setDateIsEnabled(!dateIsEnabled)} value={dateIsEnabled} />
-            <Text style={styles.formText}>Date*</Text>
-          </View> */}
           <FormInput name="date" label="date" placeholder=" 10/27/2022" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setCompanyNameIsEnabled(!companyNameIsEnabled)}
-              value={companyNameIsEnabled}
-            />
-            <Text style={styles.formText}>Company Name</Text>
-          </View> */}
           <FormInput name="companyName" label="companyName" placeholder=" Lucky Dim Sum" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
-              value={addressIsEnabled}
-            />
-            <Text style={styles.formText}>Address</Text>
-          </View> */}
           <FormInput name="address" label="address" placeholder=" 2400 Durant Ave., Berkeley, CA" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setContactPersonIsEnabled(!contactPersonIsEnabled)}
-              value={contactPersonIsEnabled}
-            />
-            <Text style={styles.formText}>Contact Person</Text>
-          </View> */}
           <FormInput name="contactPerson" label="contactPerson" placeholder=" Amelia Bedelia" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
-              value={phoneIsEnabled}
-            />
-            <Text style={styles.formText}>Phone</Text>
-          </View> */}
           <FormInput name="phone" label="phone" placeholder=" (510) xxx - xxxx" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setJobPositionIsEnabled(!jobPositionIsEnabled)}
-              value={jobPositionIsEnabled}
-            />
-            <Text style={styles.formText}>Job Position*</Text>
-          </View> */}
           <FormInput name="jobPosition" label="jobPosition" placeholder=" Waiter, waitress" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setLangaugeReqIsEnabled(!languageReqIsEnabled)}
-              value={languageReqIsEnabled}
-            />
-            <Text style={styles.formText}>Language Requirement*</Text>
-          </View> */}
           <FormInput
             name="languageRequirement"
             label="languageRequirement"
             placeholder=" Cantonese, English"
           />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setWorkingHoursIsEnabled(!workingHoursIsEnabled)}
-              value={workingHoursIsEnabled}
-            />
-            <Text style={styles.formText}>Working hours/day</Text>
-          </View> */}
           <FormInput name="workingHours" label="workingHours" placeholder=" 4 - 8 hrs/day" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setWorkingDaysIsEnabled(!workingDaysIsEnabled)}
-              value={workingDaysIsEnabled}
-            />
-            <Text style={styles.formText}>Working days/week</Text>
-          </View> */}
           <FormInput name="workingDays" label="workingDays" placeholder=" 3 - 5 days/week" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setSalaryIsEnabled(!salaryIsEnabled)}
-              value={salaryIsEnabled}
-            />
-            <Text style={styles.formText}>Salary</Text>
-          </View> */}
           <FormInput name="salary" label="salary" placeholder=" $36/hr" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setProbationPeriodIsEnabled(!probationPeriodIsEnabled)}
-              value={probationPeriodIsEnabled}
-            />
-            <Text style={styles.formText}>Probation Period (if any)</Text>
-          </View> */}
           <FormInput name="probationPeriod" label="probationPeriod" placeholder=" None" />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)}
-              value={employeeBenefitIsEnabled}
-            />
-            <Text style={styles.formText}>Employee Benefit (if any)</Text>
-          </View> */}
           <FormInput
             name="employeeBenefit"
             label="employeeBenefit"
             placeholder=" Insurance, paid leave, etc."
           />
-
-          {/* <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setOtherInfoIsEnabled(!otherInfoIsEnabled)}
-              value={otherInfoIsEnabled}
-            />
-            <Text style={styles.formText}>Other Information</Text>
-          </View> */}
           <FormInput name="otherInfo" label="otherInfo" placeholder=" Looking for XYZ, etc." />
         </FormProvider>
         <View style={styles.bottomButtons}>
