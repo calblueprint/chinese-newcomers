@@ -37,7 +37,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
         await signInPhone(verificationId, verificationCode);
       } else {
         await signUpPhoneAdmin(verificationId, verificationCode);
-        navigation.navigate('AdminRegister');
+        navigation.navigate('AdminRegister', { phoneNumber });
       }
     } catch (e) {
       console.error(e);

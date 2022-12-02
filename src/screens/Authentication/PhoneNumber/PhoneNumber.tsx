@@ -6,7 +6,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import styles from './styles';
 import FormInput from '../../../components/FormInput/FormInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
+import { phoneGetConfirmation, confirmCode, getActivationStatus } from '../../../firebase/auth';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
 import { getUser, addUser } from '../../../firebase/firestore/user';
@@ -38,9 +38,12 @@ const PhoneNumberScreen = ({ navigation }: any) => {
           style={styles.nextButton}
           onPress={async () => {
             try {
-              const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
-              console.log(verificationId);
-              navigation.navigate('VerificationCode', { verificationId, phoneNumber });
+              const activated = await getActivationStatus(phoneNumber);
+              if (!activated) {
+                const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
+                console.log(verificationId);
+                navigation.navigate('VerificationCode', { verificationId, phoneNumber });
+              }
             } catch (error) {
               console.log(error);
             }

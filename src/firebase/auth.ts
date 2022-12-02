@@ -29,6 +29,31 @@ export const getAccess = async (id: string): Promise<User | null> => {
   }
 };
 
+export const activatedAdmin = async (phoneNumber: string): Promise<void> => {
+  const docRef = doc(db, 'access', phoneNumber);
+  const data = {
+    access: true
+  };
+  await updateDoc(docRef, data);
+};
+
+export const getActivationStatus = async (phoneNumber: string): Promise<boolean> => {
+  const docRef = doc(db, 'access', phoneNumber);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    if (docSnap.data().activated) {
+      console.log('You are an activated admin user. Please sign in as an admin.');
+      return true;
+    } else {
+      console.log('Admin not activated.');
+      return false;
+    }
+  } else {
+    console.log('Not admin');
+    return false;
+  }
+};
+
 // Part 1 of signing in with phone. Returns verificationId
 export const phoneGetConfirmation = async (phoneNumber: string, appVerifier: any) => {
   try {
