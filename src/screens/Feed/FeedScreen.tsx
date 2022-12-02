@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { Text, View, ScrollView, Image } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
-import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
+import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import Logo from '../../assets/cnsc-logo.png';
 
@@ -20,7 +20,7 @@ const FeedScreen = ({ navigation }: any) => {
       setList(data);
     };
     void fetchJobs();
-  }, []);
+  }, [list]);
 
   const { user } = useAuthentication();
   return (
@@ -37,7 +37,6 @@ const FeedScreen = ({ navigation }: any) => {
         }}>
         {list.map((job, index) => {
           return (
-            // eslint-disable-next-line react/jsx-key
             <JobCard
               key={index}
               id={job.id}

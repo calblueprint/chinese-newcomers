@@ -86,17 +86,17 @@ export const getAllJobs = async (): Promise<Job[]> => {
   }
 };
 
-export const updateJob = async (job_id: string, new_liked: boolean): Promise<void> => {
-  const docRef = doc(db, 'jobs', job_id);
+export const updateJob = async (jobId: string, newLiked: boolean): Promise<void> => {
+  const docRef = doc(db, 'jobs', jobId);
   const data = {
-    liked: new_liked
+    liked: newLiked
   };
   await updateDoc(docRef, data);
 };
 
-export const deleteJob = async (job_id: string): Promise<void> => {
+export const deleteJob = async (jobId: string): Promise<void> => {
   try {
-    await jobCardCollection.doc(job_id).delete();
+    await jobCardCollection.doc(jobId).delete();
   } catch (e) {
     console.warn(e);
     throw e;
