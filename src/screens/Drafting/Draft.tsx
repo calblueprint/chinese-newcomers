@@ -97,7 +97,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
         <View style={styles.top}>
           <Text style={styles.refId}>#refid</Text>
           <Text style={styles.formTitle}>Temp</Text>
-          <Text style={{ fontSize: 12 }}>
+          <Text style={{ fontSize: 12, fontFamily: "DMSans_400Regular" }}>
             All fields are required. The toggle allows you to choose whether the information is
             displayed publicly, except when marked with *.
           </Text>
