@@ -47,7 +47,6 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const { ...methods } = useForm();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log('pressed');
     const map = new Map<string, boolean>();
     map.set('date', dateIsEnabled);
     map.set('companyName', companyNameIsEnabled);
@@ -79,7 +78,6 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       visible: Object.fromEntries(map)
     };
     try {
-      console.log('Posting');
       await createJob(job);
     } catch (e) {
       console.error(e);
@@ -106,7 +104,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             name="date"
             label="date"
             placeholder=" 10/27/2022"
-            // rules={{ required: 'Date is required!' }}
+            rules={{ required: 'Date is required!' }}
           />
 
           <View style={styles.formTop}>
@@ -156,7 +154,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             name="jobPosition"
             label="jobPosition"
             placeholder=" Waiter, waitress"
-            // rules={{ required: 'Job Position is required!' }}
+            rules={{ required: 'Job Position is required!' }}
           />
 
           <View style={styles.formTop}>
@@ -170,7 +168,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             name="languageRequirement"
             label="languageRequirement"
             placeholder=" Cantonese, English"
-            // rules={{ required: 'Language Requirement is required!' }}
+            rules={{ required: 'Language Requirement is required!' }}
           />
 
           <View style={styles.formTop}>

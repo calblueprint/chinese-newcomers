@@ -1,8 +1,10 @@
 {
-    "welcomePage": {
-        "welcome": "Welcome to the Chinese Newcomers Service Center job portal!",
-        "setUp": "Let's get your account set up.",
-        "signUp": "SIGN UP",
-        "signIn": "SIGN IN"
+    "translation": {
+        "welcomePage": {
+            "welcome": "Welcome to the Chinese Newcomers Service Center job portal!",
+            "setUp": "Let's get your account set up.",
+            "signUp": "SIGN UP",
+            "signIn": "SIGN IN"
+        }
     }
 }

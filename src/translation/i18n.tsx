@@ -5,15 +5,11 @@ import common_en from '../translation/english/common.json';
 import common_chinese from '../translation/chinese/common.json';
 
 i18n.use(initReactI18next).init({
-  lng: getLocales()[0].languageCode,
+  lng: 'chinese', // getLocales()[0].languageCode isn't working
   fallbackLng: 'en',
   resources: {
-    en: {
-      common: common_en
-    },
-    chinese: {
-      common: common_chinese
-    }
+    en: common_en,
+    chinese: common_chinese
   },
   interpolation: {
     escapeValue: false

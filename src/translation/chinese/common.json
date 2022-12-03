@@ -1,8 +1,10 @@
 {
-    "welcomePage": {
-        "welcome": "Chinese Welcome temp.",
-        "setUp": "Chinese account set up temp.",
-        "signUp": "Chinese SIGN UP temp",
-        "signIn": "Chinese SIGN IN temp"
+    "translation": {
+        "welcomePage": {
+            "welcome": "Welcome chinese temp!",
+            "setUp": "Let's get your account set up chinese.",
+            "signUp": "SIGN UP chinese",
+            "signIn": "SIGN IN chinese"
+        }
     }
 }
