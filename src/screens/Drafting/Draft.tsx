@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Text, View, Pressable, Switch } from 'react-native';
+import { Text, View, Pressable, Switch, Modal } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
@@ -9,6 +9,8 @@ import { createJob } from '../../firebase/firestore/job';
 import { ScrollView } from 'react-native-gesture-handler';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import StyledButton from '../../components/StyledButton/StyledButton';
+import { StatusBar } from 'expo-status-bar';
 
 const auth = getAuth();
 
@@ -28,6 +30,9 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const [probationPeriodIsEnabled, setProbationPeriodIsEnabled] = React.useState(false);
   const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] = React.useState(false);
   const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(false);
+
+  const [successModalVisibile, setSuccessModalVisible] = React.useState(false);
+  const [modalJobText, setModalJobText] = React.useState('');
 
   interface FormValues {
     date: string;
@@ -79,6 +84,8 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     };
     try {
       await createJob(job);
+      setModalJobText(data.jobPosition);
+      setSuccessModalVisible(true);
     } catch (e) {
       console.error(e);
     }
@@ -241,6 +248,38 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
         </View>
       </ScrollView>
       {/* <Button title="Back" style={styles.button} onPress={() => navigation.navigate('Home')} /> */}
+      <Modal visible={successModalVisibile} transparent={true} animationType={'slide'}>
+        <View style={styles.centeredView}>
+          <View style={styles.modal}>
+            <Text style={styles.modalText}>
+              Congratulations! You've submitted a job posting for {modalJobText}.
+            </Text>
+
+            <StyledButton
+              text={'POST ANOTHER JOB'}
+              textStyle={{ color: '#CC433C' }}
+              buttonStyle={{ backgroundColor: 'white', width: '100%' }}
+              onPress={() => {
+                navigation.goBack();
+                setSuccessModalVisible(false);
+                navigation.navigate('Draft');
+              }}
+            />
+            <StyledButton
+              text={'VIEW JOB FEED'}
+              buttonStyle={{ width: '100%' }}
+              onPress={() => {
+                navigation.goBack();
+                setSuccessModalVisible(false);
+                navigation.navigate('Feed');
+              }}
+            />
+            <Pressable onPress={() => setSuccessModalVisible(false)} style={styles.modalX}>
+              <Text>X</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

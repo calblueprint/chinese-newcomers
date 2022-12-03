@@ -1,24 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TextInput, Text, View, Image, Pressable } from 'react-native';
-import { useAuthentication } from '../../../utils/hooks/useAuthentication';
+import { Text, View, Image } from 'react-native';
 // import { getAuth, signOut } from 'firebase/auth';
 import styles from './styles';
-import FormInput from '../../../components/FormInput/FormInput';
+import NumberInput from '../../../components/NumberInput/NumberInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import {
-  phoneGetConfirmation,
-  confirmCode,
-  logInOrRegisterWithPhoneNumber,
-  getAccess,
-  signUpPhoneAdmin
-} from '../../../firebase/auth';
-import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
-import { firebaseApp } from '../../../firebase/config';
-import { getUser, addUser } from '../../../firebase/firestore/user';
-import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
+import StyledButton from '../../../components/StyledButton/StyledButton';
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const VerificationScreen = ({ route, navigation }: any) => {
   interface FormValues {
@@ -37,23 +27,37 @@ const VerificationScreen = ({ route, navigation }: any) => {
         await signInPhone(verificationId, verificationCode);
       } else {
         await signUpPhoneAdmin(verificationId, verificationCode);
-        navigation.navigate('AdminRegister');
+        navigation.navigate('AdminRegister', { phoneNumber });
       }
     } catch (e) {
       console.error(e);
     }
   };
 
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    return console.log(errors);
+  };
+
   return (
-    <View style={styles.logoContainer}>
-      <Image source={logo} style={styles.logo} />
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={logo} style={styles.logo} />
+      </View>
       <FormProvider {...methods}>
+        <View style={styles.textContainer}>
+          <Text style={styles.headingText}>Great! </Text>
+          <Text style={styles.subText}>Now, enter the six-digit verification code: </Text>
+        </View>
         <View style={styles.verificationContainer}>
-          <Text style={styles.signInText1}>Enter the six-digit code: </Text>
-          <FormInput placeholder=" code" onChangeText={setVerificationCode} />
-          <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit)}>
-            <Text style={styles.signInText3}> Next </Text>
-          </Pressable>
+          <NumberInput placeholder=" 123456" onChangeText={setVerificationCode} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <StyledButton
+            text="NEXT"
+            onPress={methods.handleSubmit(onSubmit, onError)}
+            buttonStyle={{ width: '45%', height: '100%' }}
+            textStyle={{}}
+          />
         </View>
       </FormProvider>
     </View>

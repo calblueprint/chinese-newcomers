@@ -1,16 +1,19 @@
 import React, { useRef } from 'react';
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
-import styles from '../styles';
-import { phoneGetConfirmation, confirmCode } from '../../../firebase/auth';
+import styles from './styles';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/firebaseApp';
+<<<<<<< HEAD
 import { getUser, addUser } from '../../../firebase/firestore/user';
 // import { getAuth, signOut } from "firebase/auth";
 import { useTranslation } from 'react-i18next';
 import '../../../translation/i18n';
+=======
+import StyledButton from '../../../components/StyledButton/StyledButton';
+>>>>>>> 50d5333d3b782abbc5ca7e85572779525a6a6539
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const WelcomeScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
@@ -23,6 +26,7 @@ const WelcomeScreen = ({ navigation }: any) => {
   };
 
   return (
+<<<<<<< HEAD
     <View style={styles.logoContainer}>
       <Image source={logo} style={styles.logo} />
       <View style={styles.container}>
@@ -43,12 +47,41 @@ const WelcomeScreen = ({ navigation }: any) => {
           <Text style={styles.signInText3}> {t('welcomePage.signIn')} </Text>
           {/* <Text style={styles.signInText3}> SIGN IN </Text> */}
         </Pressable>
+=======
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={logo} style={styles.logo} />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.welcomeText}>
+          Welcome to the Chinese Newcomers Service Center job portal!
+        </Text>
+        <Text style={styles.subText}>Let's get your account set up.</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <StyledButton
+          text="sign up"
+          onPress={() => navigation.navigate('PhoneNumberRegister')}
+          buttonStyle={{}}
+          textStyle={{}}
+          activeOpacity={{}}
+        />
 
-        <FirebaseRecaptchaVerifierModal
-          ref={recaptchaVerifier}
-          firebaseConfig={firebaseApp.options}
+        <Text style={styles.orText}> OR </Text>
+>>>>>>> 50d5333d3b782abbc5ca7e85572779525a6a6539
+
+        <StyledButton
+          text="sign in"
+          onPress={() => navigation.navigate('Signin')}
+          buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
+          textStyle={{ color: '#CC433C' }}
+          activeOpacity={{}}
         />
       </View>
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebaseApp.options}
+      />
     </View>
   );
 };

@@ -10,13 +10,14 @@ import {
 } from 'firebase/auth';
 import firebaseApp from '../firebase/firebaseApp';
 import { getUser, checkAndAddUser } from '../firebase/firestore/user';
+import { activatedAdmin } from '../firebase/auth';
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export interface AuthContextType {
   signInPhone: (verificationId: string, verficationCode: string) => Promise<void>;
   signInEmail: (email: string, password: string) => Promise<void>;
-  signUpEmail: (email: string, password: string) => Promise<void>;
+  signUpEmail: (email: string, password: string, phoneNumber: string) => Promise<void>;
   signOut: () => Promise<void>;
   authState?: AuthState;
 }
@@ -79,13 +80,14 @@ export const getAuthContext = (dispatch: React.Dispatch<AuthContextAction>): Aut
         console.warn('Email sign in error', error);
       });
   },
-  signUpEmail: async (email: string, password: string) => {
+  signUpEmail: async (email: string, password: string, phoneNumber: string) => {
     const auth = getAuth(firebaseApp);
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        await checkAndAddUser(user, 'admin');
+        await checkAndAddUser(user, 'admin', phoneNumber);
         console.log('Email sign up successful', user.email);
+        await activatedAdmin(phoneNumber);
         await AsyncStorage.setItem('uid', user.uid);
         dispatch({ type: 'SIGN_IN', token: user.uid });
       })
@@ -98,7 +100,7 @@ export const getAuthContext = (dispatch: React.Dispatch<AuthContextAction>): Aut
     try {
       const credential = await PhoneAuthProvider.credential(verficationId, verficationCode);
       const result = await signInWithCredential(auth, credential);
-      await checkAndAddUser(result.user, 'regular_user');
+      await checkAndAddUser(result.user, 'regular_user', null);
       console.log('Phone authentication successful', result.user.phoneNumber);
       await AsyncStorage.setItem('uid', result.user.uid);
       dispatch({ type: 'SIGN_IN', token: result.user.uid });

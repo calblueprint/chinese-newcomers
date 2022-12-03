@@ -1,7 +1,7 @@
 import * as Button from './buttons';
 
 const palette = {
-  red: '#E13C3C',
+  red: '#D82D1F',
 
   black: '#000000',
   white: '#FFFFFF',
@@ -9,7 +9,8 @@ const palette = {
   grayLight: '#C2B4B4',
   grayPrimary: '#717171',
 
-  green: '#0ECD9D'
+  grey: '#A1A1A1',
+  bronze: '#49260C'
 };
 
 export const theme = {
@@ -19,7 +20,6 @@ export const theme = {
     foreground: palette.black,
     primary: palette.red,
     cardHeaderBackground: palette.grayPrimary,
-    success: palette.green
   },
   spacing: {
     s: 8,
@@ -28,13 +28,36 @@ export const theme = {
     xl: 40
   },
   textVariants: {
-    header: {
-      fontFamily: 'Avenir',
-      fontSize: 36
+    h1: {
+      fontFamily: 'DMSans_700Bold',
+      fontSize: 36,
+      lineHeight: 60,
+      color: '#49260C'
     },
-    body: {
-      fontFamily: 'Avenir',
-      fontSize: 16
+    h2: {
+      fontFamily: 'DMSans_700Bold',
+      fontSize: 28,
+      lineHeight: 47,
+      color: '#49260C'
+    },
+    h3: {
+      fontFamily: 'DMSans_700Bold',
+      fontSize: 24,
+      lineHeight: 40,
+      color: '#49260C'
+    },
+    body1: {
+      fontFamily: 'DMSans_500Medium',
+      fontSize: 14,
+      lineHeight: 23,
+      color: '#49260C'
+    },
+    body2: {
+      fontFamily: 'DMSans_400Regular',
+      fontWeight: 400,
+      fontSize: 12,
+      lineHeight: 20,
+      color: '#49260C'
     }
   },
   breakpoints: {
