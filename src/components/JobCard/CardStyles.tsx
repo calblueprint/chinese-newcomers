@@ -61,7 +61,6 @@ export default StyleSheet.create({
     marginTop: '5%',
     width: '100%',
     height: '12%',
-    alignItems: 'flex-start',
     marginLeft: '5%',
     justifyContent: 'center'
   },
@@ -94,7 +93,8 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    marginRight: 13
+    // justifyContent: 'space-between'
   },
   jobNameText: {
     color: 'black',
@@ -107,12 +107,9 @@ export default StyleSheet.create({
     marginRight: 0
   },
   jobNameModal: {
-    // display: 'flex',
-    // flexDirection: 'row',
-    // justifyContent: 'flex-end'
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     width: '90%'
-  },
-  modalHeart: {
-    marginLeft: 5
   }
 });
