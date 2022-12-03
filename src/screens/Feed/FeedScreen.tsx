@@ -39,6 +39,7 @@ const FeedScreen = ({ navigation }: any) => {
           return (
             <JobCard
               key={index}
+              idx={index}
               id={job.id}
               date={job.date}
               companyName={job.companyName}
@@ -55,6 +56,7 @@ const FeedScreen = ({ navigation }: any) => {
               otherInfo={job.otherInfo}
               liked={job.liked}
               visible={job.visible}
+              jobList={list}
               setList={setList}></JobCard>
           );
         })}
