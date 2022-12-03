@@ -1,69 +1,54 @@
 import { StyleSheet } from 'react-native';
 
+const leftMargin = '9%';
+
 export default StyleSheet.create({
   container: {
+    width: '100%',
+    display: 'flex',
     flex: 1,
-    backgroundColor: '#ff',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
-  verificationContainer: {
-    flex: 1,
-    backgroundColor: '#ff',
-    alignItems: 'flex-start',
-    marginTop: '30%'
+    backgroundColor: '#fff',
+    flexDirection: 'column'
   },
   logoContainer: {
-    height: '100%',
-    marginLeft: '10%',
-    marginTop: '10%'
+    width: '100%',
+    height: '13%',
+    justifyContent: 'flex-start',
+    marginLeft: leftMargin,
+    marginTop: '8%'
   },
   logo: {
     resizeMode: 'contain',
-    height: '17%',
-    width: '17%'
+    height: '100%',
+    width: '30%'
   },
-  signInButton: {
-    backgroundColor: '#E13C3C',
-    width: '80%',
-    height: '6.5%',
-    borderRadius: 5,
+  textContainer: {
+    width: '75%',
+    height: '25%',
+    justifyContent: 'space-between',
+    marginLeft: leftMargin,
+    marginTop: '35%'
+  },
+  buttonContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    justifyContent: 'center'
+    marginTop: '18%'
   },
-  signInText1: {
-    color: 'black',
-    fontSize: 30
+  welcomeText: {
+    color: '#49260C',
+    fontSize: 31,
+    fontWeight: '500',
+    letterSpacing: 0.75
   },
-  signInText2: {
-    color: '#797979',
-    fontSize: 15
+  subText: {
+    color: '#94613D',
+    fontSize: 15,
+    fontWeight: '400'
   },
-  signInText3: {
-    color: 'white',
-    fontSize: 25
-  },
-  formText: {
-    color: 'white',
-    fontSize: 25,
-    padding: '5%'
-  },
-  input: {
-    borderColor: '#A1A1A1',
-    height: '5%',
-    width: '80%',
-    borderWidth: 0.5,
-    marginTop: '4%',
-    marginBottom: '4%',
-    alignItems: 'center'
-  },
-  nextButton: {
-    backgroundColor: '#E13C3C',
-    width: '40%',
-    height: '5%',
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: '40%'
+  orText: {
+    color: '#CC433C',
+    fontSize: 18,
+    fontWeight: '500'
   }
 });

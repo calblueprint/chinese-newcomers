@@ -1,14 +1,16 @@
 import { React, useState, useContext } from 'react';
-import { TextInput, Text, View, Image, Pressable } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import styles from './styles';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import FormInput from '../../../components/JobPostFormInput/JobPostFormInput';
+import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const auth = getAuth();
 
-const logo = require('../../../assets/favicon.png');
+const logo = require('../../../assets/cnsc-logo.png');
 
 const AdminSigninScreen = ({ navigation }: any) => {
   interface FormValues {
@@ -31,30 +33,45 @@ const AdminSigninScreen = ({ navigation }: any) => {
     }
   };
 
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    return console.log(errors);
+  };
+
   return (
-    <View style={styles.logoContainer}>
-      <Image source={logo} style={styles.logo} />
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={logo} style={styles.logo} />
+      </View>
       <FormProvider {...methods}>
-        <View style={styles.container}>
-          <Text style={styles.signInText1}>Sign in here. </Text>
-          <Text style={styles.signInText2}>Email </Text>
-          <FormInput
+        <View style={styles.textContainer}>
+          <Text style={styles.headingText}>Sign in here. </Text>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.smallText}>Email address </Text>
+          <AuthInput
             name="email"
             label="email"
             placeholder=" email@email.com"
             onChangeText={setEmail}
           />
-          <Text style={styles.signInText2}>Password </Text>
-          <FormInput
+          <Text style={styles.smallText}>Password </Text>
+          <AuthInput
             name="password"
             label="password"
             placeholder=" password"
             onChangeText={setPassword}
+            secureTextEntry={true}
           />
+        </View>
 
-          <Pressable style={styles.nextButton} onPress={methods.handleSubmit(onSubmit)}>
-            <Text style={styles.signInText3}> Log in </Text>
-          </Pressable>
+        <View style={styles.buttonContainer}>
+          <StyledButton
+            text="log in"
+            onPress={methods.handleSubmit(onSubmit, onError)}
+            buttonStyle={{ height: '100%', width: '100%' }}
+            textStyle={{}}
+          />
         </View>
       </FormProvider>
     </View>

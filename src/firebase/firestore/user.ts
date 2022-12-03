@@ -51,12 +51,23 @@ const parseUser = async (doc: any) => {
   return user as User;
 };
 
-export const checkAndAddUser = async (user: any, accessLevel: string) => {
+export const checkAndAddUser = async (
+  user: any,
+  accessLevel: string,
+  phoneNumber: string | null
+) => {
   const userObject = await getUser(user.uid);
   if (userObject !== null) {
     console.log('Got user from users collection. Name: ' + userObject.name);
   } else {
     console.log('Create new user flow');
+    let assignPhoneNumber = null;
+    if (user.phoneNumber) {
+      assignPhoneNumber = user.phoneNumber;
+    } else if (phoneNumber) {
+      assignPhoneNumber = phoneNumber;
+    }
+
     await addUser({
       id: user.uid,
       access: accessLevel,
@@ -64,7 +75,7 @@ export const checkAndAddUser = async (user: any, accessLevel: string) => {
       email: user.email ? user.email : null,
       likedJobs: [], // switched to string of jobIds to match Firebase
       name: 'test phone',
-      phoneNumber: user.phoneNumber ? user.phoneNumber : null,
+      phoneNumber: assignPhoneNumber,
       verified: true,
       password: null
     });
