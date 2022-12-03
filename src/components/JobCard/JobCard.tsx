@@ -66,7 +66,7 @@ const JobCard = ({
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
-                <Text style={styles.modalJobRefText}>{id}</Text>
+                <Text style={styles.modalJobRefText}>#{id}</Text>
                 <Text style={styles.modalJobNameText}>{jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
@@ -113,7 +113,7 @@ const JobCard = ({
         </Modal>
       </GestureRecognizer>
       <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>{id}</Text>
+        <Text style={styles.jobRefText}>#{id}</Text>
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{jobPosition}</Text>
