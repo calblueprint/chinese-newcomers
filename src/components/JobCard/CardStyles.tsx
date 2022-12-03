@@ -115,7 +115,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     width: '90%'
   },
-  field: {
-    display: 'flex'
+  boldModalText: {
+    fontWeight: 'bold'
   }
 });

@@ -105,44 +105,76 @@ const JobCard = ({
               </View>
               <View style={styles.modalInfo}>
                 {visibleMap.get('salary') === true && salary !== '' && (
-                  <View style={styles.field}>
-                    <Text style={styles.modalText}>salary: </Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>salary: </Text>
                     <Text style={styles.modalText}> {salary} </Text>
-                  </View>
+                  </Text>
                 )}
                 {visibleMap.get('contactPerson') === true && contactPerson !== '' && (
-                  <Text style={styles.modalText}>contact: {contactPerson}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>contact person: </Text>
+                    <Text style={styles.modalText}> {contactPerson} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('date') === true && date !== '' && (
-                  <Text style={styles.modalText}>date: {date}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>date: </Text>
+                    <Text style={styles.modalText}> {date} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('companyName') === true && companyName !== '' && (
-                  <Text style={styles.modalText}>companyName: {companyName}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>company name: </Text>
+                    <Text style={styles.modalText}> {companyName} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('address') === true && address !== '' && (
-                  <Text style={styles.modalText}>address: {address}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>address: </Text>
+                    <Text style={styles.modalText}> {address} </Text>
+                  </Text>
                 )}
-
                 {visibleMap.get('phone') === true && phone !== '' && (
-                  <Text style={styles.modalText}>phone: {phone}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>phone number: </Text>
+                    <Text style={styles.modalText}> {phone} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('languageRequirement') === true && languageRequirement !== '' && (
-                  <Text style={styles.modalText}>language requirement: {languageRequirement}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>language requirement: </Text>
+                    <Text style={styles.modalText}> {languageRequirement} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('workingHours') === true && workingHours !== '' && (
-                  <Text style={styles.modalText}>working hours: {workingHours}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>working hours: </Text>
+                    <Text style={styles.modalText}> {workingHours} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('workingDays') === true && workingDays !== '' && (
-                  <Text style={styles.modalText}>working days: {workingDays}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>working days: </Text>
+                    <Text style={styles.modalText}> {workingDays} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('probationPeriod') === true && probationPeriod !== '' && (
-                  <Text style={styles.modalText}>probation period: {probationPeriod}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>probation period: </Text>
+                    <Text style={styles.modalText}> {probationPeriod} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('employeeBenefit') === true && employeeBenefit !== '' && (
-                  <Text style={styles.modalText}>employee benefits: {employeeBenefit}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>employee benefit: </Text>
+                    <Text style={styles.modalText}> {employeeBenefit} </Text>
+                  </Text>
                 )}
                 {visibleMap.get('otherInfo') === true && otherInfo !== '' && (
-                  <Text style={styles.modalText}>other info: {otherInfo}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.boldModalText}>other info: </Text>
+                    <Text style={styles.modalText}> {otherInfo} </Text>
+                  </Text>
                 )}
               </View>
             </View>
