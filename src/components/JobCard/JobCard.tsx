@@ -6,7 +6,8 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { objectToMap } from '../../firebase/helpers';
 import Empty_heart from '../../assets/empty-heart.png';
 import filled_heart from '../../assets/filled-heart.png';
-import { updateLike } from '../../firebase/firestore/job';
+import { getAllJobs, updateLike } from '../../firebase/firestore/job';
+import { Job } from '../../types/types';
 
 interface JobCardProps {
   id: string;
@@ -25,6 +26,7 @@ interface JobCardProps {
   otherInfo: string;
   visible: Object;
   liked: boolean;
+  setList: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
 const JobCard = ({
@@ -43,7 +45,8 @@ const JobCard = ({
   otherInfo,
   salary,
   visible,
-  liked
+  liked,
+  setList
 }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [likeValue, setLikeValue] = useState(liked);
@@ -58,6 +61,12 @@ const JobCard = ({
       await updateLike(id, likeValue);
     };
     updateFirebase().catch(console.error);
+
+    const fetchJobs = async () => {
+      const data = await getAllJobs();
+      setList(data);
+    };
+    void fetchJobs();
   }, [likeValue]);
 
   return (
@@ -96,7 +105,10 @@ const JobCard = ({
               </View>
               <View style={styles.modalInfo}>
                 {visibleMap.get('salary') === true && salary !== '' && (
-                  <Text style={styles.modalText}>salary: {salary} </Text>
+                  <View style={styles.field}>
+                    <Text style={styles.modalText}>salary: </Text>
+                    <Text style={styles.modalText}> {salary} </Text>
+                  </View>
                 )}
                 {visibleMap.get('contactPerson') === true && contactPerson !== '' && (
                   <Text style={styles.modalText}>contact: {contactPerson}</Text>

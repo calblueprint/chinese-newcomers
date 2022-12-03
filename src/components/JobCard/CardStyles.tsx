@@ -10,7 +10,10 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 7,
     borderColor: '#C59675',
-    borderWidth: 2
+    borderWidth: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    elevation: 5
   },
   jobRef: {
     marginBottom: '3%',
@@ -111,5 +114,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '90%'
+  },
+  field: {
+    display: 'flex'
   }
 });

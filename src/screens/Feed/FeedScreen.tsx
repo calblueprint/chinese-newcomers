@@ -20,7 +20,7 @@ const FeedScreen = ({ navigation }: any) => {
       setList(data);
     };
     void fetchJobs();
-  }, [list]);
+  }, []);
 
   const { user } = useAuthentication();
   return (
@@ -54,7 +54,8 @@ const FeedScreen = ({ navigation }: any) => {
               employeeBenefit={job.employeeBenefit}
               otherInfo={job.otherInfo}
               liked={job.liked}
-              visible={job.visible}></JobCard>
+              visible={job.visible}
+              setList={setList}></JobCard>
           );
         })}
       </ScrollView>

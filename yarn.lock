@@ -2272,6 +2272,12 @@
   dependencies:
     merge-options "^3.0.4"
 
+"@react-native-async-storage/async-storage@react-native-async-storage/async-storage":
+  version "1.17.11"
+  resolved "https://codeload.github.com/react-native-async-storage/async-storage/tar.gz/1ae6fa8d4fde7f8c3e2a8faa0fa11ec7da93f62e"
+  dependencies:
+    merge-options "^3.0.4"
+
 "@react-native-community/cli-debugger-ui@^7.0.3":
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-7.0.3.tgz#3eeeacc5a43513cbcae56e5e965d77726361bcb4"
@@ -8586,6 +8592,7 @@ merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==
+<<<<<<< HEAD
 
 merge-options@^3.0.4:
   version "3.0.4"
@@ -8593,6 +8600,8 @@ merge-options@^3.0.4:
   integrity sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ==
   dependencies:
     is-plain-obj "^2.1.0"
+=======
+>>>>>>> 004fff2 (fixed infinite loop)
 
 merge-options@^3.0.4:
   version "3.0.4"
