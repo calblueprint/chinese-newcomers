@@ -6,7 +6,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { objectToMap } from '../../firebase/helpers';
 import Empty_heart from '../../assets/empty-heart.png';
 import filled_heart from '../../assets/filled-heart.png';
-import { updateJob } from '../../firebase/firestore/job';
+import { updateLike } from '../../firebase/firestore/job';
 
 interface JobCardProps {
   id: string;
@@ -55,7 +55,7 @@ const JobCard = ({
 
   useEffect(() => {
     const updateFirebase = async () => {
-      await updateJob(id, likeValue);
+      await updateLike(id, likeValue);
     };
     updateFirebase().catch(console.error);
   }, [likeValue]);
@@ -82,7 +82,7 @@ const JobCard = ({
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalJobRefText}>{id}</Text>
-                <View style={styles.nameAndHeart}>
+                <View style={styles.jobNameModal}>
                   <Text style={styles.modalJobNameText}>{jobPosition}</Text>
                   <Pressable
                     onPress={() => {

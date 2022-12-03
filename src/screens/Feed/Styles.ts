@@ -1,6 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { withBadge } from 'react-native-elements';
-
 export default StyleSheet.create({
   container: {
     height: '100%',
@@ -21,12 +19,6 @@ export default StyleSheet.create({
   feedTitle: {
     color: '#49260C',
     fontSize: 28
-  },
-  redSquare: {
-    height: '50%',
-    width: '20%',
-    backgroundColor: 'red',
-    borderRadius: 3
   },
   footer: {
     height: '5%',

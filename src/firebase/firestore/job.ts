@@ -86,7 +86,7 @@ export const getAllJobs = async (): Promise<Job[]> => {
   }
 };
 
-export const updateJob = async (jobId: string, newLiked: boolean): Promise<void> => {
+export const updateLike = async (jobId: string, newLiked: boolean): Promise<void> => {
   const docRef = doc(db, 'jobs', jobId);
   const data = {
     liked: newLiked

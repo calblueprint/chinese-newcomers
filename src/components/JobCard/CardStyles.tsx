@@ -98,17 +98,21 @@ export default StyleSheet.create({
   },
   jobNameText: {
     color: 'black',
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold'
   },
   heart: {
     width: 40,
-    height: 4q0,
-    marginLeft: '3%'
+    height: 40,
+    marginRight: 0
   },
-  nameAndHeart: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
+  jobNameModal: {
+    // display: 'flex',
+    // flexDirection: 'row',
+    // justifyContent: 'flex-end'
+    width: '90%'
+  },
+  modalHeart: {
+    marginLeft: 5
   }
 });
