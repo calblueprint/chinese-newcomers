@@ -17,11 +17,13 @@ export const styles = StyleSheet.create({
   },
   refId: {
     fontSize: 14,
-    fontWeight: '500'
+    fontWeight: '500',
+    paddingBottom: 6
   },
   formTitle: {
-    fontSize: 28,
-    fontWeight: 'bold'
+    fontSize: 30,
+    fontWeight: 'bold',
+    paddingBottom: 6
   },
   form: {
     width: '82%',
@@ -34,7 +36,8 @@ export const styles = StyleSheet.create({
   },
   formText: {
     fontSize: 18,
-    marginLeft: 12
+    marginLeft: 12,
+    fontWeight: '500'
   },
   bottomButtons: {
     flexDirection: 'row',

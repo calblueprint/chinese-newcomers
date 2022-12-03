@@ -16,11 +16,9 @@ const WelcomeScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const { t, i18n } = useTranslation();
-  // t is a function that accepts key (from json) as parameter and returns apprporiate text based on selected language
-  // i18n is an object containing changeLangauage(LANG) function that can be used with a button
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
+  // const changeLanguage = (lng) => {
+  //   i18n.changeLanguage(lng);
+  // };
 
   return (
     <View style={styles.container}>

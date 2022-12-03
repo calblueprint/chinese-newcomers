@@ -17,21 +17,21 @@ const auth = getAuth();
 const DraftScreen = ({ navigation }: any): ReactElement => {
   const { user } = useAuthentication();
 
-  const [dateIsEnabled, setDateIsEnabled] = React.useState(false);
-  const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(false);
-  const [addressIsEnabled, setAddressIsEnabled] = React.useState(false);
-  const [contactPersonIsEnabled, setContactPersonIsEnabled] = React.useState(false);
-  const [phoneIsEnabled, setPhoneIsEnabled] = React.useState(false);
-  const [jobPositionIsEnabled, setJobPositionIsEnabled] = React.useState(false);
-  const [languageReqIsEnabled, setLangaugeReqIsEnabled] = React.useState(false);
-  const [workingHoursIsEnabled, setWorkingHoursIsEnabled] = React.useState(false);
-  const [workingDaysIsEnabled, setWorkingDaysIsEnabled] = React.useState(false);
-  const [salaryIsEnabled, setSalaryIsEnabled] = React.useState(false);
-  const [probationPeriodIsEnabled, setProbationPeriodIsEnabled] = React.useState(false);
-  const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] = React.useState(false);
-  const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(false);
+  const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
+  const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(true);
+  const [addressIsEnabled, setAddressIsEnabled] = React.useState(true);
+  const [contactPersonIsEnabled, setContactPersonIsEnabled] = React.useState(true);
+  const [phoneIsEnabled, setPhoneIsEnabled] = React.useState(true);
+  const [jobPositionIsEnabled, setJobPositionIsEnabled] = React.useState(true);
+  const [languageReqIsEnabled, setLangaugeReqIsEnabled] = React.useState(true);
+  const [workingHoursIsEnabled, setWorkingHoursIsEnabled] = React.useState(true);
+  const [workingDaysIsEnabled, setWorkingDaysIsEnabled] = React.useState(true);
+  const [salaryIsEnabled, setSalaryIsEnabled] = React.useState(true);
+  const [probationPeriodIsEnabled, setProbationPeriodIsEnabled] = React.useState(true);
+  const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] = React.useState(true);
+  const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(true);
 
-  const [successModalVisibile, setSuccessModalVisible] = React.useState(false);
+  const [successModalVisibile, setSuccessModalVisible] = React.useState(true);
   const [modalJobText, setModalJobText] = React.useState('');
 
   interface FormValues {
@@ -96,15 +96,19 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       <ScrollView style={styles.form}>
         <View style={styles.top}>
           <Text style={styles.refId}>#refid</Text>
-          <Text style={styles.formTitle}>Temp</Text>
-          <Text style={{ fontSize: 12 }}>
-            All fields are required. The toggle allows you to choose whether the information is
-            displayed publicly, except when marked with *.
+          <Text style={styles.formTitle}>洗碗的人</Text>
+          <Text style={{ fontSize: 15 }}>
+            Use the toggle to determine what information you want displayed in your public job
+            posting.
           </Text>
         </View>
         <FormProvider {...methods}>
           <View style={styles.formTop}>
-            <Switch onValueChange={() => setDateIsEnabled(!dateIsEnabled)} value={dateIsEnabled} />
+            <Switch
+              onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
+              value={dateIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
+            />
             <Text style={styles.formText}>Date*</Text>
           </View>
           <FormInput
@@ -113,11 +117,13 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             placeholder=" 10/27/2022"
             rules={{ required: 'Date is required!' }}
           />
+          {errors.date && <p>Please check the Date</p>}
 
           <View style={styles.formTop}>
             <Switch
               onValueChange={() => setCompanyNameIsEnabled(!companyNameIsEnabled)}
               value={companyNameIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Company Name</Text>
           </View>
@@ -127,6 +133,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
               value={addressIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Address</Text>
           </View>
@@ -136,6 +143,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setContactPersonIsEnabled(!contactPersonIsEnabled)}
               value={contactPersonIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Contact Person</Text>
           </View>
@@ -145,6 +153,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
               value={phoneIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Phone</Text>
           </View>
@@ -154,6 +163,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setJobPositionIsEnabled(!jobPositionIsEnabled)}
               value={jobPositionIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Job Position*</Text>
           </View>
@@ -168,6 +178,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setLangaugeReqIsEnabled(!languageReqIsEnabled)}
               value={languageReqIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Language Requirement*</Text>
           </View>
@@ -182,6 +193,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setWorkingHoursIsEnabled(!workingHoursIsEnabled)}
               value={workingHoursIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Working hours/day</Text>
           </View>
@@ -191,6 +203,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setWorkingDaysIsEnabled(!workingDaysIsEnabled)}
               value={workingDaysIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Working days/week</Text>
           </View>
@@ -200,6 +213,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setSalaryIsEnabled(!salaryIsEnabled)}
               value={salaryIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Salary</Text>
           </View>
@@ -209,6 +223,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setProbationPeriodIsEnabled(!probationPeriodIsEnabled)}
               value={probationPeriodIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Probation Period (if any)</Text>
           </View>
@@ -218,6 +233,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)}
               value={employeeBenefitIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Employee Benefit (if any)</Text>
           </View>
@@ -231,6 +247,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             <Switch
               onValueChange={() => setOtherInfoIsEnabled(!otherInfoIsEnabled)}
               value={otherInfoIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Other Information</Text>
           </View>

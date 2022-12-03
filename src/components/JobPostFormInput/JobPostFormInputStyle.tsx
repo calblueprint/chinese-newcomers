@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     width: '100%',
-    // height: '100%',
     marginTop: 3
   },
   input: {
@@ -12,6 +11,6 @@ export default StyleSheet.create({
     borderColor: '#49260C',
     width: '100%',
     height: 40,
-    marginBottom: 20
+    marginBottom: 30
   }
 });
