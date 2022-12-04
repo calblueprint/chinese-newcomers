@@ -37,6 +37,10 @@ const PhoneNumberScreen = ({ navigation }: any) => {
     }
   };
 
+  const onBack: any = () => {
+    navigation.navigate('Signin');
+  };
+
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
     return console.log(errors);
   };
@@ -68,7 +72,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
           <View style={styles.buttonContainer}>
             <StyledButton
               text="back"
-              onPress={navigation.navigate(WelcomeScreen)}
+              onPress={onBack}
               buttonStyle={{
                 width: '45%',
                 height: '100%',
