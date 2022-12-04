@@ -31,7 +31,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] = React.useState(true);
   const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(true);
 
-  const [successModalVisibile, setSuccessModalVisible] = React.useState(true);
+  const [successModalVisibile, setSuccessModalVisible] = React.useState(false);
   const [modalJobText, setModalJobText] = React.useState('');
 
   interface FormValues {
