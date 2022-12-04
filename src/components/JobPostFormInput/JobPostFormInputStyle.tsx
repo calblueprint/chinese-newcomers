@@ -11,6 +11,7 @@ export default StyleSheet.create({
     borderColor: '#49260C',
     width: '100%',
     height: 40,
-    marginBottom: 10
+    marginBottom: 10,
+    paddingLeft: '3%'
   }
 });
