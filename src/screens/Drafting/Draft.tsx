@@ -268,7 +268,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
           />
 
           <View style={styles.formTop}>
-            <Text style={styles.formText}>Category</Text>
+            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>Category</Text>
           </View>
           <DropDownPicker
             open={open}
@@ -277,6 +277,8 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             setOpen={setOpen}
             setValue={setCategory}
             listMode="SCROLLVIEW"
+            containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
+            textStyle={{ fontFamily: 'DMSans_500Medium' }}
           />
 
           <View style={styles.formTop}>

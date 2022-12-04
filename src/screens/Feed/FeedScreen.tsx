@@ -62,6 +62,8 @@ const FeedScreen = ({ navigation }: any) => {
           alignItems: 'center',
           width: '100%'
         }}>
+        <Text style={styles.categoryText}> Filter By Category: </Text>
+
         <DropDownPicker
           open={open}
           value={category}
@@ -69,7 +71,10 @@ const FeedScreen = ({ navigation }: any) => {
           setOpen={setOpen}
           setValue={setCategory}
           listMode="SCROLLVIEW"
+          containerStyle={{ width: '85%', marginBottom: '8%' }}
+          textStyle={{ fontFamily: 'DMSans_500Medium' }}
         />
+
         {filteredList.map((job) => {
           return (
             // eslint-disable-next-line react/jsx-key
