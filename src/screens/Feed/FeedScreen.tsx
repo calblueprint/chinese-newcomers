@@ -81,8 +81,8 @@ const FeedScreen = ({ navigation }: any) => {
             <JobCard
               job={job}
               pending={false}
-              approvedJobs={list}
-              setApprovedJobs={setList}></JobCard>
+              approvedJobs={filteredList}
+              setApprovedJobs={setFilteredList}></JobCard>
           );
         })}
       </ScrollView>
