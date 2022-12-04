@@ -4,6 +4,8 @@ import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/firebaseApp';
+import { useTranslation } from 'react-i18next';
+import '../../../translation/i18n';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 
 const logo = require('../../../assets/cnsc-logo.png');
@@ -11,6 +13,7 @@ const logo = require('../../../assets/cnsc-logo.png');
 const WelcomeScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
+  const { t, i18n } = useTranslation();
 
   return (
     <View style={styles.container}>
@@ -18,24 +21,22 @@ const WelcomeScreen = ({ navigation }: any) => {
         <Image source={logo} style={styles.logo} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.welcomeText}>
-          Welcome to the Chinese Newcomers Service Center job portal!
-        </Text>
-        <Text style={styles.subText}>Let's get your account set up.</Text>
+        <Text style={styles.welcomeText}>{t('welcomePage.welcome')}</Text>
+        <Text style={styles.subText}>{t('welcomePage.setUp')}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <StyledButton
-          text="sign up"
+          text={t('welcomePage.signUp')}
           onPress={() => navigation.navigate('PhoneNumberRegister')}
           buttonStyle={{}}
           textStyle={{}}
           activeOpacity={{}}
         />
 
-        <Text style={styles.orText}> OR </Text>
+        <Text style={styles.orText}> {t('welcomePage.or')} </Text>
 
         <StyledButton
-          text="sign in"
+          text={t('welcomePage.signIn')}
           onPress={() => navigation.navigate('Signin')}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}

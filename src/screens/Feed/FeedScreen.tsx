@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
@@ -24,7 +24,7 @@ const FeedScreen = ({ navigation }: any) => {
 
   const { user } = useAuthentication();
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
         <Image source={Logo} style={{ width: 100, height: 100 }} />
         <Text style={styles.feedTitle}>Welcome!</Text>
@@ -58,10 +58,10 @@ const FeedScreen = ({ navigation }: any) => {
           );
         })}
       </ScrollView>
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <Button title="Back" onPress={() => navigation.navigate('Home')} />
-      </View>
-    </View>
+      </View> */}
+    </SafeAreaView>
   );
 };
 

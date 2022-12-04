@@ -12,8 +12,7 @@ export const styles = StyleSheet.create({
     marginTop: 10
   },
   top: {
-    marginTop: '5%',
-    marginBottom: '8%'
+    marginTop: '5%'
   },
   refId: {
     fontSize: 14,
@@ -27,12 +26,12 @@ export const styles = StyleSheet.create({
   },
   form: {
     width: '82%',
-    flexDirection: 'column',
-    marginBottom: '10%'
+    flexDirection: 'column'
   },
   formTop: {
     flexDirection: 'row',
-    marginBottom: 5
+    marginBottom: 5,
+    marginTop: 25
   },
   formText: {
     fontSize: 18,
@@ -50,7 +49,8 @@ export const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: '8%'
   },
   buttonText: {
     fontSize: 17,

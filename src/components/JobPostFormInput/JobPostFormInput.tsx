@@ -10,9 +10,9 @@ interface FormInputProps extends TextInputProps, UseControllerProps {
 }
 
 const ControlledInput = (props: FormInputProps) => {
-  const { name, label, defaultValue, ...inputProps } = props;
+  const { name, label, defaultValue, rules, ...inputProps } = props;
 
-  const { field } = useController({ name, defaultValue });
+  const { field } = useController({ name, defaultValue, rules });
 
   return (
     <View style={styles.container}>
