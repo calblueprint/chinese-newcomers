@@ -34,7 +34,7 @@ export default StyleSheet.create({
   phonenumberContainer: {
     width: '83%',
     marginLeft: leftMargin,
-    marginTop: '6%'
+    marginTop: '4%'
   },
   buttonContainer: {
     height: '18%',
@@ -44,8 +44,6 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-between',
     marginTop: '6%'
-    // color: 'black',
-    // borderWidth: 2
   },
   headingText: {
     fontFamily: 'DMSans_500Medium',

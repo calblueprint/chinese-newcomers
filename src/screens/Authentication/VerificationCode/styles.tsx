@@ -27,12 +27,11 @@ export default StyleSheet.create({
     width: '22%'
   },
   textContainer: {
-    width: '66%',
+    width: '60%',
     height: '17%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '8%',
-    borderWidth: 2
+    marginTop: '8%'
   },
   verificationContainer: {
     width: '84%',
