@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Text, View, Pressable, Switch, Modal } from 'react-native';
+import { Text, View, Pressable, Switch, Modal, SafeAreaView } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
@@ -92,7 +92,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.form}>
         <View style={styles.top}>
           <Text style={styles.formTitle}>Job Post Draft</Text>
@@ -302,7 +302,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 

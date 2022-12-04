@@ -9,11 +9,11 @@ import VerificationCodeScreen from '../screens/Authentication/VerificationCode/V
 import AdminSigninScreen from '../screens/Authentication/AdminSignin/AdminSignin';
 import AdminRegisterScreen from '../screens/Authentication/AdminRegister/AdminRegister';
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function AuthStack() {
-  const Stack = createStackNavigator<RootStackParamList>();
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator>

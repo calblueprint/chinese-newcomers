@@ -26,8 +26,7 @@ export const styles = StyleSheet.create({
   },
   form: {
     width: '82%',
-    flexDirection: 'column',
-    marginBottom: '10%'
+    flexDirection: 'column'
   },
   formTop: {
     flexDirection: 'row',
@@ -50,7 +49,8 @@ export const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: '8%'
   },
   buttonText: {
     fontSize: 17,
