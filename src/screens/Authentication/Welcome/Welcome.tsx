@@ -4,8 +4,6 @@ import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/firebaseApp';
-import { getUser, addUser } from '../../../firebase/firestore/user';
-// import { getAuth, signOut } from "firebase/auth";
 import { useTranslation } from 'react-i18next';
 import '../../../translation/i18n';
 import StyledButton from '../../../components/StyledButton/StyledButton';
@@ -16,9 +14,6 @@ const WelcomeScreen = ({ navigation }: any) => {
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const { t, i18n } = useTranslation();
-  // const changeLanguage = (lng) => {
-  //   i18n.changeLanguage(lng);
-  // };
 
   return (
     <View style={styles.container}>
