@@ -41,4 +41,5 @@ export interface Job {
   otherInfo: string;
   visible: Object;
   liked: boolean;
+  category: string;
 }

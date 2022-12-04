@@ -9,7 +9,13 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column'
   },
-
+  categoryText: {
+    fontFamily: 'DMSans_500Medium',
+    fontSize: 20,
+    alignSelf: 'flex-start',
+    marginLeft: '7.5%',
+    marginBottom: '1%'
+  },
   feedHeader: {
     height: '20%',
     width: '100%',
@@ -20,7 +26,8 @@ export default StyleSheet.create({
   },
   feedTitle: {
     color: '#49260C',
-    fontSize: 28
+    fontSize: 28,
+    fontFamily: "DMSans_700Bold"
   },
   redSquare: {
     height: '50%',

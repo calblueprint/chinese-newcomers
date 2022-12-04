@@ -1,5 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const scale = windowWidth / 390;
 const leftMargin = '7%';
 
 export default StyleSheet.create({
@@ -10,12 +13,16 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column'
   },
+  keyboardviewContainer: {
+    width: '100%',
+    height: '70%'
+  },
   logoContainer: {
     width: '100%',
-    height: '13%',
+    height: windowHeight * 0.13,
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '15%'
   },
   logo: {
     resizeMode: 'contain',
@@ -24,40 +31,45 @@ export default StyleSheet.create({
   },
   textContainer: {
     width: '80%',
-    height: '13%',
+    height: '20%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
     marginTop: '8%'
   },
   inputContainer: {
     width: '82%',
-    height: '28%',
-    marginTop: '2%',
+    height: 0.26 * windowHeight,
+    marginTop: '10%',
     marginLeft: leftMargin
   },
   buttonContainer: {
-    height: '5%',
+    height: windowHeight * 0.05,
     width: '82%',
     alignItems: 'flex-end',
-    marginTop: '1%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '6%',
     marginLeft: leftMargin
   },
   headingText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#49260C',
-    fontSize: 31,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
     fontWeight: '500',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   },
   subText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 20,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
     fontWeight: '500',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   },
   smallText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 14,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(14 * scale)),
     fontWeight: '400',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   }
 });

@@ -53,7 +53,8 @@ export default StyleSheet.create({
   textStyle: {
     color: 'black',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: "DMSans_700Bold"
   },
   modalHeader: {
     marginTop: '5%',
@@ -69,7 +70,8 @@ export default StyleSheet.create({
     textAlign: 'left',
     color: 'black',
     fontSize: 18,
-    marginLeft: '5%'
+    marginLeft: '5%',
+    fontFamily: "DMSans_500Medium"
   },
   modalInfo: {
     width: '100%',
@@ -79,22 +81,26 @@ export default StyleSheet.create({
   },
   jobRefText: {
     color: 'black',
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: "DMSans_500Medium"
   },
   modalJobRefText: {
     color: 'black',
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: "DMSans_500Medium"
   },
 
   modalJobNameText: {
     color: 'black',
     fontSize: 22,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: "DMSans_700Bold"
   },
   jobNameText: {
     color: 'black',
-    fontSize: 28,
-    fontWeight: 'bold'
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: "DMSans_700Bold"
   },
   buttonContainer: {
     height: '18%',
@@ -104,7 +110,5 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-between',
     marginTop: '6%'
-    // color: 'black',
-    // borderWidth: 2
   }
 });

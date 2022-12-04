@@ -6,6 +6,9 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 const logo = require('../../../assets/cnsc-logo.png');
 
 const SigninScreen = ({ navigation }: any): ReactElement => {
+  const onBack: any = () => {
+    navigation.goBack();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -29,6 +32,19 @@ const SigninScreen = ({ navigation }: any): ReactElement => {
             borderColor: '#CC433C',
             width: '100%',
             height: '42%'
+          }}
+          textStyle={{ color: '#CC433C' }}
+        />
+      </View>
+      <View style={styles.backButtonContainer}>
+        <StyledButton
+          text="back"
+          onPress={onBack}
+          buttonStyle={{
+            backgroundColor: '#FFFFFF',
+            borderColor: '#CC433C',
+            width: '50%',
+            height: '30%'
           }}
           textStyle={{ color: '#CC433C' }}
         />

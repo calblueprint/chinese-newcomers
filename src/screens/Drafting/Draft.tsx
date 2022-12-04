@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Text, View, Pressable, Switch, Modal, SafeAreaView } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
@@ -11,11 +11,28 @@ import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import StyledButton from '../../components/StyledButton/StyledButton';
 import { StatusBar } from 'expo-status-bar';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const auth = getAuth();
 
 const DraftScreen = ({ navigation }: any): ReactElement => {
   const { user } = useAuthentication();
+
+  const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState('');
+  const categories: string[] = [
+    'factory',
+    'caretaker',
+    'restaurant',
+    'construction',
+    'sales',
+    'driver',
+    'education',
+    'finance',
+    'management',
+    'IT',
+    'other'
+  ];
 
   const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
   const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(true);
@@ -47,6 +64,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     salary: string;
     probationPeriod: string;
     employeeBenefit: string;
+    category: string;
     otherInfo: string;
   }
   const { ...methods } = useForm();
@@ -79,6 +97,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       salary: data.salary || '',
       probationPeriod: data.probationPeriod || '',
       employeeBenefit: data.employeeBenefit || '',
+      category,
       otherInfo: data.otherInfo || '',
       visible: Object.fromEntries(map)
     };
@@ -96,7 +115,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       <ScrollView style={styles.form}>
         <View style={styles.top}>
           <Text style={styles.formTitle}>Job Post Draft</Text>
-          <Text style={{ fontSize: 15 }}>
+          <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
             Use the toggle to determine what information you want displayed in your public job
             posting.
           </Text>
@@ -246,6 +265,20 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             name="employeeBenefit"
             label="employeeBenefit"
             placeholder=" Insurance, paid leave, etc."
+          />
+
+          <View style={styles.formTop}>
+            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>Category</Text>
+          </View>
+          <DropDownPicker
+            open={open}
+            value={category}
+            items={categories.map((category) => ({ label: category, value: category }))}
+            setOpen={setOpen}
+            setValue={setCategory}
+            listMode="SCROLLVIEW"
+            containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
+            textStyle={{ fontFamily: 'DMSans_500Medium' }}
           />
 
           <View style={styles.formTop}>

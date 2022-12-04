@@ -7,6 +7,7 @@ import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-
 import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
+import PhoneNumberScreen from '../PhoneNumber/PhoneNumber';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
@@ -38,6 +39,10 @@ const VerificationScreen = ({ route, navigation }: any) => {
     return console.log(errors);
   };
 
+  const onBack: any = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -52,6 +57,17 @@ const VerificationScreen = ({ route, navigation }: any) => {
           <NumberInput placeholder=" 123456" onChangeText={setVerificationCode} />
         </View>
         <View style={styles.buttonContainer}>
+          <StyledButton
+            text="back"
+            onPress={onBack}
+            buttonStyle={{
+              width: '45%',
+              height: '100%',
+              backgroundColor: '#FFFFFF',
+              borderColor: '#CC433C'
+            }}
+            textStyle={{ fontSize: 16, color: '#CC433C' }}
+          />
           <StyledButton
             text="NEXT"
             onPress={methods.handleSubmit(onSubmit, onError)}
