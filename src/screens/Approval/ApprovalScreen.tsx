@@ -35,11 +35,16 @@ const ApprovalScreen = ({ navigation }: any) => {
           alignItems: 'center',
           width: '100%'
         }}>
-        {list.map((job) => {
+        {list.map((job, index) => {
           console.log(job);
           return (
             // eslint-disable-next-line react/jsx-key
-            <JobCard job={job} pending={true}></JobCard>
+            <JobCard
+              job={job}
+              idx={index}
+              pending={true}
+              pendingJobs={list}
+              setPendingJobs={setList}></JobCard>
           );
         })}
         {list.length == 0 && <Text>No pending job drafts to review!</Text>}

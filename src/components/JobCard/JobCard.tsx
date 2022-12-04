@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal } from 'react-native';
+import { Text, View, Pressable, Modal, SectionList } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -10,10 +10,13 @@ import { deleteJob, createJob } from '../../firebase/firestore/job';
 
 interface JobCardProps {
   job: Job;
-  pending: true;
+  idx: number;
+  pending: boolean;
+  pendingJobs: Job[];
+  setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
-const JobCard = ({ job, pending }: JobCardProps) => {
+const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
 
@@ -27,6 +30,7 @@ const JobCard = ({ job, pending }: JobCardProps) => {
     } catch (e) {
       console.log(e);
     }
+    setPendingJobs(pendingJobs.filter((_, index) => index !== idx));
   }
 
   return (
