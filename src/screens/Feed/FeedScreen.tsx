@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+
 import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
-import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
+import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';

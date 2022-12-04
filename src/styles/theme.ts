@@ -29,12 +29,14 @@ export const theme = {
   },
   textVariants: {
     h1: {
+
       fontFamily: 'DMSans_700Bold',
       fontSize: 36,
       lineHeight: 60,
       color: '#49260C'
     },
     h2: {
+
       fontFamily: 'DMSans_700Bold',
       fontSize: 28,
       lineHeight: 47,
@@ -53,6 +55,7 @@ export const theme = {
       color: '#49260C'
     },
     body2: {
+
       fontFamily: 'DMSans_400Regular',
       fontWeight: 400,
       fontSize: 12,

@@ -101,13 +101,21 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   }
 };
 
+export const updateLike = async (jobId: string, newLiked: boolean): Promise<void> => {
+  const docRef = doc(db, 'jobs', jobId);
+  const data = {
+    liked: newLiked
+  };
+  await updateDoc(docRef, data);
+};
+
+export const deleteJob = async (jobId: string): Promise<void> => {
+  try {
+    await jobCardCollection.doc(jobId).delete();
 // export const updateJob = async (job_id: string): Promise<void> => {};
 export const deleteJob = async (jobId: string, collectionName: string): Promise<void> => {
   try {
     const docRef = doc(db, collectionName, jobId);
     await deleteDoc(docRef);
-  } catch (e) {
-    console.warn(e);
-    throw e;
-  }
+
 };

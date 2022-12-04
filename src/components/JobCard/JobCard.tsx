@@ -1,9 +1,60 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal, SectionList } from 'react-native';
+import { Text, View, Pressable, Modal, Image, SectionList } from 'react-native';
 import styles from './CardStyles';
-import React, { useState } from 'react';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import React, { useEffect, useState } from 'react';
 import { objectToMap } from '../../firebase/helpers';
+import Empty_heart from '../../assets/empty-heart.png';
+import filled_heart from '../../assets/filled-heart.png';
+import Ex from '../../assets/ex.png';
+import { getAllJobs, updateLike } from '../../firebase/firestore/job';
+import { Job } from '../../types/types';
+
+interface JobCardProps {
+  idx: number;
+  id: string;
+  date: string;
+  companyName: string;
+  address: string;
+  contactPerson: string;
+  phone: string;
+  jobPosition: string;
+  languageRequirement: string;
+  workingHours: string;
+  workingDays: string;
+  salary: string;
+  probationPeriod: string;
+  employeeBenefit: string;
+  otherInfo: string;
+  visible: Object;
+  liked: boolean;
+  jobList: Job[];
+  setList: React.Dispatch<React.SetStateAction<Job[]>>;
+}
+
+const JobCard = ({
+  idx,
+  id,
+  date,
+  companyName,
+  address,
+  contactPerson,
+  phone,
+  jobPosition,
+  languageRequirement,
+  workingHours,
+  workingDays,
+  probationPeriod,
+  employeeBenefit,
+  otherInfo,
+  salary,
+  visible,
+  liked,
+  jobList,
+  setList
+}: JobCardProps) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [likeValue, setLikeValue] = useState(liked);
+  const visibleMap = objectToMap(visible);
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import { deleteJob, createJob } from '../../firebase/firestore/job';
@@ -32,6 +83,26 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
     }
     setPendingJobs(pendingJobs.filter((_, index) => index !== idx));
   }
+  const toggleLike = () => {
+    setLikeValue((likeValue) => !likeValue);
+  };
+
+  useEffect(() => {
+    const updateFirebase = async () => {
+      await updateLike(id, likeValue);
+    };
+    updateFirebase().catch(console.error);
+
+    const fetchJobs = async () => {
+      // const data = await getAllJobs();
+      const currList = [...jobList];
+      const currJob = currList[idx];
+      currJob.liked = likeValue;
+      currList[idx] = currJob;
+      setList(currList);
+    };
+    void fetchJobs();
+  }, [likeValue]);
 
   return (
     <Pressable
@@ -39,11 +110,28 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
       onPress={() => {
         setModalVisible(true);
       }}>
-      <GestureRecognizer
-        style={{ flex: 1 }}
-        onSwipeDown={() => {
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.modalHeader}>
+              {/* <Image source={'Ex'} style={styles.heart}></Image> */}
+              <Text style={styles.modalJobRefText}>{id}</Text>
+              <View style={styles.jobNameModal}>
+                <Text style={styles.modalJobNameText}>{jobPosition}</Text>
+                <Pressable
+                  onPress={() => {
+                    toggleLike();
+                  }}>
+                  <Image
+                    source={likeValue ? filled_heart : Empty_heart}
+                    style={styles.heart}></Image>
+                </Pressable>
         <Modal
           transparent={true}
           visible={modalVisible}
@@ -118,15 +206,13 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
                     />
                   </View>
                 )}
-              </View>
-            </View>
-          </View>
-        </Modal>
-      </GestureRecognizer>
-      <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>{job.id}</Text>
-      </View>
-      <View style={styles.jobName}>
+        <Text style={styles.jobNameText}>{jobPosition}</Text>
+        <Pressable
+          onPress={() => {
+            toggleLike();
+          }}>
+          <Image source={likeValue ? filled_heart : Empty_heart} style={styles.heart}></Image>
+        </Pressable>
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
       </View>
     </Pressable>
