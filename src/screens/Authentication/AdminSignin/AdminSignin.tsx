@@ -38,6 +38,10 @@ const AdminSigninScreen = ({ navigation }: any) => {
     return console.log(errors);
   };
 
+  const onBack: any = () => {
+    navigation.navigate('Signin');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -75,7 +79,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
           />
           <StyledButton
             text="back"
-            onPress={navigation.navigate(SigninScreen)}
+            onPress={onBack}
             buttonStyle={{
               width: '100%',
               height: '100%',
