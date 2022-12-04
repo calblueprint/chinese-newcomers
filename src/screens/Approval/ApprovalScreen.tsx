@@ -7,7 +7,6 @@ import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
-import Logo from '../../assets/cnsc-logo.png';
 
 const auth = getAuth();
 
@@ -26,7 +25,6 @@ const ApprovalScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
-        <Image source={Logo} style={{ width: 100, height: 100 }} />
         <Text style={styles.feedTitle}>Pending Job Posts</Text>
       </View>
       <ScrollView
@@ -42,7 +40,9 @@ const ApprovalScreen = ({ navigation }: any) => {
             <JobCard job={job} pending={true}></JobCard>
           );
         })}
-        {list.length == 0 && <Text>No pending job drafts to review!</Text>}
+        {list.length == 0 && (
+          <Text style={{ marginTop: '10%' }}>No pending job drafts to review!</Text>
+        )}
       </ScrollView>
       {/* <View style={styles.footer}>
         <Button title="Back" onPress={() => navigation.navigate('Home')} />
