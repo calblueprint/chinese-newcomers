@@ -83,7 +83,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       visible: Object.fromEntries(map)
     };
     try {
-      await createJob(job);
+      await createJob(job, 'notApprovedJobs');
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
     } catch (e) {

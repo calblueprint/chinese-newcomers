@@ -95,5 +95,16 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 28,
     fontWeight: 'bold'
+  },
+  buttonContainer: {
+    height: '18%',
+    width: '80%',
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    marginTop: '6%'
+    // color: 'black',
+    // borderWidth: 2
   }
 });

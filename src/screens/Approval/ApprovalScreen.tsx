@@ -11,12 +11,12 @@ import Logo from '../../assets/cnsc-logo.png';
 
 const auth = getAuth();
 
-const FeedScreen = ({ navigation }: any) => {
+const ApprovalScreen = ({ navigation }: any) => {
   const [list, setList] = useState([] as Job[]);
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const data = await getAllJobs('approvedJobs');
+      const data = await getAllJobs('notApprovedJobs');
       setList(data);
     };
     void fetchJobs();
@@ -36,9 +36,10 @@ const FeedScreen = ({ navigation }: any) => {
           width: '100%'
         }}>
         {list.map((job) => {
+          console.log(job);
           return (
             // eslint-disable-next-line react/jsx-key
-            <JobCard job={job} pending={false}></JobCard>
+            <JobCard job={job} pending={true}></JobCard>
           );
         })}
       </ScrollView>
@@ -49,4 +50,4 @@ const FeedScreen = ({ navigation }: any) => {
   );
 };
 
-export default FeedScreen;
+export default ApprovalScreen;

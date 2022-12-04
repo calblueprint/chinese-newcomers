@@ -12,6 +12,7 @@ import SignoutScreen from '../screens/Signout';
 import FeedScreen from '../screens/Feed/FeedScreen';
 import { RootStackParamList } from '../types/navigation';
 import AdminRegisterScreen from '../screens/Authentication/AdminRegister/AdminRegister';
+import ApprovalScreen from '../screens/Approval/ApprovalScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -39,6 +40,15 @@ const UserStack = (): ReactElement => {
           options={{
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="note-text-outline" color={color} size={26} />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Approval"
+          component={ApprovalScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="account-check" color={color} size={26} />
             )
           }}
         />
