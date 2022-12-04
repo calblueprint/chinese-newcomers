@@ -102,7 +102,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       visible: Object.fromEntries(map)
     };
     try {
-      await createJob(job);
+      await createJob(job, 'notApprovedJobs');
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
     } catch (e) {
@@ -113,13 +113,35 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.form}>
-        <View style={styles.formContainer}>
-          <View style={styles.top}>
-            <Text style={styles.formTitle}>Job Post Draft</Text>
-            <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-              Use the toggle to determine what information you want displayed in your public job
-              posting.
-            </Text>
+        <View style={styles.top}>
+          <Text style={styles.formTitle}>Job Post Draft</Text>
+          <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
+            Use the toggle to determine what information you want displayed in your public job
+            posting.
+          </Text>
+        </View>
+        <FormProvider {...methods}>
+          <View style={styles.formTop}>
+            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>Category</Text>
+          </View>
+          <DropDownPicker
+            open={open}
+            value={category}
+            items={categories.map((category) => ({ label: category, value: category }))}
+            setOpen={setOpen}
+            setValue={setCategory}
+            listMode="SCROLLVIEW"
+            containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
+            textStyle={{ fontFamily: 'DMSans_500Medium' }}
+          />
+
+          <View style={styles.formTop}>
+            <Switch
+              onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
+              value={dateIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
+            />
+            <Text style={styles.formText}>Date*</Text>
           </View>
           <FormProvider {...methods}>
             <View style={styles.formTop}>
@@ -258,32 +280,11 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             </View>
             <FormInput name="probationPeriod" label="probationPeriod" placeholder=" None" />
 
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() => setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)}
-                value={employeeBenefitIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Employee Benefit (if any)</Text>
-            </View>
-            <FormInput
-              name="employeeBenefit"
-              label="employeeBenefit"
-              placeholder=" Insurance, paid leave, etc."
-            />
-
-            <View style={styles.formTop}>
-              <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>Category</Text>
-            </View>
-            <DropDownPicker
-              open={open}
-              value={category}
-              items={categories.map((category) => ({ label: category, value: category }))}
-              setOpen={setOpen}
-              setValue={setCategory}
-              listMode="SCROLLVIEW"
-              containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
-              textStyle={{ fontFamily: 'DMSans_500Medium' }}
+          <View style={styles.formTop}>
+            <Switch
+              onValueChange={() => setOtherInfoIsEnabled(!otherInfoIsEnabled)}
+              value={otherInfoIsEnabled}
+              trackColor={{ false: '#767577', true: '#000000' }}
             />
 
             <View style={styles.formTop}>

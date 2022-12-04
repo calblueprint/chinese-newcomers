@@ -101,5 +101,14 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: "DMSans_700Bold"
+  },
+  buttonContainer: {
+    height: '18%',
+    width: '80%',
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    marginTop: '6%'
   }
 });

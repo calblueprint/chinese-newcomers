@@ -9,6 +9,7 @@ import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firesto
 import { Job } from '../../types/types';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
+import { useIsFocused } from '@react-navigation/native';
 
 const auth = getAuth();
 
@@ -32,14 +33,16 @@ const FeedScreen = ({ navigation }: any) => {
     'other'
   ];
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     const fetchJobs = async () => {
-      const data = await getAllJobs();
+      const data = await getAllJobs('approvedJobs');
       setList(data);
       setFilteredList(data);
     };
     void fetchJobs();
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
     if (category === 'all') {
@@ -75,27 +78,10 @@ const FeedScreen = ({ navigation }: any) => {
           textStyle={{ fontFamily: 'DMSans_500Medium' }}
         />
 
-        {filteredList.map((job) => {
+        {filteredList.map((job, index) => {
           return (
             // eslint-disable-next-line react/jsx-key
-            <JobCard
-              id={job.id}
-              date={job.date}
-              companyName={job.companyName}
-              address={job.address}
-              contactPerson={job.contactPerson}
-              phone={job.phone}
-              jobPosition={job.jobPosition}
-              languageRequirement={job.languageRequirement}
-              workingHours={job.workingHours}
-              workingDays={job.workingDays}
-              salary={job.salary}
-              probationPeriod={job.probationPeriod}
-              employeeBenefit={job.employeeBenefit}
-              category={job.category}
-              otherInfo={job.otherInfo}
-              liked={job.liked}
-              visible={job.visible}></JobCard>
+            <JobCard job={job} idx={index} pending={false}></JobCard>
           );
         })}
       </ScrollView>
