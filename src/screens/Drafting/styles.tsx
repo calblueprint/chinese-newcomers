@@ -17,15 +17,20 @@ export const styles = StyleSheet.create({
   refId: {
     fontSize: 14,
     fontWeight: '500',
-    fontFamily: "DMSans_500Medium"
+    fontFamily: 'DMSans_500Medium'
   },
   formTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    fontFamily: "DMSans_700Bold"
+    fontFamily: 'DMSans_700Bold'
+  },
+  formContainer: {
+    flex: 1,
+    width: '82%',
+    alignSelf: 'center'
   },
   form: {
-    width: '82%',
+    width: '100%',
     flexDirection: 'column'
   },
   formTop: {
@@ -36,7 +41,7 @@ export const styles = StyleSheet.create({
   formText: {
     fontSize: 18,
     marginLeft: 12,
-    fontFamily: "DMSans_500Medium"
+    fontFamily: 'DMSans_500Medium'
   },
   bottomButtons: {
     flexDirection: 'row',
@@ -57,7 +62,6 @@ export const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontFamily: 'DMSans_500Medium'
-
   },
   centeredView: {
     flex: 1,
