@@ -95,8 +95,8 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     <View style={styles.container}>
       <ScrollView style={styles.form}>
         <View style={styles.top}>
-          <Text style={styles.refId}>#refid</Text>
-          <Text style={styles.formTitle}>洗碗的人</Text>
+          {/* <Text style={styles.refId}>#refid</Text> */}
+          <Text style={styles.formTitle}>Job Post Draft</Text>
           <Text style={{ fontSize: 15 }}>
             Use the toggle to determine what information you want displayed in your public job
             posting.
@@ -117,7 +117,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             placeholder=" 10/27/2022"
             rules={{ required: 'Date is required!' }}
           />
-          {errors.date && <p>Please check the Date</p>}
+          {methods.formState.errors.date != null && <Text>Please check the Date</Text>}
 
           <View style={styles.formTop}>
             <Switch
@@ -173,6 +173,9 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             placeholder=" Waiter, waitress"
             rules={{ required: 'Job Position is required!' }}
           />
+          {methods.formState.errors.jobPosition != null && (
+            <Text>Please check the Job Position</Text>
+          )}
 
           <View style={styles.formTop}>
             <Switch
@@ -188,6 +191,9 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             placeholder=" Cantonese, English"
             rules={{ required: 'Language Requirement is required!' }}
           />
+          {methods.formState.errors.langaugeRequirement != null && (
+            <Text>Please check the Language Requirement</Text>
+          )}
 
           <View style={styles.formTop}>
             <Switch
