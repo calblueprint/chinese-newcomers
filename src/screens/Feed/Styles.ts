@@ -20,7 +20,8 @@ export default StyleSheet.create({
   },
   feedTitle: {
     color: '#49260C',
-    fontSize: 28
+    fontSize: 28,
+    fontFamily: "DMSans_700Bold"
   },
   redSquare: {
     height: '50%',
