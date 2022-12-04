@@ -35,6 +35,10 @@ const AdminRegisterScreen = ({ route, navigation }: any) => {
     return console.log(errors);
   };
 
+  const onBack: any = () => {
+    navigation.navigate('Signin');
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, borderWidth: 10, borderColor: 'red' }}
@@ -70,7 +74,7 @@ const AdminRegisterScreen = ({ route, navigation }: any) => {
           <View style={styles.buttonContainer}>
             <StyledButton
               text="back"
-              onPress={navigation.navigate(VerificationScreen)}
+              onPress={onBack}
               buttonStyle={{
                 width: '45%',
                 height: '100%',
