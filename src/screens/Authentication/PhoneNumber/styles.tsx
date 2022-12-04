@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
+const windowWidth = Dimensions.get('window').width;
+const scale = windowWidth / 390;
 const leftMargin = '7%';
 
 export default StyleSheet.create({
@@ -15,7 +17,7 @@ export default StyleSheet.create({
     height: '13%',
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '15%'
   },
   logo: {
     resizeMode: 'contain',
@@ -24,32 +26,36 @@ export default StyleSheet.create({
   },
   textContainer: {
     width: '92%',
-    height: '18%',
+    height: '17%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '11%'
+    marginTop: '8%'
   },
   phonenumberContainer: {
     width: '83%',
     marginLeft: leftMargin,
-    marginTop: '3%'
+    marginTop: '4%'
   },
   buttonContainer: {
     height: '18%',
     width: '80%',
+    flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'flex-end',
-    marginTop: '5%'
+    justifyContent: 'space-between',
+    marginTop: '6%'
   },
   headingText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#49260C',
-    fontSize: 31,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
     fontWeight: '500',
     letterSpacing: 0.75
   },
   subText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 20,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
     fontWeight: '500'
   }
 });
