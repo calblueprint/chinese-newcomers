@@ -122,6 +122,20 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
         </View>
         <FormProvider {...methods}>
           <View style={styles.formTop}>
+            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>Category</Text>
+          </View>
+          <DropDownPicker
+            open={open}
+            value={category}
+            items={categories.map((category) => ({ label: category, value: category }))}
+            setOpen={setOpen}
+            setValue={setCategory}
+            listMode="SCROLLVIEW"
+            containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
+            textStyle={{ fontFamily: 'DMSans_500Medium' }}
+          />
+
+          <View style={styles.formTop}>
             <Switch
               onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
               value={dateIsEnabled}
@@ -265,20 +279,6 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             name="employeeBenefit"
             label="employeeBenefit"
             placeholder=" Insurance, paid leave, etc."
-          />
-
-          <View style={styles.formTop}>
-            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>Category</Text>
-          </View>
-          <DropDownPicker
-            open={open}
-            value={category}
-            items={categories.map((category) => ({ label: category, value: category }))}
-            setOpen={setOpen}
-            setValue={setCategory}
-            listMode="SCROLLVIEW"
-            containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
-            textStyle={{ fontFamily: 'DMSans_500Medium' }}
           />
 
           <View style={styles.formTop}>
