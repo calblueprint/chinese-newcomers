@@ -78,7 +78,11 @@ const FeedScreen = ({ navigation }: any) => {
         {filteredList.map((job) => {
           return (
             // eslint-disable-next-line react/jsx-key
-            <JobCard job={job} pending={false}></JobCard>
+            <JobCard
+              job={job}
+              pending={false}
+              approvedJobs={list}
+              setApprovedJobs={setList}></JobCard>
           );
         })}
       </ScrollView>
