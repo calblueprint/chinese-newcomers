@@ -41,6 +41,13 @@ export default StyleSheet.create({
     alignContent: 'center',
     marginTop: '6%'
   },
+  backButtonContainer: {
+    height: '21%',
+    width: '83%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: '35%'
+  },
   headingText: {
     fontFamily: 'DMSans_500Medium',
     color: '#49260C',

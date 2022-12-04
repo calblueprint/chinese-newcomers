@@ -39,6 +39,10 @@ const VerificationScreen = ({ route, navigation }: any) => {
     return console.log(errors);
   };
 
+  const onBack: any = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -55,7 +59,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
         <View style={styles.buttonContainer}>
           <StyledButton
             text="back"
-            onPress={navigation.navigate(PhoneNumberScreen)}
+            onPress={onBack}
             buttonStyle={{
               width: '45%',
               height: '100%',

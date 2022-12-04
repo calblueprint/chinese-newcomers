@@ -39,7 +39,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
   };
 
   const onBack: any = () => {
-    navigation.navigate('Signin');
+    navigation.goBack();
   };
 
   return (

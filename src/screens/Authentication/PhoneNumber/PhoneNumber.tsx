@@ -38,7 +38,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
   };
 
   const onBack: any = () => {
-    navigation.navigate('Signin');
+    navigation.goBack();
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {

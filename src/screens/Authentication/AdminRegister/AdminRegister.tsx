@@ -6,7 +6,6 @@ import AuthInput from '../../../components/AuthInput/AuthInput';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import VerificationScreen from '../VerificationCode/VerificationCode';
 
 const auth = getAuth();
 
@@ -36,63 +35,65 @@ const AdminRegisterScreen = ({ route, navigation }: any) => {
   };
 
   const onBack: any = () => {
-    navigation.navigate('Signin');
+    navigation.goBack();
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, borderWidth: 10, borderColor: 'red' }}
-      behavior="position"
-      contentContainerStyle={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image source={logo} style={styles.logo} />
-        </View>
-        <FormProvider {...methods}>
-          <View style={styles.textContainer}>
-            <Text style={styles.headingText}>Great! </Text>
-            <Text style={styles.subText}>Now, enter your email & create a password: </Text>
+    <View style={styles.container}>
+      <View style={styles.keyboardviewContainer}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior="position"
+          contentContainerStyle={styles.container}>
+          <View style={styles.logoContainer}>
+            <Image source={logo} style={styles.logo} />
           </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.smallText}>Email address</Text>
-            <AuthInput
-              name="email"
-              label="email"
-              placeholder=" email@email.com"
-              onChangeText={setEmail}
-            />
-            <Text style={styles.smallText}>Create Password </Text>
-            <AuthInput
-              name="password"
-              label="password"
-              placeholder=" password"
-              onChangeText={setPassword}
-            />
-            <Text style={styles.smallText}>Verify Password </Text>
-            <AuthInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
-          </View>
-          <View style={styles.buttonContainer}>
-            <StyledButton
-              text="back"
-              onPress={onBack}
-              buttonStyle={{
-                width: '45%',
-                height: '100%',
-                backgroundColor: '#FFFFFF',
-                borderColor: '#CC433C'
-              }}
-              textStyle={{ fontSize: 16, color: '#CC433C' }}
-            />
-            <StyledButton
-              text="NEXT"
-              onPress={methods.handleSubmit(onSubmit, onError)}
-              buttonStyle={{ width: '45%', height: '100%' }}
-              textStyle={{}}
-            />
-          </View>
-        </FormProvider>
+          <FormProvider {...methods}>
+            <View style={styles.textContainer}>
+              <Text style={styles.headingText}>Great! </Text>
+              <Text style={styles.subText}>Now, enter your email & create a password: </Text>
+            </View>
+            <View style={styles.inputContainer}>
+              <Text style={styles.smallText}>Email address</Text>
+              <AuthInput
+                name="email"
+                label="email"
+                placeholder=" email@email.com"
+                onChangeText={setEmail}
+              />
+              <Text style={styles.smallText}>Create Password </Text>
+              <AuthInput
+                name="password"
+                label="password"
+                placeholder=" password"
+                onChangeText={setPassword}
+              />
+              <Text style={styles.smallText}>Verify Password </Text>
+              <AuthInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
+            </View>
+            <View style={styles.buttonContainer}>
+              <StyledButton
+                text="back"
+                onPress={onBack}
+                buttonStyle={{
+                  width: '45%',
+                  height: '100%',
+                  backgroundColor: '#FFFFFF',
+                  borderColor: '#CC433C'
+                }}
+                textStyle={{ fontSize: 16, color: '#CC433C' }}
+              />
+              <StyledButton
+                text="NEXT"
+                onPress={methods.handleSubmit(onSubmit, onError)}
+                buttonStyle={{ width: '45%', height: '100%' }}
+                textStyle={{}}
+              />
+            </View>
+          </FormProvider>
+        </KeyboardAvoidingView>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

@@ -15,9 +15,7 @@ export default StyleSheet.create({
   },
   keyboardviewContainer: {
     width: '100%',
-    height: '30%',
-    borderWidth: 4,
-    flex: 1
+    height: '70%'
   },
   logoContainer: {
     width: '100%',
@@ -33,21 +31,19 @@ export default StyleSheet.create({
   },
   textContainer: {
     width: '80%',
-    height: '13%',
+    height: '20%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '8%',
-    borderWidth: 2
+    marginTop: '8%'
   },
   inputContainer: {
     width: '82%',
-    height: '26%',
-    marginTop: '2%',
-    marginLeft: leftMargin,
-    borderWidth: 3
+    height: 0.26 * windowHeight,
+    marginTop: '10%',
+    marginLeft: leftMargin
   },
   buttonContainer: {
-    height: '5%',
+    height: windowHeight * 0.05,
     width: '82%',
     alignItems: 'flex-end',
     flexDirection: 'row',
