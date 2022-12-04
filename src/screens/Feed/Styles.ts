@@ -9,7 +9,13 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column'
   },
-
+  categoryText: {
+    fontFamily: 'DMSans_500Medium',
+    fontSize: 20,
+    alignSelf: 'flex-start',
+    marginLeft: '7.5%',
+    marginBottom: '1%'
+  },
   feedHeader: {
     height: '20%',
     width: '100%',
