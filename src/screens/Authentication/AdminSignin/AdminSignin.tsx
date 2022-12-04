@@ -75,7 +75,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
           />
           <StyledButton
             text="back"
-            // onPress={navigation.navigate('Signin')}
+            onPress={navigation.navigate('Signin')}
             buttonStyle={{
               width: '100%',
               height: '100%',
