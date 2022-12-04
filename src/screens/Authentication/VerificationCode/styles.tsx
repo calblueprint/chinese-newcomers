@@ -1,4 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const scale = windowWidth / 390;
 
 const leftMargin = '7%';
 
@@ -23,11 +27,12 @@ export default StyleSheet.create({
     width: '22%'
   },
   textContainer: {
-    width: '60%',
+    width: '66%',
     height: '17%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '8%',
+    borderWidth: 2
   },
   verificationContainer: {
     width: '84%',
@@ -45,14 +50,16 @@ export default StyleSheet.create({
     marginTop: '8%'
   },
   headingText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#49260C',
-    fontSize: 31,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
     fontWeight: '500',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   },
   subText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 20,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
     fontWeight: '500',
     letterSpacing: 0.75
   }

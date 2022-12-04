@@ -1,5 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const scale = windowWidth / 390;
 const leftMargin = '7%';
 
 export default StyleSheet.create({
@@ -10,12 +13,19 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column'
   },
+  keyboardviewContainer: {
+    width: '100%',
+    height: '30%',
+    borderWidth: 4,
+    flex: 1
+  },
   logoContainer: {
     width: '100%',
-    height: '13%',
+    height: windowHeight * 0.13,
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '15%'
+    marginTop: '15%',
+    borderWidth: 2
   },
   logo: {
     resizeMode: 'contain',
@@ -27,13 +37,15 @@ export default StyleSheet.create({
     height: '13%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '8%',
+    borderWidth: 2
   },
   inputContainer: {
     width: '82%',
-    height: '28%',
+    height: '26%',
     marginTop: '2%',
-    marginLeft: leftMargin
+    marginLeft: leftMargin,
+    borderWidth: 3
   },
   buttonContainer: {
     height: '5%',
@@ -45,21 +57,24 @@ export default StyleSheet.create({
     marginLeft: leftMargin
   },
   headingText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#49260C',
-    fontSize: 31,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
     fontWeight: '500',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   },
   subText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 20,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
     fontWeight: '500',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   },
   smallText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 14,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(14 * scale)),
     fontWeight: '400',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   }
 });

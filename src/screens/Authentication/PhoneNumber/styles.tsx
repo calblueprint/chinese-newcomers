@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
+const windowWidth = Dimensions.get('window').width;
+const scale = windowWidth / 390;
 const leftMargin = '7%';
 
 export default StyleSheet.create({
@@ -32,7 +34,7 @@ export default StyleSheet.create({
   phonenumberContainer: {
     width: '83%',
     marginLeft: leftMargin,
-    marginTop: '4%'
+    marginTop: '6%'
   },
   buttonContainer: {
     height: '18%',
@@ -46,14 +48,16 @@ export default StyleSheet.create({
     // borderWidth: 2
   },
   headingText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#49260C',
-    fontSize: 31,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
     fontWeight: '500',
     letterSpacing: 0.75
   },
   subText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 20,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
     fontWeight: '500'
   }
 });

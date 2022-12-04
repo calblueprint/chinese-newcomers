@@ -11,6 +11,7 @@ export default StyleSheet.create({
     borderRadius: 3,
     borderColor: '#49260C',
     width: '100%',
-    height: 40
+    height: 40,
+    paddingLeft: '3%'
   }
 });

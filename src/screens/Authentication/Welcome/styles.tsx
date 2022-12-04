@@ -1,5 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const scale = windowWidth / 390;
+console.log(windowWidth);
+console.log(scale);
+console.log(windowHeight);
 const leftMargin = '9%';
 
 export default StyleSheet.create({
@@ -23,7 +29,7 @@ export default StyleSheet.create({
     width: '22%'
   },
   textContainer: {
-    width: '75%',
+    width: '76%',
     height: '25%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
@@ -32,23 +38,26 @@ export default StyleSheet.create({
   buttonContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
+    height: '38%',
     alignItems: 'center',
-    marginTop: '18%'
+    marginTop: '22%'
   },
   welcomeText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#49260C',
-    fontSize: 31,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(30 * scale)),
     fontWeight: '500',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   },
   subText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 15,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(16 * scale)),
     fontWeight: '400'
   },
   orText: {
     color: '#CC433C',
-    fontSize: 18,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(18 * scale)),
     fontWeight: '500'
   }
 });
