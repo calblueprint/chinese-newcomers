@@ -19,6 +19,7 @@ interface JobCardProps {
   salary: string;
   probationPeriod: string;
   employeeBenefit: string;
+  category: string;
   otherInfo: string;
   visible: Object;
   liked: boolean;
@@ -37,6 +38,7 @@ const JobCard = ({
   workingDays,
   probationPeriod,
   employeeBenefit,
+  category,
   otherInfo,
   salary,
   visible,
@@ -104,6 +106,7 @@ const JobCard = ({
                 {visibleMap.get('employeeBenefit') === true && employeeBenefit !== '' && (
                   <Text style={styles.modalText}>employee benefits: {employeeBenefit}</Text>
                 )}
+                <Text style={styles.modalText}>category: {category}</Text>
                 {visibleMap.get('otherInfo') === true && otherInfo !== '' && (
                   <Text style={styles.modalText}>other info: {otherInfo}</Text>
                 )}
