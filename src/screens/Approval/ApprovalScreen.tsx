@@ -7,11 +7,14 @@ import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
+import { useIsFocused } from '@react-navigation/native';
 
 const auth = getAuth();
 
 const ApprovalScreen = ({ navigation }: any) => {
   const [list, setList] = useState([] as Job[]);
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -19,7 +22,7 @@ const ApprovalScreen = ({ navigation }: any) => {
       setList(data);
     };
     void fetchJobs();
-  }, []);
+  }, [isFocused]);
 
   const { user } = useAuthentication();
   return (

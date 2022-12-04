@@ -14,19 +14,9 @@ interface JobCardProps {
   pending: boolean;
   pendingJobs: Job[];
   setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
-  approvedJobs: Job[];
-  setApprovedJobs: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
-const JobCard = ({
-  job,
-  idx,
-  pending,
-  pendingJobs,
-  setPendingJobs,
-  approvedJobs,
-  setApprovedJobs
-}: JobCardProps) => {
+const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
 
@@ -36,9 +26,6 @@ const JobCard = ({
       await deleteJob(job.id, 'notApprovedJobs');
       if (approve) {
         await createJob(job, 'approvedJobs');
-        const currApprovedJobs = [...approvedJobs];
-        currApprovedJobs.push(job);
-        setApprovedJobs(currApprovedJobs);
       }
     } catch (e) {
       console.log(e);
