@@ -27,7 +27,7 @@ const ApprovalScreen = ({ navigation }: any) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
         <Image source={Logo} style={{ width: 100, height: 100 }} />
-        <Text style={styles.feedTitle}>Welcome!</Text>
+        <Text style={styles.feedTitle}>Pending Job Posts</Text>
       </View>
       <ScrollView
         contentContainerStyle={{
@@ -42,6 +42,7 @@ const ApprovalScreen = ({ navigation }: any) => {
             <JobCard job={job} pending={true}></JobCard>
           );
         })}
+        {list.length == 0 && <Text>No pending job drafts to review!</Text>}
       </ScrollView>
       {/* <View style={styles.footer}>
         <Button title="Back" onPress={() => navigation.navigate('Home')} />
