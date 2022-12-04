@@ -12,29 +12,31 @@ export const styles = StyleSheet.create({
     marginTop: 10
   },
   top: {
-    marginTop: '5%',
-    marginBottom: '8%'
+    marginTop: '5%'
   },
   refId: {
     fontSize: 14,
-    fontWeight: '500'
+    fontWeight: '500',
+    fontFamily: 'DMSans_500Medium'
   },
   formTitle: {
     fontSize: 28,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'DMSans_700Bold'
   },
   form: {
     width: '82%',
-    flexDirection: 'column',
-    marginBottom: '10%'
+    flexDirection: 'column'
   },
   formTop: {
     flexDirection: 'row',
-    marginBottom: 5
+    marginBottom: 5,
+    marginTop: 25
   },
   formText: {
     fontSize: 18,
-    marginLeft: 12
+    marginLeft: 12,
+    fontFamily: 'DMSans_500Medium'
   },
   bottomButtons: {
     flexDirection: 'row',
@@ -47,12 +49,14 @@ export const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: '8%'
   },
   buttonText: {
     fontSize: 17,
     color: '#fff',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'DMSans_500Medium'
   },
   centeredView: {
     flex: 1,

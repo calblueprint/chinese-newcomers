@@ -8,17 +8,20 @@ import {
   DocumentData,
   DocumentSnapshot,
   updateDoc,
-  setDoc
+  setDoc,
+  deleteDoc
 } from 'firebase/firestore';
 import { Job, User } from '../../types/types';
 
-const jobCardCollection = collection(db, 'jobs');
+const approvedJobsCollection = collection(db, 'approvedJobs');
+const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
 
-export const getJob = async (id: string): Promise<Job> => {
-  const docRef = doc(db, 'jobs', id);
+export const getJob = async (id: string, collectionName: string): Promise<Job> => {
+  const docRef = doc(db, collectionName, id);
   const docSnap = await getDoc(docRef);
   return await parseJob(docSnap);
 };
+
 export const parseJob = async (doc: DocumentSnapshot<DocumentData>) => {
   const job_id = doc.id.toString();
   const data = doc.data();
@@ -30,7 +33,7 @@ export const parseJob = async (doc: DocumentSnapshot<DocumentData>) => {
 };
 
 export const getMonthlyCounter = async (): Promise<number> => {
-  const docRef = doc(db, 'jobs', 'metadata');
+  const docRef = doc(db, 'approvedJobs', 'metadata');
   const docSnap = await getDoc(docRef);
   const data = docSnap.data();
   // reset monthly counter if new month and not yet reset
@@ -47,7 +50,7 @@ export const updateMonthlyCounter = async (
   newLastReset: Date,
   newMonthlyCounter: number
 ): Promise<void> => {
-  const docRef = doc(db, 'jobs', 'metadata');
+  const docRef = doc(db, 'approvedJobs', 'metadata');
   // This data object changes the fields that are different from the entry in backend!
   const data = {
     lastReset: newLastReset,
@@ -56,25 +59,37 @@ export const updateMonthlyCounter = async (
   await updateDoc(docRef, data);
 };
 
-export const createJob = async (job: Partial<Job>): Promise<void> => {
-  const docRef = collection(db, 'jobs');
+export const createJob = async (job: Partial<Job>, collectionName: string): Promise<void> => {
+  const docRef = collection(db, collectionName);
   try {
-    const monthlyCounter = await getMonthlyCounter();
-    const now = new Date();
-    const month = ('0' + now.getMonth().toString()).slice(-2);
-    const jobId = now.getFullYear().toString().slice(-2) + month + (monthlyCounter + 1).toString();
-
-    await setDoc(doc(db, 'jobs', jobId), job);
-    await updateMonthlyCounter(now, monthlyCounter + 1);
+    if (collectionName === 'approvedJobs') {
+      const monthlyCounter = await getMonthlyCounter();
+      const additionalZero = monthlyCounter < 9 ? '0' : '';
+      const now = new Date();
+      const month = ('0' + now.getMonth().toString()).slice(-2);
+      const jobId =
+        now.getFullYear().toString().slice(-2) +
+        month +
+        additionalZero +
+        (monthlyCounter + 1).toString();
+      job.id = jobId;
+      await setDoc(doc(db, collectionName, jobId), job);
+      await updateMonthlyCounter(now, monthlyCounter + 1);
+    } else {
+      await addDoc(docRef, job);
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getAllJobs = async (): Promise<Job[]> => {
+export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   try {
     const promises: Array<Promise<Job>> = [];
-    const docSnap = await getDocs(jobCardCollection);
+    const docSnap =
+      collectionName === 'approvedJobs'
+        ? await getDocs(approvedJobsCollection)
+        : await getDocs(notApprovedJobsCollection);
     docSnap.forEach((job) => {
       promises.push(parseJob(job));
     });
@@ -97,8 +112,10 @@ export const updateLike = async (jobId: string, newLiked: boolean): Promise<void
 export const deleteJob = async (jobId: string): Promise<void> => {
   try {
     await jobCardCollection.doc(jobId).delete();
-  } catch (e) {
-    console.warn(e);
-    throw e;
-  }
+// export const updateJob = async (job_id: string): Promise<void> => {};
+export const deleteJob = async (jobId: string, collectionName: string): Promise<void> => {
+  try {
+    const docRef = doc(db, collectionName, jobId);
+    await deleteDoc(docRef);
+
 };

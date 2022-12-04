@@ -1,4 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const scale = windowWidth / 390;
 
 const leftMargin = '7%';
 
@@ -15,7 +19,7 @@ export default StyleSheet.create({
     height: '13%',
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '15%'
   },
   logo: {
     resizeMode: 'contain',
@@ -24,33 +28,37 @@ export default StyleSheet.create({
   },
   textContainer: {
     width: '60%',
-    height: '15%',
+    height: '17%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '11%'
+    marginTop: '8%'
   },
   verificationContainer: {
-    width: '83%',
+    width: '84%',
     height: '6%',
-    marginTop: '6%',
+    marginTop: '4%',
     marginLeft: leftMargin
   },
   buttonContainer: {
     height: '5%',
-    width: '80%',
+    width: '83%',
     alignSelf: 'center',
     alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: '8%'
   },
   headingText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#49260C',
-    fontSize: 31,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
     fontWeight: '500',
-    letterSpacing: 0.75
+    letterSpacing: 0.5
   },
   subText: {
+    fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: 20,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
     fontWeight: '500',
     letterSpacing: 0.75
   }
