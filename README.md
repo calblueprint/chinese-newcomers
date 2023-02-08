@@ -35,10 +35,18 @@ We strongly recommend using a Node version manager like [nvm](https://github.com
         ```sh
         cd chinese-newcomers
         ```
-   3. Install project dependencies. This command installs all packages from [`yarn.lock`](yarn.lock).
-      ```sh
-      yarn install
-      ```
+   3. Install Typescript:
+        ```sh
+        npm install -g typescript
+        ```
+   4. Install yarn:
+        ```sh
+        npm install -g yarn
+        ```
+   5. Install project dependencies. This command installs all packages from [`yarn.lock`](yarn.lock).
+         ```sh
+         yarn install
+         ```
 2. Set up secrets:
    1. In the project's root directory (`chinese-newcomers/`), create a new file named `.env`
         ```sh
