@@ -1,7 +1,10 @@
 ## Documentation
 
+## How to Review
+
 ## Related PRs
 
 ## Screenshots
 
-CC: @alliu879 @surajr10 @cecilia-gao3
+CC: @surajr10 @themiachou8
+
