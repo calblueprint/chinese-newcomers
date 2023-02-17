@@ -52,7 +52,7 @@ We strongly recommend using a Node version manager like [nvm](https://github.com
         ```sh
         touch .env
         ```
-   2. Copy the credentials from [Blueprint's internal Notion](https://www.notion.so/calblueprint/Firebase-Environment-Variables-c30a053fba4c47559f9f4944e4962a9f) (access is required) and paste them into the `.env` file.
+   2. Copy the credentials from [Blueprint's internal Notion](https://www.notion.so/calblueprint/Environment-Variables-2d24bb3a8b8c4b369fa620cbe1c8fe49) (access is required) and paste them into the `.env` file.
 
 **Helpful resources**
 * [GitHub: Cloning a Repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository#cloning-a-repository)
