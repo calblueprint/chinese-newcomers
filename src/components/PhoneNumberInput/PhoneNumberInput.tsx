@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, TouchableHighlight } from 'react-native
 import PhoneInput from 'react-native-phone-input';
 import styles from './PhoneNumberInputStyles';
 
-const PhoneNumberInput = () => {
+function PhoneNumberInput() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const phoneInput = useRef<PhoneInput>(null);
 
@@ -32,6 +32,6 @@ const PhoneNumberInput = () => {
       </TouchableHighlight>
     </SafeAreaView>
   );
-};
+}
 
 export default PhoneNumberInput;

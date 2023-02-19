@@ -1,5 +1,5 @@
-import { db } from '../config';
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../config';
 import { User } from '../../types/types';
 
 export const getUser = async (id: string): Promise<User | null> => {
@@ -8,11 +8,11 @@ export const getUser = async (id: string): Promise<User | null> => {
   if (docSnap.exists()) {
     console.log('User data:', docSnap.data());
     return await parseUser(docSnap);
-  } else {
+  } 
     // doc.data() will be undefined in this case
     console.log('No such document!');
     return null;
-  }
+  
 };
 
 export const addUser = async (user: User): Promise<void> => {
@@ -58,7 +58,7 @@ export const checkAndAddUser = async (
 ) => {
   const userObject = await getUser(user.uid);
   if (userObject !== null) {
-    console.log('Got user from users collection. Name: ' + userObject.name);
+    console.log(`Got user from users collection. Name: ${  userObject.name}`);
   } else {
     console.log('Create new user flow');
     let assignPhoneNumber = null;

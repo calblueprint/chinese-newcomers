@@ -1,21 +1,21 @@
 import React, { ReactElement, useState } from 'react';
 import { Text, View, Pressable, Switch, Modal, SafeAreaView } from 'react-native';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
+import { ScrollView } from 'react-native-gesture-handler';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { StatusBar } from 'expo-status-bar';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { styles } from './styles';
 import { Job } from '../../types/types';
 import { createJob } from '../../firebase/firestore/job';
-import { ScrollView } from 'react-native-gesture-handler';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import StyledButton from '../../components/StyledButton/StyledButton';
-import { StatusBar } from 'expo-status-bar';
-import DropDownPicker from 'react-native-dropdown-picker';
 
 const auth = getAuth();
 
-const DraftScreen = ({ navigation }: any): ReactElement => {
+function DraftScreen({ navigation }: any): ReactElement {
   const { user } = useAuthentication();
 
   const [open, setOpen] = useState(false);
@@ -303,7 +303,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
         </View>
       </ScrollView>
       {/* <Button title="Back" style={styles.button} onPress={() => navigation.navigate('Home')} /> */}
-      <Modal visible={successModalVisibile} transparent={true} animationType={'slide'}>
+      <Modal visible={successModalVisibile} transparent animationType="slide">
         <View style={styles.centeredView}>
           <View style={styles.modal}>
             <Text style={styles.modalText}>
@@ -311,7 +311,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             </Text>
 
             <StyledButton
-              text={'POST ANOTHER JOB'}
+              text="POST ANOTHER JOB"
               textStyle={{ color: '#CC433C' }}
               buttonStyle={{ backgroundColor: 'white', width: '100%' }}
               onPress={() => {
@@ -321,7 +321,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
               }}
             />
             <StyledButton
-              text={'VIEW JOB FEED'}
+              text="VIEW JOB FEED"
               buttonStyle={{ width: '100%' }}
               onPress={() => {
                 navigation.goBack();
@@ -337,6 +337,6 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       </Modal>
     </SafeAreaView>
   );
-};
+}
 
 export default DraftScreen;

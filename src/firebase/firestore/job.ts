@@ -1,4 +1,3 @@
-import { firebaseApp, db } from '../firebaseApp';
 import {
   getDoc,
   doc,
@@ -11,6 +10,7 @@ import {
   setDoc,
   deleteDoc
 } from 'firebase/firestore';
+import { firebaseApp, db } from '../firebaseApp';
 import { Job, User } from '../../types/types';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
@@ -66,7 +66,7 @@ export const createJob = async (job: Partial<Job>, collectionName: string): Prom
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
-      const month = ('0' + now.getMonth().toString()).slice(-2);
+      const month = (`0${  now.getMonth().toString()}`).slice(-2);
       const jobId =
         now.getFullYear().toString().slice(-2) +
         month +

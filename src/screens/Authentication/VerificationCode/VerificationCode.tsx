@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
 // import { getAuth, signOut } from 'firebase/auth';
+import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import styles from './styles';
 import NumberInput from '../../../components/NumberInput/NumberInput';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
@@ -11,7 +11,7 @@ import PhoneNumberScreen from '../PhoneNumber/PhoneNumber';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
-const VerificationScreen = ({ route, navigation }: any) => {
+function VerificationScreen({ route, navigation }: any) {
   interface FormValues {
     phoneNumber: string;
     VerificationCode: string;
@@ -35,9 +35,7 @@ const VerificationScreen = ({ route, navigation }: any) => {
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
-    return console.log(errors);
-  };
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   const onBack: any = () => {
     navigation.goBack();
@@ -78,6 +76,6 @@ const VerificationScreen = ({ route, navigation }: any) => {
       </FormProvider>
     </View>
   );
-};
+}
 
 export default VerificationScreen;

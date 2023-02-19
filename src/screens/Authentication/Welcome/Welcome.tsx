@@ -1,16 +1,16 @@
 import React, { useRef } from 'react';
 import { Text, View, Image } from 'react-native';
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import { useTranslation } from 'react-i18next';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
-import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/firebaseApp';
-import { useTranslation } from 'react-i18next';
 import '../../../translation/i18n';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
-const WelcomeScreen = ({ navigation }: any) => {
+function WelcomeScreen({ navigation }: any) {
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const { t, i18n } = useTranslation();
@@ -49,5 +49,5 @@ const WelcomeScreen = ({ navigation }: any) => {
       />
     </View>
   );
-};
+}
 export default WelcomeScreen;

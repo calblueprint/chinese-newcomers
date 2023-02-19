@@ -8,9 +8,9 @@ import {
   signInWithEmailAndPassword,
   deleteUser
 } from 'firebase/auth';
-import { getUser, addUser } from '../firebase/firestore/user';
-import { db } from '../firebase/config';
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { getUser, addUser } from "./firestore/user";
+import { db } from "./config";
 import firebaseApp from './firebaseApp';
 
 const auth = getAuth(firebaseApp);
@@ -23,10 +23,10 @@ export const getAccess = async (id: string): Promise<User | null> => {
   if (docSnap.exists()) {
     console.log('Admin access');
     return true;
-  } else {
+  } 
     console.log('not admin');
     return false;
-  }
+  
 };
 
 export const activatedAdmin = async (phoneNumber: string): Promise<void> => {
@@ -44,14 +44,14 @@ export const getActivationStatus = async (phoneNumber: string): Promise<boolean>
     if (docSnap.data().activated) {
       console.log('You are an activated admin user. Please sign in as an admin.');
       return true;
-    } else {
+    } 
       console.log('Admin not activated.');
       return false;
-    }
-  } else {
+    
+  } 
     console.log('Not admin');
     return false;
-  }
+  
 };
 
 // Part 1 of signing in with phone. Returns verificationId
@@ -93,11 +93,11 @@ export const registerWithEmailAndPassword = async (
 ): Promise<User> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    const {user} = userCredential;
     console.log(user);
     const userObject = await getUser(user.uid);
     if (userObject !== null) {
-      console.log('Got user from users collection. Name: ' + userObject.name);
+      console.log(`Got user from users collection. Name: ${  userObject.name}`);
       // TODO: probably put user object into react context
     } else {
       console.log('Create new user flow');
@@ -125,7 +125,7 @@ export const logInOrRegisterWithPhoneNumber = async (user: any): Promise<User> =
   try {
     const userObject = await getUser(user.id);
     if (userObject !== null) {
-      console.log('Got user from users collection. Name: ' + userObject.name);
+      console.log(`Got user from users collection. Name: ${  userObject.name}`);
       // TODO: probably put user object into react context
     } else {
       console.log('Create new user flow');
