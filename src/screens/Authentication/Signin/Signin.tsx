@@ -5,7 +5,7 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
-const SigninScreen = ({ navigation }: any): ReactElement => {
+function SigninScreen({ navigation }: any) {
   const onBack: any = () => {
     navigation.goBack();
   };
@@ -23,6 +23,7 @@ const SigninScreen = ({ navigation }: any): ReactElement => {
           onPress={() => navigation.navigate('AdminSignin')}
           buttonStyle={{ width: '100%', height: '42%' }}
           textStyle={{}}
+          activeOpacity = {{}}
         />
         <StyledButton
           text="job seeker"
@@ -34,6 +35,7 @@ const SigninScreen = ({ navigation }: any): ReactElement => {
             height: '42%'
           }}
           textStyle={{ color: '#CC433C' }}
+          activeOpacity = {{}}
         />
       </View>
       <View style={styles.backButtonContainer}>
@@ -47,10 +49,11 @@ const SigninScreen = ({ navigation }: any): ReactElement => {
             height: '30%'
           }}
           textStyle={{ color: '#CC433C' }}
+          activeOpacity = {{}}
         />
       </View>
     </View>
   );
-};
+}
 
 export default SigninScreen;

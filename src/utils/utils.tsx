@@ -1,7 +1,6 @@
 import { User } from '../types/types';
 
-export const getEmptyUser = (): User => {
-  return {
+export const getEmptyUser = (): User => ({
     id: '',
     access: '',
     createdJobs: [],
@@ -10,5 +9,4 @@ export const getEmptyUser = (): User => {
     name: '',
     phoneNumber: '',
     verified: false
-  };
-};
+  });

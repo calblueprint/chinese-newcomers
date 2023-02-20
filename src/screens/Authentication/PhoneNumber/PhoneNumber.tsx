@@ -1,19 +1,24 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useRef } from 'react';
 import { Text, View, Image } from 'react-native';
+import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import PhoneInput from 'react-native-phone-number-input';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { phoneGetConfirmation, getActivationStatus } from '../../../firebase/auth';
-import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import PhoneInput from 'react-native-phone-number-input';
 import WelcomeScreen from '../Welcome/Welcome';
+
 const logo = require('../../../assets/cnsc-logo.png');
 
-const PhoneNumberScreen = ({ navigation }: any) => {
-  const { ...methods } = useForm();
+function PhoneNumberScreen({ navigation }: any) {
+  interface FormValues {
+    phoneNumber: string;
+  }
+
+  const { ...methods } = useForm<FormValues>();
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,9 +46,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
     navigation.goBack();
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
-    return console.log(errors);
-  };
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -80,12 +83,14 @@ const PhoneNumberScreen = ({ navigation }: any) => {
                 borderColor: '#CC433C'
               }}
               textStyle={{ fontSize: 16, color: '#CC433C' }}
+              activeOpacity = {{}}
             />
             <StyledButton
               text="next"
               onPress={methods.handleSubmit(onSubmit, onError)}
               buttonStyle={{ width: '45%', height: '100%' }}
               textStyle={{ fontSize: 16 }}
+              activeOpacity = {{}}
             />
           </View>
           <FirebaseRecaptchaVerifierModal
@@ -96,6 +101,6 @@ const PhoneNumberScreen = ({ navigation }: any) => {
       </FormProvider>
     </View>
   );
-};
+}
 
 export default PhoneNumberScreen;

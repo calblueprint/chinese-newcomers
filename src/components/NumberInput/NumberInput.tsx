@@ -4,7 +4,6 @@ import styles from './styles';
 
 interface NumberInputProps {
   placeholder: string;
-  value: string;
   onChangeText: any;
 }
 
