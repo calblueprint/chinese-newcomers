@@ -10,7 +10,7 @@ interface AuthInputProps extends TextInputProps, UseControllerProps {
 }
 
 function ControlledInput(props: AuthInputProps) {
-  const { name, defaultValue, ...inputProps } = props;
+  const { name, label, defaultValue, ...inputProps } = props;
 
   const { field } = useController({ name, defaultValue });
 
