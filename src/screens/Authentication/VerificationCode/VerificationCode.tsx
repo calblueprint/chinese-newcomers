@@ -7,7 +7,6 @@ import NumberInput from '../../../components/NumberInput/NumberInput';
 import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import PhoneNumberScreen from '../PhoneNumber/PhoneNumber';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
@@ -16,7 +15,7 @@ function VerificationScreen({ route, navigation }: any) {
     phoneNumber: string;
     VerificationCode: string;
   }
-  const { ...methods } = useForm();
+  const { ...methods } = useForm<FormValues>();
   const [verificationCode, setVerificationCode] = useState('');
   const { verificationId, phoneNumber } = route.params;
   const { signInPhone } = useContext(AuthContext);
@@ -52,11 +51,11 @@ function VerificationScreen({ route, navigation }: any) {
           <Text style={styles.subText}>Now, enter the six-digit verification code: </Text>
         </View>
         <View style={styles.verificationContainer}>
-          <NumberInput placeholder=" 123456" onChangeText={setVerificationCode} />
+          <NumberInput placeholder=" 123456" onChangeText={setVerificationCode}/>
         </View>
         <View style={styles.buttonContainer}>
           <StyledButton
-            text="back"
+            text="back" 
             onPress={onBack}
             buttonStyle={{
               width: '45%',
@@ -65,12 +64,14 @@ function VerificationScreen({ route, navigation }: any) {
               borderColor: '#CC433C'
             }}
             textStyle={{ fontSize: 16, color: '#CC433C' }}
+            activeOpacity = {{}}
           />
           <StyledButton
             text="NEXT"
             onPress={methods.handleSubmit(onSubmit, onError)}
             buttonStyle={{ width: '45%', height: '100%' }}
             textStyle={{}}
+            activeOpacity = {{}}
           />
         </View>
       </FormProvider>

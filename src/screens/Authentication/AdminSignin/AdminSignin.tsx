@@ -1,4 +1,4 @@
-import { React, useState, useContext } from 'react';
+import React, {useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
@@ -18,7 +18,7 @@ function AdminSigninScreen({ navigation }: any) {
     email: string;
     password: string;
   }
-  const { ...methods } = useForm();
+  const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signInEmail } = useContext(AuthContext);
@@ -29,7 +29,7 @@ function AdminSigninScreen({ navigation }: any) {
       console.log('signed in');
       // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
-      console.error(e.message);
+      console.error(e);
       throw e;
     }
   };
@@ -74,6 +74,7 @@ function AdminSigninScreen({ navigation }: any) {
             onPress={methods.handleSubmit(onSubmit, onError)}
             buttonStyle={{ height: '100%', width: '100%' }}
             textStyle={{}}
+            activeOpacity = {{}}
           />
           <StyledButton
             text="back"
@@ -85,6 +86,7 @@ function AdminSigninScreen({ navigation }: any) {
               borderColor: '#CC433C'
             }}
             textStyle={{ fontSize: 16, color: '#CC433C' }}
+            activeOpacity = {{}}
           />
         </View>
       </FormProvider>

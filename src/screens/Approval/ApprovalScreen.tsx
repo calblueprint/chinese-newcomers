@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
-import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
+import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 
 const auth = getAuth();
@@ -21,7 +21,7 @@ function ApprovalScreen({ navigation }: any) {
       const data = await getAllJobs('notApprovedJobs');
       setList(data);
     };
-    void fetchJobs();
+    fetchJobs();
   }, [isFocused]);
 
   const { user } = useAuthentication();
@@ -48,7 +48,7 @@ function ApprovalScreen({ navigation }: any) {
               setPendingJobs={setList} />
           );
         })}
-        {list.length == 0 && (
+        {list.length === 0 && (
           <Text style={{ marginTop: '10%' }}>No pending job drafts to review!</Text>
         )}
       </ScrollView>

@@ -14,7 +14,11 @@ import WelcomeScreen from '../Welcome/Welcome';
 const logo = require('../../../assets/cnsc-logo.png');
 
 function PhoneNumberScreen({ navigation }: any) {
-  const { ...methods } = useForm();
+  interface FormValues {
+    phoneNumber: string;
+  }
+
+  const { ...methods } = useForm<FormValues>();
   const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -79,12 +83,14 @@ function PhoneNumberScreen({ navigation }: any) {
                 borderColor: '#CC433C'
               }}
               textStyle={{ fontSize: 16, color: '#CC433C' }}
+              activeOpacity = {{}}
             />
             <StyledButton
               text="next"
               onPress={methods.handleSubmit(onSubmit, onError)}
               buttonStyle={{ width: '45%', height: '100%' }}
               textStyle={{ fontSize: 16 }}
+              activeOpacity = {{}}
             />
           </View>
           <FirebaseRecaptchaVerifierModal

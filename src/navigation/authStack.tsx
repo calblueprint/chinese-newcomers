@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RootStackParamList } from '../types/navigation';
 import WelcomeScreen from '../screens/Authentication/Welcome/Welcome';
 import SigninScreen from '../screens/Authentication/Signin/Signin';
 import PhoneNumberScreen from '../screens/Authentication/PhoneNumber/PhoneNumber';

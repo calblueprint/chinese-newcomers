@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/Home';
 import DraftScreen from '../screens/Drafting/Draft';
 import SigninScreen from '../screens/Authentication/Signin';
-import SignoutScreen from '../screens/Signout';
+import SignoutScreen from '../screens/Authentication/Signout/Signout';
 import FeedScreen from '../screens/Feed/FeedScreen';
 import { RootStackParamList } from '../types/navigation';
 import AdminRegisterScreen from '../screens/Authentication/AdminRegister/AdminRegister';

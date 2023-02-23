@@ -10,7 +10,6 @@ import { User } from '../types/types';
 import { getUser } from '../firebase/firestore/user';
 import {
   AuthContext,
-  AuthContextType,
   useAuthReducer,
   getAuthContext
 } from '../context/AuthContext';
@@ -21,13 +20,12 @@ export default function RootNavigation() {
 
   useEffect(() => {
     const restoreAuthToken = async () => {
-      let userToken;
       try {
-        userToken = await AsyncStorage.getItem('uid');
+        const userToken = await AsyncStorage.getItem('uid');
+        dispatch({ type: 'RESTORE_TOKEN', token: userToken });
       } catch (e) {
         console.log(e);
       }
-      dispatch({ type: 'RESTORE_TOKEN', token: userToken });
     };
     restoreAuthToken();
   }, []);
