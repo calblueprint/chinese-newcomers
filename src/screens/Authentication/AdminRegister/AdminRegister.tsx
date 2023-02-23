@@ -1,9 +1,9 @@
 import { React, useState, useContext } from 'react';
 import { Text, View, Image, KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { getAuth } from 'firebase/auth';
+import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 
@@ -11,7 +11,7 @@ const auth = getAuth();
 
 const logo = require('../../../assets/cnsc-logo.png');
 
-const AdminRegisterScreen = ({ route, navigation }: any) => {
+function AdminRegisterScreen({ route, navigation }: any) {
   interface FormValues {
     email: string;
     password: string;
@@ -30,9 +30,7 @@ const AdminRegisterScreen = ({ route, navigation }: any) => {
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
-    return console.log(errors);
-  };
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   const onBack: any = () => {
     navigation.goBack();
@@ -95,6 +93,6 @@ const AdminRegisterScreen = ({ route, navigation }: any) => {
       </View>
     </View>
   );
-};
+}
 
 export default AdminRegisterScreen;

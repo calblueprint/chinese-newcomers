@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal, SectionList } from 'react-native';
-import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import styles from './CardStyles';
 import { objectToMap } from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
@@ -16,9 +16,10 @@ interface JobCardProps {
   setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
-const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) => {
+function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
+  // const [pendingJobs, setPendingJobs] = useState([])
 
   async function handleAction(approve: boolean) {
     setModalVisible(false);
@@ -45,7 +46,7 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
           setModalVisible(!modalVisible);
         }}>
         <Modal
-          transparent={true}
+          transparent
           visible={modalVisible}
           animationType="slide"
           onRequestClose={() => {
@@ -102,20 +103,18 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
                   <View style={styles.buttonContainer}>
                     <StyledButton
                       text="decline"
-                      onPress={async () => await handleAction(false)}
+                      onPress={async () => handleAction(false)}
                       buttonStyle={{
                         width: '45%',
                         height: '50%',
                         backgroundColor: '#FFFFFF',
                         borderColor: '#CC433C'
                       }}
-                      textStyle={{ fontSize: 16, color: '#CC433C' }}
-                    />
+                      textStyle={{ fontSize: 16, color: '#CC433C' }} activeOpacity={undefined} />
                     <StyledButton
                       text="approve"
-                      onPress={async () => await handleAction(true)}
-                      buttonStyle={{ width: '45%', height: '50%' }}
-                    />
+                      onPress={async () => handleAction(true)}
+                      buttonStyle={{ width: '45%', height: '50%' }} textStyle={{fontSize: 16}} activeOpacity={undefined} />
                   </View>
                 )}
               </View>
@@ -131,6 +130,6 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
       </View>
     </Pressable>
   );
-};
+}
 
 export default JobCard;

@@ -71,7 +71,7 @@ export const getAuthContext = (dispatch: React.Dispatch<AuthContextAction>): Aut
     const auth = getAuth(firebaseApp);
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
-        const user = userCredential.user;
+        const {user} = userCredential;
         console.log('Email sign in successful', user.email);
         await AsyncStorage.setItem('uid', user.uid);
         dispatch({ type: 'SIGN_IN', token: user.uid });
@@ -84,7 +84,7 @@ export const getAuthContext = (dispatch: React.Dispatch<AuthContextAction>): Aut
     const auth = getAuth(firebaseApp);
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
-        const user = userCredential.user;
+        const {user} = userCredential;
         await checkAndAddUser(user, 'admin', phoneNumber);
         console.log('Email sign up successful', user.email);
         await activatedAdmin(phoneNumber);

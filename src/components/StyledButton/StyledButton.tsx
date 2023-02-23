@@ -1,8 +1,8 @@
-import styles from './styles';
 import * as React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { GestureResponderEvent, StyleProp, Text, TouchableOpacity, ViewStyle } from 'react-native';
+import styles from './styles';
 
-const StyledButton = ({
+function StyledButton({
   text,
   buttonStyle,
   textStyle,
@@ -10,11 +10,11 @@ const StyledButton = ({
   activeOpacity
 }: {
   text: string;
-  buttonStyle: any;
-  textStyle: any;
-  onPress: any;
-  activeOpacity: any;
-}) => {
+  buttonStyle: React.CSSProperties;
+  textStyle: React.CSSProperties;
+  onPress: (event: GestureResponderEvent) => void;
+  activeOpacity: StyleProp<ViewStyle>;
+}) {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -23,5 +23,5 @@ const StyledButton = ({
       <Text style={[styles.buttonText, textStyle]}>{text}</Text>
     </TouchableOpacity>
   );
-};
+}
 export default StyledButton;

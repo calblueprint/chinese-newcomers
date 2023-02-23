@@ -9,7 +9,7 @@ interface FormInputProps extends TextInputProps, UseControllerProps {
   defaultValue?: string;
 }
 
-const ControlledInput = (props: FormInputProps) => {
+function ControlledInput(props: FormInputProps) {
   const { name, label, defaultValue, rules, ...inputProps } = props;
 
   const { field } = useController({ name, defaultValue, rules });
@@ -24,9 +24,9 @@ const ControlledInput = (props: FormInputProps) => {
       />
     </View>
   );
-};
+}
 
-const JobPostFormInput = (props: FormInputProps) => {
+function JobPostFormInput(props: FormInputProps) {
   const { name } = props;
 
   if (name.length === 0) {
@@ -35,6 +35,6 @@ const JobPostFormInput = (props: FormInputProps) => {
     return null;
   }
   return <ControlledInput {...props} />;
-};
+}
 
 export default JobPostFormInput;

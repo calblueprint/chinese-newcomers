@@ -16,7 +16,7 @@ import ApprovalScreen from '../screens/Approval/ApprovalScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const UserStack = (): ReactElement => {
+function UserStack(): ReactElement {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -64,6 +64,6 @@ const UserStack = (): ReactElement => {
       </Tab.Navigator>
     </NavigationContainer>
   );
-};
+}
 
 export default UserStack;
