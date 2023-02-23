@@ -15,7 +15,7 @@ const emailSchema = z.object({
   email: z
   .string()
   .min(1)
-  .email(console.log("Error"))
+  .email(console.log())
 });
 
 function AdminSigninScreen({
@@ -32,6 +32,7 @@ function AdminSigninScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
+      emailSchema.parse(email);
       await signInEmail(email, password);
       console.log('signed in');
       // navigation.navigate('Root', { screen: 'Home' });
