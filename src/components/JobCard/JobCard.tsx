@@ -56,7 +56,7 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
               <View style={styles.modalHeader}>
                 <Text style={styles.modalJobRefText}>{job.id}</Text>
                 <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
-                <TouchableOpacity> onPress={() => setModalVisible(false)}>
+                <TouchableOpacity> onPress={() => setModalVisible(!modalVisible)}>
                   <Text style={styles.modalHeaderCloseText}>X</Text>
                 </TouchableOpacity>
               </View>
