@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal, SectionList } from 'react-native';
+import { Text, View, Pressable, Modal, SectionList, TouchableOpacity } from 'react-native';
 import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -136,4 +136,3 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
   );
 };
 
-export default JobCard;
