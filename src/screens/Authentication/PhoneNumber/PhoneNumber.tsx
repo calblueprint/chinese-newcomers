@@ -8,9 +8,7 @@ import styles from './styles';
 import { phoneGetConfirmation, getActivationStatus } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import WelcomeScreen from '../Welcome/Welcome';
-
-const logo = require('../../../assets/cnsc-logo.png');
+import logo from '../../../assets/cnsc-logo.png'
 
 function PhoneNumberScreen({ navigation }: any) {
   interface FormValues {
@@ -23,7 +21,7 @@ function PhoneNumberScreen({ navigation }: any) {
   const [valid, setValid] = useState(false);
   const phoneInput = useRef<PhoneInput>(null);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
       const checkValid = phoneInput.current?.isValidNumber(phoneNumber);
       console.log(valid);
@@ -44,7 +42,7 @@ function PhoneNumberScreen({ navigation }: any) {
     navigation.goBack();
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = (errors) => console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -81,14 +79,12 @@ function PhoneNumberScreen({ navigation }: any) {
                 borderColor: '#CC433C'
               }}
               textStyle={{ fontSize: 16, color: '#CC433C' }}
-              activeOpacity = {{}}
             />
             <StyledButton
               text="next"
               onPress={methods.handleSubmit(onSubmit, onError)}
               buttonStyle={{ width: '45%', height: '100%' }}
               textStyle={{ fontSize: 16 }}
-              activeOpacity = {{}}
             />
           </View>
           <FirebaseRecaptchaVerifierModal

@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DraftScreen from '../screens/Drafting/Draft';
-import SignoutScreen from '../screens/Signout';
+import SignoutScreen from '../screens/Authentication/Signout/Signout';
 import FeedScreen from '../screens/Feed/FeedScreen';
 import ApprovalScreen from '../screens/Approval/ApprovalScreen';
 

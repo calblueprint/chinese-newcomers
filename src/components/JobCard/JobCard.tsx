@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal, SectionList } from 'react-native';
+import { Text, View, Pressable, Modal } from 'react-native';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import styles from './CardStyles';
@@ -110,11 +110,11 @@ function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
                         backgroundColor: '#FFFFFF',
                         borderColor: '#CC433C'
                       }}
-                      textStyle={{ fontSize: 16, color: '#CC433C' }} activeOpacity={undefined} />
+                      textStyle={{ fontSize: 16, color: '#CC433C' }} />
                     <StyledButton
                       text="approve"
                       onPress={async () => handleAction(true)}
-                      buttonStyle={{ width: '45%', height: '50%' }} textStyle={{fontSize: 16}} activeOpacity={undefined} />
+                      buttonStyle={{ width: '45%', height: '50%' }} textStyle={{fontSize: 16}} />
                   </View>
                 )}
               </View>

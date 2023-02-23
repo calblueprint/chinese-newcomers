@@ -2,16 +2,14 @@ import React, {useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import SigninScreen from '../Signin/Signin';
+import logo from '../../../assets/cnsc-logo.png'
 
 const auth = getAuth();
 
-const logo = require('../../../assets/cnsc-logo.png');
 
 function AdminSigninScreen({ navigation }: any) {
   interface FormValues {
@@ -74,7 +72,6 @@ function AdminSigninScreen({ navigation }: any) {
             onPress={methods.handleSubmit(onSubmit, onError)}
             buttonStyle={{ height: '100%', width: '100%' }}
             textStyle={{}}
-            activeOpacity = {{}}
           />
           <StyledButton
             text="back"
@@ -86,7 +83,6 @@ function AdminSigninScreen({ navigation }: any) {
               borderColor: '#CC433C'
             }}
             textStyle={{ fontSize: 16, color: '#CC433C' }}
-            activeOpacity = {{}}
           />
         </View>
       </FormProvider>

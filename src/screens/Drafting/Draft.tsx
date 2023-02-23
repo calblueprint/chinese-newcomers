@@ -315,7 +315,6 @@ function DraftScreen({ navigation }: any): ReactElement {
                 setSuccessModalVisible(false);
                 navigation.navigate('Draft');
               }}
-              activeOpacity={0.7} // placeholder (?)
             />
             <StyledButton
               text="VIEW JOB FEED"
@@ -326,7 +325,6 @@ function DraftScreen({ navigation }: any): ReactElement {
                 setSuccessModalVisible(false);
                 navigation.navigate('Feed');
               }}
-              activeOpacity={0.7} // placeholder(?)
             />
             <Pressable onPress={() => setSuccessModalVisible(false)} style={styles.modalX}>
               <Text>X</Text>

@@ -10,8 +10,8 @@ import {
   setDoc,
   deleteDoc
 } from 'firebase/firestore';
-import { firebaseApp, db } from '../firebaseApp';
-import { Job, User } from '../../types/types';
+import { db } from '../firebaseApp';
+import { Job } from '../../types/types';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');

@@ -1,12 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { getAuth } from 'firebase/auth';
+import React, { useEffect, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserStack from './userStack';
 import AuthStack from './authStack';
-import { UserContext } from '../context/context';
-import { getEmptyUser } from '../utils/utils';
-import { User } from '../types/types';
-import { getUser } from '../firebase/firestore/user';
 import {
   AuthContext,
   useAuthReducer,

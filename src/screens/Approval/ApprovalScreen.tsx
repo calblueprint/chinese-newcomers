@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
+import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { getAuth } from 'firebase/auth';
 import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';

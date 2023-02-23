@@ -7,8 +7,7 @@ import NumberInput from '../../../components/NumberInput/NumberInput';
 import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-
-const logo = require('../../../assets/cnsc-logo.png');
+import logo from '../../../assets/cnsc-logo.png'
 
 function VerificationScreen({ route, navigation }: any) {
   interface FormValues {
@@ -20,7 +19,7 @@ function VerificationScreen({ route, navigation }: any) {
   const { verificationId, phoneNumber } = route.params;
   const { signInPhone } = useContext(AuthContext);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
       const access = await getAccess(phoneNumber);
       if (access === false) {
@@ -64,14 +63,12 @@ function VerificationScreen({ route, navigation }: any) {
               borderColor: '#CC433C'
             }}
             textStyle={{ fontSize: 16, color: '#CC433C' }}
-            activeOpacity = {{}}
           />
           <StyledButton
             text="NEXT"
             onPress={methods.handleSubmit(onSubmit, onError)}
             buttonStyle={{ width: '45%', height: '100%' }}
             textStyle={{}}
-            activeOpacity = {{}}
           />
         </View>
       </FormProvider>

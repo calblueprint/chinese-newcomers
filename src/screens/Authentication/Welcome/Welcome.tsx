@@ -6,8 +6,7 @@ import styles from './styles';
 import { firebaseApp } from '../../../firebase/firebaseApp';
 import '../../../translation/i18n';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-
-const logo = require('../../../assets/cnsc-logo.png');
+import logo from '../../../assets/cnsc-logo.png'
 
 function WelcomeScreen({ navigation }: any) {
   const recaptchaVerifier = useRef(null);
@@ -28,7 +27,6 @@ function WelcomeScreen({ navigation }: any) {
           onPress={() => navigation.navigate('PhoneNumberRegister')}
           buttonStyle={{}}
           textStyle={{}}
-          activeOpacity={{}}
         />
 
         <Text style={styles.orText}> {t('welcomePage.or')} </Text>
@@ -38,7 +36,6 @@ function WelcomeScreen({ navigation }: any) {
           onPress={() => navigation.navigate('Signin')}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}
-          activeOpacity={{}}
         />
       </View>
       <FirebaseRecaptchaVerifierModal

@@ -1,15 +1,13 @@
-import { FirebaseApp } from 'firebase/app';
 import {
   getAuth,
   PhoneAuthProvider,
   signInWithCredential,
   signOut,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   deleteUser,
   User
 } from 'firebase/auth';
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getUser, addUser } from "./firestore/user";
 import { db } from "./config";
 import firebaseApp from './firebaseApp';

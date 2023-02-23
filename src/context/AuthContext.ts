@@ -9,7 +9,7 @@ import {
   signOut
 } from 'firebase/auth';
 import firebaseApp from '../firebase/firebaseApp';
-import { getUser, checkAndAddUser } from '../firebase/firestore/user';
+import { checkAndAddUser } from '../firebase/firestore/user';
 import { activatedAdmin } from '../firebase/auth';
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);

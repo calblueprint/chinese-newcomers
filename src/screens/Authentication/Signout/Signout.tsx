@@ -15,7 +15,6 @@ function HomeScreen({ navigation }: any): ReactElement {
         onPress={signOut}
         buttonStyle={{ width: '45%', height: '5%' }}
         textStyle = {{}}
-        activeOpacity = {{}}
       />
     </View>
   );

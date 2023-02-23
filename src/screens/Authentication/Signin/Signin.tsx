@@ -2,8 +2,7 @@ import React from 'react';
 import { Text, View, Image } from 'react-native';
 import styles from './styles';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-
-const logo = require('../../../assets/cnsc-logo.png');
+import logo from '../../../assets/cnsc-logo.png'
 
 function SigninScreen({ navigation }: any) {
   const onBack: any = () => {
@@ -23,7 +22,6 @@ function SigninScreen({ navigation }: any) {
           onPress={() => navigation.navigate('AdminSignin')}
           buttonStyle={{ width: '100%', height: '42%' }}
           textStyle={{}}
-          activeOpacity = {{}}
         />
         <StyledButton
           text="job seeker"
@@ -35,7 +33,6 @@ function SigninScreen({ navigation }: any) {
             height: '42%'
           }}
           textStyle={{ color: '#CC433C' }}
-          activeOpacity = {{}}
         />
       </View>
       <View style={styles.backButtonContainer}>
@@ -49,7 +46,6 @@ function SigninScreen({ navigation }: any) {
             height: '30%'
           }}
           textStyle={{ color: '#CC433C' }}
-          activeOpacity = {{}}
         />
       </View>
     </View>
