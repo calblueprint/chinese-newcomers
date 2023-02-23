@@ -38,7 +38,8 @@ function AdminRegisterScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      await signUpEmail(dispatch, { email, password, phoneNumber });
+      emailSchema.safeParse(email);
+      await signUpEmail(email, password, phoneNumber);
     } catch (e) {
       console.error(e);
     }
