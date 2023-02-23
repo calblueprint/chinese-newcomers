@@ -49,13 +49,16 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
           visible={modalVisible}
           animationType="slide"
           onRequestClose={() => {
-            setModalVisible(!modalVisible);
+            setModalVisible(false);
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalJobRefText}>{job.id}</Text>
                 <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
+                <TouchableOpacity> onPress={() => setModalVisible(false)}>
+                  <Text style={styles.modalHeaderCloseText}>X</Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.modalInfo}>
                 {visibleMap.get('salary') === true && job.salary !== '' && (
