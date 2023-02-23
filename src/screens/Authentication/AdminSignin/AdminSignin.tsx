@@ -11,12 +11,7 @@ import logo from '../../../assets/cnsc-logo.png';
 import SigninScreen from '../Signin/Signin';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
-const emailSchema = z.object({
-  email: z
-  .string()
-  .min(1)
-  .email(console.log())
-});
+const emailSchema = z.string().email();
 
 function AdminSigninScreen({
   navigation,
