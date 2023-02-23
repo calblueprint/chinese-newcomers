@@ -1,11 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import {
-  useForm,
-  FormProvider,
-  SubmitHandler,
-  SubmitErrorHandler,
-} from 'react-hook-form';
+import { getAuth } from 'firebase/auth';
+import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import { z } from 'zod';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
@@ -13,6 +10,13 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
 import SigninScreen from '../Signin/Signin';
 import { AuthStackScreenProps } from '../../../types/navigation';
+
+const emailSchema = z.object({
+  email: z
+  .string()
+  .min(1)
+  .email(console.log("Error"))
+});
 
 function AdminSigninScreen({
   navigation,
