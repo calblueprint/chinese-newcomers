@@ -125,7 +125,7 @@ function DraftScreen({ navigation }: any): ReactElement {
           <DropDownPicker
             open={open}
             value={category}
-            items={categories.map((ca) => ({ label: category, value: ca }))}
+            items={categories.map((c) => ({ label: c, value: c }))}
             setOpen={setOpen}
             setValue={setCategory}
             listMode="SCROLLVIEW"
