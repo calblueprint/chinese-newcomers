@@ -10,12 +10,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { signInEmail } from '../../../firebase/auth';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
-const emailSchema = z.object({
-  email: z
-  .string()
-  .min(1)
-  .email(console.log())
-});
+const emailSchema = z.string().email();
 
 function AdminSigninScreen({
   navigation,
