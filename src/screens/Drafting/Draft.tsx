@@ -1,13 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 import { Text, View, Pressable, Switch, Modal, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { StatusBar } from 'expo-status-bar';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
-import { styles } from './styles';
+import styles from './styles';
 import { Job } from '../../types/types';
 import { createJob } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
@@ -16,7 +13,6 @@ import StyledButton from '../../components/StyledButton/StyledButton';
 const auth = getAuth();
 
 function DraftScreen({ navigation }: any): ReactElement {
-  const { user } = useAuthentication();
 
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState('');
@@ -67,7 +63,7 @@ function DraftScreen({ navigation }: any): ReactElement {
     category: string;
     otherInfo: string;
   }
-  const { ...methods } = useForm();
+  const { ...methods } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const map = new Map<string, boolean>();
@@ -127,7 +123,7 @@ function DraftScreen({ navigation }: any): ReactElement {
           <DropDownPicker
             open={open}
             value={category}
-            items={categories.map((category) => ({ label: category, value: category }))}
+            items={categories.map((c) => ({ label: c, value: c }))}
             setOpen={setOpen}
             setValue={setCategory}
             listMode="SCROLLVIEW"
@@ -307,7 +303,7 @@ function DraftScreen({ navigation }: any): ReactElement {
         <View style={styles.centeredView}>
           <View style={styles.modal}>
             <Text style={styles.modalText}>
-              Congratulations! You've submitted a job posting for {modalJobText}.
+              Congratulations! You&apos;ve submitted a job posting for {modalJobText}.
             </Text>
 
             <StyledButton
@@ -319,15 +315,18 @@ function DraftScreen({ navigation }: any): ReactElement {
                 setSuccessModalVisible(false);
                 navigation.navigate('Draft');
               }}
+              activeOpacity={0.7} // placeholder (?)
             />
             <StyledButton
               text="VIEW JOB FEED"
+              textStyle={{}}
               buttonStyle={{ width: '100%' }}
               onPress={() => {
                 navigation.goBack();
                 setSuccessModalVisible(false);
                 navigation.navigate('Feed');
               }}
+              activeOpacity={0.7} // placeholder(?)
             />
             <Pressable onPress={() => setSuccessModalVisible(false)} style={styles.modalX}>
               <Text>X</Text>

@@ -5,7 +5,6 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 import styles from './styles';
 
 function HomeScreen({ navigation }: any): ReactElement {
-  // const { user } = useAuthentication();
 
   const { signOut } = useContext(AuthContext);
 

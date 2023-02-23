@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { User } from '../types/types';
-import { getEmptyUser } from '../utils/utils';
+import getEmptyUser from '../utils/utils';
 
 const createContext = <A extends {} | null>(defaultValue: A) => {
   type UpdateType = React.Dispatch<React.SetStateAction<typeof defaultValue>>;

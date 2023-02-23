@@ -1,13 +1,31 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, DocumentData, getDoc, QueryDocumentSnapshot, setDoc, updateDoc } from 'firebase/firestore';
+import { UserCredential } from 'firebase/auth';
 import { db } from '../config';
 import { User } from '../../types/types';
+
+const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
+  const userId = document.id.toString();
+  const data = document.data();
+  const user = {
+    id: userId,
+    access: data.access,
+    createdJobs: data.createdJobs, // might need to map to job objects later
+    email: data.email,
+    likedJobs: data.likedJobs, // might need to map to job objects later
+    name: data.name,
+    phoneNumber: data.phoneNumber,
+    verified: data.verified,
+    password: data.password
+  };
+  return user as User;
+};
 
 export const getUser = async (id: string): Promise<User | null> => {
   const docRef = doc(db, 'users', id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     console.log('User data:', docSnap.data());
-    return await parseUser(docSnap);
+    return parseUser(docSnap);
   } 
     // doc.data() will be undefined in this case
     console.log('No such document!');
@@ -34,25 +52,8 @@ export const deleteUser = async (userId: string): Promise<void> => {
   await deleteDoc(docRef);
 };
 
-const parseUser = async (doc: any) => {
-  const user_id = doc.id.toString();
-  const data = doc.data();
-  const user = {
-    id: user_id,
-    access: data.access,
-    createdJobs: data.createdJobs, // might need to map to job objects later
-    email: data.email,
-    likedJobs: data.likedJobs, // might need to map to job objects later
-    name: data.name,
-    phoneNumber: data.phoneNumber,
-    verified: data.verified,
-    password: data.password
-  };
-  return user as User;
-};
-
 export const checkAndAddUser = async (
-  user: any,
+  user: UserCredential['user'],
   accessLevel: string,
   phoneNumber: string | null
 ) => {
@@ -77,7 +78,6 @@ export const checkAndAddUser = async (
       name: 'test phone',
       phoneNumber: assignPhoneNumber,
       verified: true,
-      password: null
     });
   }
 };

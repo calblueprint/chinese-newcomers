@@ -1,6 +1,6 @@
 import { User } from '../types/types';
 
-export const getEmptyUser = (): User => ({
+const getEmptyUser = (): User => ({
     id: '',
     access: '',
     createdJobs: [],
@@ -10,3 +10,6 @@ export const getEmptyUser = (): User => ({
     phoneNumber: '',
     verified: false
   });
+
+  export default getEmptyUser;
+

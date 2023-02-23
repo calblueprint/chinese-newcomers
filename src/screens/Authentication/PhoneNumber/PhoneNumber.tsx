@@ -4,7 +4,6 @@ import { Text, View, Image } from 'react-native';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import PhoneInput from 'react-native-phone-number-input';
-import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import styles from './styles';
 import { phoneGetConfirmation, getActivationStatus } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
@@ -19,7 +18,6 @@ function PhoneNumberScreen({ navigation }: any) {
   }
 
   const { ...methods } = useForm<FormValues>();
-  const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);

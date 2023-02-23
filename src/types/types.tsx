@@ -9,7 +9,6 @@ export interface User {
   name: string;
   phoneNumber: string | null;
   verified: boolean;
-  password: string | null;
 }
 
 // export interface Job {

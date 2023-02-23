@@ -6,7 +6,8 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  deleteUser
+  deleteUser,
+  User
 } from 'firebase/auth';
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { getUser, addUser } from "./firestore/user";
@@ -17,7 +18,7 @@ const auth = getAuth(firebaseApp);
 // TODO: CHANGE 'recaptcha-container' TO ID OF CAPTCHA CONTAINER
 // window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
 
-export const getAccess = async (id: string): Promise<User | null> => {
+export const getAccess = async (id: string): Promise<boolean> => {
   const docRef = doc(db, 'access', id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
@@ -67,7 +68,7 @@ export const phoneGetConfirmation = async (phoneNumber: string, appVerifier: any
 };
 
 // Part 2 of signing in with phone. Confirm code using ConfirmationResult. Returns user
-export const confirmCode = async (verificationId: any, code: any) => {
+export const confirmCode = async (verificationId: string, code: string) => {
   try {
     const credential = await PhoneAuthProvider.credential(verificationId, code);
     const result = await signInWithCredential(auth, credential);
@@ -78,10 +79,9 @@ export const confirmCode = async (verificationId: any, code: any) => {
   }
 };
 
-export const signOutUser = async () => {
+export const signOutUser = async (): Promise<void> => {
   try {
-    const result = await signOut(auth);
-    return result;
+    await signOut(auth);
   } catch (error) {
     console.log(error);
   }
@@ -90,7 +90,7 @@ export const signOutUser = async () => {
 export const registerWithEmailAndPassword = async (
   email: string,
   password: string
-): Promise<User> => {
+): Promise<void> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const {user} = userCredential;
@@ -112,7 +112,7 @@ export const registerWithEmailAndPassword = async (
         name: 'test phone',
         phoneNumber: user.phoneNumber,
         verified: true,
-        password: null
+        // password: null
       });
     }
   } catch (e) {
@@ -121,7 +121,7 @@ export const registerWithEmailAndPassword = async (
   }
 };
 
-export const logInOrRegisterWithPhoneNumber = async (user: any): Promise<User> => {
+export const logInOrRegisterWithPhoneNumber = async (user: any): Promise<void> => {
   try {
     const userObject = await getUser(user.id);
     if (userObject !== null) {
@@ -140,7 +140,7 @@ export const logInOrRegisterWithPhoneNumber = async (user: any): Promise<User> =
         name: 'test phone',
         phoneNumber: user.phoneNumber,
         verified: true,
-        password: null
+        // password: null
       });
     }
   } catch (error) {
@@ -148,13 +148,16 @@ export const logInOrRegisterWithPhoneNumber = async (user: any): Promise<User> =
   }
 };
 
-export const signUpPhoneAdmin = async (verficationId: any, code: any): Promise<void> => {
+export const signUpPhoneAdmin = async (verficationId: string, code: string): Promise<void> => {
   try {
     const credential = await PhoneAuthProvider.credential(verficationId, code);
     const result = await signInWithCredential(auth, credential);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const user = auth.currentUser;
-    deleteUser(user)
+    if (user == null) {
+      console.warn('null user error'); // TODO: handle null user case
+    }
+    deleteUser(user as User)
       .then(() => {
         console.log('User successfully deleted');
       })

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { getAuth } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAuthentication } from '../utils/hooks/useAuthentication';
 import UserStack from './userStack';
 import AuthStack from './authStack';
 import { UserContext } from '../context/context';

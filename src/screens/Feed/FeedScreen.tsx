@@ -4,7 +4,6 @@ import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
@@ -52,7 +51,6 @@ function FeedScreen({ navigation }: any) {
     }
   }, [category]);
 
-  const { user } = useAuthentication();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
@@ -70,7 +68,7 @@ function FeedScreen({ navigation }: any) {
         <DropDownPicker
           open={open}
           value={category}
-          items={categories.map((category) => ({ label: category, value: category }))}
+          items={categories.map((c) => ({ label: category, value: category }))}
           setOpen={setOpen}
           setValue={setCategory}
           listMode="SCROLLVIEW"

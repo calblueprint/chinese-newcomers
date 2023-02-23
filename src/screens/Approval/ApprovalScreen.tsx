@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-n
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
 import { useIsFocused } from '@react-navigation/native';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
@@ -24,7 +23,7 @@ function ApprovalScreen({ navigation }: any) {
     fetchJobs();
   }, [isFocused]);
 
-  const { user } = useAuthentication();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
