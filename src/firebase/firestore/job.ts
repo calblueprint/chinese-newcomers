@@ -72,7 +72,7 @@ export const createJob = async (job: Partial<Job>, collectionName: string): Prom
         month +
         additionalZero +
         (monthlyCounter + 1).toString();
-      job.id = jobId; 
+      // job.id = jobId; 
       await setDoc(doc(db, collectionName, jobId), job);
       await updateMonthlyCounter(now, monthlyCounter + 1);
     } else {
