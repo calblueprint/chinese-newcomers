@@ -6,12 +6,20 @@ import {
   SubmitHandler,
   SubmitErrorHandler,
 } from 'react-hook-form';
+import { z } from 'zod';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import logo from '../../../assets/cnsc-logo.png';
+
+const emailSchema = z.object({
+  email: z
+  .string()
+  .min(1)
+  .email(console.log("Error"))
+});
 
 function AdminRegisterScreen({
   navigation,
