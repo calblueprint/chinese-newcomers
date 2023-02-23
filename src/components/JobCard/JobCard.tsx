@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal, SectionList } from 'react-native';
-import styles from './CardStyles';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import styles from './CardStyles';
 import { objectToMap } from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
@@ -16,7 +16,7 @@ interface JobCardProps {
   setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
-const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) => {
+function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
 
@@ -45,7 +45,7 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
           setModalVisible(!modalVisible);
         }}>
         <Modal
-          transparent={true}
+          transparent
           visible={modalVisible}
           animationType="slide"
           onRequestClose={() => {
@@ -131,6 +131,6 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
       </View>
     </Pressable>
   );
-};
+}
 
 export default JobCard;

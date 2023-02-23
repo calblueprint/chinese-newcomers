@@ -1,19 +1,19 @@
 import { React, useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import styles from './styles';
 import { getAuth } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import SigninScreen from '../Signin/Signin';
 
 const auth = getAuth();
 
 const logo = require('../../../assets/cnsc-logo.png');
 
-const AdminSigninScreen = ({ navigation }: any) => {
+function AdminSigninScreen({ navigation }: any) {
   interface FormValues {
     email: string;
     password: string;
@@ -34,9 +34,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
-    return console.log(errors);
-  };
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   const onBack: any = () => {
     navigation.goBack();
@@ -66,7 +64,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
             label="password"
             placeholder=" password"
             onChangeText={setPassword}
-            secureTextEntry={true}
+            secureTextEntry
           />
         </View>
 
@@ -92,6 +90,6 @@ const AdminSigninScreen = ({ navigation }: any) => {
       </FormProvider>
     </View>
   );
-};
+}
 
 export default AdminSigninScreen;

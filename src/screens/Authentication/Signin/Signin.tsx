@@ -5,7 +5,7 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
-const SigninScreen = ({ navigation }: any): ReactElement => {
+function SigninScreen({ navigation }: any): ReactElement {
   const onBack: any = () => {
     navigation.goBack();
   };
@@ -51,6 +51,6 @@ const SigninScreen = ({ navigation }: any): ReactElement => {
       </View>
     </View>
   );
-};
+}
 
 export default SigninScreen;

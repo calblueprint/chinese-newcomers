@@ -15,7 +15,7 @@ export default function App() {
 
   if (!fontsLoaded) {
     return null;
-  } else {
+  } 
     return (
       <ThemeProvider>
         <UserProvider>
@@ -23,5 +23,5 @@ export default function App() {
         </UserProvider>
       </ThemeProvider>
     );
-  }
+  
 }
