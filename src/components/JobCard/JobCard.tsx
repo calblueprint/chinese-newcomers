@@ -136,3 +136,4 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
   );
 };
 
+export default JobCard;
