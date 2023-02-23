@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/Home';
 import DraftScreen from '../screens/Drafting/Draft';
 import SigninScreen from '../screens/Authentication/Signin';
-import SignoutScreen from '../screens/Signout';
+import SignoutScreen from '../screens/Authentication/Signout/Signout';
 import FeedScreen from '../screens/Feed/FeedScreen';
 import { RootStackParamList } from '../types/navigation';
 import AdminRegisterScreen from '../screens/Authentication/AdminRegister/AdminRegister';
@@ -16,7 +16,7 @@ import ApprovalScreen from '../screens/Approval/ApprovalScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const UserStack = (): ReactElement => {
+function UserStack(): ReactElement {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -64,6 +64,6 @@ const UserStack = (): ReactElement => {
       </Tab.Navigator>
     </NavigationContainer>
   );
-};
+}
 
 export default UserStack;

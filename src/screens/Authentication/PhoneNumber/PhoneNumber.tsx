@@ -9,7 +9,6 @@ import styles from './styles';
 import { phoneGetConfirmation, getActivationStatus } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import WelcomeScreen from '../Welcome/Welcome';
 
 const logo = require('../../../assets/cnsc-logo.png');
 

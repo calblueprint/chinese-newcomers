@@ -7,7 +7,6 @@ import NumberInput from '../../../components/NumberInput/NumberInput';
 import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import PhoneNumberScreen from '../PhoneNumber/PhoneNumber';
 
 const logo = require('../../../assets/cnsc-logo.png');
 
