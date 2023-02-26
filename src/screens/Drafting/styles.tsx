@@ -25,8 +25,13 @@ export const styles = StyleSheet.create({
     fontFamily: 'DMSans_700Bold'
   },
   form: {
-    width: '82%',
+    width: '100%',
     flexDirection: 'column'
+  },
+  formContainer: {
+    flex: 1,
+    width: '82%',
+    alignSelf: 'center'
   },
   formTop: {
     flexDirection: 'row',
