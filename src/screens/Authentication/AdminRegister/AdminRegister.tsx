@@ -14,7 +14,7 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import logo from '../../../assets/cnsc-logo.png';
 
-const emailSchema = z.string().email();
+const emailSchema = z.string().email({ message: "Invalid email address" });
 
 function AdminRegisterScreen({
   navigation,
@@ -35,6 +35,9 @@ function AdminRegisterScreen({
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
+      if (e instanceof z.ZodError) {
+        console.log(e.issues);
+      }
       console.error(e);
     }
   };

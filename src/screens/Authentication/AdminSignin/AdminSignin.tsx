@@ -11,7 +11,7 @@ import logo from '../../../assets/cnsc-logo.png';
 import SigninScreen from '../Signin/Signin';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
-const emailSchema = z.string().email();
+const emailSchema = z.string().email({ message: "Oops! Invalid email. Try again." });
 
 function AdminSigninScreen({
   navigation,
@@ -32,7 +32,10 @@ function AdminSigninScreen({
       console.log('signed in');
       // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
-      console.error(e);
+      if (e instanceof z.ZodError) {
+        console.log(e.issues);
+      }
+      console.error(e.message);
       throw e;
     }
   };
