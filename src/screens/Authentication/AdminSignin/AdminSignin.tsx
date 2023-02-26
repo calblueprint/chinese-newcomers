@@ -10,7 +10,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { signInEmail } from '../../../firebase/auth';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
-const emailSchema = z.string().email();
+const emailSchema = z.string().email({ message: "Oops! Invalid email. Try again." });
 
 function AdminSigninScreen({
   navigation,
@@ -30,7 +30,10 @@ function AdminSigninScreen({
       await signInEmail(email, password);
       console.log('signed in');
     } catch (e) {
-      console.error(e);
+      if (e instanceof z.ZodError) {
+        console.log(e.issues);
+      }
+      console.error(e.message);
       throw e;
     }
   };

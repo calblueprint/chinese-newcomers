@@ -15,7 +15,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { signUpEmail } from '../../../firebase/auth';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
-const emailSchema = z.string().email();
+const emailSchema = z.string().email({ message: "Invalid email address" });
 
 function AdminRegisterScreen({
   navigation,
@@ -36,6 +36,9 @@ function AdminRegisterScreen({
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
+      if (e instanceof z.ZodError) {
+        console.log(e.issues);
+      }
       console.error(e);
     }
   };
