@@ -1,16 +1,10 @@
 import React, { ReactElement, useState } from 'react';
-import {
-  Text,
-  View,
-  Pressable,
-  Switch,
-  Modal,
-  SafeAreaView,
-} from 'react-native';
-import { getAuth } from 'firebase/auth';
+import { Text, View, Pressable, Switch, Modal, SafeAreaView, Platform} from 'react-native';
+import { getAuth, signOut } from 'firebase/auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { Job } from '../../types/types';
 import { createJob } from '../../firebase/firestore/job';
@@ -111,6 +105,7 @@ function DraftScreen({ navigation }: any): ReactElement {
       await createJob(job, 'notApprovedJobs');
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
+      methods.reset();
     } catch (e) {
       console.error(e);
     }
@@ -118,7 +113,9 @@ function DraftScreen({ navigation }: any): ReactElement {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.form}>
+      <KeyboardAwareScrollView style={styles.form}>
+      {/* <ScrollView > */}
+      <View style={styles.formContainer}>
         <View style={styles.top}>
           <Text style={styles.formTitle}>Job Post Draft</Text>
           <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
@@ -360,7 +357,9 @@ function DraftScreen({ navigation }: any): ReactElement {
             <Text style={styles.buttonText}>Post Job</Text>
           </Pressable>
         </View>
-      </ScrollView>
+        </View>
+      {/* </ScrollView> */}
+      </KeyboardAwareScrollView>
       {/* <Button title="Back" style={styles.button} onPress={() => navigation.navigate('Home')} /> */}
       <Modal visible={successModalVisibile} transparent animationType="slide">
         <View style={styles.centeredView}>
