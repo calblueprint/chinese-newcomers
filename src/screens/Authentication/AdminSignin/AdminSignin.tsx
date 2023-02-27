@@ -3,6 +3,7 @@ import { Text, View, Image } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { z } from 'zod';
+import { TextField } from 'react-native-material-textfield';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
