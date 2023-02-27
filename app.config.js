@@ -52,7 +52,8 @@ export default {
             buildToolsVersion: '31.0.0'
           },
           ios: {
-            deploymentTarget: '13.0'
+            deploymentTarget: '13.0',
+            useFrameworks: 'dynamic'
           }
         }
       ]
