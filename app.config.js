@@ -6,10 +6,10 @@ export default {
     slug: 'chinese-newcomers',
     version: '1.0.0',
     orientation: 'portrait',
-    icon: './assets/icon.png',
+    icon: './src/assets/icon.png',
     userInterfaceStyle: 'light',
     splash: {
-      image: './assets/splash.png',
+      image: './src/assets/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#ffffff'
     },
@@ -18,16 +18,18 @@ export default {
     },
     assetBundlePatterns: ['**/*'],
     ios: {
-      supportsTablet: true
+      supportsTablet: true,
+      bundleIdentifier: 'org.calblueprint.cnsc'
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
+        foregroundImage: './src/assets/adaptive-icon.png',
         backgroundColor: '#FFFFFF'
-      }
+      },
+      package: 'org.calblueprint.cnsc'
     },
     web: {
-      favicon: './assets/favicon.png'
+      favicon: './src/assets/favicon.png'
     },
     extra: {
       firebaseApiKey: process.env.FIREBASE_API_KEY,
@@ -39,6 +41,21 @@ export default {
       eas: {
         projectId: 'cd93534f-9ad5-4519-8be6-424af925ef8a'
       }
-    }
+    },
+    plugins: [
+      [
+        'expo-build-properties',
+        {
+          android: {
+            compileSdkVersion: 31,
+            targetSdkVersion: 31,
+            buildToolsVersion: '31.0.0'
+          },
+          ios: {
+            deploymentTarget: '13.0'
+          }
+        }
+      ]
+    ]
   }
 };
