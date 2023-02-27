@@ -8,6 +8,7 @@ import {
 import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
 import logo from '../../../assets/cnsc-logo.png';
 import { z } from 'zod';
+import { TextField } from 'react-native-material-textfield';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
