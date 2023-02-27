@@ -28,6 +28,7 @@ function AdminRegisterScreen({
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // const [errorMsg, setErrorMsg] = useState('');
   const { phoneNumber } = route.params;
   const { dispatch } = useContext(AuthContext);
 
@@ -37,6 +38,7 @@ function AdminRegisterScreen({
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
       if (e instanceof z.ZodError) {
+        // setErrorText = e.issues
         console.log(e.issues);
       }
       console.error(e);
