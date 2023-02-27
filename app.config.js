@@ -19,7 +19,8 @@ export default {
     assetBundlePatterns: ['**/*'],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: 'org.calblueprint.cnsc'
+      bundleIdentifier: 'org.calblueprint.cnsc',
+      bitcode: 'Debug'
     },
     android: {
       adaptiveIcon: {
