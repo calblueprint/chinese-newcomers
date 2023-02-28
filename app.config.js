@@ -54,7 +54,8 @@ export default {
           },
           ios: {
             deploymentTarget: '13.0',
-            useFrameworks: 'dynamic'
+            useFrameworks: 'static',
+            newArchEnabled: true
           }
         }
       ]
