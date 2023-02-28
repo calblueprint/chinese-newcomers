@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import { getAuth } from 'firebase/auth';
+import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
+import { Button } from 'react-native-elements';
+import { getAuth, signOut } from 'firebase/auth';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
@@ -77,9 +78,15 @@ function FeedScreen({ navigation }: any) {
         />
 
         {filteredList.map((job, index) => (
+<<<<<<< HEAD
           // eslint-disable-next-line react/jsx-key
           <JobCard job={job} idx={index} pending={false} />
         ))}
+=======
+            // eslint-disable-next-line react/jsx-key
+            <JobCard job={job} idx={index} pending={false} />
+          ))}
+>>>>>>> 2b768d2 (added expandable text boxes in draft form)
       </ScrollView>
       {/* <View style={styles.footer}>
         <Button title="Back" onPress={() => navigation.navigate('Home')} />

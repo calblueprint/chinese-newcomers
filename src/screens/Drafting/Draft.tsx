@@ -1,10 +1,11 @@
 import React, { ReactElement, useState } from 'react';
-import { Text, View, Pressable, Switch, Modal, SafeAreaView, Platform} from 'react-native';
+import { Text, View, Pressable, Switch, Modal, SafeAreaView } from 'react-native';
+import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { Job } from '../../types/types';
 import { createJob } from '../../firebase/firestore/job';
@@ -151,7 +152,7 @@ function DraftScreen({ navigation }: any): ReactElement {
           <FormInput
             name="date"
             label="date"
-            placeholder=" 10/27/2022"
+            placeholder="10/27/2022"
             rules={{ required: 'Date is required!' }}
           />
           {methods.formState.errors.date != null && (
@@ -168,11 +169,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Company Name</Text>
           </View>
-          <FormInput
-            name="companyName"
-            label="companyName"
-            placeholder=" Lucky Dim Sum"
-          />
+          <FormInput name="companyName" label="companyName" placeholder="Lucky Dim Sum" />
 
           <View style={styles.formTop}>
             <Switch
@@ -182,11 +179,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Address</Text>
           </View>
-          <FormInput
-            name="address"
-            label="address"
-            placeholder=" 2400 Durant Ave., Berkeley, CA"
-          />
+          <FormInput name="address" label="address" placeholder="2400 Durant Ave., Berkeley, CA" />
 
           <View style={styles.formTop}>
             <Switch
@@ -198,11 +191,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Contact Person</Text>
           </View>
-          <FormInput
-            name="contactPerson"
-            label="contactPerson"
-            placeholder=" Amelia Bedelia"
-          />
+          <FormInput name="contactPerson" label="contactPerson" placeholder="Amelia Bedelia" />
 
           <View style={styles.formTop}>
             <Switch
@@ -212,11 +201,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Phone</Text>
           </View>
-          <FormInput
-            name="phone"
-            label="phone"
-            placeholder=" (510) xxx - xxxx"
-          />
+          <FormInput name="phone" label="phone" placeholder="(510) xxx - xxxx" />
 
           <View style={styles.formTop}>
             <Switch
@@ -231,7 +216,7 @@ function DraftScreen({ navigation }: any): ReactElement {
           <FormInput
             name="jobPosition"
             label="jobPosition"
-            placeholder=" Waiter, waitress"
+            placeholder="Waiter, waitress"
             rules={{ required: 'Job Position is required!' }}
           />
           {methods.formState.errors.jobPosition != null && (
@@ -251,7 +236,7 @@ function DraftScreen({ navigation }: any): ReactElement {
           <FormInput
             name="languageRequirement"
             label="languageRequirement"
-            placeholder=" Cantonese, English"
+            placeholder="Cantonese, English"
             rules={{ required: 'Language Requirement is required!' }}
           />
           {methods.formState.errors.languageRequirement != null && (
@@ -268,11 +253,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Working hours/day</Text>
           </View>
-          <FormInput
-            name="workingHours"
-            label="workingHours"
-            placeholder=" 4 - 8 hrs/day"
-          />
+          <FormInput name="workingHours" label="workingHours" placeholder="4 - 8 hrs/day" />
 
           <View style={styles.formTop}>
             <Switch
@@ -284,11 +265,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Working days/week</Text>
           </View>
-          <FormInput
-            name="workingDays"
-            label="workingDays"
-            placeholder=" 3 - 5 days/week"
-          />
+          <FormInput name="workingDays" label="workingDays" placeholder="3 - 5 days/week" />
 
           <View style={styles.formTop}>
             <Switch
@@ -298,7 +275,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Salary</Text>
           </View>
-          <FormInput name="salary" label="salary" placeholder=" $36/hr" />
+          <FormInput name="salary" label="salary" placeholder="$36/hr" />
 
           <View style={styles.formTop}>
             <Switch
@@ -310,11 +287,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Probation Period (if any)</Text>
           </View>
-          <FormInput
-            name="probationPeriod"
-            label="probationPeriod"
-            placeholder=" None"
-          />
+          <FormInput name="probationPeriod" label="probationPeriod" placeholder="None" />
 
           <View style={styles.formTop}>
             <Switch
@@ -329,7 +302,7 @@ function DraftScreen({ navigation }: any): ReactElement {
           <FormInput
             name="employeeBenefit"
             label="employeeBenefit"
-            placeholder=" Insurance, paid leave, etc."
+            placeholder="Insurance, paid leave, etc."
           />
 
           <View style={styles.formTop}>
@@ -340,11 +313,7 @@ function DraftScreen({ navigation }: any): ReactElement {
             />
             <Text style={styles.formText}>Other Information</Text>
           </View>
-          <FormInput
-            name="otherInfo"
-            label="otherInfo"
-            placeholder=" Looking for XYZ, etc."
-          />
+          <FormInput name="otherInfo" label="otherInfo" placeholder="Looking for XYZ, etc." />
         </FormProvider>
         <View style={styles.bottomButtons}>
           <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
