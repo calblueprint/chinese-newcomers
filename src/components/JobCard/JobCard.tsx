@@ -42,7 +42,7 @@ function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
       <GestureRecognizer
         style={{ flex: 1 }}
         onSwipeDown={() => {
-          setModalVisible(!modalVisible);
+          setModalVisible(false);
         }}>
         <Modal
           transparent
@@ -54,7 +54,7 @@ function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
-                <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                <Pressable onPress={() => setModalVisible(false)}>
                   <Text style={styles.modalButtonText}>X</Text>
                 </Pressable>
                 <Text style={styles.modalJobRefText}>{job.id}</Text>
