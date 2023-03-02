@@ -7,7 +7,7 @@ const createContext = <A extends {} | null>(defaultValue: A) => {
   const defaultUpdate: UpdateType = () => defaultValue;
   const ctx = React.createContext({
     state: defaultValue,
-    update: defaultUpdate
+    update: defaultUpdate,
   });
 
   function Provider(props: React.PropsWithChildren<{}>) {

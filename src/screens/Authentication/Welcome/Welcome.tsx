@@ -6,7 +6,7 @@ import styles from './styles';
 import { firebaseApp } from '../../../firebase/firebaseApp';
 import '../../../translation/i18n';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import logo from '../../../assets/cnsc-logo.png'
+import logo from '../../../assets/cnsc-logo.png';
 
 function WelcomeScreen({ navigation }: any) {
   const recaptchaVerifier = useRef(null);

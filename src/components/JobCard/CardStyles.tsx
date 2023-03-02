@@ -11,14 +11,14 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 7,
     borderColor: '#C59675',
-    borderWidth: 2
+    borderWidth: 2,
   },
   jobRef: {
     marginBottom: '3%',
     marginLeft: '10%',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    height: '15%'
+    height: '15%',
   },
   jobName: {
     display: 'flex',
@@ -26,13 +26,13 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     marginLeft: '10%',
     height: '30%',
-    marginBottom: '8%'
+    marginBottom: '8%',
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     marginTop: '70%',
@@ -45,17 +45,17 @@ export default StyleSheet.create({
     borderColor: '#C59675',
     borderWidth: 2,
     shadowOpacity: 0.25,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   textStyle: {
     color: 'black',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: "DMSans_700Bold"
+    fontFamily: 'DMSans_700Bold',
   },
   modalHeader: {
     marginTop: '5%',
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     height: '12%',
     alignItems: 'flex-start',
     marginLeft: '5%',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   modalText: {
     marginTop: '1%',
@@ -72,36 +72,36 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 18,
     marginLeft: '5%',
-    fontFamily: "DMSans_500Medium"
+    fontFamily: 'DMSans_500Medium',
   },
   modalInfo: {
     width: '100%',
     height: '80%',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   jobRefText: {
     color: 'black',
     fontSize: 14,
-    fontFamily: "DMSans_500Medium"
+    fontFamily: 'DMSans_500Medium',
   },
   modalJobRefText: {
     color: 'black',
     fontSize: 20,
-    fontFamily: "DMSans_500Medium"
+    fontFamily: 'DMSans_500Medium',
   },
 
   modalJobNameText: {
     color: 'black',
     fontSize: 22,
     fontWeight: 'bold',
-    fontFamily: "DMSans_700Bold"
+    fontFamily: 'DMSans_700Bold',
   },
   jobNameText: {
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
-    fontFamily: "DMSans_700Bold"
+    fontFamily: 'DMSans_700Bold',
   },
   buttonContainer: {
     height: '18%',
@@ -110,6 +110,6 @@ export default StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    marginTop: '6%'
-  }
+    marginTop: '6%',
+  },
 });

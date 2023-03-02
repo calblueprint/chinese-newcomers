@@ -1,14 +1,22 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useRef } from 'react';
 import { Text, View, Image } from 'react-native';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import PhoneInput from 'react-native-phone-number-input';
 import styles from './styles';
-import { phoneGetConfirmation, getActivationStatus } from '../../../firebase/auth';
+import {
+  phoneGetConfirmation,
+  getActivationStatus,
+} from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import logo from '../../../assets/cnsc-logo.png'
+import logo from '../../../assets/cnsc-logo.png';
 
 function PhoneNumberScreen({ navigation }: any) {
   interface FormValues {
@@ -29,9 +37,15 @@ function PhoneNumberScreen({ navigation }: any) {
       // To Do: render error label
       const activated = await getActivationStatus(phoneNumber);
       if (!activated) {
-        const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
+        const verificationId = await phoneGetConfirmation(
+          phoneNumber,
+          recaptchaVerifier,
+        );
         console.log(verificationId);
-        navigation.navigate('VerificationCode', { verificationId, phoneNumber });
+        navigation.navigate('VerificationCode', {
+          verificationId,
+          phoneNumber,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -42,7 +56,7 @@ function PhoneNumberScreen({ navigation }: any) {
     navigation.goBack();
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors) => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -62,7 +76,7 @@ function PhoneNumberScreen({ navigation }: any) {
               ref={phoneInput}
               placeholder="4151234567"
               defaultValue={phoneNumber}
-              onChangeFormattedText={(text) => {
+              onChangeFormattedText={text => {
                 setPhoneNumber(text);
               }}
               defaultCode="US"
@@ -76,7 +90,7 @@ function PhoneNumberScreen({ navigation }: any) {
                 width: '45%',
                 height: '100%',
                 backgroundColor: '#FFFFFF',
-                borderColor: '#CC433C'
+                borderColor: '#CC433C',
               }}
               textStyle={{ fontSize: 16, color: '#CC433C' }}
             />

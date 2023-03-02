@@ -16,28 +16,26 @@ type Props = {
 };
 
 const homeOutline = (props: Props) => {
-  const {color} = props;
-  return (
-    <MaterialCommunityIcons name="home-outline" color={color} size={26} />
-  );
+  const { color } = props;
+  return <MaterialCommunityIcons name="home-outline" color={color} size={26} />;
 };
 
 const noteTextOutline = (props: Props) => {
-  const {color} = props;
+  const { color } = props;
   return (
     <MaterialCommunityIcons name="note-text-outline" color={color} size={26} />
   );
 };
 
 const accountCheck = (props: Props) => {
-  const {color} = props;
+  const { color } = props;
   return (
     <MaterialCommunityIcons name="account-check" color={color} size={26} />
   );
 };
 
 const logoutVariant = (props: Props) => {
-  const {color} = props;
+  const { color } = props;
   return (
     <MaterialCommunityIcons name="logout-variant" color={color} size={26} />
   );
@@ -51,33 +49,34 @@ function UserStack(): ReactElement {
         // TODO: Curve the bottom navigation bar
         barStyle={{ backgroundColor: '#FFFFFF' }}
         activeColor="#CC433C"
-        shifting={false}>
+        shifting={false}
+      >
         <Tab.Screen
           name="Feed"
           component={FeedScreen}
           options={{
-            tabBarIcon: homeOutline
+            tabBarIcon: homeOutline,
           }}
         />
         <Tab.Screen
           name="Draft"
           component={DraftScreen}
           options={{
-            tabBarIcon: noteTextOutline
+            tabBarIcon: noteTextOutline,
           }}
         />
         <Tab.Screen
           name="Approval"
           component={ApprovalScreen}
           options={{
-            tabBarIcon: accountCheck
+            tabBarIcon: accountCheck,
           }}
         />
         <Tab.Screen
           name="Signout"
           component={SignoutScreen}
           options={{
-            tabBarIcon: logoutVariant
+            tabBarIcon: logoutVariant,
           }}
         />
       </Tab.Navigator>

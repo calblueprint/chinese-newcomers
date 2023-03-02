@@ -5,7 +5,6 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 import styles from './styles';
 
 function HomeScreen({ navigation }: any): ReactElement {
-
   const { signOut } = useContext(AuthContext);
 
   return (
@@ -14,11 +13,10 @@ function HomeScreen({ navigation }: any): ReactElement {
         text="Sign Out"
         onPress={signOut}
         buttonStyle={{ width: '45%', height: '5%' }}
-        textStyle = {{}}
+        textStyle={{}}
       />
     </View>
   );
 }
-
 
 export default HomeScreen;

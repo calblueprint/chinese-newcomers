@@ -6,42 +6,42 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   button: {
-    marginTop: 10
+    marginTop: 10,
   },
   top: {
-    marginTop: '5%'
+    marginTop: '5%',
   },
   refId: {
     fontSize: 14,
     fontWeight: '500',
-    fontFamily: 'DMSans_500Medium'
+    fontFamily: 'DMSans_500Medium',
   },
   formTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    fontFamily: 'DMSans_700Bold'
+    fontFamily: 'DMSans_700Bold',
   },
   form: {
     width: '82%',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   formTop: {
     flexDirection: 'row',
     marginBottom: 5,
-    marginTop: 25
+    marginTop: 25,
   },
   formText: {
     fontSize: 18,
     marginLeft: 12,
-    fontFamily: 'DMSans_500Medium'
+    fontFamily: 'DMSans_500Medium',
   },
   bottomButtons: {
     flexDirection: 'row',
     alignContent: 'space-around',
-    marginBottom: '10%'
+    marginBottom: '10%',
   },
   buttons: {
     width: '45%',
@@ -50,19 +50,19 @@ export default StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '8%'
+    marginTop: '8%',
   },
   buttonText: {
     fontSize: 17,
     color: '#fff',
     fontWeight: 'bold',
-    fontFamily: 'DMSans_500Medium'
+    fontFamily: 'DMSans_500Medium',
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22
+    marginTop: 22,
   },
   modal: {
     width: '80%',
@@ -77,20 +77,20 @@ export default StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.95,
     shadowRadius: 200,
-    elevation: 5
+    elevation: 5,
   },
   modalText: {
     marginBottom: 20,
-    ...theme.textVariants.h3
+    ...theme.textVariants.h3,
   },
   modalX: {
     display: 'flex',
     position: 'absolute',
     top: '5%',
-    right: '5%'
-  }
+    right: '5%',
+  },
 });

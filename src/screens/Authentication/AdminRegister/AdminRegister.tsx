@@ -1,7 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image, KeyboardAvoidingView } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
@@ -21,7 +26,7 @@ function AdminRegisterScreen({ route, navigation }: any) {
   const [password, setPassword] = useState('');
   const { phoneNumber } = route.params;
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
@@ -29,7 +34,8 @@ function AdminRegisterScreen({ route, navigation }: any) {
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
+    console.log(errors);
 
   const onBack: any = () => {
     navigation.goBack();
@@ -41,14 +47,17 @@ function AdminRegisterScreen({ route, navigation }: any) {
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior="position"
-          contentContainerStyle={styles.container}>
+          contentContainerStyle={styles.container}
+        >
           <View style={styles.logoContainer}>
             <Image source={logo} style={styles.logo} />
           </View>
           <FormProvider {...methods}>
             <View style={styles.textContainer}>
               <Text style={styles.headingText}>Great! </Text>
-              <Text style={styles.subText}>Now, enter your email & create a password: </Text>
+              <Text style={styles.subText}>
+                Now, enter your email & create a password:{' '}
+              </Text>
             </View>
             <View style={styles.inputContainer}>
               <Text style={styles.smallText}>Email address</Text>
@@ -66,7 +75,11 @@ function AdminRegisterScreen({ route, navigation }: any) {
                 onChangeText={setPassword}
               />
               <Text style={styles.smallText}>Verify Password </Text>
-              <AuthInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
+              <AuthInput
+                name="confirmPassword"
+                label="confirmPassword"
+                placeholder=" password"
+              />
             </View>
             <View style={styles.buttonContainer}>
               <StyledButton
@@ -76,7 +89,7 @@ function AdminRegisterScreen({ route, navigation }: any) {
                   width: '45%',
                   height: '100%',
                   backgroundColor: '#FFFFFF',
-                  borderColor: '#CC433C'
+                  borderColor: '#CC433C',
                 }}
                 textStyle={{ fontSize: 16, color: '#CC433C' }}
               />
@@ -85,7 +98,6 @@ function AdminRegisterScreen({ route, navigation }: any) {
                 onPress={methods.handleSubmit(onSubmit, onError)}
                 buttonStyle={{ width: '45%', height: '100%' }}
                 textStyle={{}}
- 
               />
             </View>
           </FormProvider>

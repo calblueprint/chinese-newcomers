@@ -22,7 +22,6 @@ function ApprovalScreen({ navigation }: any) {
     fetchJobs();
   }, [isFocused]);
 
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
@@ -32,8 +31,9 @@ function ApprovalScreen({ navigation }: any) {
         contentContainerStyle={{
           flexGrow: 1,
           alignItems: 'center',
-          width: '100%'
-        }}>
+          width: '100%',
+        }}
+      >
         {list.map((job, index) => {
           console.log(job);
           return (
@@ -43,11 +43,14 @@ function ApprovalScreen({ navigation }: any) {
               idx={index}
               pending
               pendingJobs={list}
-              setPendingJobs={setList} />
+              setPendingJobs={setList}
+            />
           );
         })}
         {list.length === 0 && (
-          <Text style={{ marginTop: '10%' }}>No pending job drafts to review!</Text>
+          <Text style={{ marginTop: '10%' }}>
+            No pending job drafts to review!
+          </Text>
         )}
       </ScrollView>
       {/* <View style={styles.footer}>

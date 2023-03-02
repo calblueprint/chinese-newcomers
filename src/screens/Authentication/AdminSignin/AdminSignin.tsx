@@ -1,15 +1,19 @@
-import React, {useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import logo from '../../../assets/cnsc-logo.png'
+import logo from '../../../assets/cnsc-logo.png';
 
 const auth = getAuth();
-
 
 function AdminSigninScreen({ navigation }: any) {
   interface FormValues {
@@ -21,7 +25,7 @@ function AdminSigninScreen({ navigation }: any) {
   const [password, setPassword] = useState('');
   const { signInEmail } = useContext(AuthContext);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
       await signInEmail(email, password);
       console.log('signed in');
@@ -32,7 +36,8 @@ function AdminSigninScreen({ navigation }: any) {
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
+    console.log(errors);
 
   const onBack: any = () => {
     navigation.goBack();
@@ -80,7 +85,7 @@ function AdminSigninScreen({ navigation }: any) {
               width: '100%',
               height: '100%',
               backgroundColor: '#FFFFFF',
-              borderColor: '#CC433C'
+              borderColor: '#CC433C',
             }}
             textStyle={{ fontSize: 16, color: '#CC433C' }}
           />

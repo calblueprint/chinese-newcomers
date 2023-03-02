@@ -1,13 +1,18 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
 // import { getAuth, signOut } from 'firebase/auth';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
 import styles from './styles';
 import NumberInput from '../../../components/NumberInput/NumberInput';
 import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import logo from '../../../assets/cnsc-logo.png'
+import logo from '../../../assets/cnsc-logo.png';
 
 function VerificationScreen({ route, navigation }: any) {
   interface FormValues {
@@ -33,7 +38,8 @@ function VerificationScreen({ route, navigation }: any) {
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
+    console.log(errors);
 
   const onBack: any = () => {
     navigation.goBack();
@@ -47,20 +53,25 @@ function VerificationScreen({ route, navigation }: any) {
       <FormProvider {...methods}>
         <View style={styles.textContainer}>
           <Text style={styles.headingText}>Great! </Text>
-          <Text style={styles.subText}>Now, enter the six-digit verification code: </Text>
+          <Text style={styles.subText}>
+            Now, enter the six-digit verification code:{' '}
+          </Text>
         </View>
         <View style={styles.verificationContainer}>
-          <NumberInput placeholder=" 123456" onChangeText={setVerificationCode}/>
+          <NumberInput
+            placeholder=" 123456"
+            onChangeText={setVerificationCode}
+          />
         </View>
         <View style={styles.buttonContainer}>
           <StyledButton
-            text="back" 
+            text="back"
             onPress={onBack}
             buttonStyle={{
               width: '45%',
               height: '100%',
               backgroundColor: '#FFFFFF',
-              borderColor: '#CC433C'
+              borderColor: '#CC433C',
             }}
             textStyle={{ fontSize: 16, color: '#CC433C' }}
           />

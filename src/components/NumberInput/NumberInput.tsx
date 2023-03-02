@@ -10,7 +10,13 @@ interface NumberInputProps {
 function NumberInput(props: NumberInputProps) {
   const { placeholder, onChangeText } = props;
 
-  return <TextInput style={styles.input} placeholder={placeholder} onChangeText={onChangeText} />;
-};
+  return (
+    <TextInput
+      style={styles.input}
+      placeholder={placeholder}
+      onChangeText={onChangeText}
+    />
+  );
+}
 
 export default NumberInput;
