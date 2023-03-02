@@ -7,7 +7,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     fontWeight: '600',
     textTransform: 'uppercase',
-    fontFamily: 'DMSans_500Medium'
+    fontFamily: 'DMSans_500Medium',
   },
   buttonContainer: {
     backgroundColor: '#CC433C',
@@ -18,6 +18,6 @@ export default StyleSheet.create({
     borderColor: '#CC433C',
     borderWidth: 1.5,
     marginTop: '2%',
-    marginBottom: '2%'
-  }
+    marginBottom: '2%',
+  },
 });

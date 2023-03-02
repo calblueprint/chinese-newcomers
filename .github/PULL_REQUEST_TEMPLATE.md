@@ -7,4 +7,3 @@
 ## Screenshots
 
 CC: @surajr10 @themiachou8
-

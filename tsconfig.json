@@ -5,13 +5,8 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react-native",
-    "lib": [
-      "es2019"
-    ],
-    "types": [
-      "react-native",
-      "jest"
-    ],
+    "lib": ["es2019"],
+    "types": ["react-native", "jest"],
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
