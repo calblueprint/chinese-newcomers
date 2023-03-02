@@ -5,10 +5,9 @@ import AuthStack from './authStack';
 import {
   AuthContext,
   useAuthReducer,
-  getAuthContext
+  getAuthContext,
 } from '../context/AuthContext';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function RootNavigation() {
   const [authState, dispatch] = useAuthReducer();
 

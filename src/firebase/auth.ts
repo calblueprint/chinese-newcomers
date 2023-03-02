@@ -5,11 +5,11 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   deleteUser,
-  User
+  User,
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { getUser, addUser } from "./firestore/user";
-import { db } from "./config";
+import { getUser, addUser } from './firestore/user';
+import { db } from './config';
 import firebaseApp from './firebaseApp';
 
 const auth = getAuth(firebaseApp);
@@ -22,42 +22,49 @@ export const getAccess = async (id: string): Promise<boolean> => {
   if (docSnap.exists()) {
     console.log('Admin access');
     return true;
-  } 
-    console.log('not admin');
-    return false;
-  
+  }
+  console.log('not admin');
+  return false;
 };
 
 export const activatedAdmin = async (phoneNumber: string): Promise<void> => {
   const docRef = doc(db, 'access', phoneNumber);
   const data = {
-    activated: true
+    activated: true,
   };
   await updateDoc(docRef, data);
 };
 
-export const getActivationStatus = async (phoneNumber: string): Promise<boolean> => {
+export const getActivationStatus = async (
+  phoneNumber: string,
+): Promise<boolean> => {
   const docRef = doc(db, 'access', phoneNumber);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     if (docSnap.data().activated) {
-      console.log('You are an activated admin user. Please sign in as an admin.');
+      console.log(
+        'You are an activated admin user. Please sign in as an admin.',
+      );
       return true;
-    } 
-      console.log('Admin not activated.');
-      return false;
-    
-  } 
-    console.log('Not admin');
+    }
+    console.log('Admin not activated.');
     return false;
-  
+  }
+  console.log('Not admin');
+  return false;
 };
 
 // Part 1 of signing in with phone. Returns verificationId
-export const phoneGetConfirmation = async (phoneNumber: string, appVerifier: any) => {
+export const phoneGetConfirmation = async (
+  phoneNumber: string,
+  appVerifier: any,
+) => {
   try {
     const phoneProvider = new PhoneAuthProvider(auth);
-    const verificationId = await phoneProvider.verifyPhoneNumber(phoneNumber, appVerifier.current);
+    const verificationId = await phoneProvider.verifyPhoneNumber(
+      phoneNumber,
+      appVerifier.current,
+    );
     return verificationId;
   } catch (e) {
     console.log(e);
@@ -87,15 +94,19 @@ export const signOutUser = async (): Promise<void> => {
 
 export const registerWithEmailAndPassword = async (
   email: string,
-  password: string
+  password: string,
 ): Promise<void> => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const {user} = userCredential;
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    const { user } = userCredential;
     console.log(user);
     const userObject = await getUser(user.uid);
     if (userObject !== null) {
-      console.log(`Got user from users collection. Name: ${  userObject.name}`);
+      console.log(`Got user from users collection. Name: ${userObject.name}`);
       // TODO: probably put user object into react context
     } else {
       console.log('Create new user flow');
@@ -110,7 +121,6 @@ export const registerWithEmailAndPassword = async (
         name: 'test phone',
         phoneNumber: user.phoneNumber,
         verified: true,
-        // password: null
       });
     }
   } catch (e) {
@@ -119,11 +129,13 @@ export const registerWithEmailAndPassword = async (
   }
 };
 
-export const logInOrRegisterWithPhoneNumber = async (user: any): Promise<void> => {
+export const logInOrRegisterWithPhoneNumber = async (
+  user: any,
+): Promise<void> => {
   try {
     const userObject = await getUser(user.id);
     if (userObject !== null) {
-      console.log(`Got user from users collection. Name: ${  userObject.name}`);
+      console.log(`Got user from users collection. Name: ${userObject.name}`);
       // TODO: probably put user object into react context
     } else {
       console.log('Create new user flow');
@@ -146,7 +158,10 @@ export const logInOrRegisterWithPhoneNumber = async (user: any): Promise<void> =
   }
 };
 
-export const signUpPhoneAdmin = async (verficationId: string, code: string): Promise<void> => {
+export const signUpPhoneAdmin = async (
+  verficationId: string,
+  code: string,
+): Promise<void> => {
   try {
     const credential = await PhoneAuthProvider.credential(verficationId, code);
     const result = await signInWithCredential(auth, credential);
@@ -159,7 +174,7 @@ export const signUpPhoneAdmin = async (verficationId: string, code: string): Pro
       .then(() => {
         console.log('User successfully deleted');
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Error deleting user', error);
       });
   } catch (error) {

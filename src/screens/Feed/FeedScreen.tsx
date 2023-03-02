@@ -28,7 +28,7 @@ function FeedScreen({ navigation }: any) {
     'finance',
     'management',
     'IT',
-    'other'
+    'other',
   ];
 
   const isFocused = useIsFocused();
@@ -46,7 +46,7 @@ function FeedScreen({ navigation }: any) {
     if (category === 'all') {
       setFilteredList(list);
     } else {
-      setFilteredList(list.filter((job) => job.category === category));
+      setFilteredList(list.filter(job => job.category === category));
     }
   }, [category, list]);
 
@@ -60,14 +60,15 @@ function FeedScreen({ navigation }: any) {
         contentContainerStyle={{
           flexGrow: 1,
           alignItems: 'center',
-          width: '100%'
-        }}>
+          width: '100%',
+        }}
+      >
         <Text style={styles.categoryText}> Filter By Category: </Text>
 
         <DropDownPicker
           open={open}
           value={category}
-          items={categories.map((c) => ({ label: c, value: c }))}
+          items={categories.map(c => ({ label: c, value: c }))}
           setOpen={setOpen}
           setValue={setCategory}
           listMode="SCROLLVIEW"
@@ -76,9 +77,9 @@ function FeedScreen({ navigation }: any) {
         />
 
         {filteredList.map((job, index) => (
-            // eslint-disable-next-line react/jsx-key
-            <JobCard job={job} idx={index} pending={false} />
-          ))}
+          // eslint-disable-next-line react/jsx-key
+          <JobCard job={job} idx={index} pending={false} />
+        ))}
       </ScrollView>
       {/* <View style={styles.footer}>
         <Button title="Back" onPress={() => navigation.navigate('Home')} />
