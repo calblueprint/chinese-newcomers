@@ -13,8 +13,13 @@ import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
+import PhoneNumberScreen from '../PhoneNumber/PhoneNumber';
+import { AuthStackScreenProps } from '../../../navigation/types';
 
-function VerificationScreen({ route, navigation }: any) {
+function VerificationScreen({
+  route,
+  navigation,
+}: AuthStackScreenProps<'VerificationScreen'>) {
   interface FormValues {
     phoneNumber: string;
     VerificationCode: string;
@@ -31,7 +36,7 @@ function VerificationScreen({ route, navigation }: any) {
         await signInPhone(verificationId, verificationCode);
       } else {
         await signUpPhoneAdmin(verificationId, verificationCode);
-        navigation.navigate('AdminRegister', { phoneNumber });
+        navigation.navigate('AdminRegisterScreen', { phoneNumber });
       }
     } catch (e) {
       console.error(e);

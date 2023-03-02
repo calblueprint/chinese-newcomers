@@ -16,10 +16,15 @@ import { Job } from '../../types/types';
 import { createJob } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
+import { DraftStackScreenProps } from '../../navigation/types';
 
 const auth = getAuth();
 
-function DraftScreen({ navigation }: any): ReactElement {
+function DraftScreen({
+  navigation,
+}: DraftStackScreenProps<'DraftScreen'>): ReactElement {
+  const { user } = useAuthentication();
+
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState('');
   const categories: string[] = [
@@ -377,7 +382,7 @@ function DraftScreen({ navigation }: any): ReactElement {
               onPress={() => {
                 navigation.goBack();
                 setSuccessModalVisible(false);
-                navigation.navigate('Draft');
+                navigation.navigate('DraftScreen');
               }}
             />
             <StyledButton
@@ -387,7 +392,7 @@ function DraftScreen({ navigation }: any): ReactElement {
               onPress={() => {
                 navigation.goBack();
                 setSuccessModalVisible(false);
-                navigation.navigate('Feed');
+                navigation.navigate('FeedScreen');
               }}
             />
             <Pressable

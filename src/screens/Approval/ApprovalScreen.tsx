@@ -6,10 +6,13 @@ import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
+import { ApprovalStackScreenProps } from '../../navigation/types';
 
 const auth = getAuth();
 
-function ApprovalScreen({ navigation }: any) {
+function ApprovalScreen({
+  navigation,
+}: ApprovalStackScreenProps<'ApprovalScreen'>) {
   const [list, setList] = useState([] as Job[]);
 
   const isFocused = useIsFocused();

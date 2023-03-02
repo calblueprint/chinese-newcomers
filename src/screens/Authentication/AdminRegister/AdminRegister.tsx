@@ -11,11 +11,15 @@ import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
+import { AuthStackScreenProps } from '../../../navigation/types';
 import logo from '../../../assets/cnsc-logo.png';
 
 const auth = getAuth();
 
-function AdminRegisterScreen({ route, navigation }: any) {
+function AdminRegisterScreen({
+  navigation,
+  route,
+}: AuthStackScreenProps<'AdminRegisterScreen'>) {
   interface FormValues {
     email: string;
     password: string;

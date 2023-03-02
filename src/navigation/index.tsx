@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import UserStack from './userStack';
-import AuthStack from './authStack';
+import { NavigationContainer } from '@react-navigation/native';
+import UserStack from './BottomTabNavigator';
+import AuthStack from './stacks/AuthStackNavigator';
+
 import {
   AuthContext,
   useAuthReducer,
@@ -26,8 +28,10 @@ export default function RootNavigation() {
   const authContext = useMemo(() => getAuthContext(dispatch), []);
 
   return (
-    <AuthContext.Provider value={authContext}>
-      {authState.userToken !== null ? <UserStack /> : <AuthStack />}
-    </AuthContext.Provider>
+    <NavigationContainer>
+      <AuthContext.Provider value={authContext}>
+        {authState.userToken !== null ? <UserStack /> : <AuthStack />}
+      </AuthContext.Provider>
+    </NavigationContainer>
   );
 }

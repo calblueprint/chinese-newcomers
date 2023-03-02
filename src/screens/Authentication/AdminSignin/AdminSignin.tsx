@@ -12,10 +12,14 @@ import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
+import SigninScreen from '../Signin/Signin';
+import { AuthStackScreenProps } from '../../../navigation/types';
 
 const auth = getAuth();
 
-function AdminSigninScreen({ navigation }: any) {
+function AdminSigninScreen({
+  navigation,
+}: AuthStackScreenProps<'AdminSigninScreen'>) {
   interface FormValues {
     email: string;
     password: string;

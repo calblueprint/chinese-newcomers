@@ -8,10 +8,11 @@ import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import Logo from '../../assets/cnsc-logo.png';
+import { FeedStackScreenProps } from '../../navigation/types';
 
 const auth = getAuth();
 
-function FeedScreen({ navigation }: any) {
+function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([] as Job[]);
   const [filteredList, setFilteredList] = useState([] as Job[]);

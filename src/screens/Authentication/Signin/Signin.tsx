@@ -3,8 +3,11 @@ import { Text, View, Image } from 'react-native';
 import styles from './styles';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
+import { AuthStackScreenProps } from '../../../navigation/types';
 
-function SigninScreen({ navigation }: any) {
+function SigninScreen({
+  navigation,
+}: AuthStackScreenProps<'SigninScreen'>): ReactElement {
   const onBack: any = () => {
     navigation.goBack();
   };
@@ -21,13 +24,13 @@ function SigninScreen({ navigation }: any) {
       <View style={styles.buttonContainer}>
         <StyledButton
           text="admin"
-          onPress={() => navigation.navigate('AdminSignin')}
+          onPress={() => navigation.navigate('AdminSigninScreen')}
           buttonStyle={{ width: '100%', height: '42%' }}
           textStyle={{}}
         />
         <StyledButton
           text="job seeker"
-          onPress={() => navigation.navigate('PhoneNumberRegister')}
+          onPress={() => navigation.navigate('PhoneNumberScreen')}
           buttonStyle={{
             backgroundColor: '#FFFFFF',
             borderColor: '#CC433C',
