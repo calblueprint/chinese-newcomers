@@ -42,15 +42,9 @@ export default function RootNavigation() {
       if (authState.userToken !== null) {
         try {
           const userObject = await getUser(authState.userToken);
-          if (userObject !== null) {
-            if (userObject.access === "admin") {
-              setActiveStack(<AdminStack/>)
-            } else {
-              setActiveStack(<UserStack/>)
-            } 
-          }
+          const stack = (userObject !== null && userObject.access === "admin" ? <AdminStack/> : <UserStack/>)
+          setActiveStack(stack);
         } catch (e) {
-          setActiveStack(<AuthStack/>)
           console.log(e);
         }
       } else {
