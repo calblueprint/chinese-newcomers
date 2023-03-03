@@ -20,7 +20,8 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'org.calblueprint.cnsc',
-      bitcode: 'Debug'
+      bitcode: 'Debug',
+      buildNumber: '2'
     },
     android: {
       adaptiveIcon: {
