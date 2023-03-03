@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 export default StyleSheet.create({
   cardContainer: {
     marginTop: '3%',
@@ -31,10 +32,12 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22
+    marginTop: 22,
+    height: 300,
+    // marginBottom: '10%',
   },
   modalView: {
-    marginTop: '70%',
+    marginTop: '35%',
     height: '100%',
     width: '100%',
     backgroundColor: 'white',
@@ -44,7 +47,7 @@ export default StyleSheet.create({
     borderColor: '#C59675',
     borderWidth: 2,
     shadowOpacity: 0.25,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     padding: 10,
@@ -103,12 +106,14 @@ export default StyleSheet.create({
     fontFamily: "DMSans_700Bold"
   },
   buttonContainer: {
-    height: '18%',
+    height: 100,
     width: '80%',
+    // display: 'flex',
     flexDirection: 'row',
     alignSelf: 'center',
-    alignItems: 'flex-end',
+    // alignItems: 'flex-end',
     justifyContent: 'space-between',
-    marginTop: '6%'
+    marginTop: 5,
+    // marginBottom: '10%'
   }
 });

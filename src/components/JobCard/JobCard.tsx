@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal, SectionList } from 'react-native';
-import styles from './CardStyles';
+import { Text, View, Pressable, Modal, SectionList, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { SafeAreaView } from 'react-native';
+import styles from './CardStyles';
 import { objectToMap } from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import { deleteJob, createJob } from '../../firebase/firestore/job';
+
 
 interface JobCardProps {
   job: Job;
@@ -16,7 +18,7 @@ interface JobCardProps {
   setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
-const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) => {
+function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
 
@@ -45,13 +47,17 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
           setModalVisible(!modalVisible);
         }}>
         <Modal
-          transparent={true}
+          transparent
           visible={modalVisible}
           animationType="slide"
           onRequestClose={() => {
             setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.centeredView}>
+          }
+          }>
+          <View contentContainerStyle={styles.centeredView}>
+          <SafeAreaView>
+          <ScrollView>
+            {/* <SafeAreaView> */}
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalJobRefText}>{job.id}</Text>
@@ -120,6 +126,9 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
                 )}
               </View>
             </View>
+          {/* </SafeAreaView> */}
+          </ScrollView>
+          </SafeAreaView>
           </View>
         </Modal>
       </GestureRecognizer>
@@ -131,6 +140,6 @@ const JobCard = ({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
       </View>
     </Pressable>
   );
-};
+}
 
 export default JobCard;
