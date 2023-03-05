@@ -38,7 +38,7 @@ jobs:
       # Install packages #
       ################################
       - name: Install packages
-        run: npm ci
+        run: yarn install --frozen-lockfile
       ################################
       # Check ESLint on codebase #
       ################################
