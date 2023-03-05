@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 export type AuthStackParamList = {
   AdminRegisterScreen: { phoneNumber: string };
   AdminSigninScreen: undefined;
-  PhoneNumberScreen: undefined;
+  PhoneNumberScreen: { phoneNumber: string };
   SigninScreen: undefined;
   VerificationScreen: { verificationId: string; phoneNumber: string };
   WelcomeScreen: undefined;
