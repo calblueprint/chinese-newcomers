@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal, SectionList, ScrollView } from 'react-native';
+import { Text, View, Pressable, Modal, SectionList, ScrollView, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { SafeAreaView } from 'react-native';
+// import { SafeAreaView } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Modalize } from 'react-native-modalize';
 import styles from './CardStyles';
 import { objectToMap } from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
@@ -20,6 +22,7 @@ interface JobCardProps {
 
 function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
+
   const visibleMap = objectToMap(job.visible);
 
   async function handleAction(approve: boolean) {
@@ -54,10 +57,8 @@ function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
             setModalVisible(!modalVisible);
           }
           }>
-          <View contentContainerStyle={styles.centeredView}>
-          <SafeAreaView>
-          <ScrollView>
-            {/* <SafeAreaView> */}
+          <SafeAreaView style={styles.centeredView}>
+          <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: 75 }}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalJobRefText}>{job.id}</Text>
@@ -110,8 +111,8 @@ function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
                       text="decline"
                       onPress={async () => await handleAction(false)}
                       buttonStyle={{
-                        width: '45%',
-                        height: '50%',
+                        width: 150,
+                        height: 65, 
                         backgroundColor: '#FFFFFF',
                         borderColor: '#CC433C'
                       }}
@@ -120,16 +121,14 @@ function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
                     <StyledButton
                       text="approve"
                       onPress={async () => await handleAction(true)}
-                      buttonStyle={{ width: '45%', height: '50%' }}
+                      buttonStyle={{ width: 150, height: 65 }}
                     />
                   </View>
                 )}
               </View>
             </View>
-          {/* </SafeAreaView> */}
           </ScrollView>
           </SafeAreaView>
-          </View>
         </Modal>
       </GestureRecognizer>
       <View style={styles.jobRef}>

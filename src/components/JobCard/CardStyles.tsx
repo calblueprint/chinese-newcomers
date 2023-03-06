@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 
 export default StyleSheet.create({
   cardContainer: {
@@ -11,7 +12,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 7,
     borderColor: '#C59675',
-    borderWidth: 2
+    borderWidth: 2,
   },
   jobRef: {
     marginBottom: '3%',
@@ -25,21 +26,23 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '10%',
+    marginRight: '5%',
     height: '30%',
     marginBottom: '8%'
   },
   centeredView: {
-    flex: 1,
+    flex: 1, 
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
-    height: 300,
-    // marginBottom: '10%',
+    // minHeight: Dimensions.get("window").height,
+    // marginTop: 22,
+    // height: '100%'
   },
   modalView: {
     marginTop: '35%',
+    // minHeight: ScreenHeight, 
     height: '100%',
-    width: '100%',
+    width: ScreenWidth,
     backgroundColor: 'white',
     alignItems: 'flex-start',
     shadowColor: '#000',
@@ -48,6 +51,7 @@ export default StyleSheet.create({
     borderWidth: 2,
     shadowOpacity: 0.25,
     elevation: 5,
+    overflow: 'scroll'
   },
   button: {
     padding: 10,
@@ -74,6 +78,7 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 18,
     marginLeft: '5%',
+    marginRight: '5%',
     fontFamily: "DMSans_500Medium"
   },
   modalInfo: {
@@ -90,14 +95,15 @@ export default StyleSheet.create({
   modalJobRefText: {
     color: 'black',
     fontSize: 20,
-    fontFamily: "DMSans_500Medium"
+    fontFamily: "DMSans_500Medium",
   },
 
   modalJobNameText: {
     color: 'black',
     fontSize: 22,
     fontWeight: 'bold',
-    fontFamily: "DMSans_700Bold"
+    fontFamily: "DMSans_700Bold",
+    marginRight: '5%'
   },
   jobNameText: {
     color: 'black',
@@ -106,14 +112,13 @@ export default StyleSheet.create({
     fontFamily: "DMSans_700Bold"
   },
   buttonContainer: {
-    height: 100,
-    width: '80%',
-    // display: 'flex',
+    height: '10%',
+    width: '84%',
+    display: 'flex',
     flexDirection: 'row',
     alignSelf: 'center',
-    // alignItems: 'flex-end',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
-    marginTop: 5,
-    // marginBottom: '10%'
+    marginTop: '10%',
   }
 });
