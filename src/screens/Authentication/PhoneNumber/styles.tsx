@@ -10,31 +10,31 @@ export default StyleSheet.create({
     display: 'flex',
     flex: 1,
     backgroundColor: '#fff',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   logoContainer: {
     width: '100%',
     height: '13%',
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '15%'
+    marginTop: '15%',
   },
   logo: {
     resizeMode: 'contain',
     height: '100%',
-    width: '22%'
+    width: '22%',
   },
   textContainer: {
     width: '92%',
     height: '17%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '8%'
+    marginTop: '8%',
   },
   phonenumberContainer: {
     width: '83%',
     marginLeft: leftMargin,
-    marginTop: '4%'
+    marginTop: '4%',
   },
   buttonContainer: {
     height: '18%',
@@ -43,19 +43,19 @@ export default StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    marginTop: '6%'
+    marginTop: '6%',
   },
   headingText: {
     fontFamily: 'DMSans_500Medium',
     color: '#49260C',
     fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
     fontWeight: '500',
-    letterSpacing: 0.75
+    letterSpacing: 0.75,
   },
   subText: {
     fontFamily: 'DMSans_500Medium',
     color: '#94613D',
     fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
-    fontWeight: '500'
-  }
+    fontWeight: '500',
+  },
 });

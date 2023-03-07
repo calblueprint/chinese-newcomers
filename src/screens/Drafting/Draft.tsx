@@ -1,23 +1,21 @@
 import React, { ReactElement, useState } from 'react';
 import { Text, View, Pressable, Switch, Modal, SafeAreaView } from 'react-native';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
-import { styles } from './styles';
-import { Job } from '../../types/types';
-import { createJob } from '../../firebase/firestore/job';
 import { ScrollView } from 'react-native-gesture-handler';
-import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import StyledButton from '../../components/StyledButton/StyledButton';
 import { StatusBar } from 'expo-status-bar';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
+import { Job } from '../../types/types';
+import { createJob } from '../../firebase/firestore/job';
+import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
+import StyledButton from '../../components/StyledButton/StyledButton';
 
 const auth = getAuth();
 
-const DraftScreen = ({ navigation }: any): ReactElement => {
-  const { user } = useAuthentication();
-
+function DraftScreen({ navigation }: any): ReactElement {
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState('');
   const categories: string[] = [
@@ -31,21 +29,25 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     'finance',
     'management',
     'IT',
-    'other'
+    'other',
   ];
 
   const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
   const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(true);
   const [addressIsEnabled, setAddressIsEnabled] = React.useState(true);
-  const [contactPersonIsEnabled, setContactPersonIsEnabled] = React.useState(true);
+  const [contactPersonIsEnabled, setContactPersonIsEnabled] =
+    React.useState(true);
   const [phoneIsEnabled, setPhoneIsEnabled] = React.useState(true);
   const [jobPositionIsEnabled, setJobPositionIsEnabled] = React.useState(true);
   const [languageReqIsEnabled, setLangaugeReqIsEnabled] = React.useState(true);
-  const [workingHoursIsEnabled, setWorkingHoursIsEnabled] = React.useState(true);
+  const [workingHoursIsEnabled, setWorkingHoursIsEnabled] =
+    React.useState(true);
   const [workingDaysIsEnabled, setWorkingDaysIsEnabled] = React.useState(true);
   const [salaryIsEnabled, setSalaryIsEnabled] = React.useState(true);
-  const [probationPeriodIsEnabled, setProbationPeriodIsEnabled] = React.useState(true);
-  const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] = React.useState(true);
+  const [probationPeriodIsEnabled, setProbationPeriodIsEnabled] =
+    React.useState(true);
+  const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] =
+    React.useState(true);
   const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(true);
 
   const [successModalVisibile, setSuccessModalVisible] = React.useState(false);
@@ -67,9 +69,9 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
     category: string;
     otherInfo: string;
   }
-  const { ...methods } = useForm();
+  const { ...methods } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async data => {
     const map = new Map<string, boolean>();
     map.set('date', dateIsEnabled);
     map.set('companyName', companyNameIsEnabled);
@@ -99,12 +101,13 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       employeeBenefit: data.employeeBenefit || '',
       category,
       otherInfo: data.otherInfo || '',
-      visible: Object.fromEntries(map)
+      visible: Object.fromEntries(map),
     };
     try {
       await createJob(job, 'notApprovedJobs');
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
+      methods.reset();
     } catch (e) {
       console.error(e);
     }
@@ -112,22 +115,26 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.form}>
+      <KeyboardAwareScrollView style={styles.form}>
+      {/* <ScrollView > */}
+      <View style={styles.formContainer}>
         <View style={styles.top}>
           <Text style={styles.formTitle}>Job Post Draft</Text>
           <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-            Use the toggle to determine what information you want displayed in your public job
-            posting.
+            Use the toggle to determine what information you want displayed in
+            your public job posting.
           </Text>
         </View>
         <FormProvider {...methods}>
           <View style={styles.formTop}>
-            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>Category</Text>
+            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>
+              Category
+            </Text>
           </View>
           <DropDownPicker
             open={open}
             value={category}
-            items={categories.map((category) => ({ label: category, value: category }))}
+            items={categories.map(c => ({ label: c, value: c }))}
             setOpen={setOpen}
             setValue={setCategory}
             listMode="SCROLLVIEW"
@@ -146,20 +153,24 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
           <FormInput
             name="date"
             label="date"
-            placeholder=" 10/27/2022"
+            placeholder="10/27/2022"
             rules={{ required: 'Date is required!' }}
           />
-          {methods.formState.errors.date != null && <Text>Please check the Date.</Text>}
+          {methods.formState.errors.date != null && (
+            <Text>Please check the Date.</Text>
+          )}
 
           <View style={styles.formTop}>
             <Switch
-              onValueChange={() => setCompanyNameIsEnabled(!companyNameIsEnabled)}
+              onValueChange={() =>
+                setCompanyNameIsEnabled(!companyNameIsEnabled)
+              }
               value={companyNameIsEnabled}
               trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Company Name</Text>
           </View>
-          <FormInput name="companyName" label="companyName" placeholder=" Lucky Dim Sum" />
+          <FormInput name="companyName" label="companyName" placeholder="Lucky Dim Sum" />
 
           <View style={styles.formTop}>
             <Switch
@@ -169,17 +180,19 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             />
             <Text style={styles.formText}>Address</Text>
           </View>
-          <FormInput name="address" label="address" placeholder=" 2400 Durant Ave., Berkeley, CA" />
+          <FormInput name="address" label="address" placeholder="2400 Durant Ave., Berkeley, CA" />
 
           <View style={styles.formTop}>
             <Switch
-              onValueChange={() => setContactPersonIsEnabled(!contactPersonIsEnabled)}
+              onValueChange={() =>
+                setContactPersonIsEnabled(!contactPersonIsEnabled)
+              }
               value={contactPersonIsEnabled}
               trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Contact Person</Text>
           </View>
-          <FormInput name="contactPerson" label="contactPerson" placeholder=" Amelia Bedelia" />
+          <FormInput name="contactPerson" label="contactPerson" placeholder="Amelia Bedelia" />
 
           <View style={styles.formTop}>
             <Switch
@@ -189,11 +202,13 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             />
             <Text style={styles.formText}>Phone</Text>
           </View>
-          <FormInput name="phone" label="phone" placeholder=" (510) xxx - xxxx" />
+          <FormInput name="phone" label="phone" placeholder="(510) xxx - xxxx" />
 
           <View style={styles.formTop}>
             <Switch
-              onValueChange={() => setJobPositionIsEnabled(!jobPositionIsEnabled)}
+              onValueChange={() =>
+                setJobPositionIsEnabled(!jobPositionIsEnabled)
+              }
               value={jobPositionIsEnabled}
               trackColor={{ false: '#767577', true: '#000000' }}
             />
@@ -202,7 +217,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
           <FormInput
             name="jobPosition"
             label="jobPosition"
-            placeholder=" Waiter, waitress"
+            placeholder="Waiter, waitress"
             rules={{ required: 'Job Position is required!' }}
           />
           {methods.formState.errors.jobPosition != null && (
@@ -211,7 +226,9 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
 
           <View style={styles.formTop}>
             <Switch
-              onValueChange={() => setLangaugeReqIsEnabled(!languageReqIsEnabled)}
+              onValueChange={() =>
+                setLangaugeReqIsEnabled(!languageReqIsEnabled)
+              }
               value={languageReqIsEnabled}
               trackColor={{ false: '#767577', true: '#000000' }}
             />
@@ -220,7 +237,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
           <FormInput
             name="languageRequirement"
             label="languageRequirement"
-            placeholder=" Cantonese, English"
+            placeholder="Cantonese, English"
             rules={{ required: 'Language Requirement is required!' }}
           />
           {methods.formState.errors.languageRequirement != null && (
@@ -229,23 +246,27 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
 
           <View style={styles.formTop}>
             <Switch
-              onValueChange={() => setWorkingHoursIsEnabled(!workingHoursIsEnabled)}
+              onValueChange={() =>
+                setWorkingHoursIsEnabled(!workingHoursIsEnabled)
+              }
               value={workingHoursIsEnabled}
               trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Working hours/day</Text>
           </View>
-          <FormInput name="workingHours" label="workingHours" placeholder=" 4 - 8 hrs/day" />
+          <FormInput name="workingHours" label="workingHours" placeholder="4 - 8 hrs/day" />
 
           <View style={styles.formTop}>
             <Switch
-              onValueChange={() => setWorkingDaysIsEnabled(!workingDaysIsEnabled)}
+              onValueChange={() =>
+                setWorkingDaysIsEnabled(!workingDaysIsEnabled)
+              }
               value={workingDaysIsEnabled}
               trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Working days/week</Text>
           </View>
-          <FormInput name="workingDays" label="workingDays" placeholder=" 3 - 5 days/week" />
+          <FormInput name="workingDays" label="workingDays" placeholder="3 - 5 days/week" />
 
           <View style={styles.formTop}>
             <Switch
@@ -255,21 +276,25 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             />
             <Text style={styles.formText}>Salary</Text>
           </View>
-          <FormInput name="salary" label="salary" placeholder=" $36/hr" />
+          <FormInput name="salary" label="salary" placeholder="$36/hr" />
 
           <View style={styles.formTop}>
             <Switch
-              onValueChange={() => setProbationPeriodIsEnabled(!probationPeriodIsEnabled)}
+              onValueChange={() =>
+                setProbationPeriodIsEnabled(!probationPeriodIsEnabled)
+              }
               value={probationPeriodIsEnabled}
               trackColor={{ false: '#767577', true: '#000000' }}
             />
             <Text style={styles.formText}>Probation Period (if any)</Text>
           </View>
-          <FormInput name="probationPeriod" label="probationPeriod" placeholder=" None" />
+          <FormInput name="probationPeriod" label="probationPeriod" placeholder="None" />
 
           <View style={styles.formTop}>
             <Switch
-              onValueChange={() => setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)}
+              onValueChange={() =>
+                setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)
+              }
               value={employeeBenefitIsEnabled}
               trackColor={{ false: '#767577', true: '#000000' }}
             />
@@ -278,7 +303,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
           <FormInput
             name="employeeBenefit"
             label="employeeBenefit"
-            placeholder=" Insurance, paid leave, etc."
+            placeholder="Insurance, paid leave, etc."
           />
 
           <View style={styles.formTop}>
@@ -289,7 +314,7 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
             />
             <Text style={styles.formText}>Other Information</Text>
           </View>
-          <FormInput name="otherInfo" label="otherInfo" placeholder=" Looking for XYZ, etc." />
+          <FormInput name="otherInfo" label="otherInfo" placeholder="Looking for XYZ, etc." />
         </FormProvider>
         <View style={styles.bottomButtons}>
           <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
@@ -297,21 +322,25 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
           </Pressable>
           <Pressable
             onPress={methods.handleSubmit(onSubmit)}
-            style={[styles.buttons, { backgroundColor: '#CC433C' }]}>
+            style={[styles.buttons, { backgroundColor: '#CC433C' }]}
+          >
             <Text style={styles.buttonText}>Post Job</Text>
           </Pressable>
         </View>
-      </ScrollView>
+        </View>
+      {/* </ScrollView> */}
+      </KeyboardAwareScrollView>
       {/* <Button title="Back" style={styles.button} onPress={() => navigation.navigate('Home')} /> */}
-      <Modal visible={successModalVisibile} transparent={true} animationType={'slide'}>
+      <Modal visible={successModalVisibile} transparent animationType="slide">
         <View style={styles.centeredView}>
           <View style={styles.modal}>
             <Text style={styles.modalText}>
-              Congratulations! You've submitted a job posting for {modalJobText}.
+              Congratulations! You&apos;ve submitted a job posting for{' '}
+              {modalJobText}.
             </Text>
 
             <StyledButton
-              text={'POST ANOTHER JOB'}
+              text="POST ANOTHER JOB"
               textStyle={{ color: '#CC433C' }}
               buttonStyle={{ backgroundColor: 'white', width: '100%' }}
               onPress={() => {
@@ -321,7 +350,8 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
               }}
             />
             <StyledButton
-              text={'VIEW JOB FEED'}
+              text="VIEW JOB FEED"
+              textStyle={{}}
               buttonStyle={{ width: '100%' }}
               onPress={() => {
                 navigation.goBack();
@@ -329,7 +359,10 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
                 navigation.navigate('Feed');
               }}
             />
-            <Pressable onPress={() => setSuccessModalVisible(false)} style={styles.modalX}>
+            <Pressable
+              onPress={() => setSuccessModalVisible(false)}
+              style={styles.modalX}
+            >
               <Text>X</Text>
             </Pressable>
           </View>
@@ -337,6 +370,6 @@ const DraftScreen = ({ navigation }: any): ReactElement => {
       </Modal>
     </SafeAreaView>
   );
-};
+}
 
 export default DraftScreen;

@@ -1,26 +1,35 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useRef } from 'react';
 import { Text, View, Image } from 'react-native';
-import { useAuthentication } from '../../../utils/hooks/useAuthentication';
-import styles from './styles';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import { phoneGetConfirmation, getActivationStatus } from '../../../firebase/auth';
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import PhoneInput from 'react-native-phone-number-input';
+import styles from './styles';
+import {
+  phoneGetConfirmation,
+  getActivationStatus,
+} from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import PhoneInput from 'react-native-phone-number-input';
-import WelcomeScreen from '../Welcome/Welcome';
-const logo = require('../../../assets/cnsc-logo.png');
+import logo from '../../../assets/cnsc-logo.png';
 
-const PhoneNumberScreen = ({ navigation }: any) => {
-  const { ...methods } = useForm();
-  const { user } = useAuthentication();
+function PhoneNumberScreen({ navigation }: any) {
+  interface FormValues {
+    phoneNumber: string;
+  }
+
+  const { ...methods } = useForm<FormValues>();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);
   const phoneInput = useRef<PhoneInput>(null);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
       const checkValid = phoneInput.current?.isValidNumber(phoneNumber);
       console.log(valid);
@@ -28,9 +37,15 @@ const PhoneNumberScreen = ({ navigation }: any) => {
       // To Do: render error label
       const activated = await getActivationStatus(phoneNumber);
       if (!activated) {
-        const verificationId = await phoneGetConfirmation(phoneNumber, recaptchaVerifier);
+        const verificationId = await phoneGetConfirmation(
+          phoneNumber,
+          recaptchaVerifier,
+        );
         console.log(verificationId);
-        navigation.navigate('VerificationCode', { verificationId, phoneNumber });
+        navigation.navigate('VerificationCode', {
+          verificationId,
+          phoneNumber,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -41,9 +56,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
     navigation.goBack();
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
-    return console.log(errors);
-  };
+  const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -63,7 +76,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
               ref={phoneInput}
               placeholder="4151234567"
               defaultValue={phoneNumber}
-              onChangeFormattedText={(text) => {
+              onChangeFormattedText={text => {
                 setPhoneNumber(text);
               }}
               defaultCode="US"
@@ -77,7 +90,7 @@ const PhoneNumberScreen = ({ navigation }: any) => {
                 width: '45%',
                 height: '100%',
                 backgroundColor: '#FFFFFF',
-                borderColor: '#CC433C'
+                borderColor: '#CC433C',
               }}
               textStyle={{ fontSize: 16, color: '#CC433C' }}
             />
@@ -96,6 +109,6 @@ const PhoneNumberScreen = ({ navigation }: any) => {
       </FormProvider>
     </View>
   );
-};
+}
 
 export default PhoneNumberScreen;

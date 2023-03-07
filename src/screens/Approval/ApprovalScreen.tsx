@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
-import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
+import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { getAuth } from 'firebase/auth';
+import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
-import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
+import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
-import { useIsFocused } from '@react-navigation/native';
 
 const auth = getAuth();
 
-const ApprovalScreen = ({ navigation }: any) => {
+function ApprovalScreen({ navigation }: any) {
   const [list, setList] = useState([] as Job[]);
 
   const isFocused = useIsFocused();
@@ -21,10 +19,9 @@ const ApprovalScreen = ({ navigation }: any) => {
       const data = await getAllJobs('notApprovedJobs');
       setList(data);
     };
-    void fetchJobs();
+    fetchJobs();
   }, [isFocused]);
 
-  const { user } = useAuthentication();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
@@ -36,18 +33,15 @@ const ApprovalScreen = ({ navigation }: any) => {
           alignItems: 'center',
           width: '100%'
         }}>
-        {list.map((job, index) => {
-          console.log(job);
-          return (
+        {list.map((job, index) => (
             // eslint-disable-next-line react/jsx-key
             <JobCard
               job={job}
               idx={index}
-              pending={true}
+              pending
               pendingJobs={list}
-              setPendingJobs={setList}></JobCard>
-          );
-        })}
+              setPendingJobs={setList} />
+          ))}
         {list.length == 0 && (
           <Text style={{ marginTop: '10%' }}>No pending job drafts to review!</Text>
         )}
@@ -57,6 +51,6 @@ const ApprovalScreen = ({ navigation }: any) => {
       </View> */}
     </SafeAreaView>
   );
-};
+}
 
 export default ApprovalScreen;

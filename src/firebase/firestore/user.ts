@@ -1,18 +1,43 @@
+import {
+  deleteDoc,
+  doc,
+  DocumentData,
+  getDoc,
+  QueryDocumentSnapshot,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import { UserCredential } from 'firebase/auth';
 import { db } from '../config';
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { User } from '../../types/types';
+
+const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
+  const userId = document.id.toString();
+  const data = document.data();
+  const user = {
+    id: userId,
+    access: data.access,
+    createdJobs: data.createdJobs, // might need to map to job objects later
+    email: data.email,
+    likedJobs: data.likedJobs, // might need to map to job objects later
+    name: data.name,
+    phoneNumber: data.phoneNumber,
+    verified: data.verified,
+    password: data.password,
+  };
+  return user as User;
+};
 
 export const getUser = async (id: string): Promise<User | null> => {
   const docRef = doc(db, 'users', id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     console.log('User data:', docSnap.data());
-    return await parseUser(docSnap);
-  } else {
-    // doc.data() will be undefined in this case
-    console.log('No such document!');
-    return null;
+    return parseUser(docSnap);
   }
+  // doc.data() will be undefined in this case
+  console.log('No such document!');
+  return null;
 };
 
 export const addUser = async (user: User): Promise<void> => {
@@ -20,11 +45,14 @@ export const addUser = async (user: User): Promise<void> => {
   await setDoc(itemsRef, user);
 };
 
-export const updateUser = async (userId: string, newLikedJobs: string[]): Promise<void> => {
+export const updateUser = async (
+  userId: string,
+  newLikedJobs: string[],
+): Promise<void> => {
   const docRef = doc(db, 'users', userId);
   // This data object changes the fields that are different from the entry in backend!
   const data = {
-    point_gain: newLikedJobs
+    point_gain: newLikedJobs,
   };
   await updateDoc(docRef, data);
 };
@@ -34,31 +62,14 @@ export const deleteUser = async (userId: string): Promise<void> => {
   await deleteDoc(docRef);
 };
 
-const parseUser = async (doc: any) => {
-  const user_id = doc.id.toString();
-  const data = doc.data();
-  const user = {
-    id: user_id,
-    access: data.access,
-    createdJobs: data.createdJobs, // might need to map to job objects later
-    email: data.email,
-    likedJobs: data.likedJobs, // might need to map to job objects later
-    name: data.name,
-    phoneNumber: data.phoneNumber,
-    verified: data.verified,
-    password: data.password
-  };
-  return user as User;
-};
-
 export const checkAndAddUser = async (
-  user: any,
+  user: UserCredential['user'],
   accessLevel: string,
-  phoneNumber: string | null
+  phoneNumber: string | null,
 ) => {
   const userObject = await getUser(user.uid);
   if (userObject !== null) {
-    console.log('Got user from users collection. Name: ' + userObject.name);
+    console.log(`Got user from users collection. Name: ${userObject.name}`);
   } else {
     console.log('Create new user flow');
     let assignPhoneNumber = null;
@@ -77,7 +88,6 @@ export const checkAndAddUser = async (
       name: 'test phone',
       phoneNumber: assignPhoneNumber,
       verified: true,
-      password: null
     });
   }
 };
