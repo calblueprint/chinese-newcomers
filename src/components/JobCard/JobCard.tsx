@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal, SectionList, ScrollView, SafeAreaView } from 'react-native';
+import { Text, View, Pressable, Modal, SectionList, ScrollView, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 // import { SafeAreaView } from 'react-native';
@@ -58,7 +58,7 @@ function JobCard({ job, idx, pending, pendingJobs, setPendingJobs }: JobCardProp
           }
           }>
           <SafeAreaView style={styles.centeredView}>
-          <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: 75 }}>
+          <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 75 }}> 
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalJobRefText}>{job.id}</Text>

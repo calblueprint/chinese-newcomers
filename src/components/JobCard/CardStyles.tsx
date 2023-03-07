@@ -34,13 +34,10 @@ export default StyleSheet.create({
     flex: 1, 
     justifyContent: 'center',
     alignItems: 'center',
-    // minHeight: Dimensions.get("window").height,
-    // marginTop: 22,
-    // height: '100%'
+    height: '100%',
   },
   modalView: {
-    marginTop: '35%',
-    // minHeight: ScreenHeight, 
+    marginTop: '30%',
     height: '100%',
     width: ScreenWidth,
     backgroundColor: 'white',
