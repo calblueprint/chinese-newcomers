@@ -1,10 +1,13 @@
-import React, { ReactElement, useState } from 'react';
-import { Text, View, Pressable, Switch, Modal, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { ReactElement, useReducer, useState } from 'react';
+import {
+  Text,
+  View,
+  Pressable,
+  Switch,
+  Modal,
+  SafeAreaView,
+} from 'react-native';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { StatusBar } from 'expo-status-bar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
@@ -13,101 +16,128 @@ import { createJob } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
 
-const auth = getAuth();
+type FieldViewProps = {
+  title: string;
+  placeholder: string;
+  field: Field;
+  toggle: (field: Field) => void;
+  enabled: boolean;
+  required: boolean;
+  formState: ReturnType<typeof useForm>['formState'];
+};
+function FieldView({
+  title,
+  placeholder,
+  field,
+  toggle,
+  enabled,
+  required,
+  formState,
+}: FieldViewProps): ReactElement {
+  return (
+    <>
+      <View style={styles.formTop}>
+        <Switch
+          onValueChange={() => toggle(field)}
+          value={enabled}
+          trackColor={{ false: '#767577', true: '#000000' }}
+        />
+        <Text style={styles.formText}>
+          {title}
+          {required ? '*' : ''}
+        </Text>
+      </View>
+      <FormInput
+        name={field}
+        label={field}
+        placeholder={placeholder}
+        rules={required ? { required: `${title} is required!` } : {}}
+      />
+      {formState.errors[field] != null && <Text>Please check {title}.</Text>}
+    </>
+  );
+}
 
-function DraftScreen({ navigation }: any): ReactElement {
+const CATEGORIES: string[] = [
+  'factory',
+  'caretaker',
+  'restaurant',
+  'construction',
+  'sales',
+  'driver',
+  'education',
+  'finance',
+  'management',
+  'IT',
+  'other',
+];
+
+const FIELDS = [
+  'date',
+  'companyName',
+  'address',
+  'contactPerson',
+  'phone',
+  'jobPosition',
+  'languageRequirement',
+  'workingHours',
+  'workingDays',
+  'salary',
+  'probationPeriod',
+  'employeeBenefit',
+  'otherInfo',
+] as const;
+
+type Field = (typeof FIELDS)[number];
+type FormValues = {
+  [key in Field]: string;
+};
+
+type EnabledFieldsState = {
+  [key in Field]: boolean;
+};
+function enabledFieldsReducer(
+  state: EnabledFieldsState,
+  fieldToToggle: Field,
+): EnabledFieldsState {
+  return {
+    ...state,
+    [fieldToToggle]: !state[fieldToToggle],
+  };
+}
+
+type DraftScreenProps = {
+  navigation: { navigate: (to: string) => void; goBack: () => void };
+};
+function DraftScreen({ navigation }: DraftScreenProps): ReactElement {
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState('');
-  const categories: string[] = [
-    'factory',
-    'caretaker',
-    'restaurant',
-    'construction',
-    'sales',
-    'driver',
-    'education',
-    'finance',
-    'management',
-    'IT',
-    'other',
-  ];
+  const [enabledFields, toggle] = useReducer(
+    enabledFieldsReducer,
+    Object.fromEntries(FIELDS.map(f => [f, true])) as EnabledFieldsState,
+  );
 
-  const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
-  const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(true);
-  const [addressIsEnabled, setAddressIsEnabled] = React.useState(true);
-  const [contactPersonIsEnabled, setContactPersonIsEnabled] =
-    React.useState(true);
-  const [phoneIsEnabled, setPhoneIsEnabled] = React.useState(true);
-  const [jobPositionIsEnabled, setJobPositionIsEnabled] = React.useState(true);
-  const [languageReqIsEnabled, setLangaugeReqIsEnabled] = React.useState(true);
-  const [workingHoursIsEnabled, setWorkingHoursIsEnabled] =
-    React.useState(true);
-  const [workingDaysIsEnabled, setWorkingDaysIsEnabled] = React.useState(true);
-  const [salaryIsEnabled, setSalaryIsEnabled] = React.useState(true);
-  const [probationPeriodIsEnabled, setProbationPeriodIsEnabled] =
-    React.useState(true);
-  const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] =
-    React.useState(true);
-  const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(true);
+  const [successModalVisibile, setSuccessModalVisible] = useState(false);
+  const [modalJobText, setModalJobText] = useState('');
 
-  const [successModalVisibile, setSuccessModalVisible] = React.useState(false);
-  const [modalJobText, setModalJobText] = React.useState('');
-
-  interface FormValues {
-    date: string;
-    companyName: string;
-    address: string;
-    contactPerson: string;
-    phone: string;
-    jobPosition: string;
-    languageRequirement: string;
-    workingHours: string;
-    workingDays: string;
-    salary: string;
-    probationPeriod: string;
-    employeeBenefit: string;
-    category: string;
-    otherInfo: string;
-  }
-  const { ...methods } = useForm<FormValues>();
+  const formMethods = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     const map = new Map<string, boolean>();
-    map.set('date', dateIsEnabled);
-    map.set('companyName', companyNameIsEnabled);
-    map.set('address', addressIsEnabled);
-    map.set('contactPerson', contactPersonIsEnabled);
-    map.set('phone', phoneIsEnabled);
-    map.set('jobPosition', jobPositionIsEnabled);
-    map.set('languageRequirement', languageReqIsEnabled);
-    map.set('workingHours', workingHoursIsEnabled);
-    map.set('workingDays', workingDaysIsEnabled);
-    map.set('salary', salaryIsEnabled);
-    map.set('probationPeriod', probationPeriodIsEnabled);
-    map.set('employeeBenefit', employeeBenefitIsEnabled);
-    map.set('otherInfo', otherInfoIsEnabled);
+    FIELDS.forEach(field => {
+      map.set(field, enabledFields[field]);
+    });
     const job: Partial<Job> = {
-      date: data.date || '',
-      companyName: data.companyName || '',
-      address: data.address || '',
-      contactPerson: data.contactPerson || '',
-      phone: data.phone || '',
-      jobPosition: data.jobPosition || '',
-      languageRequirement: data.languageRequirement || '',
-      workingHours: data.workingHours || '',
-      workingDays: data.workingDays || '',
-      salary: data.salary || '',
-      probationPeriod: data.probationPeriod || '',
-      employeeBenefit: data.employeeBenefit || '',
-      category,
-      otherInfo: data.otherInfo || '',
       visible: Object.fromEntries(map),
     };
+    FIELDS.forEach(field => {
+      job[field] = data[field] || '';
+    });
     try {
       await createJob(job, 'notApprovedJobs');
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
-      methods.reset();
+      formMethods.reset();
     } catch (e) {
       console.error(e);
     }
@@ -116,221 +146,176 @@ function DraftScreen({ navigation }: any): ReactElement {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView style={styles.form}>
-      {/* <ScrollView > */}
-      <View style={styles.formContainer}>
-        <View style={styles.top}>
-          <Text style={styles.formTitle}>Job Post Draft</Text>
-          <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-            Use the toggle to determine what information you want displayed in
-            your public job posting.
-          </Text>
-        </View>
-        <FormProvider {...methods}>
-          <View style={styles.formTop}>
-            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>
-              Category
+        <View style={styles.formContainer}>
+          <View style={styles.top}>
+            <Text style={styles.formTitle}>Job Post Draft</Text>
+            <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
+              Use the toggle to determine what information you want displayed in
+              your public job posting.
             </Text>
           </View>
-          <DropDownPicker
-            open={open}
-            value={category}
-            items={categories.map(c => ({ label: c, value: c }))}
-            setOpen={setOpen}
-            setValue={setCategory}
-            listMode="SCROLLVIEW"
-            containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
-            textStyle={{ fontFamily: 'DMSans_500Medium' }}
-          />
-
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
-              value={dateIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+          <FormProvider {...formMethods}>
+            <View style={styles.formTop}>
+              <Text
+                style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}
+              >
+                Category
+              </Text>
+            </View>
+            <DropDownPicker
+              open={open}
+              value={category}
+              items={CATEGORIES.map(c => ({ label: c, value: c }))}
+              setOpen={setOpen}
+              setValue={setCategory}
+              listMode="SCROLLVIEW"
+              containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
+              textStyle={{ fontFamily: 'DMSans_500Medium' }}
             />
-            <Text style={styles.formText}>Date*</Text>
-          </View>
-          <FormInput
-            name="date"
-            label="date"
-            placeholder="10/27/2022"
-            rules={{ required: 'Date is required!' }}
-          />
-          {methods.formState.errors.date != null && (
-            <Text>Please check the Date.</Text>
-          )}
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setCompanyNameIsEnabled(!companyNameIsEnabled)
-              }
-              value={companyNameIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Date"
+              placeholder="MM/DD/YYYY"
+              field="date"
+              toggle={toggle}
+              enabled={enabledFields.date}
+              required
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Company Name</Text>
-          </View>
-          <FormInput name="companyName" label="companyName" placeholder="Lucky Dim Sum" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
-              value={addressIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Company Name"
+              placeholder="Lucky Dim Sum"
+              field="companyName"
+              toggle={toggle}
+              enabled={enabledFields.companyName}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Address</Text>
-          </View>
-          <FormInput name="address" label="address" placeholder="2400 Durant Ave., Berkeley, CA" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setContactPersonIsEnabled(!contactPersonIsEnabled)
-              }
-              value={contactPersonIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Address"
+              placeholder="2400 Durant Ave., Berkeley, CA"
+              field="address"
+              toggle={toggle}
+              enabled={enabledFields.address}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Contact Person</Text>
-          </View>
-          <FormInput name="contactPerson" label="contactPerson" placeholder="Amelia Bedelia" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
-              value={phoneIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Contact Person"
+              placeholder="Amelia Bedelia"
+              field="contactPerson"
+              toggle={toggle}
+              enabled={enabledFields.contactPerson}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Phone</Text>
-          </View>
-          <FormInput name="phone" label="phone" placeholder="(510) xxx - xxxx" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setJobPositionIsEnabled(!jobPositionIsEnabled)
-              }
-              value={jobPositionIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Phone"
+              placeholder="(510) xxx - xxxx"
+              field="phone"
+              toggle={toggle}
+              enabled={enabledFields.phone}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Job Position*</Text>
-          </View>
-          <FormInput
-            name="jobPosition"
-            label="jobPosition"
-            placeholder="Waiter, waitress"
-            rules={{ required: 'Job Position is required!' }}
-          />
-          {methods.formState.errors.jobPosition != null && (
-            <Text>Please check the Job Position.</Text>
-          )}
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setLangaugeReqIsEnabled(!languageReqIsEnabled)
-              }
-              value={languageReqIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Job Position"
+              placeholder="Waiter, waitress"
+              field="jobPosition"
+              toggle={toggle}
+              enabled={enabledFields.jobPosition}
+              required
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Language Requirement*</Text>
-          </View>
-          <FormInput
-            name="languageRequirement"
-            label="languageRequirement"
-            placeholder="Cantonese, English"
-            rules={{ required: 'Language Requirement is required!' }}
-          />
-          {methods.formState.errors.languageRequirement != null && (
-            <Text>Please check the Language Requirement.</Text>
-          )}
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setWorkingHoursIsEnabled(!workingHoursIsEnabled)
-              }
-              value={workingHoursIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Language Requirement"
+              placeholder="Cantonese, English"
+              field="languageRequirement"
+              toggle={toggle}
+              enabled={enabledFields.languageRequirement}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Working hours/day</Text>
-          </View>
-          <FormInput name="workingHours" label="workingHours" placeholder="4 - 8 hrs/day" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setWorkingDaysIsEnabled(!workingDaysIsEnabled)
-              }
-              value={workingDaysIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Working Hours/Day"
+              placeholder="4 - 8 hrs/day"
+              field="workingHours"
+              toggle={toggle}
+              enabled={enabledFields.workingHours}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Working days/week</Text>
-          </View>
-          <FormInput name="workingDays" label="workingDays" placeholder="3 - 5 days/week" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setSalaryIsEnabled(!salaryIsEnabled)}
-              value={salaryIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Working Days/Week"
+              placeholder="3 - 5 days/week"
+              field="workingDays"
+              toggle={toggle}
+              enabled={enabledFields.workingDays}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Salary</Text>
-          </View>
-          <FormInput name="salary" label="salary" placeholder="$36/hr" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setProbationPeriodIsEnabled(!probationPeriodIsEnabled)
-              }
-              value={probationPeriodIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Salary"
+              placeholder="$36/hr"
+              field="salary"
+              toggle={toggle}
+              enabled={enabledFields.salary}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Probation Period (if any)</Text>
-          </View>
-          <FormInput name="probationPeriod" label="probationPeriod" placeholder="None" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)
-              }
-              value={employeeBenefitIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Probation Period"
+              placeholder="None"
+              field="probationPeriod"
+              toggle={toggle}
+              enabled={enabledFields.probationPeriod}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Employee Benefit (if any)</Text>
-          </View>
-          <FormInput
-            name="employeeBenefit"
-            label="employeeBenefit"
-            placeholder="Insurance, paid leave, etc."
-          />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setOtherInfoIsEnabled(!otherInfoIsEnabled)}
-              value={otherInfoIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <FieldView
+              title="Employee Benefit"
+              placeholder="Insurance, paid leave, etc."
+              field="employeeBenefit"
+              toggle={toggle}
+              enabled={enabledFields.employeeBenefit}
+              required={false}
+              formState={formMethods.formState}
             />
-            <Text style={styles.formText}>Other Information</Text>
+
+            <FieldView
+              title="Other Information"
+              placeholder="Looking for XYZ, etc."
+              field="otherInfo"
+              toggle={toggle}
+              enabled={enabledFields.otherInfo}
+              required={false}
+              formState={formMethods.formState}
+            />
+          </FormProvider>
+          <View style={styles.bottomButtons}>
+            <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
+              <Text style={styles.buttonText}>Save to Drafts</Text>
+            </Pressable>
+            <Pressable
+              onPress={formMethods.handleSubmit(onSubmit)}
+              style={[styles.buttons, { backgroundColor: '#CC433C' }]}
+            >
+              <Text style={styles.buttonText}>Post Job</Text>
+            </Pressable>
           </View>
-          <FormInput name="otherInfo" label="otherInfo" placeholder="Looking for XYZ, etc." />
-        </FormProvider>
-        <View style={styles.bottomButtons}>
-          <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
-            <Text style={styles.buttonText}>Save to Drafts</Text>
-          </Pressable>
-          <Pressable
-            onPress={methods.handleSubmit(onSubmit)}
-            style={[styles.buttons, { backgroundColor: '#CC433C' }]}
-          >
-            <Text style={styles.buttonText}>Post Job</Text>
-          </Pressable>
         </View>
-        </View>
-      {/* </ScrollView> */}
       </KeyboardAwareScrollView>
-      {/* <Button title="Back" style={styles.button} onPress={() => navigation.navigate('Home')} /> */}
       <Modal visible={successModalVisibile} transparent animationType="slide">
         <View style={styles.centeredView}>
           <View style={styles.modal}>
