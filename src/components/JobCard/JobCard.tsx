@@ -50,20 +50,21 @@ function JobCard({
       <GestureRecognizer
         style={{ flex: 1 }}
         onSwipeDown={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
+          setModalVisible(false);
+        }}>
         <Modal
           transparent
           visible={modalVisible}
           animationType="slide"
           onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
+            setModalVisible(false);
+          }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
+                <Pressable onPress={() => setModalVisible(false)}>
+                  <Text style={styles.modalButtonText}>X</Text>
+                </Pressable>
                 <Text style={styles.modalJobRefText}>{job.id}</Text>
                 <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
               </View>
