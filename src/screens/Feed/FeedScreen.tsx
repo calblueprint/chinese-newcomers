@@ -78,15 +78,9 @@ function FeedScreen({ navigation }: any) {
         />
 
         {filteredList.map((job, index) => (
-<<<<<<< HEAD
           // eslint-disable-next-line react/jsx-key
           <JobCard job={job} idx={index} pending={false} />
         ))}
-=======
-            // eslint-disable-next-line react/jsx-key
-            <JobCard job={job} idx={index} pending={false} />
-          ))}
->>>>>>> 2b768d2 (added expandable text boxes in draft form)
       </ScrollView>
       {/* <View style={styles.footer}>
         <Button title="Back" onPress={() => navigation.navigate('Home')} />
