@@ -10,7 +10,7 @@ const palette = {
   grayPrimary: '#717171',
 
   grey: '#A1A1A1',
-  bronze: '#49260C'
+  bronze: '#49260C',
 };
 
 export const theme = {
@@ -25,52 +25,52 @@ export const theme = {
     s: 8,
     m: 16,
     l: 24,
-    xl: 40
+    xl: 40,
   },
   textVariants: {
     h1: {
       fontFamily: 'DMSans_700Bold',
       fontSize: 36,
       lineHeight: 60,
-      color: '#49260C'
+      color: '#49260C',
     },
     h2: {
       fontFamily: 'DMSans_700Bold',
       fontSize: 28,
       lineHeight: 47,
-      color: '#49260C'
+      color: '#49260C',
     },
     h3: {
       fontFamily: 'DMSans_700Bold',
       fontSize: 24,
       lineHeight: 40,
-      color: '#49260C'
+      color: '#49260C',
     },
     body1: {
       fontFamily: 'DMSans_500Medium',
       fontSize: 14,
       lineHeight: 23,
-      color: '#49260C'
+      color: '#49260C',
     },
     body2: {
       fontFamily: 'DMSans_400Regular',
       fontWeight: 400,
       fontSize: 12,
       lineHeight: 20,
-      color: '#49260C'
-    }
+      color: '#49260C',
+    },
   },
   breakpoints: {
     phone: 0,
-    tablet: 768
+    tablet: 768,
   },
   buttons: {
     feedStandard: {
       ...Button.small,
       ...Button.rounded,
-      ...Button.dropShadow
-    }
-  }
+      ...Button.dropShadow,
+    },
+  },
 };
 
 export default theme;

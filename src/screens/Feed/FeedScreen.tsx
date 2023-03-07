@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
-import { createJob, getAllJobs, deleteJob, getJob } from '../../firebase/firestore/job';
+import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
-import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
-import { useIsFocused } from '@react-navigation/native';
 
 const auth = getAuth();
 
-const FeedScreen = ({ navigation }: any) => {
+function FeedScreen({ navigation }: any) {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([] as Job[]);
   const [filteredList, setFilteredList] = useState([] as Job[]);
@@ -30,7 +29,7 @@ const FeedScreen = ({ navigation }: any) => {
     'finance',
     'management',
     'IT',
-    'other'
+    'other',
   ];
 
   const isFocused = useIsFocused();
@@ -41,18 +40,17 @@ const FeedScreen = ({ navigation }: any) => {
       setList(data);
       setFilteredList(data);
     };
-    void fetchJobs();
+    fetchJobs();
   }, [isFocused]);
 
   useEffect(() => {
     if (category === 'all') {
       setFilteredList(list);
     } else {
-      setFilteredList(list.filter((job) => job.category === category));
+      setFilteredList(list.filter(job => job.category === category));
     }
-  }, [category]);
+  }, [category, list]);
 
-  const { user } = useAuthentication();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
@@ -63,14 +61,15 @@ const FeedScreen = ({ navigation }: any) => {
         contentContainerStyle={{
           flexGrow: 1,
           alignItems: 'center',
-          width: '100%'
-        }}>
+          width: '100%',
+        }}
+      >
         <Text style={styles.categoryText}> Filter By Category: </Text>
 
         <DropDownPicker
           open={open}
           value={category}
-          items={categories.map((category) => ({ label: category, value: category }))}
+          items={categories.map(c => ({ label: c, value: c }))}
           setOpen={setOpen}
           setValue={setCategory}
           listMode="SCROLLVIEW"
@@ -78,18 +77,16 @@ const FeedScreen = ({ navigation }: any) => {
           textStyle={{ fontFamily: 'DMSans_500Medium' }}
         />
 
-        {filteredList.map((job, index) => {
-          return (
-            // eslint-disable-next-line react/jsx-key
-            <JobCard job={job} idx={index} pending={false}></JobCard>
-          );
-        })}
+        {filteredList.map((job, index) => (
+          // eslint-disable-next-line react/jsx-key
+          <JobCard job={job} idx={index} pending={false} />
+        ))}
       </ScrollView>
       {/* <View style={styles.footer}>
         <Button title="Back" onPress={() => navigation.navigate('Home')} />
       </View> */}
     </SafeAreaView>
   );
-};
+}
 
 export default FeedScreen;

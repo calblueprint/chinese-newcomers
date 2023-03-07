@@ -2,10 +2,9 @@ import React from 'react';
 import { Text, View, Image } from 'react-native';
 import styles from './styles';
 import StyledButton from '../../../components/StyledButton/StyledButton';
+import logo from '../../../assets/cnsc-logo.png';
 
-const logo = require('../../../assets/cnsc-logo.png');
-
-const SigninScreen = ({ navigation }: any): ReactElement => {
+function SigninScreen({ navigation }: any) {
   const onBack: any = () => {
     navigation.goBack();
   };
@@ -15,7 +14,9 @@ const SigninScreen = ({ navigation }: any): ReactElement => {
         <Image source={logo} style={styles.logo} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.headingText}>Are you an admin or a job seeker? </Text>
+        <Text style={styles.headingText}>
+          Are you an admin or a job seeker?{' '}
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         <StyledButton
@@ -31,7 +32,7 @@ const SigninScreen = ({ navigation }: any): ReactElement => {
             backgroundColor: '#FFFFFF',
             borderColor: '#CC433C',
             width: '100%',
-            height: '42%'
+            height: '42%',
           }}
           textStyle={{ color: '#CC433C' }}
         />
@@ -44,13 +45,13 @@ const SigninScreen = ({ navigation }: any): ReactElement => {
             backgroundColor: '#FFFFFF',
             borderColor: '#CC433C',
             width: '50%',
-            height: '30%'
+            height: '30%',
           }}
           textStyle={{ color: '#CC433C' }}
         />
       </View>
     </View>
   );
-};
+}
 
 export default SigninScreen;

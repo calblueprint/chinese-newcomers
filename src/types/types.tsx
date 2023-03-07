@@ -1,5 +1,3 @@
-import firebase from 'firebase/app';
-
 export interface User {
   id: string;
   access: string;
@@ -39,7 +37,7 @@ export interface Job {
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
-  visible: Object;
+  visible: object;
   liked: boolean;
   category: string;
 }

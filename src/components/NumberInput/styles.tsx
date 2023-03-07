@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     // height: '100%',
-    marginTop: 3
+    marginTop: 3,
   },
   input: {
     borderWidth: 2,
@@ -12,6 +12,6 @@ export default StyleSheet.create({
     borderColor: '#49260C',
     width: '100%',
     height: 40,
-    paddingLeft: '3%'
-  }
+    paddingLeft: '3%',
+  },
 });

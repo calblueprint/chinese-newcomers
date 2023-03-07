@@ -1,42 +1,43 @@
-import { React, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import styles from './styles';
 import { getAuth } from 'firebase/auth';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
+import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import SigninScreen from '../Signin/Signin';
+import logo from '../../../assets/cnsc-logo.png';
 
 const auth = getAuth();
 
-const logo = require('../../../assets/cnsc-logo.png');
-
-const AdminSigninScreen = ({ navigation }: any) => {
+function AdminSigninScreen({ navigation }: any) {
   interface FormValues {
     email: string;
     password: string;
   }
-  const { ...methods } = useForm();
+  const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signInEmail } = useContext(AuthContext);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
       await signInEmail(email, password);
       console.log('signed in');
       // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
-      console.error(e.message);
+      console.error(e);
       throw e;
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
-    return console.log(errors);
-  };
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
+    console.log(errors);
 
   const onBack: any = () => {
     navigation.goBack();
@@ -66,7 +67,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
             label="password"
             placeholder=" password"
             onChangeText={setPassword}
-            secureTextEntry={true}
+            secureTextEntry
           />
         </View>
 
@@ -84,7 +85,7 @@ const AdminSigninScreen = ({ navigation }: any) => {
               width: '100%',
               height: '100%',
               backgroundColor: '#FFFFFF',
-              borderColor: '#CC433C'
+              borderColor: '#CC433C',
             }}
             textStyle={{ fontSize: 16, color: '#CC433C' }}
           />
@@ -92,6 +93,6 @@ const AdminSigninScreen = ({ navigation }: any) => {
       </FormProvider>
     </View>
   );
-};
+}
 
 export default AdminSigninScreen;
