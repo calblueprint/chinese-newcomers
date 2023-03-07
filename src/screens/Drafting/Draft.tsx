@@ -239,7 +239,7 @@ function DraftScreen({ navigation }: DraftScreenProps): ReactElement {
               field="languageRequirement"
               toggle={toggle}
               enabled={enabledFields.languageRequirement}
-              required={false}
+              required
               formState={formMethods.formState}
             />
 
