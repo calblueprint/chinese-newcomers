@@ -20,20 +20,6 @@ const homeOutline = (props: Props) => {
   return <MaterialCommunityIcons name="home-outline" color={color} size={26} />;
 };
 
-const noteTextOutline = (props: Props) => {
-  const { color } = props;
-  return (
-    <MaterialCommunityIcons name="note-text-outline" color={color} size={26} />
-  );
-};
-
-const accountCheck = (props: Props) => {
-  const { color } = props;
-  return (
-    <MaterialCommunityIcons name="account-check" color={color} size={26} />
-  );
-};
-
 const logoutVariant = (props: Props) => {
   const { color } = props;
   return (
@@ -56,20 +42,6 @@ function UserStack(): ReactElement {
           component={FeedScreen}
           options={{
             tabBarIcon: homeOutline,
-          }}
-        />
-        <Tab.Screen
-          name="Draft"
-          component={DraftScreen}
-          options={{
-            tabBarIcon: noteTextOutline,
-          }}
-        />
-        <Tab.Screen
-          name="Approval"
-          component={ApprovalScreen}
-          options={{
-            tabBarIcon: accountCheck,
           }}
         />
         <Tab.Screen
