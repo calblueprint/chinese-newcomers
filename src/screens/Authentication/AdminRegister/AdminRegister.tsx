@@ -8,7 +8,6 @@ import {
 import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
 import logo from '../../../assets/cnsc-logo.png';
 import { z } from 'zod';
-import { TextField } from 'react-native-material-textfield';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
@@ -41,6 +40,8 @@ function AdminRegisterScreen({
       if (e instanceof z.ZodError) {
         // setErrorText = e.issues
         console.log(e.issues);
+      } else if (e instanceof FirebaseAuthWeakPasswordException) {
+        getReason();
       }
       console.error(e);
     }
