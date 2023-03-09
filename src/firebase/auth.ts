@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
+  AuthErrorCodes
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { AuthDispatch } from '../context/AuthContext';

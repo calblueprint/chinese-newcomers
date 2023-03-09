@@ -28,21 +28,24 @@ function AdminRegisterScreen({
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [errorMsg, setErrorMsg] = useState('');
   const { phoneNumber } = route.params;
   const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
+      createUserWithEmailAndPassword(auth, email, password).catch(error => {
+          switch(e.code) {
+            case 'auth/weak-password':
+              console.log('WEAK_PASSWORD')
+              break;
+          }
+        });
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
       if (e instanceof z.ZodError) {
-        // setErrorText = e.issues
         console.log(e.issues);
-      } else if (e instanceof FirebaseAuthWeakPasswordException) {
-        getReason();
-      }
+      } 
       console.error(e);
     }
   };
