@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   deleteUser,
   User,
+  AuthErrorCodes
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getUser, addUser } from './firestore/user';
