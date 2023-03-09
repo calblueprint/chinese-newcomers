@@ -26,10 +26,7 @@ interface JobCardProps {
   pending: boolean;
 }
 
-function JobCard({
-  job,
-  pending,
-}: JobCardProps) {
+function JobCard({ job, pending }: JobCardProps) {
   const [currToken, setCurrToken] = useState<string | null>('');
   const [bookmarkedValue, setBookmarked] = useState<boolean>();
 

@@ -105,11 +105,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginRight: 13,
   },
-  jobNameText: {
-    color: 'black',
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
   heart: {
     width: 40,
     height: 40,
