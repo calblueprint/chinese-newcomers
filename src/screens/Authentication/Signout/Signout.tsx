@@ -4,7 +4,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import styles from './styles';
 
-function HomeScreen({ navigation }: any): ReactElement {
+function Signout({ navigation }: any): ReactElement {
   const { signOut } = useContext(AuthContext);
 
   return (
@@ -19,4 +19,4 @@ function HomeScreen({ navigation }: any): ReactElement {
   );
 }
 
-export default HomeScreen;
+export default Signout;
