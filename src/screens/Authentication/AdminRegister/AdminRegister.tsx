@@ -7,7 +7,6 @@ import {
   SubmitErrorHandler,
 } from 'react-hook-form';
 import { z } from 'zod';
-import { TextField } from 'react-native-material-textfield';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
@@ -40,6 +39,8 @@ function AdminRegisterScreen({
       if (e instanceof z.ZodError) {
         // setErrorText = e.issues
         console.log(e.issues);
+      } else if (e instanceof FirebaseAuthWeakPasswordException) {
+        getReason();
       }
       console.error(e);
     }

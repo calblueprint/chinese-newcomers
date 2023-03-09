@@ -4,6 +4,7 @@ import {
   signInWithCredential,
   signOut,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   deleteUser,
   User,
 } from 'firebase/auth';
