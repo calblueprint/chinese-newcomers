@@ -109,6 +109,14 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   }
 };
 
+export const updateLike = async (jobId: string, newLiked: boolean): Promise<void> => {
+  const docRef = doc(db, 'jobs', jobId);
+  const data = {
+    liked: newLiked
+  };
+  await updateDoc(docRef, data);
+};
+
 // export const updateJob = async (job_id: string): Promise<void> => {};
 export const deleteJob = async (
   jobId: string,

@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import styles from './CardStyles';
 import { objectToMap } from '../../firebase/helpers';
+import emptyHeart from '../../assets/empty-heart.png';
+import filledHeart from '../../assets/filled-heart.png';
+import Ex from '../../assets/ex.png';
+import { getAllJobs, updateLike } from '../../firebase/firestore/job';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import { deleteJob, createJob } from '../../firebase/firestore/job';
@@ -14,6 +18,8 @@ interface JobCardProps {
   pending: boolean;
   pendingJobs: Job[];
   setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
+  jobList: Job[];
+  setList: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
 function JobCard({
@@ -22,10 +28,12 @@ function JobCard({
   pending,
   pendingJobs,
   setPendingJobs,
+  jobList,
+  setList
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
-  // const [pendingJobs, setPendingJobs] = useState([])
+  const [likeValue, setLikeValue] = useState(job.liked);
 
   async function handleAction(approve: boolean) {
     setModalVisible(false);
@@ -39,6 +47,26 @@ function JobCard({
     }
     setPendingJobs(pendingJobs.filter((_, index) => index !== idx));
   }
+
+  const toggleLike = () => {
+    setLikeValue((like) => !like);
+  };
+
+  useEffect(() => {
+    const updateFirebase = async () => {
+      await updateLike(job.id, likeValue);
+    };
+    updateFirebase().catch(console.error);
+
+    const fetchJobs = async () => {
+      const currList = [...jobList];
+      const currJob = currList[idx];
+      currJob.liked = likeValue;
+      currList[idx] = currJob;
+      setList(currList);
+    };
+    fetchJobs();
+  }, [idx, job.id, jobList, likeValue, setList]);
 
   return (
     <Pressable
@@ -161,6 +189,12 @@ function JobCard({
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
+        <Pressable
+          onPress={() => {
+            toggleLike();
+          }}>
+          <Image source={likeValue ? filledHeart : emptyHeart} style={styles.heart} />
+        </Pressable>
       </View>
     </Pressable>
   );
