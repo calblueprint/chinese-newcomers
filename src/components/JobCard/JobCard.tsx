@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
@@ -189,6 +189,16 @@ function JobCard({
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
+        <Pressable
+          onPress={() => {
+            toggleLike();
+          }}
+        >
+          <Image
+            source={likeValue ? filledHeart : emptyHeart}
+            style={styles.heart}
+          />
+        </Pressable>
       </View>
     </Pressable>
   );
