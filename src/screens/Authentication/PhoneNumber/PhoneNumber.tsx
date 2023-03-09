@@ -1,23 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useRef } from 'react';
 import { Text, View, Image } from 'react-native';
-import {
-  useForm,
-  FormProvider,
-  SubmitHandler,
-  SubmitErrorHandler,
-} from 'react-hook-form';
-import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import PhoneInput from 'react-native-phone-number-input';
-import styles from './styles';
-import {
-  phoneGetConfirmation,
-  getActivationStatus,
-} from '../../../firebase/auth';
-import { firebaseApp } from '../../../firebase/config';
-import StyledButton from '../../../components/StyledButton/StyledButton';
-import logo from '../../../assets/cnsc-logo.png';
-import WelcomeScreen from '../Welcome/Welcome';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
 function PhoneNumberScreen({
@@ -26,6 +9,19 @@ function PhoneNumberScreen({
   interface FormValues {
     phoneNumber: string;
   }
+import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import PhoneInput from 'react-native-phone-number-input';
+import { useAuthentication } from '../../../utils/hooks/useAuthentication';
+import styles from './styles';
+import { phoneGetConfirmation, getActivationStatus } from '../../../firebase/auth';
+import { firebaseApp } from '../../../firebase/config';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import WelcomeScreen from '../Welcome/Welcome';
+
+const logo = require('../../../assets/cnsc-logo.png');
+
+function PhoneNumberScreen({ navigation }: any) {
   const { ...methods } = useForm();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
