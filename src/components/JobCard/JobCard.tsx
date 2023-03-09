@@ -3,10 +3,18 @@ import { Text, View, Pressable, Modal } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import styles from './CardStyles';
-import objectToBooleanMap from '../../firebase/helpers';
+import objectToBooleanMap, { objectToMap } from '../../firebase/helpers';
+import emptyHeart from '../../assets/empty-heart.png';
+import filledHeart from '../../assets/filled-heart.png';
+import Ex from '../../assets/ex.png';
+import {
+  getAllJobs,
+  updateLike,
+  deleteJob,
+  createJob,
+} from '../../firebase/firestore/job';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
-import { deleteJob, createJob } from '../../firebase/firestore/job';
 import Empty from '../../assets/empty.svg';
 import Filled from '../../assets/filled.svg';
 
@@ -197,7 +205,6 @@ function JobCard({
           }}
         >
           {/* {likeValue ? <Filled /> : <Empty />} */}
-          {/* <Image source={likeValue ? require('../../assets/filled-heart.png') : require('../../assets/empty-heart.png')} style={styles.heart} /> */}
         </Pressable>
       </View>
     </Pressable>
