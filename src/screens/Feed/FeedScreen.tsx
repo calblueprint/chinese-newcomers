@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
 import DropDownPicker from 'react-native-dropdown-picker';

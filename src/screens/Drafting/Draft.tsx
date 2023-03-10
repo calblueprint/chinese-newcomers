@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
-import { Text, View, Pressable, Switch, Modal, SafeAreaView } from 'react-native';
+import { Text, View, Pressable, Switch, Modal } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
 import { ScrollView } from 'react-native-gesture-handler';

@@ -3,6 +3,7 @@ import { ThemeProvider } from 'react-native-elements';
 import { UserProvider } from './src/context/context';
 import './src/firebase/firebaseApp';
 import RootNavigation from './src/navigation';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useFonts } from 'expo-font';
 
@@ -18,9 +19,11 @@ export default function App() {
   }
   return (
     <ThemeProvider>
-      <UserProvider>
-        <RootNavigation />
-      </UserProvider>
+      <SafeAreaProvider>
+        <UserProvider>
+          <RootNavigation />
+        </UserProvider>
+      </SafeAreaProvider>
     </ThemeProvider>
   );
 }
