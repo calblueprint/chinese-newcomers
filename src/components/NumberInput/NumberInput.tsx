@@ -4,14 +4,19 @@ import styles from './styles';
 
 interface NumberInputProps {
   placeholder: string;
-  value: string;
-  onChangeText: any;
+  onChangeText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const NumberInput: React.FunctionComponent<NumberInputProps> = (props: NumberInputProps) => {
+function NumberInput(props: NumberInputProps) {
   const { placeholder, onChangeText } = props;
 
-  return <TextInput style={styles.input} placeholder={placeholder} onChangeText={onChangeText} />;
-};
+  return (
+    <TextInput
+      style={styles.input}
+      placeholder={placeholder}
+      onChangeText={onChangeText}
+    />
+  );
+}
 
 export default NumberInput;

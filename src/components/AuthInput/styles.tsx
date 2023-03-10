@@ -5,7 +5,7 @@ export default StyleSheet.create({
     width: '100%',
     flex: 1,
     marginTop: '2%',
-    marginBottom: '2%'
+    marginBottom: '2%',
   },
   input: {
     borderWidth: 2,
@@ -13,6 +13,6 @@ export default StyleSheet.create({
     borderColor: '#49260C',
     width: '100%',
     height: '100%',
-    padding: '3%'
-  }
+    padding: '3%',
+  },
 });
