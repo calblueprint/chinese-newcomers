@@ -1,17 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-// import { BottomNavigation } from '@material-ui/core';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import HomeScreen from '../screens/Home';
 import DraftScreen from '../screens/Drafting/Draft';
-import SigninScreen from '../screens/Authentication/Signin';
-import SignoutScreen from '../screens/Authentication/Signout';
+import Signout from '../screens/Authentication/Signout/Signout';
 import FeedScreen from '../screens/Feed/FeedScreen';
-import { RootStackParamList } from '../types/navigation';
-import AdminRegisterScreen from '../screens/Authentication/AdminRegister/AdminRegister';
 import ApprovalScreen from '../screens/Approval/ApprovalScreen';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -54,7 +48,7 @@ function AdminStack(): ReactElement {
         />
         <Tab.Screen
           name="Signout"
-          component={SignoutScreen}
+          component={Signout}
           options={{
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="logout-variant" color={color} size={26} />

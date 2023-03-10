@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal } from 'react-native';
+import { Text, View, Pressable, Modal, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import styles from './CardStyles';
@@ -7,10 +7,9 @@ import { objectToMap } from '../../firebase/helpers';
 import emptyHeart from '../../assets/empty-heart.png';
 import filledHeart from '../../assets/filled-heart.png';
 import Ex from '../../assets/ex.png';
-import { getAllJobs, updateLike } from '../../firebase/firestore/job';
+import { getAllJobs, updateLike , deleteJob, createJob } from '../../firebase/firestore/job';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
-import { deleteJob, createJob } from '../../firebase/firestore/job';
 
 interface JobCardProps {
   job: Job;
@@ -52,21 +51,21 @@ function JobCard({
     setLikeValue((like) => !like);
   };
 
-  useEffect(() => {
-    const updateFirebase = async () => {
-      await updateLike(job.id, likeValue);
-    };
-    updateFirebase().catch(console.error);
+  // useEffect(() => {
+  //   const updateFirebase = async () => {
+  //     await updateLike(job.id, likeValue);
+  //   };
+  //   updateFirebase().catch(console.error);
 
-    const fetchJobs = async () => {
-      const currList = [...jobList];
-      const currJob = currList[idx];
-      currJob.liked = likeValue;
-      currList[idx] = currJob;
-      setList(currList);
-    };
-    fetchJobs();
-  }, [idx, job.id, jobList, likeValue, setList]);
+  //   const fetchJobs = async () => {
+  //     const currList = [...jobList];
+  //     const currJob = currList[idx];
+  //     currJob.liked = likeValue;
+  //     currList[idx] = currJob;
+  //     setList(currList);
+  //   };
+  //   fetchJobs();
+  // }, [idx, job.id, jobList, likeValue, setList]);
 
   return (
     <Pressable
@@ -193,6 +192,7 @@ function JobCard({
           onPress={() => {
             toggleLike();
           }}>
+          
           <Image source={likeValue ? filledHeart : emptyHeart} style={styles.heart} />
         </Pressable>
       </View>

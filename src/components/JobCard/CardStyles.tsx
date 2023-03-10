@@ -120,7 +120,7 @@ export default StyleSheet.create({
     width: '90%'
   },
   boldModalText: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
     fontFamily: "DMSans_700Bold"
   },
 
