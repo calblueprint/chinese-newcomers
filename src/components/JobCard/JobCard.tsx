@@ -6,7 +6,8 @@ import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
-import { deleteJob, createJob } from '../../firebase/firestore/job';
+import Empty from '../../assets/empty.svg'
+import Filled from '../../assets/filled.svg'
 
 interface JobCardProps {
   job: Job;
@@ -180,12 +181,9 @@ function JobCard({
         <Pressable
           onPress={() => {
             toggleLike();
-          }}
-        >
-          <Image
-            source={likeValue ? filledHeart : emptyHeart}
-            style={styles.heart}
-          />
+          }}>
+          {likeValue ? <Filled /> : <Empty />}
+          {/* <Image source={likeValue ? require('../../assets/filled-heart.png') : require('../../assets/empty-heart.png')} style={styles.heart} /> */}
         </Pressable>
       </View>
     </Pressable>
