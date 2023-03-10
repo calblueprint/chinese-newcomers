@@ -10,8 +10,13 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     backgroundColor: 'white',
     borderRadius: 7,
-    borderColor: '#C59675',
-    borderWidth: 2,
+    borderColor: '#FFFFFFF',
+    borderWidth: 1,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.25,
   },
   jobRef: {
     marginBottom: '3%',
