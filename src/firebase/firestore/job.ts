@@ -110,6 +110,12 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
 };
 
 export const updateLike = async (jobId: string, newLiked: boolean): Promise<void> => {
+  
+  // TODO: change firebase schema
+  // remove liked field from job
+  // get user_id from context
+  // add job to user's liked_jobs array
+  
   const docRef = doc(db, 'jobs', jobId);
   const data = {
     liked: newLiked
