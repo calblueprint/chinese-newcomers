@@ -9,6 +9,7 @@ import {
   getAuthContext,
 } from '../context/AuthContext';
 import AdminStack from './adminStack';
+import { User } from '../types/types';
 
 export default function RootNavigation() {
   const [authState, dispatch] = useAuthReducer();
@@ -17,7 +18,10 @@ export default function RootNavigation() {
     const restoreAuthToken = async () => {
       try {
         const userToken = await AsyncStorage.getItem('uid');
-        dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+        if (userToken !== null) {
+          const user = await getUser(userToken) as User;
+          dispatch({ type: 'RESTORE_TOKEN', token: userToken, userObject: user });
+        }
       } catch (e) {
         console.log(e);
       }

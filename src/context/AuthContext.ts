@@ -36,7 +36,7 @@ export interface AuthState {
   isLoading: boolean;
   userToken: string | null;
   isSignout: boolean;
-  userObject: User;
+  userObject: User | null;
 }
 
 export type AuthContextAction =
@@ -123,7 +123,7 @@ export const getAuthContext = (
       );
       const result = await signInWithCredential(auth, credential);
       await checkAndAddUser(result.user, 'regular_user', null);
-      const newUser = await getUser(user.uid) as User; 
+      const newUser = await getUser(result.user.uid) as User; 
       console.log('Phone authentication successful', result.user.phoneNumber);
       await AsyncStorage.setItem('uid', result.user.uid);
       dispatch({ type: 'SIGN_IN', token: result.user.uid, userObject: newUser });
