@@ -121,4 +121,12 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: '6%',
   },
+  singleButtonContainer: {
+    height: '18%',
+    width: '80%',
+    flexDirection: 'column',
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: '6%',
+  },
 });
