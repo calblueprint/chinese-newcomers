@@ -29,7 +29,6 @@ function JobCard({
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
-  // const [pendingJobs, setPendingJobs] = useState([])
 
   async function handleAction(approve: boolean) {
     setModalVisible(false);
