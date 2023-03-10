@@ -19,6 +19,8 @@ interface JobCardProps {
   setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
   jobList: Job[];
   setList: React.Dispatch<React.SetStateAction<Job[]>>;
+  filteredJobs: Job[];
+  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
 function JobCard({
@@ -28,7 +30,9 @@ function JobCard({
   pendingJobs,
   setPendingJobs,
   jobList,
-  setList
+  setList,
+  filteredJobs,
+  setFilteredJobs,
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
@@ -66,6 +70,15 @@ function JobCard({
   //   };
   //   fetchJobs();
   // }, [idx, job.id, jobList, likeValue, setList]);
+  async function removeJob() {
+    setModalVisible(false);
+    try {
+      await deleteJob(job.id, 'approvedJobs');
+    } catch (e) {
+      console.log(e);
+    }
+    setFilteredJobs(filteredJobs.filter((_, index) => index !== idx));
+  }
 
   return (
     <Pressable
@@ -175,6 +188,18 @@ function JobCard({
                       onPress={async () => handleAction(true)}
                       buttonStyle={{ width: '45%', height: '50%' }}
                       textStyle={{ fontSize: 16 }}
+                    />
+                  </View>
+                )}
+                {!pending && (
+                  <View style={styles.singleButtonContainer}>
+                    <StyledButton
+                      text="remove"
+                      onPress={async () => removeJob()}
+                      buttonStyle={{
+                        width: '45%',
+                        height: '50%',
+                      }}
                     />
                   </View>
                 )}
