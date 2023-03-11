@@ -36,19 +36,14 @@ function AdminRegisterScreen({
     try {
       createUserWithEmailAndPassword(auth, email, password)
       .catch(error => {
-          switch(e.code) {
-             case 'auth/weak-password':
-              console.log(e.message);
-            setPasswordError(e.message);
-            break;
-          }
-        });
+        setPasswordError("Oops! Weak password. Please make sure your password is at least 6 characters.");
+      });
       console.log('passed password check')
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
       console.log('caught error')
-      //setPasswordError(e.message);
+      // setPasswordError(e.message);
       if (e instanceof z.ZodError) {
         setEmailError("Oops! Invalid email. Try again.");
       } 
