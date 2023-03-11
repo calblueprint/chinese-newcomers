@@ -2,7 +2,7 @@ import React, { ReactElement, useContext } from 'react';
 import { View } from 'react-native';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import styles from '../styles';
+import styles from './styles';
 import { SignoutStackScreenProps } from '../../../navigation/types';
 
 function SignoutScreen({

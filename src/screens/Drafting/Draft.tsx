@@ -7,7 +7,6 @@ import {
   Modal,
   SafeAreaView,
 } from 'react-native';
-import { getAuth } from 'firebase/auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -18,13 +17,9 @@ import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
 import { DraftStackScreenProps } from '../../navigation/types';
 
-const auth = getAuth();
-
 function DraftScreen({
   navigation,
 }: DraftStackScreenProps<'DraftScreen'>): ReactElement {
-  const { user } = useAuthentication();
-
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState('');
   const categories: string[] = [

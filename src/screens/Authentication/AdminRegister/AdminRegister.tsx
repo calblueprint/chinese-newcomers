@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image, KeyboardAvoidingView } from 'react-native';
-import { getAuth } from 'firebase/auth';
 import {
   useForm,
   FormProvider,
@@ -13,8 +12,6 @@ import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthStackScreenProps } from '../../../navigation/types';
 import logo from '../../../assets/cnsc-logo.png';
-
-const auth = getAuth();
 
 function AdminRegisterScreen({
   navigation,

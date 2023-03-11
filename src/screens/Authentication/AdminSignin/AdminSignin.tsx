@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import { getAuth } from 'firebase/auth';
 import {
   useForm,
   FormProvider,
@@ -14,8 +13,6 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
 import SigninScreen from '../Signin/Signin';
 import { AuthStackScreenProps } from '../../../navigation/types';
-
-const auth = getAuth();
 
 function AdminSigninScreen({
   navigation,

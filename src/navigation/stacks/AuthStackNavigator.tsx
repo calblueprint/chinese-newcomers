@@ -17,10 +17,7 @@ export default function AuthStackNavigator() {
         headerShown: false,
       }}
     >
-      <AuthStack.Screen
-        name="AdminRegisterScreen"
-        component={AdminRegisterScreen}
-      />
+      <AuthStack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <AuthStack.Screen
         name="AdminSigninScreen"
         component={AdminSigninScreen}
@@ -29,12 +26,15 @@ export default function AuthStackNavigator() {
         name="PhoneNumberScreen"
         component={PhoneNumberScreen}
       />
-      <AuthStack.Screen name="SigninScreen" component={SigninScreen} />
       <AuthStack.Screen
         name="VerificationScreen"
         component={VerificationScreen}
       />
-      <AuthStack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <AuthStack.Screen
+        name="AdminRegisterScreen"
+        component={AdminRegisterScreen}
+      />
+      <AuthStack.Screen name="SigninScreen" component={SigninScreen} />
     </AuthStack.Navigator>
   );
 }

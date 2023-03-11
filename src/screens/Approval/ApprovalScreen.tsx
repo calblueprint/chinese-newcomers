@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView, SafeAreaView } from 'react-native';
-import { getAuth } from 'firebase/auth';
 import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import { ApprovalStackScreenProps } from '../../navigation/types';
-
-const auth = getAuth();
 
 function ApprovalScreen({
   navigation,

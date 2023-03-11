@@ -27,7 +27,6 @@ function PhoneNumberScreen({
     phoneNumber: string;
   }
   const { ...methods } = useForm();
-  const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);

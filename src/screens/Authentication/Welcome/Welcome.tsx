@@ -10,7 +10,6 @@ import logo from '../../../assets/cnsc-logo.png';
 import { AuthStackScreenProps } from '../../../navigation/types';
 
 function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
-  const { user } = useAuthentication();
   const recaptchaVerifier = useRef(null);
   const { t, i18n } = useTranslation();
 

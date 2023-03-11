@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-// import { getAuth, signOut } from 'firebase/auth';
 import {
   useForm,
   FormProvider,
@@ -36,6 +35,7 @@ function VerificationScreen({
         await signInPhone(verificationId, verificationCode);
       } else {
         await signUpPhoneAdmin(verificationId, verificationCode);
+        console.log('phonenumber', phoneNumber);
         navigation.navigate('AdminRegisterScreen', { phoneNumber });
       }
     } catch (e) {

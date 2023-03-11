@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import { getAuth } from 'firebase/auth';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
@@ -9,8 +8,6 @@ import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import Logo from '../../assets/cnsc-logo.png';
 import { FeedStackScreenProps } from '../../navigation/types';
-
-const auth = getAuth();
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
