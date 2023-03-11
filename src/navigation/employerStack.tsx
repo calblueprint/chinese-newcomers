@@ -16,7 +16,7 @@ import ApprovalScreen from '../screens/Approval/ApprovalScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
-function AdminStack(): ReactElement {
+function EmployerStack(): ReactElement {
     return (
       <NavigationContainer>
         <Tab.Navigator
