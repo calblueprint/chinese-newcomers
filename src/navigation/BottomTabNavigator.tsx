@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 // import { BottomNavigation } from '@material-ui/core';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { BottomTabParamList } from './types';
+import { BottomTabParamList } from '../types/navigation';
 import FeedStackNavigator from './stacks/FeedStackNavigator';
 import DraftStackNavigator from './stacks/DraftStackNavigator';
 import ApprovalStackNavigator from './stacks/ApprovalStackNavigator';

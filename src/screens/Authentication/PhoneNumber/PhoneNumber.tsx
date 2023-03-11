@@ -18,7 +18,7 @@ import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
 import WelcomeScreen from '../Welcome/Welcome';
-import { AuthStackScreenProps } from '../../../navigation/types';
+import { AuthStackScreenProps } from '../../../types/navigation';
 
 function PhoneNumberScreen({
   navigation,

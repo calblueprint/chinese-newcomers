@@ -3,7 +3,7 @@ import { Text, View, Image } from 'react-native';
 import styles from './styles';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
-import { AuthStackScreenProps } from '../../../navigation/types';
+import { AuthStackScreenProps } from '../../../types/navigation';
 
 function SigninScreen({
   navigation,

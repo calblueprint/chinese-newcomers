@@ -12,7 +12,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
 import SigninScreen from '../Signin/Signin';
-import { AuthStackScreenProps } from '../../../navigation/types';
+import { AuthStackScreenProps } from '../../../types/navigation';
 
 function AdminSigninScreen({
   navigation,

@@ -7,7 +7,7 @@ import { firebaseApp } from '../../../firebase/firebaseApp';
 import '../../../translation/i18n';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
-import { AuthStackScreenProps } from '../../../navigation/types';
+import { AuthStackScreenProps } from '../../../types/navigation';
 
 function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
   const recaptchaVerifier = useRef(null);

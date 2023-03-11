@@ -15,7 +15,7 @@ import { Job } from '../../types/types';
 import { createJob } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
-import { DraftStackScreenProps } from '../../navigation/types';
+import { DraftStackScreenProps } from '../../types/navigation';
 
 function DraftScreen({
   navigation,

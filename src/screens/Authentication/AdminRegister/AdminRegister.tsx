@@ -10,7 +10,7 @@ import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import { AuthStackScreenProps } from '../../../navigation/types';
+import { AuthStackScreenProps } from '../../../types/navigation';
 import logo from '../../../assets/cnsc-logo.png';
 
 function AdminRegisterScreen({

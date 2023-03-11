@@ -6,7 +6,7 @@ import PhoneNumberScreen from '../../screens/Authentication/PhoneNumber/PhoneNum
 import SigninScreen from '../../screens/Authentication/Signin/Signin';
 import VerificationScreen from '../../screens/Authentication/VerificationCode/VerificationCode';
 import WelcomeScreen from '../../screens/Authentication/Welcome/Welcome';
-import { AuthStackParamList } from '../types';
+import { AuthStackParamList } from '../../types/navigation';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 

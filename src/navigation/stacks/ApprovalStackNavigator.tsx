@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import ApprovalScreen from '../../screens/Approval/ApprovalScreen';
-import { ApprovalStackParamList } from '../types';
+import { ApprovalStackParamList } from '../../types/navigation';
 
 const ApprovalStack = createNativeStackNavigator<ApprovalStackParamList>();
 

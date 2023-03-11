@@ -5,7 +5,7 @@ import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
-import { ApprovalStackScreenProps } from '../../navigation/types';
+import { ApprovalStackScreenProps } from '../../types/navigation';
 
 function ApprovalScreen({
   navigation,
