@@ -55,10 +55,6 @@ function PhoneNumberScreen({
     }
   };
 
-  const onBack: any = () => {
-    navigation.goBack();
-  };
-
   const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
 
   return (
@@ -88,7 +84,7 @@ function PhoneNumberScreen({
           <View style={styles.buttonContainer}>
             <StyledButton
               text="back"
-              onPress={onBack}
+              onPress={() => navigation.goBack()}
               buttonStyle={{
                 width: '45%',
                 height: '100%',

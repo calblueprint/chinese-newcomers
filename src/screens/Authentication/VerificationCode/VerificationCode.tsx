@@ -35,7 +35,6 @@ function VerificationScreen({
         await signInPhone(verificationId, verificationCode);
       } else {
         await signUpPhoneAdmin(verificationId, verificationCode);
-        console.log('phonenumber', phoneNumber);
         navigation.navigate('AdminRegisterScreen', { phoneNumber });
       }
     } catch (e) {
@@ -45,10 +44,6 @@ function VerificationScreen({
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
-
-  const onBack: any = () => {
-    navigation.goBack();
-  };
 
   return (
     <View style={styles.container}>
@@ -71,7 +66,7 @@ function VerificationScreen({
         <View style={styles.buttonContainer}>
           <StyledButton
             text="back"
-            onPress={onBack}
+            onPress={() => navigation.goBack()}
             buttonStyle={{
               width: '45%',
               height: '100%',

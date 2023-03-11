@@ -38,10 +38,6 @@ function AdminRegisterScreen({
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
 
-  const onBack: any = () => {
-    navigation.goBack();
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.keyboardviewContainer}>
@@ -85,7 +81,7 @@ function AdminRegisterScreen({
             <View style={styles.buttonContainer}>
               <StyledButton
                 text="back"
-                onPress={onBack}
+                onPress={() => navigation.goBack()}
                 buttonStyle={{
                   width: '45%',
                   height: '100%',

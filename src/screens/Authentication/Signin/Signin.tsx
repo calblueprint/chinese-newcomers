@@ -8,9 +8,6 @@ import { AuthStackScreenProps } from '../../../types/navigation';
 function SigninScreen({
   navigation,
 }: AuthStackScreenProps<'SigninScreen'>): ReactElement {
-  const onBack: any = () => {
-    navigation.goBack();
-  };
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -43,7 +40,7 @@ function SigninScreen({
       <View style={styles.backButtonContainer}>
         <StyledButton
           text="back"
-          onPress={onBack}
+          onPress={() => navigation.goBack()}
           buttonStyle={{
             backgroundColor: '#FFFFFF',
             borderColor: '#CC433C',

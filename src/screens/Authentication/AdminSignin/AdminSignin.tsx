@@ -40,10 +40,6 @@ function AdminSigninScreen({
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
 
-  const onBack: any = () => {
-    navigation.goBack();
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -81,7 +77,7 @@ function AdminSigninScreen({
           />
           <StyledButton
             text="back"
-            onPress={onBack}
+            onPress={() => navigation.goBack()}
             buttonStyle={{
               width: '100%',
               height: '100%',

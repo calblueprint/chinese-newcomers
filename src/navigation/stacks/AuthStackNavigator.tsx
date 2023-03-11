@@ -18,6 +18,7 @@ export default function AuthStackNavigator() {
       }}
     >
       <AuthStack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <AuthStack.Screen name="SigninScreen" component={SigninScreen} />
       <AuthStack.Screen
         name="AdminSigninScreen"
         component={AdminSigninScreen}
@@ -34,7 +35,6 @@ export default function AuthStackNavigator() {
         name="AdminRegisterScreen"
         component={AdminRegisterScreen}
       />
-      <AuthStack.Screen name="SigninScreen" component={SigninScreen} />
     </AuthStack.Navigator>
   );
 }
