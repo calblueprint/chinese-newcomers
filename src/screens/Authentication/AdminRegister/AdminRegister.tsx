@@ -29,24 +29,30 @@ function AdminRegisterScreen({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { phoneNumber } = route.params;
-  const { dispatch } = useContext(AuthContext);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      createUserWithEmailAndPassword(auth, email, password).catch(error => {
+      createUserWithEmailAndPassword(auth, email, password)
+      .catch(error => {
           switch(e.code) {
-            case 'auth/weak-password':
-              console.log('WEAK_PASSWORD')
-              break;
+             case 'auth/weak-password':
+              console.log(e.message);
+            setPasswordError(e.message);
+            break;
           }
         });
+      console.log('passed password check')
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
+      console.log('caught error')
+      //setPasswordError(e.message);
       if (e instanceof z.ZodError) {
-        console.log(e.issues);
+        setEmailError("Oops! Invalid email. Try again.");
       } 
-      console.error(e);
+      console.log(e);
     }
   };
 
@@ -87,11 +93,9 @@ function AdminRegisterScreen({
                 onChangeText={setPassword}
               />
               <Text style={styles.smallText}>Verify Password </Text>
-              <AuthInput
-                name="confirmPassword"
-                label="confirmPassword"
-                placeholder=" password"
-              />
+              <AuthInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
+              {emailError !== '' && <Text style={{ color: 'red' }}>{emailError}</Text> }
+              {passwordError !== '' && <Text style={{ color: 'red' }}>{passwordError}</Text> }
             </View>
             <View style={styles.buttonContainer}>
               <StyledButton
