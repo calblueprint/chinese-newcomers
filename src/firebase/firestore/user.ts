@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 import { UserCredential } from 'firebase/auth';
 import { db } from '../config';
-import { User } from '../../types/types';
+import { RegularUser, Admin, Employer } from '../../types/types';
 
 const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
   const userId = document.id.toString();
@@ -25,7 +25,15 @@ const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
     verified: data.verified,
     password: data.password,
   };
-  return user as User;
+  if (data.access === "regular_user") {
+    return user as RegularUser;
+  }
+  if (data.access === "admin") {
+    return user as Admin;
+  }
+  if (data.access === "employer") {
+    return user as Employer;
+  };
 };
 
 export const getUser = async (id: string): Promise<User | null> => {
