@@ -30,7 +30,11 @@ function PhoneNumberScreen({ navigation }: any) {
 
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
-      const checkValid = phoneInput.current?.isValidNumber(phoneNumber);
+      const validatePhoneNumber = () => {
+        const regexp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        return regexp.test(phoneNumber);
+      }
+      const checkValid = validatePhoneNumber();
       console.log(valid);
       setValid(checkValid ?? false);
       // To Do: render error label
