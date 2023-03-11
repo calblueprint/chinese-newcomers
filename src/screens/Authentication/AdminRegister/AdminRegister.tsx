@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image, KeyboardAvoidingView } from 'react-native';
-import { getAuth } from 'firebase/auth';
 import {
   useForm,
   FormProvider,
@@ -11,11 +10,13 @@ import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
+import { AuthStackScreenProps } from '../../../types/navigation';
 import logo from '../../../assets/cnsc-logo.png';
 
-const auth = getAuth();
-
-function AdminRegisterScreen({ route, navigation }: any) {
+function AdminRegisterScreen({
+  navigation,
+  route,
+}: AuthStackScreenProps<'AdminRegisterScreen'>) {
   interface FormValues {
     email: string;
     password: string;
@@ -36,10 +37,6 @@ function AdminRegisterScreen({ route, navigation }: any) {
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
-
-  const onBack: any = () => {
-    navigation.goBack();
-  };
 
   return (
     <View style={styles.container}>
@@ -84,7 +81,7 @@ function AdminRegisterScreen({ route, navigation }: any) {
             <View style={styles.buttonContainer}>
               <StyledButton
                 text="back"
-                onPress={onBack}
+                onPress={() => navigation.goBack()}
                 buttonStyle={{
                   width: '45%',
                   height: '100%',

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
+import { Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
@@ -9,10 +7,9 @@ import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import Logo from '../../assets/cnsc-logo.png';
+import { FeedStackScreenProps } from '../../types/navigation';
 
-const auth = getAuth();
-
-function FeedScreen({ navigation }: any) {
+function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([] as Job[]);
   const [filteredList, setFilteredList] = useState([] as Job[]);
