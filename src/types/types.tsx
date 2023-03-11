@@ -1,9 +1,28 @@
-export interface User {
+export interface RegularUser {
+  id: string;
+  access: string;
+  email: string | null;
+  likedJobs: string[]; // switched to string of jobIds to match Firebase
+  name: string;
+  phoneNumber: string | null;
+  verified: boolean;
+}
+
+export interface Admin {
   id: string;
   access: string;
   createdJobs: string[]; // switched to string of jobIds to match Firebase
   email: string | null;
-  likedJobs: string[]; // switched to string of jobIds to match Firebase
+  name: string;
+  phoneNumber: string | null;
+  verified: boolean;
+}
+
+export interface Employer {
+  id: string;
+  access: string;
+  createdJobs: string[]; // switched to string of jobIds to match Firebase
+  email: string | null;
   name: string;
   phoneNumber: string | null;
   verified: boolean;
