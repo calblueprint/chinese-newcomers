@@ -72,7 +72,7 @@ export const createJob = async (
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
-      const month = (`0${(now.getMonth() + 1).toString()}`).slice(-2);
+      const month = `0${now.getMonth().toString()}`.slice(-2);
       const jobId =
         now.getFullYear().toString().slice(-2) +
         month +

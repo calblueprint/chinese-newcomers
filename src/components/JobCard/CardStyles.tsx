@@ -10,13 +10,8 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     backgroundColor: 'white',
     borderRadius: 7,
-    borderColor: '#FFFFFFF',
-    borderWidth: 1,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.25,
+    borderColor: '#C59675',
+    borderWidth: 2,
   },
   jobRef: {
     marginBottom: '3%',
@@ -102,15 +97,6 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'DMSans_700Bold',
   },
-
-  modalButtonText: {
-    color: 'black',
-    fontSize: 23,
-    fontFamily: "DMSans_700Medium",
-    marginTop: '2%',
-    marginBottom: '5%'
-  },
-
   jobNameText: {
     color: 'black',
     fontSize: 20,
@@ -124,14 +110,6 @@ export default StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    marginTop: '6%',
-  },
-  singleButtonContainer: {
-    height: '18%',
-    width: '80%',
-    flexDirection: 'column',
-    alignSelf: 'center',
-    alignItems: 'center',
     marginTop: '6%',
   },
 });
