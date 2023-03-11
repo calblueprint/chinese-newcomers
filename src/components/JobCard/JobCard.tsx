@@ -14,6 +14,8 @@ interface JobCardProps {
   pending: boolean;
   pendingJobs: Job[];
   setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
+  filteredJobs: Job[];
+  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
 function JobCard({
@@ -22,10 +24,11 @@ function JobCard({
   pending,
   pendingJobs,
   setPendingJobs,
+  filteredJobs,
+  setFilteredJobs,
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
-  // const [pendingJobs, setPendingJobs] = useState([])
 
   async function handleAction(approve: boolean) {
     setModalVisible(false);
@@ -40,6 +43,16 @@ function JobCard({
     setPendingJobs(pendingJobs.filter((_, index) => index !== idx));
   }
 
+  async function removeJob() {
+    setModalVisible(false);
+    try {
+      await deleteJob(job.id, 'approvedJobs');
+    } catch (e) {
+      console.log(e);
+    }
+    setFilteredJobs(filteredJobs.filter((_, index) => index !== idx));
+  }
+
   return (
     <Pressable
       style={styles.cardContainer}
@@ -50,20 +63,21 @@ function JobCard({
       <GestureRecognizer
         style={{ flex: 1 }}
         onSwipeDown={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
+          setModalVisible(false);
+        }}>
         <Modal
           transparent
           visible={modalVisible}
           animationType="slide"
           onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
+            setModalVisible(false);
+          }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
+                <Pressable onPress={() => setModalVisible(false)}>
+                  <Text style={styles.modalButtonText}>X</Text>
+                </Pressable>
                 <Text style={styles.modalJobRefText}>{job.id}</Text>
                 <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
               </View>
@@ -147,6 +161,18 @@ function JobCard({
                       onPress={async () => handleAction(true)}
                       buttonStyle={{ width: '45%', height: '50%' }}
                       textStyle={{ fontSize: 16 }}
+                    />
+                  </View>
+                )}
+                {!pending && (
+                  <View style={styles.singleButtonContainer}>
+                    <StyledButton
+                      text="remove"
+                      onPress={async () => removeJob()}
+                      buttonStyle={{
+                        width: '45%',
+                        height: '50%',
+                      }}
                     />
                   </View>
                 )}

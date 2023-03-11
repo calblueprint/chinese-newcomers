@@ -25,8 +25,13 @@ export default StyleSheet.create({
     fontFamily: 'DMSans_700Bold',
   },
   form: {
+    width: '100%',
+    flexDirection: 'column'
+  },
+  formContainer: {
+    flex: 1,
     width: '82%',
-    flexDirection: 'column',
+    alignSelf: 'center'
   },
   formTop: {
     flexDirection: 'row',

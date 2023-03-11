@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { TextInput, TextInputProps, View } from 'react-native';
+import { AutoGrowTextInput } from 'react-native-auto-grow-textinput';
 import { useController, UseControllerProps } from 'react-hook-form';
 import styles from './JobPostFormInputStyle';
 
@@ -16,7 +17,7 @@ function ControlledInput(props: FormInputProps) {
 
   return (
     <View style={styles.container}>
-      <TextInput
+      <AutoGrowTextInput
         style={styles.input}
         onChangeText={field.onChange}
         value={field.value}
