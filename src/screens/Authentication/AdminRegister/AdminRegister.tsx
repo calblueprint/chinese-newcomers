@@ -58,6 +58,11 @@ function AdminRegisterScreen({
     setPasswordError('');
   };
 
+  const inputContainerStyle = [
+    styles.inputContainer,
+    (emailError !== '' || passwordError !== '') && { borderColor: 'red' },
+  ];
+
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   return (
@@ -78,7 +83,7 @@ function AdminRegisterScreen({
                 Now, enter your email & create a password:{' '}
               </Text>
             </View>
-            <View style={styles.inputContainer}>
+            <View style={inputContainerStyle}>
               <Text style={styles.smallText}>Email address</Text>
               <AuthInput
                 name="email"
