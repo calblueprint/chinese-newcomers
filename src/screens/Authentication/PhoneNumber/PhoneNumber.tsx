@@ -17,7 +17,6 @@ import {
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
-import WelcomeScreen from '../Welcome/Welcome';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
 function PhoneNumberScreen({
@@ -26,7 +25,7 @@ function PhoneNumberScreen({
   interface FormValues {
     phoneNumber: string;
   }
-  const { ...methods } = useForm();
+  const { ...methods } = useForm<FormValues>();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);

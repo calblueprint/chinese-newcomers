@@ -175,6 +175,7 @@ function JobCard({
                         width: '45%',
                         height: '50%',
                       }}
+                      textStyle={{}}
                     />
                   </View>
                 )}
