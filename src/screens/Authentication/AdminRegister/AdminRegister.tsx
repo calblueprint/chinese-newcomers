@@ -48,8 +48,17 @@ function AdminRegisterScreen({
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
-    console.log(errors);
+  const handleEmailChange = () => {
+    setEmail(email);
+    setEmailError('');
+  };
+
+  const handlePasswordChange = () => {
+    setPassword(password);
+    setPasswordError('');
+  };
+
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -69,20 +78,20 @@ function AdminRegisterScreen({
                 Now, enter your email & create a password:{' '}
               </Text>
             </View>
-            <View style={[styles.inputContainer, emailError ? styles.errorContainer : {}]}>
+            <View style={styles.inputContainer}>
               <Text style={styles.smallText}>Email address</Text>
               <AuthInput
                 name="email"
                 label="email"
                 placeholder=" email@email.com"
-                onChangeText={setEmail}
+                onChangeText={handleEmailChange}
               />
               <Text style={styles.smallText}>Create Password </Text>
               <AuthInput
                 name="password"
                 label="password"
                 placeholder=" password"
-                onChangeText={setPassword}
+                onChangeText={handlePasswordChange}
               />
               <Text style={styles.smallText}>Verify Password </Text>
               <AuthInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
