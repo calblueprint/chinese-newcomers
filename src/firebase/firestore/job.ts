@@ -13,8 +13,11 @@ import {
 import { db } from '../firebaseApp';
 import { Job } from '../../types/types';
 
-const approvedJobsCollection = collection(db, 'approvedJobs');
-const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
+export const PENDING_JOBS_COLLECTION = "notApprovedJobs";
+export const APPROVED_JOBS_COLLECTION = "approvedJobs";
+
+const approvedJobsCollection = collection(db, APPROVED_JOBS_COLLECTION);
+const notApprovedJobsCollection = collection(db, PENDING_JOBS_COLLECTION);
 
 export const parseJob = async (document: DocumentSnapshot<DocumentData>) => {
   const jobId = document.id.toString();
@@ -39,7 +42,7 @@ export const updateMonthlyCounter = async (
   newLastReset: Date,
   newMonthlyCounter: number,
 ): Promise<void> => {
-  const docRef = doc(db, 'approvedJobs', 'metadata');
+  const docRef = doc(db, APPROVED_JOBS_COLLECTION, 'metadata');
   // This data object changes the fields that are different from the entry in backend!
   const data = {
     lastReset: newLastReset,
@@ -49,7 +52,7 @@ export const updateMonthlyCounter = async (
 };
 
 export const getMonthlyCounter = async (): Promise<number> => {
-  const docRef = doc(db, 'approvedJobs', 'metadata');
+  const docRef = doc(db, APPROVED_JOBS_COLLECTION, 'metadata');
   const docSnap = await getDoc(docRef);
   const data = docSnap.data();
   // reset monthly counter if new month and not yet reset
@@ -68,7 +71,7 @@ export const createJob = async (
 ): Promise<void> => {
   const docRef = collection(db, collectionName);
   try {
-    if (collectionName === 'approvedJobs') {
+    if (collectionName === APPROVED_JOBS_COLLECTION) {
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
@@ -93,7 +96,7 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   try {
     const promises: Array<Promise<Job>> = [];
     const docSnap =
-      collectionName === 'approvedJobs'
+      collectionName === APPROVED_JOBS_COLLECTION
         ? await getDocs(approvedJobsCollection)
         : await getDocs(notApprovedJobsCollection);
     docSnap.forEach(job => {

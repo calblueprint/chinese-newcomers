@@ -14,7 +14,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { Job } from '../../types/types';
-import { createJob } from '../../firebase/firestore/job';
+import { createJob, APPROVED_JOBS_COLLECTION, PENDING_JOBS_COLLECTION } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
 import { DraftStackScreenProps } from '../../types/navigation';
@@ -120,11 +120,11 @@ function DraftScreen({
   }
 
   const saveToDrafts: SubmitHandler<FormValues> = async data => {
-    saveJob(data, 'notApprovedJobs')
+    saveJob(data, PENDING_JOBS_COLLECTION)
   };
 
   const saveToFeed: SubmitHandler<FormValues> = async data => {
-    saveJob(data, 'approvedJobs')
+    saveJob(data, APPROVED_JOBS_COLLECTION)
   };
 
   return (
