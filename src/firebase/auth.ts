@@ -4,9 +4,10 @@ import {
   signInWithCredential,
   deleteUser,
   User,
+  ApplicationVerifier,
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { MutableRefObject } from 'react';
+import { MutableRefObject, RefObject } from 'react';
 import { db } from './config';
 import firebaseApp from './firebaseApp';
 
@@ -55,7 +56,7 @@ export const getActivationStatus = async (
 // Part 1 of signing in with phone. Returns verificationId
 export const phoneGetConfirmation = async (
   phoneNumber: string,
-  appVerifier: MutableRefObject<T>,
+  appVerifier: MutableRefObject<ApplicationVerifier>,
 ) => {
   try {
     const phoneProvider = new PhoneAuthProvider(auth);

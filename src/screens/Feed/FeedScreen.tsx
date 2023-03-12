@@ -80,6 +80,8 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
             job={job}
             idx={index}
             pending={false}
+            pendingJobs={null}
+            setPendingJobs={null}
             filteredJobs={filteredList}
             setFilteredJobs={setFilteredList}
           />

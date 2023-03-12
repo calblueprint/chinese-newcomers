@@ -12,10 +12,10 @@ interface JobCardProps {
   job: Job;
   idx: number;
   pending: boolean;
-  pendingJobs: Job[];
-  setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
-  filteredJobs: Job[];
-  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>>;
+  pendingJobs: Job[] | null;
+  setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
+  filteredJobs: Job[] | null;
+  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
 }
 
 function JobCard({

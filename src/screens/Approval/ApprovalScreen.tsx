@@ -42,6 +42,8 @@ function ApprovalScreen({
             pending
             pendingJobs={list}
             setPendingJobs={setList}
+            filteredJobs={null}
+            setFilteredJobs={null}
           />
         ))}
         {list.length === 0 && (
