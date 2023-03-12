@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { z } from 'zod';
 import styles from './styles';
@@ -22,18 +22,31 @@ function AdminSigninScreen({
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { dispatch } = useContext(AuthContext);
+  const { signInEmail } = useContext(AuthContext);
+  const [emailError, setEmailError] = useState('');
+  const [ signInError, setSignInError ] = useState('');
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
+      signInWithEmailAndPassword(auth, email, password)
+      .catch(error => {
+        console.log('fml');
+        setSignInError("Oops! Incorrect email or password. Try again.");
+      });
+      console.log('1');
       emailSchema.parse(email);
+      console.log('2');
       await signInEmail(email, password);
       console.log('signed in');
     } catch (e) {
+      console.log('bruh');
       if (e instanceof z.ZodError) {
+        setEmailError("Oops! Invalid email. Try again.");
+        console.log('lol');
+        console.log(emailError);
         console.log(e.issues);
       }
-      console.error(e.message);
+      console.log(e.message);
       throw e;
     }
   };
@@ -59,6 +72,7 @@ function AdminSigninScreen({
             placeholder=" email@email.com"
             onChangeText={setEmail}
           />
+          {emailError !== '' && <Text style={{ color: 'red' }}>{emailError}</Text> }
           <Text style={styles.smallText}>Password </Text>
           <AuthInput
             name="password"
@@ -67,6 +81,7 @@ function AdminSigninScreen({
             onChangeText={setPassword}
             secureTextEntry
           />
+          {signInError !== '' && <Text style={{ color: 'red' }}>{signInError}</Text> }
         </View>
 
         <View style={styles.buttonContainer}>

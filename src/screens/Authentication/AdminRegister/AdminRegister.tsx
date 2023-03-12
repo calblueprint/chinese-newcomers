@@ -38,12 +38,9 @@ function AdminRegisterScreen({
       .catch(error => {
         setPasswordError("Oops! Weak password. Please make sure your password is at least 6 characters.");
       });
-      console.log('passed password check')
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
-      console.log('caught error')
-      // setPasswordError(e.message);
       if (e instanceof z.ZodError) {
         setEmailError("Oops! Invalid email. Try again.");
       } 
@@ -72,7 +69,7 @@ function AdminRegisterScreen({
                 Now, enter your email & create a password:{' '}
               </Text>
             </View>
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, emailError ? styles.errorContainer : {}]}>
               <Text style={styles.smallText}>Email address</Text>
               <AuthInput
                 name="email"
