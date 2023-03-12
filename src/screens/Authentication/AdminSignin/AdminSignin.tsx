@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { z } from 'zod';
 import styles from './styles';
@@ -8,7 +8,6 @@ import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
-import SigninScreen from '../Signin/Signin';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
 const emailSchema = z.string().email({ message: "Oops! Invalid email. Try again." });
@@ -53,8 +52,17 @@ function AdminSigninScreen({
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
-    console.log(errors);
+  const handleEmailChange = () => {
+    setEmail(email);
+    setEmailError('');
+    setSignInError('');
+  };
+
+  const handlePasswordChange = () => {
+    setPassword(password);
+    setSignInError('');
+  };
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -72,7 +80,7 @@ function AdminSigninScreen({
             name="email"
             label="email"
             placeholder=" email@email.com"
-            onChangeText={setEmail}
+            onChangeText={handleEmailChange}
           />
           {emailError !== '' && <Text style={{ color: 'red' }}>{emailError}</Text> }
           <Text style={styles.smallText}>Password </Text>
@@ -80,7 +88,7 @@ function AdminSigninScreen({
             name="password"
             label="password"
             placeholder=" password"
-            onChangeText={setPassword}
+            onChangeText={handlePasswordChange}
             secureTextEntry
           />
           {signInError !== '' && <Text style={{ color: 'red' }}>{signInError}</Text> }
