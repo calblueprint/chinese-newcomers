@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import { getAuth } from 'firebase/auth';
 import {
   useForm,
   FormProvider,
@@ -12,10 +11,12 @@ import AuthInput from '../../../components/AuthInput/AuthInput';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
+import SigninScreen from '../Signin/Signin';
+import { AuthStackScreenProps } from '../../../types/navigation';
 
-const auth = getAuth();
-
-function AdminSigninScreen({ navigation }: any) {
+function AdminSigninScreen({
+  navigation,
+}: AuthStackScreenProps<'AdminSigninScreen'>) {
   interface FormValues {
     email: string;
     password: string;
@@ -38,10 +39,6 @@ function AdminSigninScreen({ navigation }: any) {
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
-
-  const onBack: any = () => {
-    navigation.goBack();
-  };
 
   return (
     <View style={styles.container}>
@@ -80,7 +77,7 @@ function AdminSigninScreen({ navigation }: any) {
           />
           <StyledButton
             text="back"
-            onPress={onBack}
+            onPress={() => navigation.goBack()}
             buttonStyle={{
               width: '100%',
               height: '100%',

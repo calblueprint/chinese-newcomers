@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-// import { getAuth, signOut } from 'firebase/auth';
 import {
   useForm,
   FormProvider,
@@ -13,8 +12,13 @@ import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
+import PhoneNumberScreen from '../PhoneNumber/PhoneNumber';
+import { AuthStackScreenProps } from '../../../types/navigation';
 
-function VerificationScreen({ route, navigation }: any) {
+function VerificationScreen({
+  route,
+  navigation,
+}: AuthStackScreenProps<'VerificationScreen'>) {
   interface FormValues {
     phoneNumber: string;
     VerificationCode: string;
@@ -31,7 +35,7 @@ function VerificationScreen({ route, navigation }: any) {
         await signInPhone(verificationId, verificationCode);
       } else {
         await signUpPhoneAdmin(verificationId, verificationCode);
-        navigation.navigate('AdminRegister', { phoneNumber });
+        navigation.navigate('AdminRegisterScreen', { phoneNumber });
       }
     } catch (e) {
       console.error(e);
@@ -40,10 +44,6 @@ function VerificationScreen({ route, navigation }: any) {
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
-
-  const onBack: any = () => {
-    navigation.goBack();
-  };
 
   return (
     <View style={styles.container}>
@@ -66,7 +66,7 @@ function VerificationScreen({ route, navigation }: any) {
         <View style={styles.buttonContainer}>
           <StyledButton
             text="back"
-            onPress={onBack}
+            onPress={() => navigation.goBack()}
             buttonStyle={{
               width: '45%',
               height: '100%',

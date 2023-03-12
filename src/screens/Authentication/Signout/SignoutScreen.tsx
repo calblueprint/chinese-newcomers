@@ -3,8 +3,11 @@ import { View } from 'react-native';
 import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import styles from './styles';
+import { SignoutStackScreenProps } from '../../../types/navigation';
 
-function Signout({ navigation }: any): ReactElement {
+function SignoutScreen({
+  navigation,
+}: SignoutStackScreenProps<'SignoutScreen'>): ReactElement {
   const { signOut } = useContext(AuthContext);
 
   return (
@@ -19,4 +22,4 @@ function Signout({ navigation }: any): ReactElement {
   );
 }
 
-export default Signout;
+export default SignoutScreen;

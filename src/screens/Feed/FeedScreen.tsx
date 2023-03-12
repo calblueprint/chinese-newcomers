@@ -1,19 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
+import { Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
-import theme from '../../styles/theme';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import Logo from '../../assets/cnsc-logo.png';
+import { FeedStackScreenProps } from '../../types/navigation';
 
-const auth = getAuth();
-
-function FeedScreen({ navigation }: any) {
+function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
   const [approvedJobs, setApprovedJobs] = useState([] as Job[]);
   const [filteredList, setFilteredList] = useState([] as Job[]);
@@ -60,7 +56,7 @@ function FeedScreen({ navigation }: any) {
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
         <Image source={Logo} style={{ width: 100, height: 100 }} />
-        <Text style={theme.textVariants.h2}>Welcome!</Text>
+        <Text style={styles.feedTitle}>Welcome!</Text>
       </View>
       <ScrollView
         contentContainerStyle={{
@@ -84,7 +80,7 @@ function FeedScreen({ navigation }: any) {
 
         {filteredList.map((job, index) => (
           // eslint-disable-next-line react/jsx-key
-          <JobCard job={job} idx={index} pending={false} updateList={filterApprovedJobs} />
+          <JobCard job={job} idx={index} pending={false} filterList={filterApprovedJobs} />
         ))}
       </ScrollView>
     </SafeAreaView>

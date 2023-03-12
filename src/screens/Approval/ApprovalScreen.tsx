@@ -1,18 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView } from 'react-native';
-import { getAuth } from 'firebase/auth';
-import { ParamListBase, RouteProp, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
-import theme from '../../styles/theme';
+import { ApprovalStackScreenProps } from '../../types/navigation';
 
-const auth = getAuth();
-
-function ApprovalScreen({ navigation }: any) {
+function ApprovalScreen({
+  navigation,
+}: ApprovalStackScreenProps<'ApprovalScreen'>) {
   const [pendingJobs, setPendingJobs] = useState([] as Job[]);
-
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -30,7 +28,7 @@ function ApprovalScreen({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
-        <Text style={theme.textVariants.h2}>Pending Job Posts</Text>
+        <Text style={styles.feedTitle}>Pending Job Posts</Text>
       </View>
       <ScrollView
         contentContainerStyle={{
@@ -44,7 +42,7 @@ function ApprovalScreen({ navigation }: any) {
               job={job}
               idx={index}
               pending
-              updateList={filterPendingJobs} />
+              filterList={filterPendingJobs} />
           ))}
         {pendingJobs.length === 0 && (
           <Text style={{ marginTop: '10%' }}>No pending job drafts to review!</Text>

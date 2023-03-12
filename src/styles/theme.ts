@@ -71,10 +71,6 @@ export const theme = {
       ...Button.dropShadow,
     },
   },
-  footer: {
-    height: '5%',
-    width: '100%',
-  },
 };
 
 export default theme;

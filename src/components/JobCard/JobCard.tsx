@@ -12,14 +12,14 @@ interface JobCardProps {
   job: Job;
   idx: number;
   pending: boolean;
-  updateList: (idx: number) => void;
+  filterList: (idx: number) => void;
 }
 
 function JobCard({
   job,
   idx,
   pending,
-  updateList,
+  filterList,
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
@@ -34,7 +34,7 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    updateList(idx);
+    filterList(idx);
   }
 
   async function removeJob() {
@@ -44,7 +44,7 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    updateList(idx);
+    filterList(idx);
   }
 
   return (

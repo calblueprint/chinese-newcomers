@@ -17,13 +17,16 @@ import {
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
+import WelcomeScreen from '../Welcome/Welcome';
+import { AuthStackScreenProps } from '../../../types/navigation';
 
-function PhoneNumberScreen({ navigation }: any) {
+function PhoneNumberScreen({
+  navigation,
+}: AuthStackScreenProps<'PhoneNumberScreen'>) {
   interface FormValues {
     phoneNumber: string;
   }
-
-  const { ...methods } = useForm<FormValues>();
+  const { ...methods } = useForm();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);
@@ -42,7 +45,7 @@ function PhoneNumberScreen({ navigation }: any) {
           recaptchaVerifier,
         );
         console.log(verificationId);
-        navigation.navigate('VerificationCode', {
+        navigation.navigate('VerificationScreen', {
           verificationId,
           phoneNumber,
         });
@@ -50,10 +53,6 @@ function PhoneNumberScreen({ navigation }: any) {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const onBack: any = () => {
-    navigation.goBack();
   };
 
   const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
@@ -85,7 +84,7 @@ function PhoneNumberScreen({ navigation }: any) {
           <View style={styles.buttonContainer}>
             <StyledButton
               text="back"
-              onPress={onBack}
+              onPress={() => navigation.goBack()}
               buttonStyle={{
                 width: '45%',
                 height: '100%',
