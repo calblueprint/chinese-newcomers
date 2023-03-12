@@ -1,10 +1,10 @@
 import React from 'react';
-import { ThemeProvider } from 'react-native-elements';
+import { ThemeProvider } from '@rneui/themed';
+import { useFonts } from 'expo-font';
 import { UserProvider } from './src/context/context';
 import './src/firebase/firebaseApp';
 import RootNavigation from './src/navigation';
-
-import { useFonts } from 'expo-font';
+import theme from './src/styles/theme';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,7 +17,7 @@ export default function App() {
     return null;
   }
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <UserProvider>
         <RootNavigation />
       </UserProvider>

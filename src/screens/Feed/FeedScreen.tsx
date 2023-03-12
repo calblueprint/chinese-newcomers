@@ -6,6 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
+import theme from '../../styles/theme';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import Logo from '../../assets/cnsc-logo.png';
@@ -55,7 +56,7 @@ function FeedScreen({ navigation }: any) {
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
         <Image source={Logo} style={{ width: 100, height: 100 }} />
-        <Text style={styles.feedTitle}>Welcome!</Text>
+        <Text style={theme.textVariants.h2}>Welcome!</Text>
       </View>
       <ScrollView
         contentContainerStyle={{
@@ -82,9 +83,6 @@ function FeedScreen({ navigation }: any) {
           <JobCard job={job} idx={index} pending={false} filteredJobs={filteredList} setFilteredJobs={setFilteredList} />
         ))}
       </ScrollView>
-      {/* <View style={styles.footer}>
-        <Button title="Back" onPress={() => navigation.navigate('Home')} />
-      </View> */}
     </SafeAreaView>
   );
 }

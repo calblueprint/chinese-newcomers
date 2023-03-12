@@ -6,6 +6,7 @@ import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
+import theme from '../../styles/theme';
 
 const auth = getAuth();
 
@@ -25,7 +26,7 @@ function ApprovalScreen({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
-        <Text style={styles.feedTitle}>Pending Job Posts</Text>
+        <Text style={theme.textVariants.h2}>Pending Job Posts</Text>
       </View>
       <ScrollView
         contentContainerStyle={{

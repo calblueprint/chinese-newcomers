@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { withBadge } from 'react-native-elements';
 
 export default StyleSheet.create({
   container: {
@@ -9,7 +8,6 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column',
   },
-
   feedHeader: {
     height: '20%',
     width: '100%',
@@ -17,11 +15,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     flexDirection: 'row',
-  },
-  feedTitle: {
-    color: '#49260C',
-    fontSize: 28,
-    fontFamily: 'DMSans_700Bold',
   },
   redSquare: {
     height: '50%',
