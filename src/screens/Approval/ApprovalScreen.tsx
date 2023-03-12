@@ -31,19 +31,23 @@ function ApprovalScreen({
         contentContainerStyle={{
           flexGrow: 1,
           alignItems: 'center',
-          width: '100%'
-        }}>
+          width: '100%',
+        }}
+      >
         {list.map((job, index) => (
-            // eslint-disable-next-line react/jsx-key
-            <JobCard
-              job={job}
-              idx={index}
-              pending
-              pendingJobs={list}
-              setPendingJobs={setList} />
-          ))}
-        {list.length == 0 && (
-          <Text style={{ marginTop: '10%' }}>No pending job drafts to review!</Text>
+          // eslint-disable-next-line react/jsx-key
+          <JobCard
+            job={job}
+            idx={index}
+            pending
+            pendingJobs={list}
+            setPendingJobs={setList}
+          />
+        ))}
+        {list.length === 0 && (
+          <Text style={{ marginTop: '10%' }}>
+            No pending job drafts to review!
+          </Text>
         )}
       </ScrollView>
       {/* <View style={styles.footer}>
