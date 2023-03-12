@@ -62,6 +62,12 @@ function AdminSigninScreen({
     setPassword(password);
     setSignInError('');
   };
+
+  const inputContainerStyle = [
+    styles.inputContainer,
+    (emailError !== ''|| signInError !== '') && { borderColor: 'red' },
+  ];
+
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   return (
@@ -74,7 +80,7 @@ function AdminSigninScreen({
           <Text style={styles.headingText}>Sign in here. </Text>
         </View>
 
-        <View style={styles.inputContainer}>
+        <View style={inputContainerStyle}>
           <Text style={styles.smallText}>Email address </Text>
           <AuthInput
             name="email"
