@@ -23,6 +23,10 @@ function ApprovalScreen({ navigation }: any) {
     fetchJobs();
   }, [isFocused]);
 
+  function handleJobRemoval(idx: number) {
+    setList(list.filter((_, index) => index !== idx))
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
