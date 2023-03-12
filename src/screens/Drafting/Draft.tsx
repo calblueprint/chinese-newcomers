@@ -77,7 +77,7 @@ function DraftScreen({
   }
   const { ...methods } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = async data => {
+  async function saveJob(data: FormValues, collection: string) {
     const map = new Map<string, boolean>();
     map.set('date', dateIsEnabled);
     map.set('companyName', companyNameIsEnabled);
@@ -110,13 +110,21 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
-      await createJob(job, 'notApprovedJobs');
+      await createJob(job, collection);
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
       methods.reset();
     } catch (e) {
       console.error(e);
     }
+  }
+
+  const saveToDrafts: SubmitHandler<FormValues> = async data => {
+    saveJob(data, 'notApprovedJobs')
+  };
+
+  const saveToFeed: SubmitHandler<FormValues> = async data => {
+    saveJob(data, 'approvedJobs')
   };
 
   return (
@@ -323,11 +331,14 @@ function DraftScreen({
           <FormInput name="otherInfo" label="otherInfo" placeholder="Looking for XYZ, etc." />
         </FormProvider>
         <View style={styles.bottomButtons}>
-          <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
+          <Pressable 
+            onPress={methods.handleSubmit(saveToDrafts)}
+            style={[styles.buttons, { backgroundColor: '#94613D' }]}
+          >
             <Text style={styles.buttonText}>Save to Drafts</Text>
           </Pressable>
           <Pressable
-            onPress={methods.handleSubmit(onSubmit)}
+            onPress={methods.handleSubmit(saveToFeed)}
             style={[styles.buttons, { backgroundColor: '#CC433C' }]}
           >
             <Text style={styles.buttonText}>Post Job</Text>
