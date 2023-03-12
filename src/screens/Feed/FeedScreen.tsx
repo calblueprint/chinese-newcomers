@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-elements';
 import { getAuth, signOut } from 'firebase/auth';
@@ -15,7 +15,7 @@ const auth = getAuth();
 
 function FeedScreen({ navigation }: any) {
   const [open, setOpen] = useState(false);
-  const [list, setList] = useState([] as Job[]);
+  const [approvedJobs, setApprovedJobs] = useState([] as Job[]);
   const [filteredList, setFilteredList] = useState([] as Job[]);
   const [category, setCategory] = useState('all');
   const categories: string[] = [
@@ -38,7 +38,7 @@ function FeedScreen({ navigation }: any) {
   useEffect(() => {
     const fetchJobs = async () => {
       const data = await getAllJobs('approvedJobs');
-      setList(data);
+      setApprovedJobs(data);
       setFilteredList(data);
     };
     fetchJobs();
@@ -46,11 +46,15 @@ function FeedScreen({ navigation }: any) {
 
   useEffect(() => {
     if (category === 'all') {
-      setFilteredList(list);
+      setFilteredList(approvedJobs);
     } else {
-      setFilteredList(list.filter(job => job.category === category));
+      setFilteredList(approvedJobs.filter(job => job.category === category));
     }
-  }, [category, list]);
+  }, [category, approvedJobs]);
+
+  const filterApprovedJobs = useCallback((idx: number) => {
+    setApprovedJobs(list => list.filter((_, index) => index !== idx))
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,7 +84,7 @@ function FeedScreen({ navigation }: any) {
 
         {filteredList.map((job, index) => (
           // eslint-disable-next-line react/jsx-key
-          <JobCard job={job} idx={index} pending={false} filteredJobs={filteredList} setFilteredJobs={setFilteredList} />
+          <JobCard job={job} idx={index} pending={false} updateList={filterApprovedJobs} />
         ))}
       </ScrollView>
     </SafeAreaView>

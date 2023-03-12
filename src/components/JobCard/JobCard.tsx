@@ -12,20 +12,14 @@ interface JobCardProps {
   job: Job;
   idx: number;
   pending: boolean;
-  pendingJobs: Job[];
-  setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
-  filteredJobs: Job[];
-  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>>;
+  updateList: (idx: number) => void;
 }
 
 function JobCard({
   job,
   idx,
   pending,
-  pendingJobs,
-  setPendingJobs,
-  filteredJobs,
-  setFilteredJobs,
+  updateList,
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToMap(job.visible);
@@ -40,7 +34,7 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    setPendingJobs(pendingJobs.filter((_, index) => index !== idx));
+    updateList(idx);
   }
 
   async function removeJob() {
@@ -50,7 +44,7 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    setFilteredJobs(filteredJobs.filter((_, index) => index !== idx));
+    updateList(idx);
   }
 
   return (

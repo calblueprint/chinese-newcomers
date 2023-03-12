@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { useIsFocused } from '@react-navigation/native';
+import { ParamListBase, RouteProp, useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
 import styles from './Styles';
 import { getAllJobs } from '../../firebase/firestore/job';
@@ -11,21 +11,21 @@ import theme from '../../styles/theme';
 const auth = getAuth();
 
 function ApprovalScreen({ navigation }: any) {
-  const [list, setList] = useState([] as Job[]);
+  const [pendingJobs, setPendingJobs] = useState([] as Job[]);
 
   const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchJobs = async () => {
       const data = await getAllJobs('notApprovedJobs');
-      setList(data);
+      setPendingJobs(data);
     };
     fetchJobs();
   }, [isFocused]);
 
-  function handleJobRemoval(idx: number) {
-    setList(list.filter((_, index) => index !== idx))
-  }
+  const filterPendingJobs = useCallback((idx: number) => {
+    setPendingJobs(list => list.filter((_, index) => index !== idx))
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,22 +38,18 @@ function ApprovalScreen({ navigation }: any) {
           alignItems: 'center',
           width: '100%'
         }}>
-        {list.map((job, index) => (
+        {pendingJobs.map((job, index) => (
             // eslint-disable-next-line react/jsx-key
             <JobCard
               job={job}
               idx={index}
               pending
-              pendingJobs={list}
-              setPendingJobs={setList} />
+              updateList={filterPendingJobs} />
           ))}
-        {list.length == 0 && (
+        {pendingJobs.length === 0 && (
           <Text style={{ marginTop: '10%' }}>No pending job drafts to review!</Text>
         )}
       </ScrollView>
-      {/* <View style={styles.footer}>
-        <Button title="Back" onPress={() => navigation.navigate('Home')} />
-      </View> */}
     </SafeAreaView>
   );
 }
