@@ -14,7 +14,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { Job } from '../../types/types';
-import { createJob } from '../../firebase/firestore/job';
+import { createJob, APPROVED_JOBS_COLLECTION, PENDING_JOBS_COLLECTION } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
 import { DraftStackScreenProps } from '../../types/navigation';
@@ -39,22 +39,22 @@ function DraftScreen({
   ];
 
   const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
-  const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(true);
-  const [addressIsEnabled, setAddressIsEnabled] = React.useState(true);
+  const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(false);
+  const [addressIsEnabled, setAddressIsEnabled] = React.useState(false);
   const [contactPersonIsEnabled, setContactPersonIsEnabled] =
-    React.useState(true);
-  const [phoneIsEnabled, setPhoneIsEnabled] = React.useState(true);
+    React.useState(false);
+  const [phoneIsEnabled, setPhoneIsEnabled] = React.useState(false);
   const [jobPositionIsEnabled, setJobPositionIsEnabled] = React.useState(true);
   const [languageReqIsEnabled, setLangaugeReqIsEnabled] = React.useState(true);
   const [workingHoursIsEnabled, setWorkingHoursIsEnabled] =
-    React.useState(true);
-  const [workingDaysIsEnabled, setWorkingDaysIsEnabled] = React.useState(true);
-  const [salaryIsEnabled, setSalaryIsEnabled] = React.useState(true);
+    React.useState(false);
+  const [workingDaysIsEnabled, setWorkingDaysIsEnabled] = React.useState(false);
+  const [salaryIsEnabled, setSalaryIsEnabled] = React.useState(false);
   const [probationPeriodIsEnabled, setProbationPeriodIsEnabled] =
-    React.useState(true);
+    React.useState(false);
   const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] =
-    React.useState(true);
-  const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(true);
+    React.useState(false);
+  const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(false);
 
   const [successModalVisibile, setSuccessModalVisible] = React.useState(false);
   const [modalJobText, setModalJobText] = React.useState('');
@@ -77,7 +77,7 @@ function DraftScreen({
   }
   const { ...methods } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = async data => {
+  async function saveJob(data: FormValues, collection: string) {
     const map = new Map<string, boolean>();
     map.set('date', dateIsEnabled);
     map.set('companyName', companyNameIsEnabled);
@@ -110,13 +110,21 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
-      await createJob(job, 'notApprovedJobs');
+      await createJob(job, collection);
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
       methods.reset();
     } catch (e) {
       console.error(e);
     }
+  }
+
+  const saveToDrafts: SubmitHandler<FormValues> = async data => {
+    saveJob(data, PENDING_JOBS_COLLECTION)
+  };
+
+  const saveToFeed: SubmitHandler<FormValues> = async data => {
+    saveJob(data, APPROVED_JOBS_COLLECTION)
   };
 
   return (
@@ -323,11 +331,14 @@ function DraftScreen({
           <FormInput name="otherInfo" label="otherInfo" placeholder="Looking for XYZ, etc." />
         </FormProvider>
         <View style={styles.bottomButtons}>
-          <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
+          <Pressable 
+            onPress={methods.handleSubmit(saveToDrafts)}
+            style={[styles.buttons, { backgroundColor: '#94613D' }]}
+          >
             <Text style={styles.buttonText}>Save to Drafts</Text>
           </Pressable>
           <Pressable
-            onPress={methods.handleSubmit(onSubmit)}
+            onPress={methods.handleSubmit(saveToFeed)}
             style={[styles.buttons, { backgroundColor: '#CC433C' }]}
           >
             <Text style={styles.buttonText}>Post Job</Text>
