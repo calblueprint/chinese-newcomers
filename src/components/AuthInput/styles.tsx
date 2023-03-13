@@ -13,6 +13,14 @@ export default StyleSheet.create({
     borderColor: '#49260C',
     width: '100%',
     height: '100%',
-    padding: '3%',
+    padding: '3%'
   },
+  inputWithError: {
+    borderWidth: 2,
+    borderRadius: 3,
+    borderColor: '#CC433C',
+    width: '100%',
+    height: '100%',
+    padding: '3%'
+  }
 });

@@ -62,11 +62,6 @@ function AdminRegisterScreen({
     setPasswordError('');
   };
 
-  const inputContainerStyle = [
-    styles.inputContainer,
-    (emailError !== '' || passwordError !== '') && { borderColor: 'red' },
-  ];
-
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   return (
@@ -87,23 +82,30 @@ function AdminRegisterScreen({
                 Now, enter your email & create a password:{' '}
               </Text>
             </View>
-            <View style={inputContainerStyle}>
+            <View style={styles.inputContainer}>
               <Text style={styles.smallText}>Email address</Text>
               <AuthInput
                 name="email"
                 label="email"
                 placeholder=" email@email.com"
-                onChangeText = {() => handleEmailChange(email)}
+                hasError={emailError!==''}
+                onChangeText = {(emailInput) => handleEmailChange(emailInput)}
               />
               <Text style={styles.smallText}>Create Password </Text>
               <AuthInput
                 name="password"
                 label="password"
                 placeholder=" password"
-                onChangeText = {() => handlePasswordChange(password)}
+                hasError={passwordError!==''}
+                onChangeText = {(passInput) => handlePasswordChange(passInput)}
               />
               <Text style={styles.smallText}>Verify Password </Text>
-              <AuthInput name="confirmPassword" label="confirmPassword" placeholder=" password" />
+              <AuthInput 
+              name="confirmPassword" 
+              label="confirmPassword" 
+              placeholder=" password" 
+              hasError={passwordError!==''}
+              />
               {emailError !== '' && <Text style={{ color: 'red' }}>{emailError}</Text> }
               {passwordError !== '' && <Text style={{ color: 'red' }}>{passwordError}</Text> }
             </View>
