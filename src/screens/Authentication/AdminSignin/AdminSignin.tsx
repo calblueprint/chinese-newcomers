@@ -52,13 +52,13 @@ function AdminSigninScreen({
     }
   };
 
-  const handleEmailChange = () => {
+  const handleEmailChange = (email) => {
     setEmail(email);
     setEmailError('');
     setSignInError('');
   };
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = (password) => {
     setPassword(password);
     setSignInError('');
   };
@@ -86,7 +86,7 @@ function AdminSigninScreen({
             name="email"
             label="email"
             placeholder=" email@email.com"
-            onChangeText={handleEmailChange}
+            onChangeText={() => handleEmailChange(email)}
           />
           {emailError !== '' && <Text style={{ color: 'red' }}>{emailError}</Text> }
           <Text style={styles.smallText}>Password </Text>
@@ -94,7 +94,7 @@ function AdminSigninScreen({
             name="password"
             label="password"
             placeholder=" password"
-            onChangeText={handlePasswordChange}
+            onChangeText={() => handlePasswordChange(password)}
             secureTextEntry
           />
           {signInError !== '' && <Text style={{ color: 'red' }}>{signInError}</Text> }
