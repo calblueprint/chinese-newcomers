@@ -7,17 +7,18 @@ import styles from './styles';
 interface AuthInputProps extends TextInputProps, UseControllerProps {
   label: string;
   defaultValue?: string;
+  hasError: boolean;
 }
 
 function ControlledInput(props: AuthInputProps) {
-  const { name, label, defaultValue, ...inputProps } = props;
+  const { name, label, hasError, defaultValue, ...inputProps } = props;
 
   const { field } = useController({ name, defaultValue });
 
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={hasError ? styles.inputWithError : styles.input}
         onChangeText={field.onChange}
         value={field.value}
         {...inputProps}
