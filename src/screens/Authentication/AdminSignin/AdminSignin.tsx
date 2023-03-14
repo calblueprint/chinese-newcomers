@@ -31,20 +31,14 @@ function AdminSigninScreen({
     try {
       signInWithEmailAndPassword(auth, email, password)
       .catch(error => {
-        console.log('fml');
         setSignInError("Oops! Incorrect email or password. Try again.");
       });
-      console.log('1');
       emailSchema.parse(email);
-      console.log('2');
       await signInEmail(email, password);
-      console.log('signed in');
+      // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
-      console.log('bruh');
       if (e instanceof z.ZodError) {
         setEmailError("Oops! Invalid email. Try again.");
-        console.log('lol');
-        console.log(emailError);
         console.log(e.issues);
       }
       console.log(e.message);
