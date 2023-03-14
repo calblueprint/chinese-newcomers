@@ -3,11 +3,8 @@ import {
   PhoneAuthProvider,
   signInWithCredential,
   signOut,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  deleteUser,
-  User,
-  AuthErrorCodes
+  createUserWithEmailAndPassword, deleteUser,
+  User
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getUser, addUser } from './firestore/user';
