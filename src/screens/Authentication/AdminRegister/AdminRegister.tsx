@@ -15,7 +15,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { signUpEmail } from '../../../firebase/auth';
 import { AuthStackScreenProps } from '../../../types/navigation';
 
-const emailSchema = z.string().email({ message: "Invalid email address" });
+const emailSchema = z.string().email({ message: 'Invalid email address' });
 
 function AdminRegisterScreen({
   navigation,
@@ -34,31 +34,33 @@ function AdminRegisterScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      createUserWithEmailAndPassword(auth, email, password)
-      .catch(error => {
-        setPasswordError("Oops! Weak password. Please make sure your password is at least 6 characters.");
+      createUserWithEmailAndPassword(auth, email, password).catch(error => {
+        setPasswordError(
+          'Oops! Weak password. Please make sure your password is at least 6 characters.',
+        );
       });
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
       if (e instanceof z.ZodError) {
-        setEmailError("Oops! Invalid email. Try again.");
-      } 
-      console.log(e)
+        setEmailError('Oops! Invalid email. Try again.');
+      }
+      console.log(e);
     }
   };
 
-  const handleEmailChange = (email) => {
+  const handleEmailChange = email => {
     setEmail(email);
     setEmailError('');
   };
 
-  const handlePasswordChange = (password) => {
+  const handlePasswordChange = password => {
     setPassword(password);
     setPasswordError('');
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
+    console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -84,26 +86,30 @@ function AdminRegisterScreen({
                 name="email"
                 label="email"
                 placeholder=" email@email.com"
-                hasError={emailError!==''}
-                onChangeText = {(emailInput) => handleEmailChange(emailInput)}
+                hasError={emailError !== ''}
+                onChangeText={emailInput => handleEmailChange(emailInput)}
               />
               <Text style={styles.smallText}>Create Password </Text>
               <AuthInput
                 name="password"
                 label="password"
                 placeholder=" password"
-                hasError={passwordError!==''}
-                onChangeText = {(passInput) => handlePasswordChange(passInput)}
+                hasError={passwordError !== ''}
+                onChangeText={passInput => handlePasswordChange(passInput)}
               />
               <Text style={styles.smallText}>Verify Password </Text>
-              <AuthInput 
-              name="confirmPassword" 
-              label="confirmPassword" 
-              placeholder=" password" 
-              hasError={passwordError!==''}
+              <AuthInput
+                name="confirmPassword"
+                label="confirmPassword"
+                placeholder=" password"
+                hasError={passwordError !== ''}
               />
-              {emailError !== '' && <Text style={{ color: 'red' }}>{emailError}</Text> }
-              {passwordError !== '' && <Text style={{ color: 'red' }}>{passwordError}</Text> }
+              {emailError !== '' && (
+                <Text style={{ color: 'red' }}>{emailError}</Text>
+              )}
+              {passwordError !== '' && (
+                <Text style={{ color: 'red' }}>{passwordError}</Text>
+              )}
             </View>
             <View style={styles.buttonContainer}>
               <StyledButton

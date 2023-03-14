@@ -4,10 +4,8 @@ import {
   getAuth,
   PhoneAuthProvider,
   signInWithCredential,
-  signInWithEmailAndPassword,
   signOut,
-  User,
-  AuthErrorCodes
+  User
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { AuthDispatch } from '../context/AuthContext';
