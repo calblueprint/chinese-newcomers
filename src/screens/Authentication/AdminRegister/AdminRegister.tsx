@@ -38,26 +38,22 @@ function AdminRegisterScreen({
       .catch(error => {
         setPasswordError("Oops! Weak password. Please make sure your password is at least 6 characters.");
       });
-      console.log('Parsed password')
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
       if (e instanceof z.ZodError) {
-        console.log("e is a zoderror! email was", email)
         setEmailError("Oops! Invalid email. Try again.");
       } 
-      console.log("general error e", e);
+      console.log(e)
     }
   };
 
   const handleEmailChange = (email) => {
-    console.log("handleEmailChange, email is", email)
     setEmail(email);
     setEmailError('');
   };
 
   const handlePasswordChange = (password) => {
-    console.log("handlePasswordChange, password is", password)
     setPassword(password);
     setPasswordError('');
   };
