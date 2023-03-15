@@ -122,7 +122,6 @@ function DraftScreen({
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView style={styles.form}>
-        {/* <ScrollView > */}
         <View style={styles.formContainer}>
           <View style={styles.top}>
             <Text style={styles.formTitle}>Job Post Draft</Text>
