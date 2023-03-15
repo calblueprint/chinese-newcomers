@@ -9,11 +9,27 @@ import {
 } from 'firebase/firestore';
 import { UserCredential } from 'firebase/auth';
 import { db } from '../config';
-import { RegularUser, Admin, Employer, genericUser } from '../../types/types';
+import { RegularUser, Admin, Employer, genericUser, User } from '../../types/types';
 
-interface Dictionary<T> {
-  [key: genericUser]: T;
-}
+// interface Dictionary<T> {
+//   [key: genericUser]: T;
+// }
+const REGULAR_USER_COLLECTION_NAME = 'regularUser';
+const ADMIN_COLLECTION_NAME = 'admin';
+const EMPLOYER_COLLECTION_NAME = 'employer';
+
+const userCollectionRefs = (id: string) => [
+  doc(db, REGULAR_USER_COLLECTION_NAME, id),
+  doc(db, ADMIN_COLLECTION_NAME, id),
+  doc(db, EMPLOYER_COLLECTION_NAME, id),
+]; 
+
+
+const userTypeToConstructorMap = new Map<string, User>([
+  [REGULAR_USER_COLLECTION_NAME, <RegularUser>{}],
+  [ADMIN_COLLECTION_NAME, <Admin>{}],
+  [EMPLOYER_COLLECTION_NAME, <Employer>{}],
+]);
 
 // QueryDocumentSnapshot<DocumentData>
 const parseUser = async (document: QueryDocumentSnapshot<any>) => {
@@ -21,28 +37,28 @@ const parseUser = async (document: QueryDocumentSnapshot<any>) => {
   const data = document.data();
   const type = data.access;
   
-  const userConstructors: Dictionary<typeof genericUser> = {
-    regular: RegularUser,
-    admin: Admin,
-    employer: Employer,
+  // const userConstructors: Dictionary<genericUser> = {
+  //   regular: RegularUser,
+  //   admin: Admin,
+  //   employer: Employer,
+  // }
+
+  const userType = userTypeToConstructorMap.get(type);
+  if (!userType) {
+    console.log('No such user type!');
+    return null;
   }
 
-  const userType = userConstructors[type];
-
   const user = {
-    userId,
+    id: userId,
     ...data,
   }
 
   return user as typeof userType;
 };
 
-export const getUser = async (id: string): Promise<genericUser | null> => {
-  const userRefs = [
-    doc(db, 'regularUser', id),
-    doc(db, 'admin', id),
-    doc(db, 'employer', id),
-  ];
+export const getUser = async (id: string): Promise<User | null> => {
+  const userRefs = userCollectionRefs(id);
 
   const userDocs = await Promise.all(userRefs.map((ref) => getDoc(ref)));
   const userDoc = userDocs.find((doc) => doc.exists);
