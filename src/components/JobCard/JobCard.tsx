@@ -3,7 +3,7 @@ import { Text, View, Pressable, Modal } from 'react-native';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import styles from './CardStyles';
-import { objectToMap } from '../../firebase/helpers';
+import objectToBooleanMap from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import { deleteJob, createJob } from '../../firebase/firestore/job';
@@ -12,10 +12,10 @@ interface JobCardProps {
   job: Job;
   idx: number;
   pending: boolean;
-  pendingJobs: Job[];
-  setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>>;
-  filteredJobs: Job[];
-  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>>;
+  pendingJobs: Job[] | null;
+  setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
+  filteredJobs: Job[] | null;
+  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
 }
 
 function JobCard({
@@ -28,7 +28,7 @@ function JobCard({
   setFilteredJobs,
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
-  const visibleMap = objectToMap(job.visible);
+  const visibleMap = objectToBooleanMap(job.visible);
 
   async function handleAction(approve: boolean) {
     setModalVisible(false);
@@ -64,14 +64,16 @@ function JobCard({
         style={{ flex: 1 }}
         onSwipeDown={() => {
           setModalVisible(false);
-        }}>
+        }}
+      >
         <Modal
           transparent
           visible={modalVisible}
           animationType="slide"
           onRequestClose={() => {
             setModalVisible(false);
-          }}>
+          }}
+        >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.modalHeader}>
@@ -173,6 +175,7 @@ function JobCard({
                         width: '45%',
                         height: '50%',
                       }}
+                      textStyle={{}}
                     />
                   </View>
                 )}

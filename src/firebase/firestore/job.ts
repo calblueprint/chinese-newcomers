@@ -72,14 +72,13 @@ export const createJob = async (
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
-      const month = (`0${(now.getMonth() + 1).toString()}`).slice(-2);
+      const month = `0${(now.getMonth() + 1).toString()}`.slice(-2);
       const jobId =
         now.getFullYear().toString().slice(-2) +
         month +
         additionalZero +
         (monthlyCounter + 1).toString();
-      job.id = jobId;
-      await setDoc(doc(db, collectionName, jobId), job);
+      await setDoc(doc(db, collectionName, jobId), { ...job, id: jobId });
       await updateMonthlyCounter(now, monthlyCounter + 1);
     } else {
       await addDoc(docRef, job);

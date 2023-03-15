@@ -2,13 +2,10 @@ import {
   getAuth,
   PhoneAuthProvider,
   signInWithCredential,
-  signOut,
-  createUserWithEmailAndPassword,
   deleteUser,
   User,
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { getUser, addUser } from './firestore/user';
 import { db } from './config';
 import firebaseApp from './firebaseApp';
 
@@ -69,92 +66,6 @@ export const phoneGetConfirmation = async (
   } catch (e) {
     console.log(e);
     throw e;
-  }
-};
-
-// Part 2 of signing in with phone. Confirm code using ConfirmationResult. Returns user
-export const confirmCode = async (verificationId: string, code: string) => {
-  try {
-    const credential = await PhoneAuthProvider.credential(verificationId, code);
-    const result = await signInWithCredential(auth, credential);
-    return result.user;
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
-};
-
-export const signOutUser = async (): Promise<void> => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const registerWithEmailAndPassword = async (
-  email: string,
-  password: string,
-): Promise<void> => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password,
-    );
-    const { user } = userCredential;
-    console.log(user);
-    const userObject = await getUser(user.uid);
-    if (userObject !== null) {
-      console.log(`Got user from users collection. Name: ${userObject.name}`);
-      // TODO: probably put user object into react context
-    } else {
-      console.log('Create new user flow');
-      // TODO: handle user not yet in users collection. check access collection to see what type of user to create
-      // below code just for testing
-      await addUser({
-        id: user.uid,
-        access: 'admin',
-        createdJobs: [],
-        email: user.email,
-        likedJobs: [], // switched to string of jobIds to match Firebase
-        name: 'test phone',
-        phoneNumber: user.phoneNumber,
-        verified: true,
-      });
-    }
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
-};
-
-export const logInOrRegisterWithPhoneNumber = async (
-  user: any,
-): Promise<void> => {
-  try {
-    const userObject = await getUser(user.id);
-    if (userObject !== null) {
-      console.log(`Got user from users collection. Name: ${userObject.name}`);
-      // TODO: probably put user object into react context
-    } else {
-      console.log('Create new user flow');
-      // TODO: handle user not yet in users collection. check access collection to see what type of user to create
-      // below code just for testing
-      await addUser({
-        id: user.uid,
-        access: 'regular_user',
-        createdJobs: [],
-        email: user.email,
-        likedJobs: [], // switched to string of jobIds to match Firebase
-        name: 'test phone',
-        phoneNumber: user.phoneNumber,
-        verified: true,
-        // password: null
-      });
-    }
-  } catch (error) {
-    console.log(error);
   }
 };
 

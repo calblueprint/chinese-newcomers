@@ -76,7 +76,15 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
 
         {filteredList.map((job, index) => (
           // eslint-disable-next-line react/jsx-key
-          <JobCard job={job} idx={index} pending={false} filteredJobs={filteredList} setFilteredJobs={setFilteredList} />
+          <JobCard
+            job={job}
+            idx={index}
+            pending={false}
+            pendingJobs={null}
+            setPendingJobs={null}
+            filteredJobs={filteredList}
+            setFilteredJobs={setFilteredList}
+          />
         ))}
       </ScrollView>
       {/* <View style={styles.footer}>

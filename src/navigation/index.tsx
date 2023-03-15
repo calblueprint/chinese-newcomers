@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, ReactElement } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import UserStack from './BottomTabNavigators/UserBottomTabNavigator';
-import AuthStack from './stacks/AuthStackNavigator';
 import { getUser } from '../firebase/firestore/user';
 
 import {
@@ -29,7 +28,7 @@ export default function RootNavigation() {
 
   const authContext = useMemo(() => getAuthContext(dispatch), []);
 
-  const [activeStack, setActiveStack] = useState(null);
+  const [activeStack, setActiveStack] = useState<ReactElement>();
 
   useEffect(() => {
     const loadStack = async () => {
@@ -47,7 +46,7 @@ export default function RootNavigation() {
           console.log(e);
         }
       } else {
-        setActiveStack(<AuthStack />);
+        setActiveStack(<AdminStack />);
       }
     };
     loadStack();
