@@ -56,7 +56,7 @@ export const getActivationStatus = async (
 // Part 1 of signing in with phone. Returns verificationId
 export const phoneGetConfirmation = async (
   phoneNumber: string,
-  appVerifier: MutableRefObject<ApplicationVerifier>,
+  appVerifier: any,
 ) => {
   try {
     const phoneProvider = new PhoneAuthProvider(auth);

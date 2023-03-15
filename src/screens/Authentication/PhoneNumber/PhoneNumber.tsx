@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState, useRef, MutableRefObject } from 'react';
+import React, { useState, useRef } from 'react';
 import { Text, View, Image } from 'react-native';
 import {
   useForm,
@@ -9,7 +9,6 @@ import {
 } from 'react-hook-form';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import PhoneInput from 'react-native-phone-number-input';
-import { ApplicationVerifier } from 'firebase/auth';
 import styles from './styles';
 import {
   phoneGetConfirmation,
@@ -27,7 +26,7 @@ function PhoneNumberScreen({
     phoneNumber: string;
   }
   const { ...methods } = useForm<FormValues>();
-  const recaptchaVerifier = useRef<MutableRefObject<ApplicationVerifier>>(null);
+  const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);
   const phoneInput = useRef<PhoneInput>(null);
