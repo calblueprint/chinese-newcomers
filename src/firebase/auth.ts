@@ -4,10 +4,8 @@ import {
   signInWithCredential,
   deleteUser,
   User,
-  ApplicationVerifier,
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { MutableRefObject, RefObject } from 'react';
 import { db } from './config';
 import firebaseApp from './firebaseApp';
 
