@@ -10,6 +10,7 @@ import {
   getAuthContext,
 } from '../context/AuthContext';
 import AdminStack from './BottomTabNavigators/AdminBottomTabNavigator';
+import AuthStackNavigator from './stacks/AuthStackNavigator';
 
 export default function RootNavigation() {
   const [authState, dispatch] = useAuthReducer();
@@ -58,7 +59,7 @@ export default function RootNavigation() {
           console.log(e);
         }
       } else {
-        setActiveStack(<AdminStack />);
+        setActiveStack(<AuthStackNavigator />);
       }
     };
     loadStack();

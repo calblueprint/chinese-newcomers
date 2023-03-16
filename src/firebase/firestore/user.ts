@@ -1,4 +1,6 @@
 import {
+  arrayRemove,
+  arrayUnion,
   deleteDoc,
   doc,
   DocumentData,
@@ -90,4 +92,41 @@ export const checkAndAddUser = async (
       verified: true,
     });
   }
+};
+
+export const updateBookmarks = async (
+  jobId: string,
+  userId: string,
+): Promise<void> => {
+  console.log('userId', userId);
+  const docRef = doc(db, 'users', userId);
+  const data = jobId;
+  const docSnap = await getDoc(docRef);
+  // console.log(docSnap.data());
+  if (docSnap === undefined) {
+    return;
+  }
+  if (docSnap.data().likedJobs.includes(jobId)) {
+    console.log('likedJobs includes jobid');
+    await updateDoc(docRef, { likedJobs: arrayRemove(data) });
+  } else {
+    console.log('likedJobs doesnt include jobid');
+    await updateDoc(docRef, { likedJobs: arrayUnion(data) });
+  }
+};
+
+export const getBookmarks = async (
+  jobId: string,
+  userId: string,
+): Promise<boolean> => {
+  const docRef = doc(db, 'users', userId);
+  console.log('im here');
+  const docSnap = await getDoc(docRef);
+  console.log('liked jobs', docSnap.data().likedJobs);
+  console.log(jobId);
+  if (docSnap.data().likedJobs.includes(jobId)) {
+    console.log('bookmarked!');
+    return true;
+  }
+  return false;
 };

@@ -29,7 +29,7 @@ export interface AuthContextType {
     phoneNumber: string,
   ) => Promise<void>;
   signOut: () => Promise<void>;
-  authState?: AuthState;
+  authState: AuthState | null;
 }
 
 export interface AuthState {

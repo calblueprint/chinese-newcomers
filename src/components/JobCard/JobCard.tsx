@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
@@ -9,6 +10,8 @@ import { Job } from '../../types/types';
 import { deleteJob, createJob } from '../../firebase/firestore/job';
 import Empty from '../../assets/empty.svg';
 import Filled from '../../assets/filled.svg';
+import { getBookmarks, updateBookmarks } from '../../firebase/firestore/user';
+import { AuthContext } from '../../context/AuthContext';
 
 interface JobCardProps {
   job: Job;
@@ -29,10 +32,24 @@ function JobCard({
   filteredJobs,
   setFilteredJobs,
 }: JobCardProps) {
-  const [bookmarked, setbookmarked] = useState();
+  const [currToken, setCurrToken] = useState<string | null>('');
+  const [bookmarkedValue, setBookmarked] = useState<boolean>();
+
+  useEffect(() => {
+    const getUserToken = async () => {
+      const userToken = await AsyncStorage.getItem('uid');
+      setCurrToken(userToken);
+    };
+    getUserToken();
+    const getBookmarked = async () => {
+      const bookmarks = await getBookmarks(job.id, currToken);
+      setBookmarked(bookmarks);
+    };
+    getBookmarked();
+  });
+
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
-
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {
@@ -55,6 +72,13 @@ function JobCard({
     }
     setFilteredJobs(filteredJobs.filter((_, index) => index !== idx));
   }
+
+  const toggleBookmark = async (val: boolean) => {
+    setBookmarked(!val);
+    if (currToken !== null) {
+      await updateBookmarks(job.id, currToken);
+    }
+  };
 
   return (
     <Pressable
@@ -194,11 +218,10 @@ function JobCard({
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
         <Pressable
           onPress={() => {
-            toggleLike();
+            toggleBookmark(bookmarkedValue);
           }}
         >
-          {/* {likeValue ? <Filled /> : <Empty />} */}
-          {/* <Image source={likeValue ? require('../../assets/filled-heart.png') : require('../../assets/empty-heart.png')} style={styles.heart} /> */}
+          {bookmarkedValue ? <Filled /> : <Empty />}
         </Pressable>
       </View>
     </Pressable>

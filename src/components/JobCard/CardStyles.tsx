@@ -103,11 +103,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     display: 'flex',
     flexDirection: 'row',
-<<<<<<< HEAD
     marginRight: 13,
-=======
-    marginRight: 13
->>>>>>> d1219df163cd80c2d1596f5afed5eab2a714bbaf
   },
   jobNameText: {
     color: 'black',
