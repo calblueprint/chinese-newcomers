@@ -34,9 +34,10 @@ function PhoneNumberScreen({
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
       const validatePhoneNumber = () => {
-        const regexp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        const regexp =
+          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
         return regexp.test(phoneNumber);
-      }
+      };
       const checkValid = validatePhoneNumber();
       console.log(valid);
       setValid(checkValid ?? false);
@@ -58,7 +59,8 @@ function PhoneNumberScreen({
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = errors =>
+    console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -113,4 +115,3 @@ function PhoneNumberScreen({
   );
 }
 
-export default PhoneNumberScreen;
