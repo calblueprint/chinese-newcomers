@@ -20,8 +20,6 @@ import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import WelcomeScreen from '../Welcome/Welcome';
 
-export default PhoneNumberScreen;
-
 const logo = require('../../../assets/cnsc-logo.png');
 
 function PhoneNumberScreen({
@@ -31,94 +29,93 @@ function PhoneNumberScreen({
     phoneNumber: string;
   }
 
-  function PhoneNumberScreen({ navigation }: any) {
-    const { ...methods } = useForm();
-    const recaptchaVerifier = useRef(null);
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [valid, setValid] = useState(false);
-    const phoneInput = useRef<PhoneInput>(null);
+  const { ...methods } = useForm();
+  const recaptchaVerifier = useRef(null);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [valid, setValid] = useState(false);
+  const phoneInput = useRef<PhoneInput>(null);
 
-    const onSubmit: SubmitHandler<FormValues> = async () => {
-      try {
-        const validatePhoneNumber = () => {
-          const regexp =
-            /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-          return regexp.test(phoneNumber);
-        };
-        const checkValid = validatePhoneNumber();
-        console.log(valid);
-        setValid(checkValid ?? false);
-        // To Do: render error label
-        const activated = await getActivationStatus(phoneNumber);
-        if (!activated) {
-          const verificationId = await phoneGetConfirmation(
-            phoneNumber,
-            recaptchaVerifier,
-          );
-          console.log(verificationId);
-          navigation.navigate('VerificationScreen', {
-            verificationId,
-            phoneNumber,
-          });
-        }
-      } catch (error) {
-        console.log(error);
+  const onSubmit: SubmitHandler<FormValues> = async () => {
+    try {
+      const validatePhoneNumber = () => {
+        const regexp =
+          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        return regexp.test(phoneNumber);
+      };
+      const checkValid = validatePhoneNumber();
+      console.log(valid);
+      setValid(checkValid ?? false);
+      // To Do: render error label
+      const activated = await getActivationStatus(phoneNumber);
+      if (!activated) {
+        const verificationId = await phoneGetConfirmation(
+          phoneNumber,
+          recaptchaVerifier,
+        );
+        console.log(verificationId);
+        navigation.navigate('VerificationScreen', {
+          verificationId,
+          phoneNumber,
+        });
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const onError: SubmitErrorHandler<FormValues> = errors =>
-      console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image source={logo} style={styles.logo} />
+  return (
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={logo} style={styles.logo} />
+      </View>
+      <FormProvider {...methods}>
+        <View style={styles.textContainer}>
+          <Text style={styles.headingText}>Enter your phone number: </Text>
+          <Text style={styles.subText}>
+            We'll send you a six-digit verification code to you via text.{' '}
+          </Text>
         </View>
-        <FormProvider {...methods}>
-          <View style={styles.textContainer}>
-            <Text style={styles.headingText}>Enter your phone number: </Text>
-            <Text style={styles.subText}>
-              We'll send you a six-digit verification code to you via text.{' '}
-            </Text>
-          </View>
-          <View>
-            <View style={styles.phonenumberContainer}>
-              <PhoneInput
-                ref={phoneInput}
-                placeholder="4151234567"
-                defaultValue={phoneNumber}
-                onChangeFormattedText={text => {
-                  setPhoneNumber(text);
-                }}
-                defaultCode="US"
-              />
-            </View>
-            <View style={styles.buttonContainer}>
-              <StyledButton
-                text="back"
-                onPress={() => navigation.goBack()}
-                buttonStyle={{
-                  width: '45%',
-                  height: '100%',
-                  backgroundColor: '#FFFFFF',
-                  borderColor: '#CC433C',
-                }}
-                textStyle={{ fontSize: 16, color: '#CC433C' }}
-              />
-              <StyledButton
-                text="next"
-                onPress={methods.handleSubmit(onSubmit, onError)}
-                buttonStyle={{ width: '45%', height: '100%' }}
-                textStyle={{ fontSize: 16 }}
-              />
-            </View>
-            <FirebaseRecaptchaVerifierModal
-              ref={recaptchaVerifier}
-              firebaseConfig={firebaseApp.options}
+        <View>
+          <View style={styles.phonenumberContainer}>
+            <PhoneInput
+              ref={phoneInput}
+              placeholder="4151234567"
+              defaultValue={phoneNumber}
+              onChangeFormattedText={text => {
+                setPhoneNumber(text);
+              }}
+              defaultCode="US"
             />
           </View>
-        </FormProvider>
-      </View>
-    );
-  }
+          <View style={styles.buttonContainer}>
+            <StyledButton
+              text="back"
+              onPress={() => navigation.goBack()}
+              buttonStyle={{
+                width: '45%',
+                height: '100%',
+                backgroundColor: '#FFFFFF',
+                borderColor: '#CC433C',
+              }}
+              textStyle={{ fontSize: 16, color: '#CC433C' }}
+            />
+            <StyledButton
+              text="next"
+              onPress={methods.handleSubmit(onSubmit, onError)}
+              buttonStyle={{ width: '45%', height: '100%' }}
+              textStyle={{ fontSize: 16 }}
+            />
+          </View>
+          <FirebaseRecaptchaVerifierModal
+            ref={recaptchaVerifier}
+            firebaseConfig={firebaseApp.options}
+          />
+        </View>
+      </FormProvider>
+    </View>
+  );
 }
+
+export default PhoneNumberScreen;

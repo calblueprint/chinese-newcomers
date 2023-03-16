@@ -47,8 +47,12 @@ function AdminSigninScreen({
 
   const handleEmailChange = (email) => {
     setEmail(email);
-    setEmailError('');
-    setSignInError('');
+    if (emailError !== '') {
+      setEmailError('');
+    }
+    if (signInError !== '') {
+      setSignInError('');
+    }
   };
 
   const handlePasswordChange = (password) => {
