@@ -29,6 +29,7 @@ function PhoneNumberScreen({
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
   const phoneInput = useRef<PhoneInput>(null);
 
   const onSubmit: SubmitHandler<FormValues> = async () => {
@@ -36,14 +37,17 @@ function PhoneNumberScreen({
       const validatePhoneNumber = () => {
         const regexp =
           /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-        return regexp.test(phoneNumber);
+        if (regexp.test(phoneNumber)) {
+          setPhoneError('');
+        }
+        setPhoneError('Oops! Invalid phone number. Please try again.');
       };
       const checkValid = validatePhoneNumber();
       console.log(valid);
       setValid(checkValid ?? false);
       // To Do: render error label
       const activated = await getActivationStatus(phoneNumber);
-      if (!activated) {
+      if (!activated && valid) {
         const verificationId = await phoneGetConfirmation(
           phoneNumber,
           recaptchaVerifier,
@@ -61,6 +65,13 @@ function PhoneNumberScreen({
 
   const onError: SubmitErrorHandler<FormValues> = errors =>
     console.log(errors);
+
+  const handlePhoneChange = phoneNumber => {
+    setPhoneNumber(phoneNumber);
+    if (phoneError !== '') {
+      setPhoneError('');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -80,11 +91,17 @@ function PhoneNumberScreen({
               ref={phoneInput}
               placeholder="4151234567"
               defaultValue={phoneNumber}
-              onChangeFormattedText={text => {
-                setPhoneNumber(text);
-              }}
+              onChangeFormattedText={
+                newPhoneInput => handlePhoneChange(newPhoneInput)
+                //   text => {
+                //   //setPhoneNumber(text);
+                // }
+              }
               defaultCode="US"
             />
+            {phoneError !== '' && (
+              <Text style={{ color: 'red' }}>{phoneError}</Text>
+            )}
           </View>
           <View style={styles.buttonContainer}>
             <StyledButton
