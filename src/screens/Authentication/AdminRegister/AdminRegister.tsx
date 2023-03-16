@@ -4,8 +4,9 @@ import {
   useForm,
   FormProvider,
   SubmitHandler,
-  SubmitErrorHandler,
+  SubmitErrorHandler
 } from 'react-hook-form';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { z } from 'zod';
 import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
@@ -31,6 +32,7 @@ function AdminRegisterScreen({
   const { phoneNumber } = route.params;
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const auth = getAuth();
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {

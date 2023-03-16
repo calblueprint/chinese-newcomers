@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { z } from 'zod';
 import styles from './styles';
@@ -25,6 +25,7 @@ function AdminSigninScreen({
   const { signInEmail } = useContext(AuthContext);
   const [emailError, setEmailError] = useState('');
   const [ signInError, setSignInError ] = useState('');
+  const auth = getAuth()
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
