@@ -8,12 +8,12 @@ import {
 import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
 import logo from '../../../assets/cnsc-logo.png';
 import { z } from 'zod';
-import styles from './styles';
+import logo from '../../../assets/cnsc-logo.png';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
-import { signUpEmail } from '../../../firebase/auth';
 import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
 const emailSchema = z.string().email({ message: 'Invalid email address' });
 
