@@ -93,6 +93,9 @@ function AdminRegisterScreen({
                 hasError={emailError !== ''}
                 onChangeText={emailInput => handleEmailChange(emailInput)}
               />
+              {emailError !== '' && (
+                <Text style={{ color: 'red' }}>{emailError}</Text>
+              )}
               <Text style={styles.smallText}>Create Password </Text>
               <AuthInput
                 name="password"
@@ -108,9 +111,6 @@ function AdminRegisterScreen({
                 placeholder=" password"
                 hasError={passwordError !== ''}
               />
-              {emailError !== '' && (
-                <Text style={{ color: 'red' }}>{emailError}</Text>
-              )}
               {passwordError !== '' && (
                 <Text style={{ color: 'red' }}>{passwordError}</Text>
               )}
