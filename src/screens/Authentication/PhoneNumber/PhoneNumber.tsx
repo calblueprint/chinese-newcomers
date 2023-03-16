@@ -37,16 +37,22 @@ function PhoneNumberScreen({
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
       const validatePhoneNumber = () => {
-        const regexp =
-          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-        if (regexp.test(phoneNumber)) {
+        // const regexp = /^[0-9\b]+$/;
+        // /"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"/;
+        // if (regexp.test(phoneNumber)) {
+        //   setPhoneError('');
+        //   console.log('phone input valid')
+        // }
+        if (phoneInput.current?.isValidNumber(phoneNumber)) {
+          console.log('phone number valid');
           setPhoneError('');
-        }
-        setPhoneError('Oops! Invalid phone number. Please try again.');
+          return true;
+        } console.log('phone number invalid');
+          setPhoneError('Oops! Invalid phone number. Please try again.');
       };
-      const checkValid = validatePhoneNumber();
+      //const checkValid = validatePhoneNumber();
+      setValid(validatePhoneNumber());
       console.log(valid);
-      setValid(checkValid ?? false);
       // To Do: render error label
       const activated = await getActivationStatus(phoneNumber);
       if (!activated && valid) {
@@ -68,6 +74,8 @@ function PhoneNumberScreen({
   const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
 
   const handlePhoneChange = phoneNumber => {
+    console.log('new phone number is', phoneNumber);
+    console.log('this is the current error', phoneError);
     setPhoneNumber(phoneNumber);
     if (phoneError !== '') {
       setPhoneError('');
