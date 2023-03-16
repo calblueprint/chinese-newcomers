@@ -19,7 +19,7 @@ export interface Employer extends genericUser {
   createdJobs: string[];
 }
 
-export type User = RegularUser | Admin | Employer | null;
+export type User = RegularUser | Admin | Employer;
 
 // export interface Job {
 //   contact_info: string;
