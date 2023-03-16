@@ -29,6 +29,7 @@ function JobCard({
   filteredJobs,
   setFilteredJobs,
 }: JobCardProps) {
+  const [bookmarked, setbookmarked] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
 
