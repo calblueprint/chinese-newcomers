@@ -1,19 +1,16 @@
-import React, { useState, useContext } from 'react';
-import { Text, View, Image, KeyboardAvoidingView } from 'react-native';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
 import {
-  useForm,
-  FormProvider,
-  SubmitHandler,
-  SubmitErrorHandler
+  FormProvider, SubmitErrorHandler, SubmitHandler, useForm
 } from 'react-hook-form';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
 import { z } from 'zod';
-import styles from './styles';
-import AuthInput from '../../../components/AuthInput/AuthInput';
-import { AuthContext } from '../../../context/AuthContext';
-import StyledButton from '../../../components/StyledButton/StyledButton';
-import { AuthStackScreenProps } from '../../../types/navigation';
 import logo from '../../../assets/cnsc-logo.png';
+import AuthInput from '../../../components/AuthInput/AuthInput';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { AuthContext } from '../../../context/AuthContext';
+import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
 const emailSchema = z.string().email({ message: 'Invalid email address' });
 
