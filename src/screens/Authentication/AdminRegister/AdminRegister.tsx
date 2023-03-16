@@ -51,12 +51,16 @@ function AdminRegisterScreen({
 
   const handleEmailChange = email => {
     setEmail(email);
-    setEmailError('');
+    if (emailError !== '') {
+      setEmailError('');
+    }
   };
 
   const handlePasswordChange = password => {
     setPassword(password);
-    setPasswordError('');
+    if (passwordError !== '') {
+      setPasswordError('');
+    }
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
