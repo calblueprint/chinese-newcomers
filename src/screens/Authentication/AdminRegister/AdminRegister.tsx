@@ -35,18 +35,31 @@ function AdminRegisterScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      createUserWithEmailAndPassword(auth, email, password).catch(error => {
-        setPasswordError(
-          'Oops! Weak password. Please make sure your password is at least 6 characters.',
-        );
-      });
+      // createUserWithEmailAndPassword(auth, email, password).catch(error => {
+      //   setPasswordError(
+      //     'Oops! Weak password. Please make sure your password is at least 6 characters.',
+      //   );
+      // });
       emailSchema.parse(email);
       await signUpEmail(email, password, phoneNumber);
     } catch (e) {
       if (e instanceof z.ZodError) {
         setEmailError('Oops! Invalid email. Try again.');
       }
+      switch (e.code) {
+        case 'auth/weak-password':
+          setPasswordError(
+            'Oops! Weak password. Please make sure your password is at least 6 characters.',
+          );
+          break;
+        case 'auth/email-already-in-use':
+          setEmailError(e.message);
+          break;
+        default:
+          setPasswordError('');
+      }
       console.log(e);
+      console.log(typeof e);
     }
   };
 
