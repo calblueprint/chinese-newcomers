@@ -1,16 +1,16 @@
-import React, { useReducer, createContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   createUserWithEmailAndPassword,
   getAuth,
-  signInWithEmailAndPassword,
   PhoneAuthProvider,
   signInWithCredential,
+  signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
+import React, { createContext, useReducer } from 'react';
+import { activatedAdmin } from '../firebase/auth';
 import firebaseApp from '../firebase/firebaseApp';
 import { checkAndAddUser } from '../firebase/firestore/user';
-import { activatedAdmin } from '../firebase/auth';
 
 export const AuthContext = createContext<AuthContextType>(
   {} as AuthContextType,
@@ -93,18 +93,17 @@ export const getAuthContext = (
   },
   signUpEmail: async (email: string, password: string, phoneNumber: string) => {
     const auth = getAuth(firebaseApp);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async userCredential => {
-        const { user } = userCredential;
-        await checkAndAddUser(user, 'admin', phoneNumber);
-        console.log('Email sign up successful', user.email);
-        await activatedAdmin(phoneNumber);
-        await AsyncStorage.setItem('uid', user.uid);
-        dispatch({ type: 'SIGN_IN', token: user.uid });
-      })
-      .catch(error => {
-        console.warn('Email sign up error', error);
-      });
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    const { user } = userCredential;
+    await checkAndAddUser(user, 'admin', phoneNumber);
+    console.log('Email sign up successful', user.email);
+    await activatedAdmin(phoneNumber);
+    await AsyncStorage.setItem('uid', user.uid);
+    dispatch({ type: 'SIGN_IN', token: user.uid });
   },
   signInPhone: async (verficationId: string, verficationCode: string) => {
     const auth = getAuth(firebaseApp);
