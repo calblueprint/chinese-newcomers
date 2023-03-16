@@ -31,6 +31,7 @@ function AdminRegisterScreen({
   const { phoneNumber } = route.params;
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const auth = getAuth();
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
