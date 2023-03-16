@@ -9,40 +9,49 @@ import {
 } from 'firebase/firestore';
 import { UserCredential } from 'firebase/auth';
 import { db } from '../config';
-import { RegularUser, Admin, Employer, genericUser } from '../../types/types';
+import { RegularUser, Admin, Employer, GenericUser } from '../../types/types';
 
-interface Dictionary<T> {
-  [key: genericUser]: T;
-}
+const REGULAR_USER_COLLECTION_NAME = 'regularUser';
+const ADMIN_COLLECTION_NAME = 'admin';
+const EMPLOYER_COLLECTION_NAME = 'employer';
+
+const userCollectionRefs = (id: string) => [
+  doc(db, REGULAR_USER_COLLECTION_NAME, id),
+  doc(db, ADMIN_COLLECTION_NAME, id),
+  doc(db, EMPLOYER_COLLECTION_NAME, id),
+]; 
+
+const userTypeToConstructorMap = new Map<string, GenericUser>([
+  [REGULAR_USER_COLLECTION_NAME, <RegularUser>{}],
+  [ADMIN_COLLECTION_NAME, <Admin>{}],
+  [EMPLOYER_COLLECTION_NAME, <Employer>{}],
+]);
+
+const constructorToUserTypeMap = new Map<GenericUser, string>([
+  [<RegularUser>{}, REGULAR_USER_COLLECTION_NAME],
+  [<Admin>{}, ADMIN_COLLECTION_NAME],
+  [<Employer>{}, EMPLOYER_COLLECTION_NAME],
+])
 
 // QueryDocumentSnapshot<DocumentData>
-const parseUser = async (document: QueryDocumentSnapshot<any>) => {
+const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
   const userId = document.id.toString();
   const data = document.data();
-  const type = data.access;
-  
-  const userConstructors: Dictionary<typeof genericUser> = {
-    regular: RegularUser,
-    admin: Admin,
-    employer: Employer,
-  }
+  const type = data.access; 
 
-  const userType = userConstructors[type];
+  const userType = userTypeToConstructorMap.get(type);
 
   const user = {
-    userId,
+    id: userId,
     ...data,
   }
 
   return user as typeof userType;
 };
 
-export const getUser = async (id: string): Promise<genericUser | null> => {
-  const userRefs = [
-    doc(db, 'regularUser', id),
-    doc(db, 'admin', id),
-    doc(db, 'employer', id),
-  ];
+// edit this using the constants above
+export const getUser = async (id: string): Promise<GenericUser | null> => {
+  const userRefs = userCollectionRefs(id);
 
   const userDocs = await Promise.all(userRefs.map((ref) => getDoc(ref)));
   const userDoc = userDocs.find((doc) => doc.exists);
@@ -54,30 +63,25 @@ export const getUser = async (id: string): Promise<genericUser | null> => {
   return parseUser(userDoc);
 };
 
-export const addUser = async (user: genericUser): Promise<void> => {
+export const addUser = async (user: GenericUser): Promise<void> => {
   const type = user.access;
   const itemsRef = doc(db, type, user.id);
   await setDoc(itemsRef, user);
 };
 
-export const updateUser = async(userId: string, newField: Dictionary<string>) => {
-  const user = getUser(userId);
-  const userConstructors: Dictionary<string> = {
-    RegularUser: 'regularUser',
-    Admin: 'admin',
-    Employer: 'employer',
-  };
-
-  const userType = userConstructors[user];
+// the values for newField might have multiple types (string or string[])
+export const updateUser = async(userId: string, newFields: Map<string, string | string[]>) => {
+  const user = await getUser(userId);
+  const userType = constructorToUserTypeMap.get(user)
   const docRef = doc(db, userType, userId);
-  const field = Object.keys(newField)[0];
-  const data = {
-    field = newField[field];
-  };
+  const data: { [key: string]: string | string[] } = {};
+  newFields.forEach((newValue, field) => {
+    data[field] = newValue;
+  });
   await updateDoc(docRef, data);
 };
 
-export const deleteUser = async (user: genericUser): Promise<void> => {
+export const deleteUser = async (user: GenericUser): Promise<void> => {
   const type = user.access;
   const userId = user.id;
   const docRef = doc(db, type, userId);
@@ -102,6 +106,7 @@ export const checkAndAddUser = async (
       assignPhoneNumber = phoneNumber;
     }
 
+    //  might need to fix this depending on different types
     await addUser({
       id: user.uid,
       access: accessLevel,
