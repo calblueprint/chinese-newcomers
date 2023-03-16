@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
-import JobCard from '../../components/JobCard/JobCard';
-import styles from './Styles';
-import { getAllJobs } from '../../firebase/firestore/job';
-import { Job } from '../../types/types';
+import React, { useEffect, useState } from 'react';
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
+import JobCard from '../../components/JobCard/JobCard';
+import { getAllJobs } from '../../firebase/firestore/job';
 import { FeedStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './Styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
@@ -78,6 +78,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
           // eslint-disable-next-line react/jsx-key
           <JobCard
             job={job}
+            key={job.id}
             idx={index}
             pending={false}
             pendingJobs={null}

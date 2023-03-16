@@ -1,9 +1,11 @@
 /* eslint-disable global-require */
-import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
+import React from 'react';
 import { ThemeProvider } from 'react-native-elements';
+import { AuthContextProvider } from './src/context/AuthContext';
 import './src/firebase/firebaseApp';
-import RootNavigation from './src/navigation';
+import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,7 +19,11 @@ export default function App() {
   }
   return (
     <ThemeProvider>
-      <RootNavigation />
+      <NavigationContainer>
+        <AuthContextProvider>
+          <AppNavigator />
+        </AuthContextProvider>
+      </NavigationContainer>
     </ThemeProvider>
   );
 }
