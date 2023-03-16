@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomTabParamList } from '../../types/navigation';
 import FeedStackNavigator from '../stacks/FeedStackNavigator';
 import SignoutStackNavigator from '../stacks/SignOutStackNavigator';
+import BookmarksStackNavigator from '../stacks/BookmarksStackNavigator';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
@@ -35,6 +36,13 @@ function UserStack(): ReactElement {
         component={FeedStackNavigator}
         options={{
           tabBarIcon: HomeOutlineIcon,
+        }}
+      />
+      <Tab.Screen
+        name="Bookmarks"
+        component={BookmarksStackNavigator}
+        options={{
+          tabBarIcon: LogoutVariantIcon,
         }}
       />
       <Tab.Screen

@@ -6,7 +6,7 @@ import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
-import styles from './Styles';
+import styles from './styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
