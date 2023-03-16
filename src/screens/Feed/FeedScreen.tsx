@@ -3,7 +3,7 @@ import { Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import JobCard from '../../components/JobCard/JobCard';
-import styles from './Styles';
+import styles from './styles';
 import { getAllJobs } from '../../firebase/firestore/job';
 import { Job } from '../../types/types';
 import Logo from '../../assets/cnsc-logo.png';

@@ -26,6 +26,18 @@ export default function RootNavigation() {
     restoreAuthToken();
   }, []);
 
+  useEffect(() => {
+    const restoreAuthObject = async () => {
+      try {
+        const userObject = await AsyncStorage.getItem('uid');
+        dispatch({ type: 'RESTORE_OBJECT', token: userObject });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    restoreAuthObject();
+  }, []);
+
   const authContext = useMemo(() => getAuthContext(dispatch), []);
 
   const [activeStack, setActiveStack] = useState<ReactElement>();

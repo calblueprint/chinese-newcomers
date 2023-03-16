@@ -33,7 +33,7 @@ export default StyleSheet.create({
     marginLeft: '6%',
     height: '30%',
     marginBottom: '10%',
-    marginRight: '10%'
+    marginRight: '10%',
   },
   centeredView: {
     flex: 1,
@@ -103,27 +103,27 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     display: 'flex',
     flexDirection: 'row',
-    marginRight: 13
+    marginRight: 13,
   },
   jobNameText: {
     color: 'black',
     fontSize: 22,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   heart: {
     width: 40,
     height: 40,
-    marginRight: 0
+    marginRight: 0,
   },
   jobNameModal: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '90%'
+    width: '90%',
   },
   boldModalText: {
-    fontWeight: 'bold'
-    fontFamily: "DMSans_700Bold"
+    fontWeight: 'bold',
+    fontFamily: 'DMSans_700Bold',
   },
 
   modalButtonText: {

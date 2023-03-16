@@ -11,6 +11,7 @@ import {
 import firebaseApp from '../firebase/firebaseApp';
 import { checkAndAddUser } from '../firebase/firestore/user';
 import { activatedAdmin } from '../firebase/auth';
+import { User } from '../types/types';
 
 export const AuthContext = createContext<AuthContextType>(
   {} as AuthContextType,
@@ -35,12 +36,14 @@ export interface AuthState {
   isLoading: boolean;
   userToken: string | null;
   isSignout: boolean;
+  userObject: User | null;
 }
 
 export type AuthContextAction =
   | { type: 'RESTORE_TOKEN'; token: string | null }
   | { type: 'SIGN_IN'; token: string }
-  | { type: 'SIGN_OUT' };
+  | { type: 'SIGN_OUT' }
+  | { type: 'RESTORE_OBJECT'; token: User | null };
 
 export const useAuthReducer = () =>
   useReducer(
@@ -72,6 +75,7 @@ export const useAuthReducer = () =>
       isLoading: true,
       isSignout: false,
       userToken: null,
+      userObject: null,
     },
   );
 
@@ -83,6 +87,7 @@ export const getAuthContext = (
     signInWithEmailAndPassword(auth, email, password)
       .then(async userCredential => {
         const { user } = userCredential;
+        console.log('this is the usercredential', user);
         console.log('Email sign in successful', user.email);
         await AsyncStorage.setItem('uid', user.uid);
         dispatch({ type: 'SIGN_IN', token: user.uid });
