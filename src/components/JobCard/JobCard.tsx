@@ -28,6 +28,7 @@ function JobCard({
   setFilteredJobs,
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
+  console.log(job.salary)
   const visibleMap = objectToBooleanMap(job.visible);
 
   async function handleAction(approve: boolean) {
