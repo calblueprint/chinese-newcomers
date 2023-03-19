@@ -1,18 +1,18 @@
-import React, { useState, useContext } from 'react';
-import { Text, View, Image } from 'react-native';
+import React, { useContext, useState } from 'react';
 import {
-  useForm,
   FormProvider,
-  SubmitHandler,
   SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
 } from 'react-hook-form';
-import styles from './styles';
-import AuthInput from '../../../components/AuthInput/AuthInput';
-import { AuthContext } from '../../../context/AuthContext';
-import StyledButton from '../../../components/StyledButton/StyledButton';
+import { Image, Text, View } from 'react-native';
 import logo from '../../../assets/cnsc-logo.png';
-import SigninScreen from '../Signin/Signin';
+import AuthInput from '../../../components/AuthInput/AuthInput';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { AuthContext } from '../../../context/AuthContext';
+import { signInEmail } from '../../../firebase/auth';
 import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
 function AdminSigninScreen({
   navigation,
@@ -24,13 +24,12 @@ function AdminSigninScreen({
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signInEmail } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      await signInEmail(email, password);
+      await signInEmail(dispatch, { email, password });
       console.log('signed in');
-      // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
       console.error(e);
       throw e;

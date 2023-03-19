@@ -1,20 +1,18 @@
 import React, { ReactElement, useContext } from 'react';
 import { View } from 'react-native';
-import { AuthContext } from '../../../context/AuthContext';
 import StyledButton from '../../../components/StyledButton/StyledButton';
+import { AuthContext } from '../../../context/AuthContext';
+import { signUserOut } from '../../../firebase/auth';
 import styles from './styles';
-import { SignoutStackScreenProps } from '../../../types/navigation';
 
-function SignoutScreen({
-  navigation,
-}: SignoutStackScreenProps<'SignoutScreen'>): ReactElement {
-  const { signOut } = useContext(AuthContext);
+function SignoutScreen(): ReactElement {
+  const { dispatch } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
       <StyledButton
         text="Sign Out"
-        onPress={signOut}
+        onPress={() => signUserOut(dispatch)}
         buttonStyle={{ width: '45%', height: '5%' }}
         textStyle={{}}
       />
