@@ -4,9 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './CardStyles';
-import objectToBooleanMap, { objectToMap } from '../../firebase/helpers';
-import emptyHeart from '../../assets/empty-heart.png';
-import filledHeart from '../../assets/filled-heart.png';
+import objectToBooleanMap from '../../firebase/helpers';
 import Ex from '../../assets/ex.png';
 import {
   getAllJobs,
