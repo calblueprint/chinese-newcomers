@@ -12,7 +12,7 @@ import { FeedStackScreenProps } from '../../types/navigation';
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
   const [approvedJobs, setApprovedJobs] = useState([] as Job[]);
-  const [filteredList, setFilteredList] = useState([] as Job[]);
+  const [filteredApprovedJobs, setFilteredApprovedJobs] = useState([] as Job[]);
   const [category, setCategory] = useState('all');
   const categories: string[] = [
     'all',
@@ -35,16 +35,16 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
     const fetchJobs = async () => {
       const data = await getAllJobs('approvedJobs');
       setApprovedJobs(data);
-      setFilteredList(data);
+      setFilteredApprovedJobs(data);
     };
     fetchJobs();
   }, [isFocused]);
 
   useEffect(() => {
     if (category === 'all') {
-      setFilteredList(approvedJobs);
+      setFilteredApprovedJobs(approvedJobs);
     } else {
-      setFilteredList(approvedJobs.filter(job => job.category === category));
+      setFilteredApprovedJobs(approvedJobs.filter(job => job.category === category));
     }
   }, [category, approvedJobs]);
 
@@ -78,9 +78,8 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
           textStyle={{ fontFamily: 'DMSans_500Medium' }}
         />
 
-        {filteredList.map((job, index) => (
-          // eslint-disable-next-line react/jsx-key
-          <JobCard job={job} idx={index} pending={false} filterList={filterApprovedJobs} />
+        {filteredApprovedJobs.map((job, index) => (
+          <JobCard key={job.id} job={job} idx={index} isPending={false} onRemove={filterApprovedJobs} />
         ))}
       </ScrollView>
     </SafeAreaView>

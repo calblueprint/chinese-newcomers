@@ -21,7 +21,7 @@ function ApprovalScreen({
     fetchJobs();
   }, [isFocused]);
 
-  const filterPendingJobs = useCallback((idx: number) => {
+  const handleRemoveJob = useCallback((idx: number) => {
     setPendingJobs(list => list.filter((_, index) => index !== idx))
   }, []);
 
@@ -37,12 +37,12 @@ function ApprovalScreen({
           width: '100%'
         }}>
         {pendingJobs.map((job, index) => (
-            // eslint-disable-next-line react/jsx-key
             <JobCard
+              key={job.id}
               job={job}
               idx={index}
-              pending
-              filterList={filterPendingJobs} />
+              isPending
+              onRemove={handleRemoveJob} />
           ))}
         {pendingJobs.length === 0 && (
           <Text style={{ marginTop: '10%' }}>No pending job drafts to review!</Text>

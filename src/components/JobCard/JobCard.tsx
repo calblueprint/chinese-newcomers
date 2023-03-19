@@ -11,15 +11,15 @@ import { deleteJob, createJob } from '../../firebase/firestore/job';
 interface JobCardProps {
   job: Job;
   idx: number;
-  pending: boolean;
-  filterList: (idx: number) => void;
+  isPending: boolean;
+  onRemove: (idx: number) => void;
 }
 
 function JobCard({
   job,
   idx,
-  pending,
-  filterList,
+  isPending: pending,
+  onRemove: filterList,
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
