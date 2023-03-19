@@ -39,7 +39,17 @@ const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
   const data = document.data();
   const type = data.access; 
 
+  // if (!userTypeToConstructorMap.has(type)) {
+  //   console.log('Invalid User Type.');
+  //   return null;
+  // }
+
   const userType = userTypeToConstructorMap.get(type);
+
+  if (!userType) {
+    console.log('User type not found.');
+    return null;
+  }
 
   const user = {
     id: userId,
@@ -54,13 +64,13 @@ export const getUser = async (id: string): Promise<GenericUser | null> => {
   const userRefs = userCollectionRefs(id);
 
   const userDocs = await Promise.all(userRefs.map((ref) => getDoc(ref)));
-  const userDoc = userDocs.find((doc) => doc.exists);
+  const userDoc = userDocs.find((docSnap) => docSnap.exists);
   if (!userDoc) {
       console.log('No such document!');
       return null;
   };
   console.log('User data:', userDoc.data());
-  return parseUser(userDoc);
+  return parseUser(userDoc as QueryDocumentSnapshot<DocumentData>);
 };
 
 export const addUser = async (user: GenericUser): Promise<void> => {
@@ -69,12 +79,20 @@ export const addUser = async (user: GenericUser): Promise<void> => {
   await setDoc(itemsRef, user);
 };
 
-// the values for newField might have multiple types (string or string[])
-export const updateUser = async(userId: string, newFields: Map<string, string | string[]>) => {
+// the values for newField might have multiple types (string, string[], or boolean)
+export const updateUser = async(userId: string, newFields: Map<string, string | string[] | boolean>) => {
   const user = await getUser(userId);
+  if (!user) {
+    console.log('User does not exist.')
+    return;
+  }
   const userType = constructorToUserTypeMap.get(user)
+  if (!userType) {
+    console.log('User type does not exist.')
+    return;
+  }
   const docRef = doc(db, userType, userId);
-  const data: { [key: string]: string | string[] } = {};
+  const data: { [key: string]: string | string[] | boolean } = {};
   newFields.forEach((newValue, field) => {
     data[field] = newValue;
   });
