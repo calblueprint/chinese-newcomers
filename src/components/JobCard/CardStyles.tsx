@@ -106,9 +106,9 @@ export default StyleSheet.create({
   modalButtonText: {
     color: 'black',
     fontSize: 23,
-    fontFamily: "DMSans_700Medium",
+    fontFamily: 'DMSans_700Medium',
     marginTop: '2%',
-    marginBottom: '5%'
+    marginBottom: '5%',
   },
 
   jobNameText: {
