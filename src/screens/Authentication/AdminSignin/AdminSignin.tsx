@@ -30,17 +30,31 @@ function AdminSigninScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      signInWithEmailAndPassword(auth, email, password)
-      .catch(error => {
-        setSignInError("Oops! Incorrect email or password. Try again.");
-      });
+      // signInWithEmailAndPassword(auth, email, password)
+      // .catch(error => {
+      //   setSignInError("Oops! Incorrect email or password. Try again.");
+      // });
       emailSchema.parse(email);
       await signInEmail(email, password);
       // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
       if (e instanceof z.ZodError) {
         setEmailError("Oops! Invalid email. Try again.");
-        console.log(e.issues);
+      }
+      switch (e.code) {
+        case 'auth/wrong-password':
+          setSignInError(
+            'Oops! Incorrect password. Please try again.',
+          );
+          break;
+        case 'auth/user-not-found':
+          console.log('bruh')
+          setEmailError(
+            'Oops! Incorrect email. Please try again.',
+          );
+          break;
+        default:
+          setSignInError('');
       }
       console.log(e.message);
       throw e;
