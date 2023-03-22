@@ -1,4 +1,3 @@
-import { getAuth } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import {
   FormProvider,
@@ -32,9 +31,13 @@ function AdminRegisterScreen({
   const { phoneNumber } = route.params;
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const auth = getAuth();
+  const [confirmPass, setConfirmPass] = useState('');
+  const [confirmError, setConfirmError] = useState('');
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
+    if (confirmPass !== password) {
+      setConfirmError('Oops! These passwords do not match. Please try again.')
+    }
     try {
       // createUserWithEmailAndPassword(auth, email, password).catch(error => {
       //   setPasswordError(
@@ -60,7 +63,6 @@ function AdminRegisterScreen({
           setPasswordError('');
       }
       console.log(e);
-      console.log(typeof e);
     }
   };
 
@@ -124,10 +126,14 @@ function AdminRegisterScreen({
                 name="confirmPassword"
                 label="confirmPassword"
                 placeholder=" password"
-                hasError={passwordError !== ''}
+                hasError={(passwordError !== '') || (confirmError !== '')}
+                onChangeText={setConfirmPass}
               />
               {passwordError !== '' && (
                 <Text style={{ color: 'red' }}>{passwordError}</Text>
+              )}
+              {confirmError !== '' && (
+                <Text style={{ color: 'red' }}>{confirmError}</Text>
               )}
             </View>
             <View style={styles.buttonContainer}>
