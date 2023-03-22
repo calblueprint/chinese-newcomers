@@ -80,16 +80,15 @@ export const getAuthContext = (
 ): AuthContextType => ({
   signInEmail: async (email: string, password: string) => {
     const auth = getAuth(firebaseApp);
-    signInWithEmailAndPassword(auth, email, password)
-      .then(async userCredential => {
-        const { user } = userCredential;
-        console.log('Email sign in successful', user.email);
-        await AsyncStorage.setItem('uid', user.uid);
-        dispatch({ type: 'SIGN_IN', token: user.uid });
-      })
-      .catch(error => {
-        console.warn('Email sign in error', error);
-      });
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const { user } = userCredential;
+    console.log('Email sign in successful', user.email);
+    await AsyncStorage.setItem('uid', user.uid);
+    dispatch({ type: 'SIGN_IN', token: user.uid });
   },
   signUpEmail: async (email: string, password: string, phoneNumber: string) => {
     const auth = getAuth(firebaseApp);

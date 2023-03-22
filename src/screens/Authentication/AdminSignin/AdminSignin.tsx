@@ -49,14 +49,14 @@ function AdminSigninScreen({
         case 'auth/user-not-found':
           console.log('bruh')
           setEmailError(
-            'Oops! Incorrect email. Please try again.',
+            'Oops! Incorrect email or password. Please try again.',
           );
           break;
         default:
           setSignInError('');
       }
-      console.log(e.message);
-      throw e;
+      console.log(e);
+      //throw e;
     }
   };
 
