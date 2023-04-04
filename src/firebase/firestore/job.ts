@@ -62,10 +62,43 @@ export const getMonthlyCounter = async (): Promise<number> => {
   return data?.monthlyCounter;
 };
 
-// const parseFirestoreListenerJob = (job: Partial<Job>, jobId: string): Partial<Job> => {
-  
-//   return jobCopy;
-// }
+function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
+  const {
+    date,
+    companyName,
+    address,
+    contactPerson,
+    phone,
+    jobPosition,
+    languageRequirement,
+    workingHours,
+    workingDays,
+    salary,
+    probationPeriod,
+    employeeBenefit,
+    otherInfo,
+    visible,
+    category } = job;
+    const jobCopy = { 
+      jobId,
+      date,
+      companyName,
+      address,
+      contactPerson,
+      phone,
+      jobPosition,
+      languageRequirement,
+      workingHours,
+      workingDays,
+      salary,
+      probationPeriod,
+      employeeBenefit,
+      otherInfo,
+      visible,
+      category };
+    return jobCopy;
+
+}
 
 export const createJob = async (
   job: Partial<Job>,
@@ -83,47 +116,13 @@ export const createJob = async (
         month +
         additionalZero +
         (monthlyCounter + 1).toString();
-      // const parsedJob = parseFirestoreListenerJob(job, jobId);
-      // console.log(parsedJob);
-      const {
-        date,
-        companyName,
-        address,
-        contactPerson,
-        phone,
-        jobPosition,
-        languageRequirement,
-        workingHours,
-        workingDays,
-        salary,
-        probationPeriod,
-        employeeBenefit,
-        otherInfo,
-        visible,
-        category } = job;
-      const jobCopy = { 
-        jobId,
-        date,
-        companyName,
-        address,
-        contactPerson,
-        phone,
-        jobPosition,
-        languageRequirement,
-        workingHours,
-        workingDays,
-        salary,
-        probationPeriod,
-        employeeBenefit,
-        otherInfo,
-        visible,
-        category };
-      await setDoc(doc(db, collectionName, jobId), jobCopy);
+      const parsedJob = parseFirestoreListenerJob(jobId, job);
+      await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
     } else {
       const newDoc = await addDoc(docRef, job );
       const data = {
-        id: newDoc.id,
+        jobId: newDoc.id,
       };
       await updateDoc(newDoc, data);
     }
