@@ -27,7 +27,7 @@ function ApprovalScreen({
         {notApprovedJobs.map((job) => (
           <JobCard
             job={job}
-            key={job.jobId}
+            key={job.id}
             pending
           />
         ))}

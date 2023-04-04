@@ -23,7 +23,7 @@ export interface User {
 // }
 
 export interface Job {
-  jobId: string;
+  id: string;
   date: string;
   companyName: string;
   address: string;

@@ -62,7 +62,7 @@ export const getMonthlyCounter = async (): Promise<number> => {
   return data?.monthlyCounter;
 };
 
-function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
+function parseFirestoreListenerJob(id: string, job: Partial<Job>) {
   const {
     date,
     companyName,
@@ -80,7 +80,7 @@ function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
     visible,
     category } = job;
     const jobCopy = { 
-      jobId,
+      id,
       date,
       companyName,
       address,
@@ -120,9 +120,9 @@ export const createJob = async (
       await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
     } else {
-      const newDoc = await addDoc(docRef, job );
+      const newDoc = await addDoc(docRef, job);
       const data = {
-        jobId: newDoc.id,
+        id: newDoc.id,
       };
       await updateDoc(newDoc, data);
     }
@@ -163,5 +163,3 @@ export const deleteJob = async (
     throw e;
   }
 };
-
-

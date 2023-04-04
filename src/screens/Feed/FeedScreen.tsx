@@ -65,7 +65,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
         {filteredApprovedJobs.map((job) => (
           <JobCard
             job={job}
-            key={job.jobId}
+            key={job.id}
             pending={false}
           />
         ))}

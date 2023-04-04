@@ -23,7 +23,7 @@ function JobCard({
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {
-      await deleteJob(job.jobId, 'notApprovedJobs');
+      await deleteJob(job.id, 'notApprovedJobs');
       if (approve) {
         await createJob(job, 'approvedJobs');
       }
@@ -35,7 +35,7 @@ function JobCard({
   async function removeJob() {
     setModalVisible(false);
     try {
-      await deleteJob(job.jobId, 'approvedJobs');
+      await deleteJob(job.id, 'approvedJobs');
     } catch (e) {
       console.log(e);
     }
@@ -68,7 +68,7 @@ function JobCard({
                 <Pressable onPress={() => setModalVisible(false)}>
                   <Text style={styles.modalButtonText}>X</Text>
                 </Pressable>
-                <Text style={styles.modalJobRefText}>{job.jobId}</Text>
+                <Text style={styles.modalJobRefText}>{job.id}</Text>
                 <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
@@ -173,7 +173,7 @@ function JobCard({
         </Modal>
       </GestureRecognizer>
       <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>{job.jobId}</Text>
+        <Text style={styles.jobRefText}>{job.id}</Text>
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
