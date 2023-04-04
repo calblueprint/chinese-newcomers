@@ -62,6 +62,11 @@ export const getMonthlyCounter = async (): Promise<number> => {
   return data?.monthlyCounter;
 };
 
+// const parseFirestoreListenerJob = (job: Partial<Job>, jobId: string): Partial<Job> => {
+  
+//   return jobCopy;
+// }
+
 export const createJob = async (
   job: Partial<Job>,
   collectionName: string,
@@ -78,10 +83,49 @@ export const createJob = async (
         month +
         additionalZero +
         (monthlyCounter + 1).toString();
-      await setDoc(doc(db, collectionName, jobId), { ...job, id: jobId });
+      // const parsedJob = parseFirestoreListenerJob(job, jobId);
+      // console.log(parsedJob);
+      const {
+        date,
+        companyName,
+        address,
+        contactPerson,
+        phone,
+        jobPosition,
+        languageRequirement,
+        workingHours,
+        workingDays,
+        salary,
+        probationPeriod,
+        employeeBenefit,
+        otherInfo,
+        visible,
+        category } = job;
+      const jobCopy = { 
+        jobId,
+        date,
+        companyName,
+        address,
+        contactPerson,
+        phone,
+        jobPosition,
+        languageRequirement,
+        workingHours,
+        workingDays,
+        salary,
+        probationPeriod,
+        employeeBenefit,
+        otherInfo,
+        visible,
+        category };
+      await setDoc(doc(db, collectionName, jobId), jobCopy);
       await updateMonthlyCounter(now, monthlyCounter + 1);
     } else {
-      await addDoc(docRef, job);
+      const newDoc = await addDoc(docRef, job );
+      const data = {
+        id: newDoc.id,
+      };
+      await updateDoc(newDoc, data);
     }
   } catch (error) {
     console.log(error);
@@ -108,7 +152,6 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   }
 };
 
-// export const updateJob = async (job_id: string): Promise<void> => {};
 export const deleteJob = async (
   jobId: string,
   collectionName: string,
@@ -121,3 +164,5 @@ export const deleteJob = async (
     throw e;
   }
 };
+
+

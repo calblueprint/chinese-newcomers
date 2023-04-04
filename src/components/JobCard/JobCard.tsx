@@ -10,25 +10,14 @@ import { deleteJob, createJob } from '../../firebase/firestore/job';
 
 interface JobCardProps {
   job: Job;
-  idx: number;
   pending: boolean;
-  pendingJobs: Job[] | null;
-  setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
-  filteredJobs: Job[] | null;
-  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
 }
 
 function JobCard({
   job,
-  idx,
   pending,
-  pendingJobs,
-  setPendingJobs,
-  filteredJobs,
-  setFilteredJobs,
 }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(job.salary)
   const visibleMap = objectToBooleanMap(job.visible);
 
   async function handleAction(approve: boolean) {
@@ -41,7 +30,6 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    setPendingJobs(pendingJobs.filter((_, index) => index !== idx));
   }
 
   async function removeJob() {
@@ -51,7 +39,6 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    setFilteredJobs(filteredJobs.filter((_, index) => index !== idx));
   }
 
   return (
