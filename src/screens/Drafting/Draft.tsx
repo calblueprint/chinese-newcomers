@@ -130,204 +130,232 @@ function DraftScreen({
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView style={styles.form}>
-      {/* <ScrollView > */}
-      <View style={styles.formContainer}>
-        <View style={styles.top}>
-          <Text style={styles.formTitle}>Job Post Draft</Text>
-          <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-            Use the toggle to determine what information you want displayed in
-            your public job posting.
-          </Text>
-        </View>
-        <FormProvider {...methods}>
-          <View style={styles.formTop}>
-            <Text style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}>
-              Category
+        <View style={styles.formContainer}>
+          <View style={styles.top}>
+            <Text style={styles.formTitle}>Job Post Draft</Text>
+            <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
+              Use the toggle to determine what information you want displayed in
+              your public job posting.
             </Text>
           </View>
-          <DropDownPicker
-            open={open}
-            value={category}
-            items={categories.map(c => ({ label: c, value: c }))}
-            setOpen={setOpen}
-            setValue={setCategory}
-            listMode="SCROLLVIEW"
-            containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
-            textStyle={{ fontFamily: 'DMSans_500Medium' }}
-          />
-
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
-              value={dateIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+          <FormProvider {...methods}>
+            <View style={styles.formTop}>
+              <Text
+                style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}
+              >
+                Category
+              </Text>
+            </View>
+            <DropDownPicker
+              open={open}
+              value={category}
+              items={categories.map(c => ({ label: c, value: c }))}
+              setOpen={setOpen}
+              setValue={setCategory}
+              listMode="SCROLLVIEW"
+              containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
+              textStyle={{ fontFamily: 'DMSans_500Medium' }}
             />
-            <Text style={styles.formText}>Date*</Text>
-          </View>
-          <FormInput
-            name="date"
-            label="date"
-            placeholder="10/27/2022"
-            rules={{ required: 'Date is required!' }}
-          />
-          {methods.formState.errors.date != null && (
-            <Text>Please check the Date.</Text>
-          )}
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setCompanyNameIsEnabled(!companyNameIsEnabled)
-              }
-              value={companyNameIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
+                value={dateIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Date*</Text>
+            </View>
+            <FormInput
+              name="date"
+              label="date"
+              placeholder="10/27/2022"
+              rules={{ required: 'Date is required!' }}
             />
-            <Text style={styles.formText}>Company Name</Text>
-          </View>
-          <FormInput name="companyName" label="companyName" placeholder="Lucky Dim Sum" />
+            {methods.formState.errors.date != null && (
+              <Text>Please check the Date.</Text>
+            )}
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
-              value={addressIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setCompanyNameIsEnabled(!companyNameIsEnabled)
+                }
+                value={companyNameIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Company Name</Text>
+            </View>
+            <FormInput
+              name="companyName"
+              label="companyName"
+              placeholder="Lucky Dim Sum"
             />
-            <Text style={styles.formText}>Address</Text>
-          </View>
-          <FormInput name="address" label="address" placeholder="2400 Durant Ave., Berkeley, CA" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setContactPersonIsEnabled(!contactPersonIsEnabled)
-              }
-              value={contactPersonIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
+                value={addressIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Address</Text>
+            </View>
+            <FormInput
+              name="address"
+              label="address"
+              placeholder="2400 Durant Ave., Berkeley, CA"
             />
-            <Text style={styles.formText}>Contact Person</Text>
-          </View>
-          <FormInput name="contactPerson" label="contactPerson" placeholder="Amelia Bedelia" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
-              value={phoneIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setContactPersonIsEnabled(!contactPersonIsEnabled)
+                }
+                value={contactPersonIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Contact Person</Text>
+            </View>
+            <FormInput
+              name="contactPerson"
+              label="contactPerson"
+              placeholder="Amelia Bedelia"
             />
-            <Text style={styles.formText}>Phone</Text>
-          </View>
-          <FormInput name="phone" label="phone" placeholder="(510) xxx - xxxx" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setJobPositionIsEnabled(!jobPositionIsEnabled)
-              }
-              value={jobPositionIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
+                value={phoneIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Phone</Text>
+            </View>
+            <FormInput
+              name="phone"
+              label="phone"
+              placeholder="(510) xxx - xxxx"
             />
-            <Text style={styles.formText}>Job Position*</Text>
-          </View>
-          <FormInput
-            name="jobPosition"
-            label="jobPosition"
-            placeholder="Waiter, waitress"
-            rules={{ required: 'Job Position is required!' }}
-          />
-          {methods.formState.errors.jobPosition != null && (
-            <Text>Please check the Job Position.</Text>
-          )}
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setLangaugeReqIsEnabled(!languageReqIsEnabled)
-              }
-              value={languageReqIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setJobPositionIsEnabled(!jobPositionIsEnabled)
+                }
+                value={jobPositionIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Job Position*</Text>
+            </View>
+            <FormInput
+              name="jobPosition"
+              label="jobPosition"
+              placeholder="Waiter, waitress"
+              rules={{ required: 'Job Position is required!' }}
             />
-            <Text style={styles.formText}>Language Requirement*</Text>
-          </View>
-          <FormInput
-            name="languageRequirement"
-            label="languageRequirement"
-            placeholder="Cantonese, English"
-            rules={{ required: 'Language Requirement is required!' }}
-          />
-          {methods.formState.errors.languageRequirement != null && (
-            <Text>Please check the Language Requirement.</Text>
-          )}
+            {methods.formState.errors.jobPosition != null && (
+              <Text>Please check the Job Position.</Text>
+            )}
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setWorkingHoursIsEnabled(!workingHoursIsEnabled)
-              }
-              value={workingHoursIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setLangaugeReqIsEnabled(!languageReqIsEnabled)
+                }
+                value={languageReqIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Language Requirement*</Text>
+            </View>
+            <FormInput
+              name="languageRequirement"
+              label="languageRequirement"
+              placeholder="Cantonese, English"
+              rules={{ required: 'Language Requirement is required!' }}
             />
-            <Text style={styles.formText}>Working hours/day</Text>
-          </View>
-          <FormInput name="workingHours" label="workingHours" placeholder="4 - 8 hrs/day" />
+            {methods.formState.errors.languageRequirement != null && (
+              <Text>Please check the Language Requirement.</Text>
+            )}
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setWorkingDaysIsEnabled(!workingDaysIsEnabled)
-              }
-              value={workingDaysIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setWorkingHoursIsEnabled(!workingHoursIsEnabled)
+                }
+                value={workingHoursIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Working hours/day</Text>
+            </View>
+            <FormInput
+              name="workingHours"
+              label="workingHours"
+              placeholder="4 - 8 hrs/day"
             />
-            <Text style={styles.formText}>Working days/week</Text>
-          </View>
-          <FormInput name="workingDays" label="workingDays" placeholder="3 - 5 days/week" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setSalaryIsEnabled(!salaryIsEnabled)}
-              value={salaryIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setWorkingDaysIsEnabled(!workingDaysIsEnabled)
+                }
+                value={workingDaysIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Working days/week</Text>
+            </View>
+            <FormInput
+              name="workingDays"
+              label="workingDays"
+              placeholder="3 - 5 days/week"
             />
-            <Text style={styles.formText}>Salary</Text>
-          </View>
-          <FormInput name="salary" label="salary" placeholder="$36/hr" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setProbationPeriodIsEnabled(!probationPeriodIsEnabled)
-              }
-              value={probationPeriodIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
-            />
-            <Text style={styles.formText}>Probation Period (if any)</Text>
-          </View>
-          <FormInput name="probationPeriod" label="probationPeriod" placeholder="None" />
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() => setSalaryIsEnabled(!salaryIsEnabled)}
+                value={salaryIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Salary</Text>
+            </View>
+            <FormInput name="salary" label="salary" placeholder="$36/hr" />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() =>
-                setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)
-              }
-              value={employeeBenefitIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setProbationPeriodIsEnabled(!probationPeriodIsEnabled)
+                }
+                value={probationPeriodIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Probation Period (if any)</Text>
+            </View>
+            <FormInput
+              name="probationPeriod"
+              label="probationPeriod"
+              placeholder="None"
             />
-            <Text style={styles.formText}>Employee Benefit (if any)</Text>
-          </View>
-          <FormInput
-            name="employeeBenefit"
-            label="employeeBenefit"
-            placeholder="Insurance, paid leave, etc."
-          />
 
-          <View style={styles.formTop}>
-            <Switch
-              onValueChange={() => setOtherInfoIsEnabled(!otherInfoIsEnabled)}
-              value={otherInfoIsEnabled}
-              trackColor={{ false: '#767577', true: '#000000' }}
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)
+                }
+                value={employeeBenefitIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Employee Benefit (if any)</Text>
+            </View>
+            <FormInput
+              name="employeeBenefit"
+              label="employeeBenefit"
+              placeholder="Insurance, paid leave, etc."
             />
-            <Text style={styles.formText}>Other Information</Text>
-          </View>
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() => setOtherInfoIsEnabled(!otherInfoIsEnabled)}
+                value={otherInfoIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>Other Information</Text>
+            </View>
           <FormInput name="otherInfo" label="otherInfo" placeholder="Looking for XYZ, etc." />
         </FormProvider>
         <View style={styles.bottomButtons}>
@@ -345,9 +373,7 @@ function DraftScreen({
           </Pressable>
         </View>
         </View>
-      {/* </ScrollView> */}
       </KeyboardAwareScrollView>
-      {/* <Button title="Back" style={styles.button} onPress={() => navigation.navigate('Home')} /> */}
       <Modal visible={successModalVisibile} transparent animationType="slide">
         <View style={styles.centeredView}>
           <View style={styles.modal}>
@@ -355,7 +381,6 @@ function DraftScreen({
               Congratulations! You&apos;ve submitted a job posting for{' '}
               {modalJobText}.
             </Text>
-
             <StyledButton
               text="POST ANOTHER JOB"
               textStyle={{ color: '#CC433C' }}

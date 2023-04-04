@@ -1,3 +1,4 @@
+import { UserCredential } from 'firebase/auth';
 import {
   deleteDoc,
   doc,
@@ -7,9 +8,8 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { UserCredential } from 'firebase/auth';
-import { db } from '../config';
 import { User } from '../../types/types';
+import { db } from '../config';
 
 const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
   const userId = document.id.toString();
@@ -32,7 +32,6 @@ export const getUser = async (id: string): Promise<User | null> => {
   const docRef = doc(db, 'users', id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    console.log('User data:', docSnap.data());
     return parseUser(docSnap);
   }
   // doc.data() will be undefined in this case

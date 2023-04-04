@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Text, View, Image } from 'react-native';
 import styles from './styles';
 import StyledButton from '../../../components/StyledButton/StyledButton';

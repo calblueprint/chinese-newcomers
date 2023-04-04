@@ -26,12 +26,12 @@ export default StyleSheet.create({
   },
   form: {
     width: '100%',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   formContainer: {
     flex: 1,
     width: '82%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   formTop: {
     flexDirection: 'row',

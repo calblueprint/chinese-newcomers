@@ -42,7 +42,7 @@ export const updateMonthlyCounter = async (
   newLastReset: Date,
   newMonthlyCounter: number,
 ): Promise<void> => {
-  const docRef = doc(db, APPROVED_JOBS_COLLECTION, 'metadata');
+  const docRef = doc(db, 'metadata', 'counter');
   // This data object changes the fields that are different from the entry in backend!
   const data = {
     lastReset: newLastReset,
@@ -52,7 +52,7 @@ export const updateMonthlyCounter = async (
 };
 
 export const getMonthlyCounter = async (): Promise<number> => {
-  const docRef = doc(db, APPROVED_JOBS_COLLECTION, 'metadata');
+  const docRef = doc(db, 'metadata', 'counter');
   const docSnap = await getDoc(docRef);
   const data = docSnap.data();
   // reset monthly counter if new month and not yet reset
@@ -75,14 +75,13 @@ export const createJob = async (
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
-      const month = (`0${(now.getMonth() + 1).toString()}`).slice(-2);
+      const month = `0${(now.getMonth() + 1).toString()}`.slice(-2);
       const jobId =
         now.getFullYear().toString().slice(-2) +
         month +
         additionalZero +
         (monthlyCounter + 1).toString();
-      job.id = jobId;
-      await setDoc(doc(db, collectionName, jobId), job);
+      await setDoc(doc(db, collectionName, jobId), { ...job, id: jobId });
       await updateMonthlyCounter(now, monthlyCounter + 1);
     } else {
       await addDoc(docRef, job);
