@@ -10,6 +10,8 @@ import {
   setDoc,
   deleteDoc,
 } from 'firebase/firestore';
+import _ from 'lodash'
+import { keys } from 'ts-transformer-keys';
 import { db } from '../firebaseApp';
 import { Job } from '../../types/types';
 
@@ -62,42 +64,28 @@ export const getMonthlyCounter = async (): Promise<number> => {
   return data?.monthlyCounter;
 };
 
-function parseFirestoreListenerJob(id: string, job: Partial<Job>) {
-  const {
-    date,
-    companyName,
-    address,
-    contactPerson,
-    phone,
-    jobPosition,
-    languageRequirement,
-    workingHours,
-    workingDays,
-    salary,
-    probationPeriod,
-    employeeBenefit,
-    otherInfo,
-    visible,
-    category } = job;
-    const jobCopy = { 
-      id,
-      date,
-      companyName,
-      address,
-      contactPerson,
-      phone,
-      jobPosition,
-      languageRequirement,
-      workingHours,
-      workingDays,
-      salary,
-      probationPeriod,
-      employeeBenefit,
-      otherInfo,
-      visible,
-      category };
-    return jobCopy;
+function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
+//   const headers: Array<Object> = Object.keys(Activity).map(key => {
+//     return { text: key, value: key }
+// });
 
+// const before = { test: "hello", newTest: "world"};
+// const reduced = new MyInterface();
+// _.assign(reduced , _.pick(before, _.keys(reduced)));
+
+// type Job astype JobCard;
+const keysOfProps = keys<Job>();
+const updatedJob = _.pick(job, _.keys(keysOfProps));
+console.log(updatedJob);
+
+
+const j = job as Job;
+// console.log(j);
+const j2 = {
+  id: jobId,
+  ...(j as Partial<Job>),
+};
+    return j2;
 }
 
 export const createJob = async (
