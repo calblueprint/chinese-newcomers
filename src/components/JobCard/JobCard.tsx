@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal } from 'react-native';
+import { Text, View, Pressable, Modal, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { FormProvider, useForm } from 'react-hook-form';
 import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import { deleteJob, createJob } from '../../firebase/firestore/job';
+import FormInput from "../JobPostFormInput/JobPostFormInput";
 
 interface JobCardProps {
   job: Job;
@@ -30,7 +32,7 @@ function JobCard({
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
 
-  async function handleAction(approve: boolean) {
+  async function handlePendingAction(approve: boolean) {
     setModalVisible(false);
     try {
       await deleteJob(job.id, 'notApprovedJobs');
@@ -52,6 +54,44 @@ function JobCard({
     }
     setFilteredJobs(filteredJobs.filter((_, index) => index !== idx));
   }
+
+  const [editing, setEditing] = useState(false);
+
+
+  const jobCardField = (field: string) => {
+    let result;
+    const fieldValue = job[field as keyof typeof job] as string;
+    if (visibleMap.get(field) && fieldValue !== '') {
+      if (editing) {
+        result = <View>
+          <Text style={styles.modalFieldTitle}>{field}</Text>
+          <TextInput style={styles.modalInput} defaultValue={fieldValue}
+          /></View>
+      } else {
+        const staticText = `${field}: ${fieldValue}`;
+        result = <Text style={styles.modalText}>{staticText}</Text>;
+      }
+    }
+    return result;
+  }
+
+  interface FormValues {
+    date: string;
+    companyName: string;
+    address: string;
+    contactPerson: string;
+    phone: string;
+    jobPosition: string;
+    languageRequirement: string;
+    workingHours: string;
+    workingDays: string;
+    salary: string;
+    probationPeriod: string;
+    employeeBenefit: string;
+    category: string;
+    otherInfo: string;
+  }
+  const { ...methods } = useForm<FormValues>();
 
   return (
     <Pressable
@@ -83,73 +123,25 @@ function JobCard({
                 <Text style={styles.modalJobRefText}>{job.id}</Text>
                 <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
               </View>
+              <FormProvider {...methods}>
               <View style={styles.modalInfo}>
-                {visibleMap.get('salary') === true && job.salary !== '' && (
-                  <Text style={styles.modalText}>salary: {job.salary} </Text>
-                )}
-                {visibleMap.get('contactPerson') === true &&
-                  job.contactPerson !== '' && (
-                    <Text style={styles.modalText}>
-                      contact: {job.contactPerson}
-                    </Text>
-                  )}
-                {visibleMap.get('date') === true && job.date !== '' && (
-                  <Text style={styles.modalText}>date: {job.date}</Text>
-                )}
-                {visibleMap.get('companyName') === true &&
-                  job.companyName !== '' && (
-                    <Text style={styles.modalText}>
-                      companyName: {job.companyName}
-                    </Text>
-                  )}
-                {visibleMap.get('address') === true && job.address !== '' && (
-                  <Text style={styles.modalText}>address: {job.address}</Text>
-                )}
-
-                {visibleMap.get('phone') === true && job.phone !== '' && (
-                  <Text style={styles.modalText}>phone: {job.phone}</Text>
-                )}
-                {visibleMap.get('languageRequirement') === true &&
-                  job.languageRequirement !== '' && (
-                    <Text style={styles.modalText}>
-                      language requirement: {job.languageRequirement}
-                    </Text>
-                  )}
-                {visibleMap.get('workingHours') === true &&
-                  job.workingHours !== '' && (
-                    <Text style={styles.modalText}>
-                      working hours: {job.workingHours}
-                    </Text>
-                  )}
-                {visibleMap.get('workingDays') === true &&
-                  job.workingDays !== '' && (
-                    <Text style={styles.modalText}>
-                      working days: {job.workingDays}
-                    </Text>
-                  )}
-                {visibleMap.get('probationPeriod') === true &&
-                  job.probationPeriod !== '' && (
-                    <Text style={styles.modalText}>
-                      probation period: {job.probationPeriod}
-                    </Text>
-                  )}
-                {visibleMap.get('employeeBenefit') === true &&
-                  job.employeeBenefit !== '' && (
-                    <Text style={styles.modalText}>
-                      employee benefits: {job.employeeBenefit}
-                    </Text>
-                  )}
-                {visibleMap.get('otherInfo') === true &&
-                  job.otherInfo !== '' && (
-                    <Text style={styles.modalText}>
-                      other info: {job.otherInfo}
-                    </Text>
-                  )}
+                {jobCardField('salary')}
+                {jobCardField('contactPerson')}
+                {jobCardField('date')}
+                {jobCardField('companyName')}
+                {jobCardField('address')}
+                {jobCardField('phone')}
+                {jobCardField('languageRequirement')}
+                {jobCardField('workingHours')}
+                {jobCardField('workingDays')}
+                {jobCardField('probationPeriod')}
+                {jobCardField('employeeBenefit')}
+                {jobCardField('otherInfo')}
                 {pending && (
                   <View style={styles.buttonContainer}>
                     <StyledButton
                       text="decline"
-                      onPress={async () => handleAction(false)}
+                      onPress={async () => handlePendingAction(false)}
                       buttonStyle={{
                         width: '45%',
                         height: '50%',
@@ -160,13 +152,13 @@ function JobCard({
                     />
                     <StyledButton
                       text="approve"
-                      onPress={async () => handleAction(true)}
+                      onPress={async () => handlePendingAction(true)}
                       buttonStyle={{ width: '45%', height: '50%' }}
                       textStyle={{ fontSize: 16 }}
                     />
                   </View>
                 )}
-                {!pending && (
+                {!pending && !editing && (
                   <View style={styles.singleButtonContainer}>
                     <StyledButton
                       text="remove"
@@ -177,9 +169,41 @@ function JobCard({
                       }}
                       textStyle={{}}
                     />
+                    <StyledButton
+                      text="edit"
+                      onPress={() => setEditing(true)}
+                      buttonStyle={{
+                        width: '45%',
+                        height: '50%',
+                      }}
+                      textStyle={{}}
+                    />
+                  </View>
+                )}
+                {editing && (
+                  <View style={styles.singleButtonContainer}>
+                    <StyledButton
+                      text="Discard"
+                      onPress={() => setEditing(false)}
+                      buttonStyle={{
+                        width: '45%',
+                        height: '50%',
+                      }}
+                      textStyle={{}}
+                    />
+                    <StyledButton
+                      text="Approve"
+                      onPress={() => setEditing(!editing)}
+                      buttonStyle={{
+                        width: '45%',
+                        height: '50%',
+                      }}
+                      textStyle={{}}
+                    />
                   </View>
                 )}
               </View>
+              </FormProvider>
             </View>
           </View>
         </Modal>
