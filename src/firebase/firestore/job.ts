@@ -10,10 +10,8 @@ import {
   setDoc,
   deleteDoc,
 } from 'firebase/firestore';
-import _ from 'lodash'
-import { keys } from 'ts-transformer-keys';
 import { db } from '../firebaseApp';
-import { Job } from '../../types/types';
+import { Job, jobInstance } from '../../types/types';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
@@ -65,27 +63,10 @@ export const getMonthlyCounter = async (): Promise<number> => {
 };
 
 function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
-//   const headers: Array<Object> = Object.keys(Activity).map(key => {
-//     return { text: key, value: key }
-// });
-
-// const before = { test: "hello", newTest: "world"};
-// const reduced = new MyInterface();
-// _.assign(reduced , _.pick(before, _.keys(reduced)));
-
-// type Job astype JobCard;
-const keysOfProps = keys<Job>();
-const updatedJob = _.pick(job, _.keys(keysOfProps));
-console.log(updatedJob);
-
-
-const j = job as Job;
-// console.log(j);
-const j2 = {
-  id: jobId,
-  ...(j as Partial<Job>),
-};
-    return j2;
+  const jobKeys = Object.keys(jobInstance);
+  const parsedJob = Object.fromEntries(jobKeys.map(k => [k, job[k as keyof typeof job]]));
+  parsedJob.id = jobId;
+  return parsedJob;
 }
 
 export const createJob = async (

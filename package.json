@@ -31,7 +31,6 @@
     "global": "^4.4.0",
     "i18next": "^22.0.6",
     "idb": "^7.0.2",
-    "lodash": "^4.17.21",
     "main": "^1000.0.1",
     "react": "18.0.0",
     "react-dom": "18.0.0",
@@ -54,8 +53,7 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-web": "~0.18.7",
     "react-native-webview": "11.23.0",
-    "react-navigation": "^4.4.4",
-    "ts-transformer-keys": "^0.4.4"
+    "react-navigation": "^4.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
