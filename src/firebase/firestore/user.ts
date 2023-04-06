@@ -1,3 +1,4 @@
+import { UserCredential } from 'firebase/auth';
 import {
   deleteDoc,
   doc,
@@ -7,7 +8,6 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { UserCredential } from 'firebase/auth';
 import { db } from '../config';
 import { RegularUser, Admin, Employer, GenericUser } from '../../types/types';
 
