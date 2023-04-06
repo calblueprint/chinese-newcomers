@@ -24,7 +24,7 @@ function BookmarksScreen({
       console.log('bookmarked list change');
     };
     fetchJobs();
-  }, [userObject.id, isFocused]);
+  }, [userObject.id, userObject?.likedJobs, isFocused]);
 
   return (
     <SafeAreaView style={styles.container}>
