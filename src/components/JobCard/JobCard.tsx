@@ -2,7 +2,6 @@
 import { Text, View, Pressable, Modal } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import Ex from '../../assets/ex.png';
@@ -38,21 +37,17 @@ function JobCard({
   filteredJobs,
   setFilteredJobs,
 }: JobCardProps) {
-  const [currToken, setCurrToken] = useState<string | null>('');
+  // const [currToken, setCurrToken] = useState<string | null>('');
+  const { userObject } = useContext(AuthContext);
   const [bookmarkedValue, setBookmarked] = useState<boolean>();
 
   useEffect(() => {
-    const getUserToken = async () => {
-      const userToken = await AsyncStorage.getItem('uid');
-      setCurrToken(userToken);
-    };
-    getUserToken();
     const getBookmarked = async () => {
-      const bookmarks = await getBookmarks(job.id, currToken);
+      const bookmarks = await getBookmarks(job.id, userObject.id);
       setBookmarked(bookmarks);
     };
     getBookmarked();
-  });
+  }, [job.id, userObject?.id]);
 
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
@@ -80,10 +75,10 @@ function JobCard({
   }
 
   const toggleBookmark = async (val: boolean) => {
-    setBookmarked(!val);
-    if (currToken !== null) {
-      await updateBookmarks(job.id, currToken);
+    if (userObject !== null) {
+      await updateBookmarks(job.id, userObject.id);
     }
+    setBookmarked(!val);
   };
 
   return (

@@ -1,10 +1,12 @@
 import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
+import { AuthContext } from '../../context/AuthContext';
 import { getAllJobs } from '../../firebase/firestore/job';
+import { getAllBookmarks } from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './styles';
@@ -34,6 +36,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   useEffect(() => {
     const fetchJobs = async () => {
       const data = await getAllJobs('approvedJobs');
+      console.log('rerendered');
       setList(data);
       setFilteredList(data);
     };

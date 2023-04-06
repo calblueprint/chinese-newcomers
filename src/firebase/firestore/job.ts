@@ -39,7 +39,7 @@ export const updateMonthlyCounter = async (
   newLastReset: Date,
   newMonthlyCounter: number,
 ): Promise<void> => {
-  const docRef = doc(db, 'approvedJobs', 'metadata');
+  const docRef = doc(db, 'metadata', 'counter');
   // This data object changes the fields that are different from the entry in backend!
   const data = {
     lastReset: newLastReset,
@@ -49,7 +49,7 @@ export const updateMonthlyCounter = async (
 };
 
 export const getMonthlyCounter = async (): Promise<number> => {
-  const docRef = doc(db, 'approvedJobs', 'metadata');
+  const docRef = doc(db, 'metadata', 'counter');
   const docSnap = await getDoc(docRef);
   const data = docSnap.data();
   // reset monthly counter if new month and not yet reset

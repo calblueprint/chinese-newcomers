@@ -10,8 +10,9 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { User } from '../../types/types';
+import { User, Job } from '../../types/types';
 import { db } from '../config';
+import { getJob } from './job';
 
 const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
   const userId = document.id.toString();
@@ -119,7 +120,6 @@ export const getBookmarks = async (
   userId: string,
 ): Promise<boolean> => {
   const docRef = doc(db, 'users', userId);
-  console.log('im here');
   const docSnap = await getDoc(docRef);
   console.log('liked jobs', docSnap.data().likedJobs);
   console.log(jobId);
@@ -128,4 +128,22 @@ export const getBookmarks = async (
     return true;
   }
   return false;
+};
+
+export const getAllBookmarks = async (userId: string): Promise<Job[]> => {
+  try {
+    const promises: Array<Promise<Job>> = [];
+    const docRef = doc(db, 'users', userId);
+    const docSnap = await getDoc(docRef);
+    docSnap.data().likedJobs.forEach(job => {
+      promises.push(getJob(job, 'approvedJobs'));
+    });
+    const allJobs = await Promise.all(promises);
+    return allJobs.filter(obj =>
+      Object.prototype.hasOwnProperty.call(obj, 'jobPosition'),
+    );
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 };
