@@ -115,6 +115,31 @@ export const updateBookmarks = async (
   }
 };
 
+export const updateUserBookmarks = async (
+  userLikedJobs: string[],
+  userId: string,
+): Promise<void> => {
+  const docRef = doc(db, 'users', userId);
+  const docSnap = await getDoc(docRef);
+  const currBookmarks = docSnap.data().likedJobs;
+  console.log('currBookmarks', currBookmarks);
+  const data = userLikedJobs;
+  // need to figure out await inside of for loop
+  for (let i = 0; i < data.length; i++) {
+    updateDoc(docRef, { likedJobs: arrayUnion(data[i]) });
+  }
+  for (let i = 0; i < currBookmarks.length; i++) {
+    if (!data.includes(currBookmarks[i])) {
+      updateDoc(docRef, { likedJobs: arrayRemove(currBookmarks[i]) });
+    }
+  }
+};
+// remove all and then replace all?
+// await Promise.all([
+//   updateDoc(docRef, { likedJobs: arrayRemove(currBookmarks) }),
+//   updateDoc(docRef, { likedJobs: arrayUnion(data) }),
+// ]);
+
 export const getBookmarks = async (
   jobId: string,
   userId: string,

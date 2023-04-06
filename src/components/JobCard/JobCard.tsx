@@ -2,6 +2,7 @@
 import { Text, View, Pressable, Modal } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { use } from 'i18next';
 import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import Ex from '../../assets/ex.png';
@@ -40,6 +41,7 @@ function JobCard({
   // const [currToken, setCurrToken] = useState<string | null>('');
   const { userObject } = useContext(AuthContext);
   const [bookmarkedValue, setBookmarked] = useState<boolean>();
+  const [userBookmarkedJobs, setUserBookmarkedJobs] = useState<string[]>();
 
   useEffect(() => {
     const getBookmarked = async () => {
@@ -75,8 +77,23 @@ function JobCard({
   }
 
   const toggleBookmark = async (val: boolean) => {
+    console.log('toggled!');
     if (userObject !== null) {
-      await updateBookmarks(job.id, userObject.id);
+      // updates local userlikedjobs array
+      console.log('before if check', userObject?.likedJobs);
+      if (userObject?.likedJobs?.includes(job.id)) {
+        const index = userObject?.likedJobs.indexOf(job.id);
+        userObject?.likedJobs.splice(index, 1);
+        console.log('removed job', userObject?.likedJobs);
+        setUserBookmarkedJobs(userObject?.likedJobs);
+        console.log('updated usestatejobs', userBookmarkedJobs);
+      } else {
+        userObject?.likedJobs?.push(job.id);
+        console.log('added job', userObject?.likedJobs);
+        setUserBookmarkedJobs(userObject?.likedJobs);
+        console.log('updated usestatejobs', userBookmarkedJobs);
+      }
+      // await updateBookmarks(job.id, userObject.id);
     }
     setBookmarked(!val);
   };
@@ -220,6 +237,7 @@ function JobCard({
         <Pressable
           onPress={() => {
             toggleBookmark(bookmarkedValue);
+            console.log('pressed!');
           }}
         >
           {bookmarkedValue ? <Filled /> : <Empty />}

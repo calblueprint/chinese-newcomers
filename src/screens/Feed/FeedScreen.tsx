@@ -6,12 +6,32 @@ import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
 import { AuthContext } from '../../context/AuthContext';
 import { getAllJobs } from '../../firebase/firestore/job';
-import { getAllBookmarks } from '../../firebase/firestore/user';
+import {
+  getAllBookmarks,
+  updateUserBookmarks,
+} from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
+  const { userObject } = useContext(AuthContext);
+  const userBookmarkedJobs = userObject?.likedJobs;
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      // add all jobs that are in userobject.likedjobs that aren't in firebase
+      // remove firebase jobs not in userobject.likedjobs array
+      // send current bookmarked values to firebase (updateBookmarks)??
+      // for job object in list, updateBookmarks(job.id, userObject.id)
+      // need to get boolean value, and then add/delete from firebase
+      console.log('bookmarkedjobs on feed', userBookmarkedJobs);
+      updateUserBookmarks(userBookmarkedJobs, userObject?.id);
+      console.log('updated firebase!');
+    });
+    return unsubscribe;
+  }, [navigation, userBookmarkedJobs]);
+
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([] as Job[]);
   const [filteredList, setFilteredList] = useState([] as Job[]);
