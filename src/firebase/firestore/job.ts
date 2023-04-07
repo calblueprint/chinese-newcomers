@@ -129,6 +129,7 @@ export const deleteJob = async (
   collectionName: string,
 ): Promise<void> => {
   try {
+    // TODO: go through all users and delete from likedjobs
     const docRef = doc(db, collectionName, jobId);
     await deleteDoc(docRef);
   } catch (e) {

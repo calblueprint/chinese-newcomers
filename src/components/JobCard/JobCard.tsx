@@ -27,6 +27,8 @@ interface JobCardProps {
   setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
   filteredJobs: Job[] | null;
   setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
+  bookmarkedJobs: Job[] | null;
+  setBookmarkedJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
 }
 
 function JobCard({
@@ -37,19 +39,23 @@ function JobCard({
   setPendingJobs,
   filteredJobs,
   setFilteredJobs,
+  bookmarkedJobs,
+  setBookmarkedJobs,
 }: JobCardProps) {
   // const [currToken, setCurrToken] = useState<string | null>('');
   const { userObject } = useContext(AuthContext);
   const [bookmarkedValue, setBookmarked] = useState<boolean>();
   const [userBookmarkedJobs, setUserBookmarkedJobs] = useState<string[]>();
+  const userObjectToString = JSON.stringify(userObject?.likedJobs);
 
   useEffect(() => {
-    const getBookmarked = async () => {
-      const bookmarks = await getBookmarks(job.id, userObject.id);
+    const getBookmarked = () => {
+      console.log('HEEEEEY-in JobCard');
+      const bookmarks = getBookmarks(job.id, userObject);
       setBookmarked(bookmarks);
     };
     getBookmarked();
-  }, [job.id, userObject?.id]);
+  }, [job.id, userObjectToString, userObject]);
 
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
@@ -82,20 +88,26 @@ function JobCard({
       // updates local userlikedjobs array
       console.log('before if check', userObject?.likedJobs);
       if (userObject?.likedJobs?.includes(job.id)) {
+        console.log('AHHHHHHHHH');
+        console.log(job.id === userObject?.likedJobs[2]);
         const index = userObject?.likedJobs.indexOf(job.id);
         userObject?.likedJobs.splice(index, 1);
+        // console.log(job.id);
+
+        // userObject?.likedJobs.filter(el => el !== job.id);
         console.log('removed job', userObject?.likedJobs);
-        setUserBookmarkedJobs(userObject?.likedJobs);
+        // setUserBookmarkedJobs(userObject?.likedJobs);
         console.log('updated usestatejobs', userBookmarkedJobs);
       } else {
         userObject?.likedJobs?.push(job.id);
         console.log('added job', userObject?.likedJobs);
-        setUserBookmarkedJobs(userObject?.likedJobs);
+        // setUserBookmarkedJobs(userObject?.likedJobs);
         console.log('updated usestatejobs', userBookmarkedJobs);
       }
       // await updateBookmarks(job.id, userObject.id);
     }
     setBookmarked(!val);
+    setBookmarkedJobs(bookmarkedJobs.filter((_, index) => index !== idx));
   };
 
   return (
@@ -238,6 +250,7 @@ function JobCard({
           onPress={() => {
             toggleBookmark(bookmarkedValue);
             console.log('pressed!');
+            console.log('UPDATEDDD', userObject?.likedJobs);
           }}
         >
           {bookmarkedValue ? <Filled /> : <Empty />}
