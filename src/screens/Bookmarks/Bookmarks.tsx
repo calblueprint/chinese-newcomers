@@ -5,7 +5,10 @@ import { BookmarksStackScreenProps } from '../../types/navigation';
 import JobCard from '../../components/JobCard/JobCard';
 import { Job } from '../../types/types';
 import styles from './styles';
-import { getAllBookmarks } from '../../firebase/firestore/user';
+import {
+  getAllBookmarks,
+  updateUserBookmarks,
+} from '../../firebase/firestore/user';
 import { AuthContext } from '../../context/AuthContext';
 
 function BookmarksScreen({
@@ -13,18 +16,36 @@ function BookmarksScreen({
 }: BookmarksStackScreenProps<'BookmarksScreen'>) {
   const [bookmarkedList, setBookmarkedList] = useState([] as Job[]);
   const { userObject } = useContext(AuthContext);
+  const userBookmarkedJobs = userObject?.likedJobs;
+  console.log('userbookmarks', userBookmarkedJobs);
+  const userObjectToString = JSON.stringify(userObject?.likedJobs);
 
   const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const data = await getAllBookmarks(userObject.id);
-      console.log('hellloo');
+      console.log('IM HERE');
+      const data = await getAllBookmarks(userObject);
+      console.log('hellloo', data);
       setBookmarkedList(data);
       console.log('bookmarked list change');
     };
     fetchJobs();
-  }, [userObject.id, userObject?.likedJobs, isFocused]);
+  }, [
+    userObject?.id,
+    JSON.stringify(userObject?.likedJobs),
+    isFocused,
+    userObject,
+  ]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', async () => {
+      console.log('bookmarkedjobs on feed', userBookmarkedJobs);
+      await updateUserBookmarks(userBookmarkedJobs, userObject?.id);
+      console.log('updated firebase!');
+    });
+    return unsubscribe;
+  }, [navigation, userObject?.id, userBookmarkedJobs]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,6 +70,8 @@ function BookmarksScreen({
             setPendingJobs={null}
             filteredJobs={null}
             setFilteredJobs={null}
+            bookmarkedJobs={bookmarkedList}
+            setBookmarkedJobs={setBookmarkedList}
           />
         ))}
         {bookmarkedList.length === 0 && (

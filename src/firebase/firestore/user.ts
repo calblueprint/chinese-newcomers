@@ -10,6 +10,8 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import { User, Job } from '../../types/types';
 import { db } from '../config';
 import { getJob } from './job';
@@ -122,45 +124,29 @@ export const updateUserBookmarks = async (
   const docRef = doc(db, 'users', userId);
   const docSnap = await getDoc(docRef);
   const currBookmarks = docSnap.data().likedJobs;
-  console.log('currBookmarks', currBookmarks);
-  const data = userLikedJobs;
-  // need to figure out await inside of for loop
-  for (let i = 0; i < data.length; i++) {
-    updateDoc(docRef, { likedJobs: arrayUnion(data[i]) });
-  }
-  for (let i = 0; i < currBookmarks.length; i++) {
-    if (!data.includes(currBookmarks[i])) {
-      updateDoc(docRef, { likedJobs: arrayRemove(currBookmarks[i]) });
-    }
-  }
+  // console.log('currBookmarks', currBookmarks);
+  updateDoc(docRef, { likedJobs: userLikedJobs });
 };
-// remove all and then replace all?
-// await Promise.all([
-//   updateDoc(docRef, { likedJobs: arrayRemove(currBookmarks) }),
-//   updateDoc(docRef, { likedJobs: arrayUnion(data) }),
-// ]);
 
-export const getBookmarks = async (
+export const getBookmarks = (
   jobId: string,
-  userId: string,
-): Promise<boolean> => {
-  const docRef = doc(db, 'users', userId);
-  const docSnap = await getDoc(docRef);
-  console.log('liked jobs', docSnap.data().likedJobs);
-  console.log(jobId);
-  if (docSnap.data().likedJobs.includes(jobId)) {
-    console.log('bookmarked!');
+  userObject: User | null,
+): boolean => {
+  // console.log('liked jobs', userObject?.likedJobs);
+  // console.log(jobId);
+  if (userObject?.likedJobs.includes(jobId)) {
+    // console.log('bookmarked!');
     return true;
   }
   return false;
 };
 
-export const getAllBookmarks = async (userId: string): Promise<Job[]> => {
+export const getAllBookmarks = async (
+  userObject: User | null,
+): Promise<Job[]> => {
   try {
     const promises: Array<Promise<Job>> = [];
-    const docRef = doc(db, 'users', userId);
-    const docSnap = await getDoc(docRef);
-    docSnap.data().likedJobs.forEach(job => {
+    userObject?.likedJobs.forEach(job => {
       promises.push(getJob(job, 'approvedJobs'));
     });
     const allJobs = await Promise.all(promises);
