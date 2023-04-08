@@ -2,12 +2,12 @@
 import { Text, View, Pressable, Modal, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
-import { Job } from '../../types/types';
-import { deleteJob, createJob } from '../../firebase/firestore/job';
+import { Job, JobFormValues } from '../../types/types';
+import { deleteJob, createJob, updatejob } from '../../firebase/firestore/job';
 import FormInput from "../JobPostFormInput/JobPostFormInput";
 
 interface JobCardProps {
@@ -29,15 +29,16 @@ function JobCard({
   filteredJobs,
   setFilteredJobs,
 }: JobCardProps) {
+  const [jobState, setJobState] = useState(job);
   const [modalVisible, setModalVisible] = useState(false);
-  const visibleMap = objectToBooleanMap(job.visible);
+  const visibleMap = objectToBooleanMap(jobState.visible);
 
   async function handlePendingAction(approve: boolean) {
     setModalVisible(false);
     try {
-      await deleteJob(job.id, 'notApprovedJobs');
+      await deleteJob(jobState.id, 'notApprovedJobs');
       if (approve) {
-        await createJob(job, 'approvedJobs');
+        await createJob(jobState, 'approvedJobs');
       }
     } catch (e) {
       console.log(e);
@@ -48,7 +49,7 @@ function JobCard({
   async function removeJob() {
     setModalVisible(false);
     try {
-      await deleteJob(job.id, 'approvedJobs');
+      await deleteJob(jobState.id, 'approvedJobs');
     } catch (e) {
       console.log(e);
     }
@@ -57,41 +58,31 @@ function JobCard({
 
   const [editing, setEditing] = useState(false);
 
-
-  const jobCardField = (field: string) => {
-    let result;
-    const fieldValue = job[field as keyof typeof job] as string;
-    if (visibleMap.get(field) && fieldValue !== '') {
-      if (editing) {
-        result = <View>
+  const jobCardField = (field: string, value: string) => {
+    if (visibleMap.get(field) && value !== '') {
+      const staticText = `${field}: ${value}`;
+      return (editing ? 
+        <View>
           <Text style={styles.modalFieldTitle}>{field}</Text>
-          <TextInput style={styles.modalInput} defaultValue={fieldValue}
-          /></View>
-      } else {
-        const staticText = `${field}: ${fieldValue}`;
-        result = <Text style={styles.modalText}>{staticText}</Text>;
-      }
+          <FormInput
+              name={field}
+              label={field}
+              defaultValue={value}
+              rules={{ required: 'Date is required!' }}
+            />
+        </View> : <Text style={styles.modalText}>{staticText}</Text>)
     }
-    return result;
+    return null;
   }
 
-  interface FormValues {
-    date: string;
-    companyName: string;
-    address: string;
-    contactPerson: string;
-    phone: string;
-    jobPosition: string;
-    languageRequirement: string;
-    workingHours: string;
-    workingDays: string;
-    salary: string;
-    probationPeriod: string;
-    employeeBenefit: string;
-    category: string;
-    otherInfo: string;
+  const onSave: SubmitHandler<JobFormValues> = async data => {
+    setEditing(false);
+    const updatedJob = Object.assign(jobState, data);
+    setJobState({...jobState});
+    updatejob(updatedJob);
   }
-  const { ...methods } = useForm<FormValues>();
+
+  const { ...methods } = useForm<JobFormValues>();
 
   return (
     <Pressable
@@ -112,6 +103,7 @@ function JobCard({
           animationType="slide"
           onRequestClose={() => {
             setModalVisible(false);
+            setEditing(false);
           }}
         >
           <View style={styles.centeredView}>
@@ -120,23 +112,27 @@ function JobCard({
                 <Pressable onPress={() => setModalVisible(false)}>
                   <Text style={styles.modalButtonText}>X</Text>
                 </Pressable>
-                <Text style={styles.modalJobRefText}>{job.id}</Text>
-                <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
+                <Text style={styles.modalJobRefText}>{jobState.id}</Text>
+                <Text style={styles.modalJobNameText}>{jobState.jobPosition}</Text>
               </View>
               <FormProvider {...methods}>
               <View style={styles.modalInfo}>
-                {jobCardField('salary')}
-                {jobCardField('contactPerson')}
-                {jobCardField('date')}
-                {jobCardField('companyName')}
-                {jobCardField('address')}
-                {jobCardField('phone')}
-                {jobCardField('languageRequirement')}
-                {jobCardField('workingHours')}
-                {jobCardField('workingDays')}
-                {jobCardField('probationPeriod')}
-                {jobCardField('employeeBenefit')}
-                {jobCardField('otherInfo')}
+                
+              <View>
+                {jobCardField('salary', jobState.salary)}
+                {jobCardField('contactPerson', jobState.contactPerson)}
+                {jobCardField('date', jobState.date)}
+                {jobCardField('companyName', jobState.companyName)}
+                {jobCardField('address', jobState.address)}
+                {jobCardField('phone', jobState.phone)}
+                {jobCardField('languageRequirement', jobState.languageRequirement)}
+                {jobCardField('workingHours', jobState.workingHours)}
+                {jobCardField('workingDays', jobState.workingDays)}
+                {jobCardField('probationPeriod', jobState.probationPeriod)}
+                {jobCardField('employeeBenefit', jobState.employeeBenefit)}
+                {jobCardField('otherInfo', jobState.otherInfo)}
+              </View>
+                
                 {pending && (
                   <View style={styles.buttonContainer}>
                     <StyledButton
@@ -183,8 +179,8 @@ function JobCard({
                 {editing && (
                   <View style={styles.singleButtonContainer}>
                     <StyledButton
-                      text="Discard"
-                      onPress={() => setEditing(false)}
+                      text="Save"
+                      onPress={methods.handleSubmit(onSave)}
                       buttonStyle={{
                         width: '45%',
                         height: '50%',
@@ -192,8 +188,8 @@ function JobCard({
                       textStyle={{}}
                     />
                     <StyledButton
-                      text="Approve"
-                      onPress={() => setEditing(!editing)}
+                      text="Discard"
+                      onPress={() => setEditing(false)}
                       buttonStyle={{
                         width: '45%',
                         height: '50%',
@@ -209,10 +205,10 @@ function JobCard({
         </Modal>
       </GestureRecognizer>
       <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>{job.id}</Text>
+        <Text style={styles.jobRefText}>{jobState.id}</Text>
       </View>
       <View style={styles.jobName}>
-        <Text style={styles.jobNameText}>{job.jobPosition}</Text>
+        <Text style={styles.jobNameText}>{jobState.jobPosition}</Text>
       </View>
     </Pressable>
   );

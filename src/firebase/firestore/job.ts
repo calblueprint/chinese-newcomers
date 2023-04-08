@@ -88,6 +88,17 @@ export const createJob = async (
   }
 };
 
+export const updatejob = async (
+  job: Partial<Job>,
+): Promise<void> => {
+  try {
+    const docRef = doc(db, 'approvedJobs', job.id as string);
+    await updateDoc(docRef, job);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   try {
     const promises: Array<Promise<Job>> = [];

@@ -41,3 +41,20 @@ export interface Job {
   liked: boolean;
   category: string;
 }
+
+export interface JobFormValues {
+  date: string;
+  companyName: string;
+  address: string;
+  contactPerson: string;
+  phone: string;
+  jobPosition: string;
+  languageRequirement: string;
+  workingHours: string;
+  workingDays: string;
+  salary: string;
+  probationPeriod: string;
+  employeeBenefit: string;
+  category: string;
+  otherInfo: string;
+}
