@@ -6,7 +6,6 @@ import {
   useForm,
 } from 'react-hook-form';
 import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
-import logo from '../../../assets/cnsc-logo.png';
 import { z } from 'zod';
 import logo from '../../../assets/cnsc-logo.png';
 import AuthInput from '../../../components/AuthInput/AuthInput';

@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import PhoneInput from 'react-native-phone-number-input';
+import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 import {
   phoneGetConfirmation,
@@ -62,6 +63,13 @@ function PhoneNumberScreen({
 
   const onError: SubmitErrorHandler<FormValues> = errors =>
     console.log(errors);
+
+  const handlePhoneChange = phoneNumber => {
+    setPhoneNumber(phoneNumber);
+    if (phoneError !== '') {
+      setPhoneError('');
+    }
+  };
 
   const handlePhoneChange = phoneNumber => {
     setPhoneNumber(phoneNumber);

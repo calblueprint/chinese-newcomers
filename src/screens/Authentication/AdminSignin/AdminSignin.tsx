@@ -59,6 +59,14 @@ function AdminSigninScreen({
       console.log(e);
       //throw e;
     }
+    if (signInError !== '') {
+      setSignInError('');
+    }
+  };
+
+  const handlePasswordChange = (password) => {
+    setPassword(password);
+    setSignInError('');
   };
 
   const handleEmailChange = (email) => {
