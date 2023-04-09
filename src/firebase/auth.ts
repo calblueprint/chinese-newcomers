@@ -105,6 +105,7 @@ export const signUpEmail = async (
 ) => {
   createUserWithEmailAndPassword(auth, params.email, params.password)
     .then(async userCredential => {
+      console.log("signup email");
       const { user } = userCredential;
       await checkAndAddUser(user, 'admin', params.phoneNumber);
       console.log('Email sign up successful', user.email);

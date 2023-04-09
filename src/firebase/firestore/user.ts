@@ -39,11 +39,6 @@ const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
   const data = document.data();
   const type = data.access; 
 
-  // if (!userTypeToConstructorMap.has(type)) {
-  //   console.log('Invalid User Type.');
-  //   return null;
-  // }
-
   const userType = userTypeToConstructorMap.get(type);
 
   if (!userType) {
@@ -61,10 +56,20 @@ const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
 
 // edit this using the constants above
 export const getUser = async (id: string): Promise<GenericUser | null> => {
-  const userRefs = userCollectionRefs(id);
+  // const docRef = doc(db, 'users', id);
+  // const docSnap = await getDoc(docRef);
+  // if (docSnap.exists()) {
+  //   return parseUser(docSnap);
+  // }
 
-  const userDocs = await Promise.all(userRefs.map((ref) => getDoc(ref)));
-  const userDoc = userDocs.find((docSnap) => docSnap.exists);
+  // const userRefs = userCollectionRefs(id);
+
+  // const userDocs = await Promise.all(userRefs.map((ref) => getDoc(ref)));
+  // const userDoc = userDocs.find((docSnap) => docSnap.exists);
+  // console.log(parseUser(userDoc));
+  if (userDoc === undefined) {
+    console.log("ALSJDFKALSDIJFOASDKF");
+  }
   if (!userDoc) {
       console.log('No such document!');
       return null;
@@ -112,7 +117,9 @@ export const checkAndAddUser = async (
   accessLevel: string,
   phoneNumber: string | null,
 ) => {
+  console.log("check and add user");
   const userObject = await getUser(user.uid);
+  console.log("does this work");
   if (userObject !== null) {
     console.log(`Got user from users collection. Name: ${userObject.name}`);
   } else {

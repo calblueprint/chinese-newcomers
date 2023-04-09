@@ -17,6 +17,7 @@ export interface Admin extends GenericUser {
 }
 
 export interface Employer extends GenericUser {
+  email: string | null;
   createdJobs: string[]; 
 }
 
