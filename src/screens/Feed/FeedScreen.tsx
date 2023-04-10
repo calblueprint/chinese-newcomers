@@ -17,9 +17,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {
-      console.log('bookmarkedjobs on feed', userBookmarkedJobs);
       await updateUserBookmarks(userBookmarkedJobs, userObject?.id);
-      console.log('updated firebase!');
     });
     return unsubscribe;
   }, [navigation, userObject?.id, userBookmarkedJobs]);

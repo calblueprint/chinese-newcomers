@@ -9,12 +9,15 @@ import {
   updateDoc,
   setDoc,
   deleteDoc,
+  arrayRemove,
 } from 'firebase/firestore';
+import { G } from 'react-native-svg';
 import { db } from '../firebaseApp';
 import { Job, jobInstance } from '../../types/types';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
+const userCollection = collection(db, 'users');
 
 export const parseJob = async (document: DocumentSnapshot<DocumentData>) => {
   const jobId = document.id.toString();
@@ -122,14 +125,33 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   }
 };
 
+export const approveOrDeclineJob = async (
+  jobId: string,
+  collectionName: string,
+): Promise<void> => {
+  try {
+    const docRef = doc(db, collectionName, jobId);
+    await deleteDoc(docRef);
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
 export const deleteJob = async (
   jobId: string,
   collectionName: string,
 ): Promise<void> => {
   try {
-    // TODO: go through all users and delete from likedjobs
     const docRef = doc(db, collectionName, jobId);
     await deleteDoc(docRef);
+    const docSnap = await getDocs(userCollection);
+    docSnap.forEach(async user => {
+      const userRef = doc(db, 'users', user.data().id);
+      if (user.data().likedJobs.includes(jobId)) {
+        await updateDoc(userRef, { likedJobs: arrayRemove(jobId) });
+      }
+    });
   } catch (e) {
     console.warn(e);
     throw e;

@@ -9,16 +9,15 @@ import emptyHeart from '../../assets/empty-heart.png';
 import filledHeart from '../../assets/filled-heart.png';
 import Ex from '../../assets/ex.png';
 import {
-  getAllJobs,
-  updateLike,
   deleteJob,
+  approveOrDeclineJob,
   createJob,
 } from '../../firebase/firestore/job';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import Empty from '../../assets/empty.svg';
 import Filled from '../../assets/filled.svg';
-import { getBookmarks, updateBookmarks } from '../../firebase/firestore/user';
+import { getBookmarks } from '../../firebase/firestore/user';
 import { AuthContext } from '../../context/AuthContext';
 
 interface JobCardProps {
@@ -55,7 +54,7 @@ function JobCard({
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {
-      await deleteJob(job.id, 'notApprovedJobs');
+      await approveOrDeclineJob(job.id, 'notApprovedJobs');
       if (approve) {
         await createJob(job, 'approvedJobs');
       }
@@ -80,12 +79,9 @@ function JobCard({
       console.log('before if check', userObject?.likedJobs);
       if (userObject?.likedJobs?.includes(job.id)) {
         console.log('AHHHHHHHHH');
-        console.log(job.id === userObject?.likedJobs[2]);
         const index = userObject?.likedJobs.indexOf(job.id);
         userObject?.likedJobs.splice(index, 1);
-        // console.log(job.id);
 
-        // userObject?.likedJobs.filter(el => el !== job.id);
         console.log('removed job', userObject?.likedJobs);
         // setUserBookmarkedJobs(userObject?.likedJobs);
         console.log('updated usestatejobs', userBookmarkedJobs);
@@ -93,7 +89,6 @@ function JobCard({
         userObject?.likedJobs?.push(job.id);
         console.log('added job', userObject?.likedJobs);
         // setUserBookmarkedJobs(userObject?.likedJobs);
-        console.log('updated usestatejobs', userBookmarkedJobs);
       }
       // await updateBookmarks(job.id, userObject.id);
     }
