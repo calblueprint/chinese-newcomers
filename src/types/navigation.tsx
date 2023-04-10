@@ -37,6 +37,7 @@ export type FeedStackScreenProps<T extends keyof FeedStackParamList> =
 
 export type SignoutStackParamList = {
   SignoutScreen: undefined;
+  AccessScreen: undefined;
 };
 
 export type SignoutStackScreenProps<T extends keyof SignoutStackParamList> =

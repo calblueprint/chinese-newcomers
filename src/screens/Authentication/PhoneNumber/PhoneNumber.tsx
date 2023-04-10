@@ -12,12 +12,12 @@ import PhoneInput from 'react-native-phone-number-input';
 import styles from './styles';
 import {
   phoneGetConfirmation,
-  getActivationStatus,
 } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
 import { AuthStackScreenProps } from '../../../types/navigation';
+import { getActivationStatus } from '../../../firebase/firestore/access';
 
 function PhoneNumberScreen({
   navigation,
@@ -38,7 +38,7 @@ function PhoneNumberScreen({
       setValid(checkValid ?? false);
       // To Do: render error label
       const activated = await getActivationStatus(phoneNumber);
-      if (!activated) {
+      if (!activated && valid) {
         const verificationId = await phoneGetConfirmation(
           phoneNumber,
           recaptchaVerifier,

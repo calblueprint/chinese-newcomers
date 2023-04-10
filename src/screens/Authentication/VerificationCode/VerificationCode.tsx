@@ -11,10 +11,12 @@ import NumberInput from '../../../components/NumberInput/NumberInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import {
-  getAccess,
   signInPhone,
   signUpPhoneAdmin,
 } from '../../../firebase/auth';
+import {
+  getAccess,
+} from '../../../firebase/firestore/access'
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
