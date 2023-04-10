@@ -10,8 +10,6 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
 import { User, Job } from '../../types/types';
 import { db } from '../config';
 import { getJob } from './job';
@@ -104,7 +102,6 @@ export const updateBookmarks = async (
   const docRef = doc(db, 'users', userId);
   const data = jobId;
   const docSnap = await getDoc(docRef);
-  // console.log(docSnap.data());
   if (docSnap === undefined) {
     return;
   }
@@ -124,7 +121,6 @@ export const updateUserBookmarks = async (
   const docRef = doc(db, 'users', userId);
   const docSnap = await getDoc(docRef);
   const currBookmarks = docSnap.data().likedJobs;
-  // console.log('currBookmarks', currBookmarks);
   updateDoc(docRef, { likedJobs: userLikedJobs });
 };
 
@@ -132,10 +128,7 @@ export const getBookmarks = (
   jobId: string,
   userObject: User | null,
 ): boolean => {
-  // console.log('liked jobs', userObject?.likedJobs);
-  // console.log(jobId);
   if (userObject?.likedJobs.includes(jobId)) {
-    // console.log('bookmarked!');
     return true;
   }
   return false;

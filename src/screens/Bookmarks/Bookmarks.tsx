@@ -17,32 +17,25 @@ function BookmarksScreen({
   const [bookmarkedList, setBookmarkedList] = useState([] as Job[]);
   const { userObject } = useContext(AuthContext);
   const userBookmarkedJobs = userObject?.likedJobs;
-  console.log('userbookmarks', userBookmarkedJobs);
-  const userObjectToString = JSON.stringify(userObject?.likedJobs);
 
   const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchJobs = async () => {
-      console.log('IM HERE');
       const data = await getAllBookmarks(userObject);
-      console.log('hellloo', data);
       setBookmarkedList(data);
-      console.log('bookmarked list change');
     };
     fetchJobs();
   }, [
+    isFocused,
     userObject?.id,
     JSON.stringify(userObject?.likedJobs),
-    isFocused,
     userObject,
   ]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {
-      console.log('bookmarkedjobs on feed', userBookmarkedJobs);
       await updateUserBookmarks(userBookmarkedJobs, userObject?.id);
-      console.log('updated firebase!');
     });
     return unsubscribe;
   }, [navigation, userObject?.id, userBookmarkedJobs]);

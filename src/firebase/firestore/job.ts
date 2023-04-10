@@ -9,12 +9,15 @@ import {
   updateDoc,
   setDoc,
   deleteDoc,
+  arrayRemove,
 } from 'firebase/firestore';
+import { G } from 'react-native-svg';
 import { db } from '../firebaseApp';
 import { Job } from '../../types/types';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
+const userCollection = collection(db, 'users');
 
 export const parseJob = async (document: DocumentSnapshot<DocumentData>) => {
   const jobId = document.id.toString();
@@ -108,30 +111,33 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   }
 };
 
-export const updateLike = async (
+export const approveOrDeclineJob = async (
   jobId: string,
-  newLiked: boolean,
+  collectionName: string,
 ): Promise<void> => {
-  // TODO: change firebase schema
-  // remove liked field from job
-  // get user_id from context
-  // add job to user's liked_jobs array
-  const docRef = doc(db, 'jobs', jobId);
-  const data = {
-    liked: newLiked,
-  };
-  await updateDoc(docRef, data);
+  try {
+    const docRef = doc(db, collectionName, jobId);
+    await deleteDoc(docRef);
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
 };
 
-// export const updateJob = async (job_id: string): Promise<void> => {};
 export const deleteJob = async (
   jobId: string,
   collectionName: string,
 ): Promise<void> => {
   try {
-    // TODO: go through all users and delete from likedjobs
     const docRef = doc(db, collectionName, jobId);
     await deleteDoc(docRef);
+    const docSnap = await getDocs(userCollection);
+    docSnap.forEach(async user => {
+      const userRef = doc(db, 'users', user.data().id);
+      if (user.data().likedJobs.includes(jobId)) {
+        await updateDoc(userRef, { likedJobs: arrayRemove(jobId) });
+      }
+    });
   } catch (e) {
     console.warn(e);
     throw e;

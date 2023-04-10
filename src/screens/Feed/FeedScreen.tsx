@@ -17,9 +17,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {
-      console.log('bookmarkedjobs on feed', userBookmarkedJobs);
       await updateUserBookmarks(userBookmarkedJobs, userObject?.id);
-      console.log('updated firebase!');
     });
     return unsubscribe;
   }, [navigation, userObject?.id, userBookmarkedJobs]);
@@ -48,7 +46,6 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   useEffect(() => {
     const fetchJobs = async () => {
       const data = await getAllJobs('approvedJobs');
-      console.log('rerendered');
       setList(data);
       setFilteredList(data);
     };
@@ -100,6 +97,8 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
             setPendingJobs={null}
             filteredJobs={filteredList}
             setFilteredJobs={setFilteredList}
+            bookmarkedJobs={null}
+            setBookmarkedJobs={null}
           />
         ))}
       </ScrollView>
