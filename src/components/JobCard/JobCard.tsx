@@ -4,10 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { use } from 'i18next';
 import styles from './CardStyles';
-import objectToBooleanMap, { objectToMap } from '../../firebase/helpers';
-import emptyHeart from '../../assets/empty-heart.png';
-import filledHeart from '../../assets/filled-heart.png';
-import Ex from '../../assets/ex.png';
+import objectToBooleanMap from '../../firebase/helpers';
 import {
   deleteJob,
   approveOrDeclineJob,
@@ -34,15 +31,12 @@ function JobCard({
   bookmarkedJobs,
   setBookmarkedJobs,
 }: JobCardProps) {
-  // const [currToken, setCurrToken] = useState<string | null>('');
   const { userObject } = useContext(AuthContext);
   const [bookmarkedValue, setBookmarked] = useState<boolean>();
-  const [userBookmarkedJobs, setUserBookmarkedJobs] = useState<string[]>();
   const userObjectToString = JSON.stringify(userObject?.likedJobs);
 
   useEffect(() => {
     const getBookmarked = () => {
-      console.log('HEEEEEY-in JobCard');
       const bookmarks = getBookmarks(job.id, userObject);
       setBookmarked(bookmarks);
     };
@@ -72,25 +66,14 @@ function JobCard({
     }
   }
 
-  const toggleBookmark = async (val: boolean) => {
-    console.log('toggled!');
+  const toggleBookmark = async (val: boolean | undefined) => {
     if (userObject !== null) {
-      // updates local userlikedjobs array
-      console.log('before if check', userObject?.likedJobs);
       if (userObject?.likedJobs?.includes(job.id)) {
-        console.log('AHHHHHHHHH');
         const index = userObject?.likedJobs.indexOf(job.id);
         userObject?.likedJobs.splice(index, 1);
-
-        console.log('removed job', userObject?.likedJobs);
-        // setUserBookmarkedJobs(userObject?.likedJobs);
-        console.log('updated usestatejobs', userBookmarkedJobs);
       } else {
         userObject?.likedJobs?.push(job.id);
-        console.log('added job', userObject?.likedJobs);
-        // setUserBookmarkedJobs(userObject?.likedJobs);
       }
-      // await updateBookmarks(job.id, userObject.id);
     }
     setBookmarked(!val);
     setBookmarkedJobs(bookmarkedJobs.filter((_, index) => index !== idx));
@@ -235,8 +218,6 @@ function JobCard({
         <Pressable
           onPress={() => {
             toggleBookmark(bookmarkedValue);
-            console.log('pressed!');
-            console.log('UPDATEDDD', userObject?.likedJobs);
           }}
         >
           {bookmarkedValue ? <Filled /> : <Empty />}

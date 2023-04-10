@@ -98,7 +98,6 @@ export const updateBookmarks = async (
   jobId: string,
   userId: string,
 ): Promise<void> => {
-  console.log('userId', userId);
   const docRef = doc(db, 'users', userId);
   const data = jobId;
   const docSnap = await getDoc(docRef);
@@ -106,21 +105,17 @@ export const updateBookmarks = async (
     return;
   }
   if (docSnap.data().likedJobs.includes(jobId)) {
-    console.log('likedJobs includes jobid');
     await updateDoc(docRef, { likedJobs: arrayRemove(data) });
   } else {
-    console.log('likedJobs doesnt include jobid');
     await updateDoc(docRef, { likedJobs: arrayUnion(data) });
   }
 };
 
 export const updateUserBookmarks = async (
-  userLikedJobs: string[],
+  userLikedJobs: string[] | undefined,
   userId: string,
 ): Promise<void> => {
   const docRef = doc(db, 'users', userId);
-  const docSnap = await getDoc(docRef);
-  const currBookmarks = docSnap.data().likedJobs;
   updateDoc(docRef, { likedJobs: userLikedJobs });
 };
 
