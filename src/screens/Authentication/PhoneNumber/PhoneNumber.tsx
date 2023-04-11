@@ -71,13 +71,6 @@ function PhoneNumberScreen({
     }
   };
 
-  const handlePhoneChange = phoneNumber => {
-    setPhoneNumber(phoneNumber);
-    if (phoneError !== '') {
-      setPhoneError('');
-    }
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
