@@ -13,7 +13,7 @@ import styles from './styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const { userObject } = useContext(AuthContext);
-  const userBookmarkedJobs = userObject?.likedJobs;
+  const userBookmarkedJobs = userObject?.bookmarkedJobs;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {

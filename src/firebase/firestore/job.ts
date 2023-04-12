@@ -148,8 +148,8 @@ export const deleteJob = async (
     const docSnap = await getDocs(userCollection);
     docSnap.forEach(async user => {
       const userRef = doc(db, 'users', user.data().id);
-      if (user.data().likedJobs.includes(jobId)) {
-        await updateDoc(userRef, { likedJobs: arrayRemove(jobId) });
+      if (user.data().bookmarkedJobs.includes(jobId)) {
+        await updateDoc(userRef, { bookmarkedJobs: arrayRemove(jobId) });
       }
     });
   } catch (e) {

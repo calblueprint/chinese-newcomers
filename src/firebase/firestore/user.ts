@@ -22,7 +22,7 @@ const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
     access: data.access,
     createdJobs: data.createdJobs, // might need to map to job objects later
     email: data.email,
-    likedJobs: data.likedJobs, // might need to map to job objects later
+    bookmarkedJobs: data.bookmarkedJobs, // might need to map to job objects later
     name: data.name,
     phoneNumber: data.phoneNumber,
     verified: data.verified,
@@ -49,12 +49,12 @@ export const addUser = async (user: User): Promise<void> => {
 
 export const updateUser = async (
   userId: string,
-  newLikedJobs: string[],
+  newBookmarkedJobs: string[],
 ): Promise<void> => {
   const docRef = doc(db, 'users', userId);
   // This data object changes the fields that are different from the entry in backend!
   const data = {
-    point_gain: newLikedJobs,
+    point_gain: newBookmarkedJobs,
   };
   await updateDoc(docRef, data);
 };
@@ -86,7 +86,7 @@ export const checkAndAddUser = async (
       access: accessLevel,
       createdJobs: [],
       email: user.email ? user.email : null,
-      likedJobs: [], // switched to string of jobIds to match Firebase
+      bookmarkedJobs: [], // switched to string of jobIds to match Firebase
       name: 'test phone',
       phoneNumber: assignPhoneNumber,
       verified: true,
@@ -98,32 +98,37 @@ export const updateBookmarks = async (
   jobId: string,
   userId: string,
 ): Promise<void> => {
-  const docRef = doc(db, 'users', userId);
-  const data = jobId;
-  const docSnap = await getDoc(docRef);
-  if (docSnap === undefined) {
-    return;
-  }
-  if (docSnap.data().likedJobs.includes(jobId)) {
-    await updateDoc(docRef, { likedJobs: arrayRemove(data) });
-  } else {
-    await updateDoc(docRef, { likedJobs: arrayUnion(data) });
+  try {
+    const docRef = doc(db, 'users', userId);
+    const data = jobId;
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      if (docSnap.data().bookmarkedJobs.includes(jobId)) {
+        await updateDoc(docRef, { bookmarkedJobs: arrayRemove(data) });
+      } else {
+        await updateDoc(docRef, { bookmarkedJobs: arrayUnion(data) });
+      }
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    throw e;
   }
 };
 
 export const updateUserBookmarks = async (
-  userLikedJobs: string[] | undefined,
+  userBookmarkedJobs: string[] | undefined,
   userId: string,
 ): Promise<void> => {
   const docRef = doc(db, 'users', userId);
-  updateDoc(docRef, { likedJobs: userLikedJobs });
+  updateDoc(docRef, { bookmarkedJobs: userBookmarkedJobs });
 };
 
 export const getBookmarks = (
   jobId: string,
   userObject: User | null,
 ): boolean => {
-  if (userObject?.likedJobs.includes(jobId)) {
+  if (userObject?.bookmarkedJobs.includes(jobId)) {
     return true;
   }
   return false;
@@ -134,7 +139,7 @@ export const getAllBookmarks = async (
 ): Promise<Job[]> => {
   try {
     const promises: Array<Promise<Job>> = [];
-    userObject?.likedJobs.forEach(job => {
+    userObject?.bookmarkedJobs.forEach(job => {
       promises.push(getJob(job, 'approvedJobs'));
     });
     const allJobs = await Promise.all(promises);

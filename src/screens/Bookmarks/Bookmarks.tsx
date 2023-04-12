@@ -16,7 +16,7 @@ function BookmarksScreen({
 }: BookmarksStackScreenProps<'BookmarksScreen'>) {
   const [bookmarkedList, setBookmarkedList] = useState([] as Job[]);
   const { userObject } = useContext(AuthContext);
-  const userBookmarkedJobs = userObject?.likedJobs;
+  const userBookmarkedJobs = userObject?.bookmarkedJobs;
 
   const isFocused = useIsFocused();
 
@@ -26,12 +26,7 @@ function BookmarksScreen({
       setBookmarkedList(data);
     };
     fetchJobs();
-  }, [
-    isFocused,
-    userObject?.id,
-    JSON.stringify(userObject?.likedJobs),
-    userObject,
-  ]);
+  }, [isFocused, userObject?.id, userObject]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {
