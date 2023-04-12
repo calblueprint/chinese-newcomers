@@ -3,7 +3,7 @@ export interface User {
   access: string;
   createdJobs: string[]; // switched to string of jobIds to match Firebase
   email: string | null;
-  likedJobs: string[]; // switched to string of jobIds to match Firebase
+  bookmarkedJobs: string[]; // switched to string of jobIds to match Firebase
   name: string;
   phoneNumber: string | null;
   verified: boolean;

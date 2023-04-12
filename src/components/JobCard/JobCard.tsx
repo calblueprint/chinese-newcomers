@@ -42,7 +42,7 @@ function JobCard({
 }: JobCardProps) {
   const { userObject } = useContext(AuthContext);
   const [bookmarkedValue, setBookmarked] = useState<boolean>();
-  const userObjectToString = JSON.stringify(userObject?.likedJobs);
+  const userObjectToString = JSON.stringify(userObject?.bookmarkedJobs);
 
   useEffect(() => {
     const getBookmarked = () => {
@@ -79,11 +79,11 @@ function JobCard({
 
   const toggleBookmark = async (val: boolean | undefined) => {
     if (userObject !== null) {
-      if (userObject?.likedJobs?.includes(job.id)) {
-        const index = userObject?.likedJobs.indexOf(job.id);
-        userObject?.likedJobs.splice(index, 1);
+      if (userObject?.bookmarkedJobs?.includes(job.id)) {
+        const index = userObject?.bookmarkedJobs.indexOf(job.id);
+        userObject?.bookmarkedJobs.splice(index, 1);
       } else {
-        userObject?.likedJobs?.push(job.id);
+        userObject?.bookmarkedJobs?.push(job.id);
       }
     }
     setBookmarked(!val);
