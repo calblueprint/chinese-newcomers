@@ -76,7 +76,10 @@ function JobCard({
       }
     }
     setBookmarked(!val);
-    setBookmarkedJobs(bookmarkedJobs.filter((_, index) => index !== idx));
+    if (bookmarkedJobs === null) {
+      return;
+    }
+    setBookmarkedJobs?.(bookmarkedJobs?.filter((_, index) => index !== idx));
   };
 
   return (
