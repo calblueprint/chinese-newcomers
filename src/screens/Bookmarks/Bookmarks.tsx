@@ -30,6 +30,9 @@ function BookmarksScreen({
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {
+      if (userObject?.id === undefined) {
+        return;
+      }
       await updateUserBookmarks(userBookmarkedJobs, userObject?.id);
     });
     return unsubscribe;

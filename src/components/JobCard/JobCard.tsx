@@ -64,7 +64,10 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    setPendingJobs(pendingJobs.filter((_, index) => index !== idx));
+    if (pendingJobs === null) {
+      return;
+    }
+    setPendingJobs?.(pendingJobs.filter((_, index) => index !== idx));
   }
 
   async function removeJob() {
@@ -74,7 +77,10 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    setFilteredJobs(filteredJobs.filter((_, index) => index !== idx));
+    if (filteredJobs === null) {
+      return;
+    }
+    setFilteredJobs?.(filteredJobs.filter((_, index) => index !== idx));
   }
 
   const toggleBookmark = async (val: boolean | undefined) => {
@@ -87,7 +93,10 @@ function JobCard({
       }
     }
     setBookmarked(!val);
-    setBookmarkedJobs(bookmarkedJobs.filter((_, index) => index !== idx));
+    if (bookmarkedJobs === null) {
+      return;
+    }
+    setBookmarkedJobs?.(bookmarkedJobs?.filter((_, index) => index !== idx));
   };
 
   return (

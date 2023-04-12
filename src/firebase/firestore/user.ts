@@ -120,8 +120,13 @@ export const updateUserBookmarks = async (
   userBookmarkedJobs: string[] | undefined,
   userId: string,
 ): Promise<void> => {
-  const docRef = doc(db, 'users', userId);
-  updateDoc(docRef, { bookmarkedJobs: userBookmarkedJobs });
+  try {
+    const docRef = doc(db, 'users', userId);
+    updateDoc(docRef, { bookmarkedJobs: userBookmarkedJobs });
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 };
 
 export const getBookmarks = (
