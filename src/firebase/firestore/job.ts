@@ -10,13 +10,9 @@ import {
   setDoc,
   deleteDoc,
 } from 'firebase/firestore';
-import functions from 'firebase-functions'; // used npm i -S firebase-functions to install
-import admin from 'firebase-admin';
 import { db } from '../firebaseApp';
 import { Job } from '../../types/types';
 
-admin.initializeApp();
-// const firestore = admin.firestore();
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
 
@@ -125,21 +121,3 @@ export const deleteJob = async (
     throw e;
   }
 };
-
-export const updateExpiredJobs = functions.pubsub
-  .schedule('*/10 * * * *') // 0 12 * * * is once a day but /10 (10 min) for testing
-  .onRun(async () => {
-    const approvedJobs = getDocs(approvedJobsCollection);
-    const now = new Date();
-    (await approvedJobs).forEach(async job => {
-      const parsedJob = await parseJob(job);
-      const jobDate = parsedJob.date;
-      const diff = now.getTime() - jobDate.getTime();
-      // 60 days in milliseconds --> 5184000000
-      if (diff > 432000000) {
-        // this is 5 days rn ^
-        // deleteJob(parsedJob.id, 'approvedJobs');
-        addDoc(collection(db, 'testCloudFunction'), parseJob);
-      }
-    });
-  });

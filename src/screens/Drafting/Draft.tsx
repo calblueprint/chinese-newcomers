@@ -60,7 +60,7 @@ function DraftScreen({
   const [modalJobText, setModalJobText] = React.useState('');
 
   interface FormValues {
-    date: string;
+    date: Date;
     companyName: string;
     address: string;
     contactPerson: string;
