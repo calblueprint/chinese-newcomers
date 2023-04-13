@@ -79,11 +79,6 @@ function AdminSigninScreen({
     }
   };
 
-  const handlePasswordChange = (password) => {
-    setPassword(password);
-    setSignInError('');
-  };
-
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   return (

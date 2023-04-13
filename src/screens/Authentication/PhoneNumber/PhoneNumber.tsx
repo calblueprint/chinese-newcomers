@@ -129,3 +129,4 @@ function PhoneNumberScreen({
   );
 }
 
+export default PhoneNumberScreen
