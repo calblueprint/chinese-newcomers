@@ -23,14 +23,14 @@ function AdminSigninScreen({
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const { signInEmail } = useContext(AuthContext);
   const [emailError, setEmailError] = useState('');
   const [ signInError, setSignInError ] = useState('');
+  const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
       emailSchema.parse(email);
-      await signInEmail(email, password);
+      await signInEmail(dispatch, { email, password });
       // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
       if (e instanceof z.ZodError) {
