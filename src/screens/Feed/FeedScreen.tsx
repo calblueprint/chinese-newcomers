@@ -1,18 +1,17 @@
-import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
+import useFirestoreListener from "react-firestore-listener"
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
-import { getAllJobs } from '../../firebase/firestore/job';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './Styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
-  const [list, setList] = useState([] as Job[]);
-  const [filteredList, setFilteredList] = useState([] as Job[]);
+  const approvedJobs = useFirestoreListener<Job>({ collection: "approvedJobs" })
+  const [filteredApprovedJobs, setFilteredApprovedJobs] = useState([] as Job[]);
   const [category, setCategory] = useState('all');
   const categories: string[] = [
     'all',
@@ -29,24 +28,13 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
     'other',
   ];
 
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      const data = await getAllJobs('approvedJobs');
-      setList(data);
-      setFilteredList(data);
-    };
-    fetchJobs();
-  }, [isFocused]);
-
   useEffect(() => {
     if (category === 'all') {
-      setFilteredList(list);
+      setFilteredApprovedJobs(approvedJobs);
     } else {
-      setFilteredList(list.filter(job => job.category === category));
+      setFilteredApprovedJobs(approvedJobs.filter(job => job.category === category));
     }
-  }, [category, list]);
+  }, [category, approvedJobs]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -57,7 +45,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          alignItems: 'center',
+          alignItems: 'center' ,
           width: '100%',
         }}
       >
@@ -74,23 +62,14 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
           textStyle={{ fontFamily: 'DMSans_500Medium' }}
         />
 
-        {filteredList.map((job, index) => (
-          // eslint-disable-next-line react/jsx-key
+        {filteredApprovedJobs.map((job) => (
           <JobCard
             job={job}
             key={job.id}
-            idx={index}
             pending={false}
-            pendingJobs={null}
-            setPendingJobs={null}
-            filteredJobs={filteredList}
-            setFilteredJobs={setFilteredList}
           />
         ))}
       </ScrollView>
-      {/* <View style={styles.footer}>
-        <Button title="Back" onPress={() => navigation.navigate('Home')} />
-      </View> */}
     </SafeAreaView>
   );
 }
