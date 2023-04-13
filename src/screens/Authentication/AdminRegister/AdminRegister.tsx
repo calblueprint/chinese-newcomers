@@ -11,6 +11,7 @@ import logo from '../../../assets/cnsc-logo.png';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
+import { signUpEmail } from '../../../firebase/auth';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -32,19 +33,15 @@ function AdminRegisterScreen({
   const [passwordError, setPasswordError] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [confirmError, setConfirmError] = useState('');
+  const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     if (confirmPass !== password) {
       setConfirmError('Oops! These passwords do not match. Please try again.')
     }
     try {
-      // createUserWithEmailAndPassword(auth, email, password).catch(error => {
-      //   setPasswordError(
-      //     'Oops! Weak password. Please make sure your password is at least 6 characters.',
-      //   );
-      // });
       emailSchema.parse(email);
-      await signUpEmail(email, password, phoneNumber);
+      await signUpEmail(dispatch, { email, password, phoneNumber });
     } catch (e) {
       if (e instanceof z.ZodError) {
         setEmailError('Oops! Invalid email. Try again.');

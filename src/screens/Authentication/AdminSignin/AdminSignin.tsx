@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Text, View, Image } from 'react-native';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { z } from 'zod';
 import styles from './styles';
@@ -23,17 +23,12 @@ function AdminSigninScreen({
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signInEmail } = useContext(AuthContext);
+  // const { signInEmail } = useContext(AuthContext);
   const [emailError, setEmailError] = useState('');
   const [ signInError, setSignInError ] = useState('');
-  const auth = getAuth()
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      // signInWithEmailAndPassword(auth, email, password)
-      // .catch(error => {
-      //   setSignInError("Oops! Incorrect email or password. Try again.");
-      // });
       emailSchema.parse(email);
       await signInEmail(email, password);
       // navigation.navigate('Root', { screen: 'Home' });
@@ -48,16 +43,19 @@ function AdminSigninScreen({
           );
           break;
         case 'auth/user-not-found':
-          console.log('bruh')
           setEmailError(
             'Oops! Incorrect email or password. Please try again.',
+          );
+          break;
+        case 'auth/missing-email':
+          setEmailError(
+            'Oops! Email is not registered as admin.',
           );
           break;
         default:
           setSignInError('');
       }
       console.log(e);
-      //throw e;
     }
     if (signInError !== '') {
       setSignInError('');
