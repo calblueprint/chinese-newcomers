@@ -11,7 +11,7 @@ import {
   deleteDoc,
 } from 'firebase/firestore';
 import { db } from '../firebaseApp';
-import { Job } from '../../types/types';
+import { Job, jobInstance } from '../../types/types';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
@@ -62,6 +62,13 @@ export const getMonthlyCounter = async (): Promise<number> => {
   return data?.monthlyCounter;
 };
 
+function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
+  const jobKeys = Object.keys(jobInstance);
+  const parsedJob = Object.fromEntries(jobKeys.map(k => [k, job[k as keyof typeof job]]));
+  parsedJob.id = jobId;
+  return parsedJob;
+}
+
 export const createJob = async (
   job: Partial<Job>,
   collectionName: string,
@@ -78,10 +85,15 @@ export const createJob = async (
         month +
         additionalZero +
         (monthlyCounter + 1).toString();
-      await setDoc(doc(db, collectionName, jobId), { ...job, id: jobId });
+      const parsedJob = parseFirestoreListenerJob(jobId, job);
+      await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
     } else {
-      await addDoc(docRef, job);
+      const newDoc = await addDoc(docRef, job);
+      const data = {
+        id: newDoc.id,
+      };
+      await updateDoc(newDoc, data);
     }
   } catch (error) {
     console.log(error);
@@ -119,7 +131,6 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   }
 };
 
-// export const updateJob = async (job_id: string): Promise<void> => {};
 export const deleteJob = async (
   jobId: string,
   collectionName: string,

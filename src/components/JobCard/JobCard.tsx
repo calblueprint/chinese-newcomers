@@ -6,28 +6,18 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
-import { Job, JobFormValues } from '../../types/types';
+import { Job, JobFormValues, jobInstance } from '../../types/types';
 import { deleteJob, createJob, updatejob } from '../../firebase/firestore/job';
 import FormInput from "../JobPostFormInput/JobPostFormInput";
 
 interface JobCardProps {
   job: Job;
-  idx: number;
   pending: boolean;
-  pendingJobs: Job[] | null;
-  setPendingJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
-  filteredJobs: Job[] | null;
-  setFilteredJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
 }
 
 function JobCard({
   job,
-  idx,
   pending,
-  pendingJobs,
-  setPendingJobs,
-  filteredJobs,
-  setFilteredJobs,
 }: JobCardProps) {
   const [jobState, setJobState] = useState(job);
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,7 +33,6 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    setPendingJobs(pendingJobs.filter((_, index) => index !== idx));
   }
 
   async function removeJob() {
@@ -53,12 +42,11 @@ function JobCard({
     } catch (e) {
       console.log(e);
     }
-    setFilteredJobs(filteredJobs.filter((_, index) => index !== idx));
   }
 
   const [editing, setEditing] = useState(false);
 
-  const jobCardField = (field: string, value: string) => {
+  const jobCardField = (field: string, value: string | object) => {
     if (visibleMap.get(field) && value !== '') {
       const staticText = `${field}: ${value}`;
       return (editing ? 
@@ -83,6 +71,8 @@ function JobCard({
   }
 
   const { ...methods } = useForm<JobFormValues>();
+
+  const jobKeys = Object.keys(jobInstance);
 
   return (
     <Pressable
@@ -119,18 +109,9 @@ function JobCard({
               <View style={styles.modalInfo}>
                 
               <View>
-                {jobCardField('salary', jobState.salary)}
-                {jobCardField('contactPerson', jobState.contactPerson)}
-                {jobCardField('date', jobState.date)}
-                {jobCardField('companyName', jobState.companyName)}
-                {jobCardField('address', jobState.address)}
-                {jobCardField('phone', jobState.phone)}
-                {jobCardField('languageRequirement', jobState.languageRequirement)}
-                {jobCardField('workingHours', jobState.workingHours)}
-                {jobCardField('workingDays', jobState.workingDays)}
-                {jobCardField('probationPeriod', jobState.probationPeriod)}
-                {jobCardField('employeeBenefit', jobState.employeeBenefit)}
-                {jobCardField('otherInfo', jobState.otherInfo)}
+                {jobKeys.map((k) => (
+                  jobCardField(k, jobState[k as keyof typeof jobState])
+                ))}
               </View>
                 
                 {pending && (

@@ -9,19 +9,6 @@ export interface User {
   verified: boolean;
 }
 
-// export interface Job {
-//   contact_info: string;
-//   description: string;
-//   employer: string;
-//   // note: look into what type the date should be in
-//   end_date: Date;
-//   hours: number;
-//   // note: maybe set type to User
-//   job_creator: string;
-//   salary: number;
-//   start_date: string;
-// }
-
 export interface Job {
   id: string;
   date: string;
@@ -38,8 +25,26 @@ export interface Job {
   employeeBenefit: string;
   otherInfo: string;
   visible: object;
-  liked: boolean;
   category: string;
+}
+
+export const jobInstance : Job = {
+  id: "",
+  date: "",
+  companyName: "",
+  address: "",
+  contactPerson: "",
+  phone: "",
+  jobPosition: "",
+  languageRequirement: "",
+  workingHours: "",
+  workingDays: "",
+  salary: "",
+  probationPeriod: "",
+  employeeBenefit: "",
+  otherInfo: "",
+  visible: Object(),
+  category: "",
 }
 
 export interface JobFormValues {
