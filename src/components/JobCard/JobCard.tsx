@@ -7,14 +7,17 @@ import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import {
   deleteJob,
-  approveOrDeclineJob,
+  removeBookmarkedJobFromAllUsers,
   createJob,
 } from '../../firebase/firestore/job';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import Empty from '../../assets/empty.svg';
 import Filled from '../../assets/filled.svg';
-import { getBookmarks } from '../../firebase/firestore/user';
+import {
+  getBookmarks,
+  removeBookmarkedJob,
+} from '../../firebase/firestore/user';
 import { AuthContext } from '../../context/AuthContext';
 
 interface JobCardProps {
@@ -32,15 +35,17 @@ function JobCard({
   setBookmarkedJobs,
 }: JobCardProps) {
   const { userObject } = useContext(AuthContext);
-  const [bookmarkedValue, setBookmarked] = useState<boolean>();
+  const [bookmarkValue, setBookmarkValue] = useState<boolean>(
+    getBookmarks(job.id, userObject),
+  );
   const userObjectToString = JSON.stringify(userObject?.bookmarkedJobs);
 
   useEffect(() => {
-    const getBookmarked = () => {
+    const getBookmarkValue = () => {
       const bookmarks = getBookmarks(job.id, userObject);
-      setBookmarked(bookmarks);
+      setBookmarkValue(bookmarks);
     };
-    getBookmarked();
+    getBookmarkValue();
   }, [job.id, userObjectToString, userObject]);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,7 +53,7 @@ function JobCard({
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {
-      await approveOrDeclineJob(job.id, 'notApprovedJobs');
+      await deleteJob(job.id, 'notApprovedJobs');
       if (approve) {
         await createJob(job, 'approvedJobs');
       }
@@ -60,22 +65,21 @@ function JobCard({
   async function removeJob() {
     setModalVisible(false);
     try {
-      await deleteJob(job.id, 'approvedJobs');
+      await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs');
     } catch (e) {
       console.log(e);
     }
   }
 
-  const toggleBookmark = async (val: boolean | undefined) => {
+  const toggleBookmark = async (val: boolean) => {
     if (userObject !== null) {
-      if (userObject?.bookmarkedJobs?.includes(job.id)) {
-        const index = userObject?.bookmarkedJobs.indexOf(job.id);
-        userObject?.bookmarkedJobs.splice(index, 1);
+      if (getBookmarks(job.id, userObject)) {
+        removeBookmarkedJob(job.id, userObject);
       } else {
         userObject?.bookmarkedJobs?.push(job.id);
       }
     }
-    setBookmarked(!val);
+    setBookmarkValue(!val);
     if (bookmarkedJobs === null) {
       return;
     }
@@ -122,8 +126,10 @@ function JobCard({
                       contact: {job.contactPerson}
                     </Text>
                   )}
-                {visibleMap.get('date') === true && job.date !== '' && (
-                  <Text style={styles.modalText}>date: {job.date}</Text>
+                {visibleMap.get('date') === true && (
+                  <Text style={styles.modalText}>
+                    date: {job.date.toDateString}
+                  </Text>
                 )}
                 {visibleMap.get('companyName') === true &&
                   job.companyName !== '' && (
@@ -220,10 +226,10 @@ function JobCard({
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
         <Pressable
           onPress={() => {
-            toggleBookmark(bookmarkedValue);
+            toggleBookmark(bookmarkValue);
           }}
         >
-          {bookmarkedValue ? <Filled /> : <Empty />}
+          {bookmarkValue ? <Filled /> : <Empty />}
         </Pressable>
       </View>
     </Pressable>

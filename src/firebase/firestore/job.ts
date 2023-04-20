@@ -125,7 +125,7 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   }
 };
 
-export const approveOrDeclineJob = async (
+export const deleteJob = async (
   jobId: string,
   collectionName: string,
 ): Promise<void> => {
@@ -138,13 +138,12 @@ export const approveOrDeclineJob = async (
   }
 };
 
-export const deleteJob = async (
+export const removeBookmarkedJobFromAllUsers = async (
   jobId: string,
   collectionName: string,
 ): Promise<void> => {
   try {
-    const docRef = doc(db, collectionName, jobId);
-    await deleteDoc(docRef);
+    deleteJob(jobId, collectionName);
     const docSnap = await getDocs(userCollection);
     docSnap.forEach(async user => {
       const userRef = doc(db, 'users', user.data().id);

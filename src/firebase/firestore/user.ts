@@ -1,7 +1,5 @@
 import { UserCredential } from 'firebase/auth';
 import {
-  arrayRemove,
-  arrayUnion,
   deleteDoc,
   doc,
   DocumentData,
@@ -47,18 +45,6 @@ export const addUser = async (user: User): Promise<void> => {
   await setDoc(itemsRef, user);
 };
 
-export const updateUser = async (
-  userId: string,
-  newBookmarkedJobs: string[],
-): Promise<void> => {
-  const docRef = doc(db, 'users', userId);
-  // This data object changes the fields that are different from the entry in backend!
-  const data = {
-    point_gain: newBookmarkedJobs,
-  };
-  await updateDoc(docRef, data);
-};
-
 export const deleteUser = async (userId: string): Promise<void> => {
   const docRef = doc(db, 'users', userId);
   await deleteDoc(docRef);
@@ -94,28 +80,6 @@ export const checkAndAddUser = async (
   }
 };
 
-export const updateBookmarks = async (
-  jobId: string,
-  userId: string,
-): Promise<void> => {
-  try {
-    const docRef = doc(db, 'users', userId);
-    const data = jobId;
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      if (docSnap.data().bookmarkedJobs.includes(jobId)) {
-        await updateDoc(docRef, { bookmarkedJobs: arrayRemove(data) });
-      } else {
-        await updateDoc(docRef, { bookmarkedJobs: arrayUnion(data) });
-      }
-    }
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    throw e;
-  }
-};
-
 export const updateUserBookmarks = async (
   userBookmarkedJobs: string[] | undefined,
   userId: string,
@@ -129,6 +93,14 @@ export const updateUserBookmarks = async (
   }
 };
 
+export const removeBookmarkedJob = async (
+  jobId: string,
+  userObject: User,
+): Promise<void> => {
+  const index = userObject?.bookmarkedJobs.indexOf(jobId);
+  userObject?.bookmarkedJobs.splice(index, 1);
+};
+
 export const getBookmarks = (
   jobId: string,
   userObject: User | null,
@@ -139,7 +111,7 @@ export const getBookmarks = (
   return false;
 };
 
-export const getAllBookmarks = async (
+export const getBookmarkedJobs = async (
   userObject: User | null,
 ): Promise<Job[]> => {
   try {

@@ -22,6 +22,12 @@ function LogoutVariantIcon({ color }: IconProps) {
   );
 }
 
+function BookmarkOutlineIcon({ color }: IconProps) {
+  return (
+    <MaterialCommunityIcons name="bookmark-outline" color={color} size={26} />
+  );
+}
+
 function UserStack(): ReactElement {
   return (
     <Tab.Navigator
@@ -49,7 +55,7 @@ function UserStack(): ReactElement {
         name="Signout"
         component={SignoutStackNavigator}
         options={{
-          tabBarIcon: LogoutVariantIcon,
+          tabBarIcon: BookmarkOutlineIcon,
         }}
       />
     </Tab.Navigator>

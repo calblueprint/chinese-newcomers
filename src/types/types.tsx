@@ -11,7 +11,7 @@ export interface User {
 
 export interface Job {
   id: string;
-  date: string;
+  date: Date;
   companyName: string;
   address: string;
   contactPerson: string;
