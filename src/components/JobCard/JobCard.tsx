@@ -93,8 +93,10 @@ function JobCard({
                       contact: {job.contactPerson}
                     </Text>
                   )}
-                {visibleMap.get('date') === true && job.date !== '' && (
-                  <Text style={styles.modalText}>date: {job.date}</Text>
+                {visibleMap.get('date') === true && (
+                  <Text style={styles.modalText}>
+                    date: {job.date.toDateString()}
+                  </Text>
                 )}
                 {visibleMap.get('companyName') === true &&
                   job.companyName !== '' && (

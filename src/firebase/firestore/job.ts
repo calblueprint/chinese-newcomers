@@ -23,6 +23,7 @@ export const parseJob = async (document: DocumentSnapshot<DocumentData>) => {
     id: jobId,
     ...(data as Partial<Job>),
   };
+  job.date = new Date(data.date.seconds * 1000);
   return job as Job;
 };
 

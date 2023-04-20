@@ -38,7 +38,7 @@ function DraftScreen({
     'other',
   ];
 
-  const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
+  // const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
   const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(true);
   const [addressIsEnabled, setAddressIsEnabled] = React.useState(true);
   const [contactPersonIsEnabled, setContactPersonIsEnabled] =
@@ -60,7 +60,7 @@ function DraftScreen({
   const [modalJobText, setModalJobText] = React.useState('');
 
   interface FormValues {
-    date: Date;
+    // date: Date;
     companyName: string;
     address: string;
     contactPerson: string;
@@ -79,7 +79,7 @@ function DraftScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     const map = new Map<string, boolean>();
-    map.set('date', dateIsEnabled);
+    map.set('date', true);
     map.set('companyName', companyNameIsEnabled);
     map.set('address', addressIsEnabled);
     map.set('contactPerson', contactPersonIsEnabled);
@@ -93,7 +93,7 @@ function DraftScreen({
     map.set('employeeBenefit', employeeBenefitIsEnabled);
     map.set('otherInfo', otherInfoIsEnabled);
     const job: Partial<Job> = {
-      date: data.date || '',
+      date: new Date(),
       companyName: data.companyName || '',
       address: data.address || '',
       contactPerson: data.contactPerson || '',
@@ -149,7 +149,7 @@ function DraftScreen({
               textStyle={{ fontFamily: 'DMSans_500Medium' }}
             />
 
-            <View style={styles.formTop}>
+            {/* <View style={styles.formTop}>
               <Switch
                 onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
                 value={dateIsEnabled}
@@ -165,7 +165,7 @@ function DraftScreen({
             />
             {methods.formState.errors.date != null && (
               <Text>Please check the Date.</Text>
-            )}
+            )} */}
 
             <View style={styles.formTop}>
               <Switch
