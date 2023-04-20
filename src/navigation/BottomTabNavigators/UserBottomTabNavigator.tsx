@@ -21,6 +21,7 @@ function LogoutVariantIcon({ color }: IconProps) {
   );
 }
 
+
 function UserStack(): ReactElement {
   return (
     <Tab.Navigator
