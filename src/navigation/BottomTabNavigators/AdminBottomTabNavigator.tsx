@@ -7,6 +7,7 @@ import DraftStackNavigator from '../stacks/DraftStackNavigator';
 import ApprovalStackNavigator from '../stacks/ApprovalStackNavigator';
 import SignoutStackNavigator from '../stacks/SignOutStackNavigator';
 import BookmarksStackNavigator from '../stacks/BookmarksStackNavigator';
+import Empty from '../../assets/empty.svg';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
@@ -33,6 +34,12 @@ function AccountCheckIcon({ color }: IconProps) {
 function LogoutVariantIcon({ color }: IconProps) {
   return (
     <MaterialCommunityIcons name="logout-variant" color={color} size={26} />
+  );
+}
+
+function BookmarkOutlineIcon({ color }: IconProps) {
+  return (
+    <MaterialCommunityIcons name="bookmark-outline" color={color} size={26} />
   );
 }
 
@@ -77,7 +84,7 @@ function AdminStack(): ReactElement {
         name="Bookmarks"
         component={BookmarksStackNavigator}
         options={{
-          tabBarIcon: LogoutVariantIcon,
+          tabBarIcon: BookmarkOutlineIcon,
         }}
       />
     </Tab.Navigator>

@@ -6,7 +6,7 @@ import JobCard from '../../components/JobCard/JobCard';
 import { Job } from '../../types/types';
 import styles from './styles';
 import {
-  getAllBookmarks,
+  getBookmarkedJobs,
   updateUserBookmarks,
 } from '../../firebase/firestore/user';
 import { AuthContext } from '../../context/AuthContext';
@@ -21,11 +21,11 @@ function BookmarksScreen({
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      const data = await getAllBookmarks(userObject);
+    const fetchBookmarkedJobs = async () => {
+      const data = await getBookmarkedJobs(userObject);
       setBookmarkedList(data);
     };
-    fetchJobs();
+    fetchBookmarkedJobs();
   }, [isFocused, userObject?.id, userObject]);
 
   useEffect(() => {
