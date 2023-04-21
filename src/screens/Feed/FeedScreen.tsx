@@ -38,11 +38,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.feedHeader}>
-        <Image source={Logo} style={{ width: 100, height: 100 }} />
-        <Text style={styles.feedTitle}>Welcome!</Text>
-      </View> */}
-       
+      
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,

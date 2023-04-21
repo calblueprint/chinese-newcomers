@@ -14,9 +14,6 @@ function ApprovalScreen({
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.feedHeader}>
-        <Text style={styles.feedTitle}>Pending Job Posts</Text>
-      </View>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,

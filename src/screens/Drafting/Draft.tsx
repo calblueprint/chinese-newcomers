@@ -124,7 +124,6 @@ function DraftScreen({
       <KeyboardAwareScrollView style={styles.form}>
         <View style={styles.formContainer}>
           <View style={styles.top}>
-            <Text style={styles.formTitle}>Job Post Draft</Text>
             <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
               Use the toggle to determine what information you want displayed in
               your public job posting.
