@@ -97,7 +97,6 @@ function DraftScreen({
     map.set('otherInfo', otherInfoIsEnabled);
     const job: Partial<Job> = {
       date: data.date || '',
-      creator: data.creator || '',
       companyName: data.companyName || '',
       address: data.address || '',
       contactPerson: data.contactPerson || '',
@@ -114,7 +113,7 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
-      await createJob(job, 'notApprovedJobs', creator);
+      await createJob(job, 'notApprovedJobs', userObject?.id);
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
       methods.reset();

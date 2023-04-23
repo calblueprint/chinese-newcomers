@@ -1,7 +1,7 @@
 export interface User {
   id: string;
   access: string;
-  createdJobs: Map<string, boolean>; // switched to string of jobIds to match Firebase
+  createdJobs: Map<string, boolean>; // switched to map of jobIDs and bool isApproved status to match Firebase
   email: string | null;
   likedJobs: string[]; // switched to string of jobIds to match Firebase
   name: string;

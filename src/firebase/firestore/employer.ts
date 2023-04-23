@@ -115,4 +115,3 @@ export const addCreatedJobs = async (
   };
 
   // Build out screens, filtering between approved & pending (similar to feed screen)
-};
