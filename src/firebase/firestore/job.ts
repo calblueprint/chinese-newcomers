@@ -23,7 +23,6 @@ export const parseJob = async (document: DocumentSnapshot<DocumentData>) => {
     id: jobId,
     ...(data as Partial<Job>),
   };
-  job.date = new Date(data.date.seconds * 1000);
   return job as Job;
 };
 
@@ -65,7 +64,9 @@ export const getMonthlyCounter = async (): Promise<number> => {
 
 function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
   const jobKeys = Object.keys(jobInstance);
-  const parsedJob = Object.fromEntries(jobKeys.map(k => [k, job[k as keyof typeof job]]));
+  const parsedJob = Object.fromEntries(
+    jobKeys.map(k => [k, job[k as keyof typeof job]]),
+  );
   parsedJob.id = jobId;
   return parsedJob;
 }
