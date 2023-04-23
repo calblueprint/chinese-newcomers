@@ -23,14 +23,12 @@ function AdminRegisterScreen({
     password: string;
   }
   const { ...methods } = useForm<FormValues>();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const { phoneNumber } = route.params;
   const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      await signUpEmail(dispatch, { email, password, phoneNumber });
+      await signUpEmail(dispatch, { email: data.email, password: data.password, phoneNumber});
     } catch (e) {
       console.error(e);
     }
@@ -63,14 +61,12 @@ function AdminRegisterScreen({
                 name="email"
                 label="email"
                 placeholder=" email@email.com"
-                onChangeText={setEmail}
               />
               <Text style={styles.smallText}>Create Password </Text>
               <AuthInput
                 name="password"
                 label="password"
                 placeholder=" password"
-                onChangeText={setPassword}
               />
               <Text style={styles.smallText}>Verify Password </Text>
               <AuthInput
@@ -92,7 +88,7 @@ function AdminRegisterScreen({
                 textStyle={{ fontSize: 16, color: '#CC433C' }}
               />
               <StyledButton
-                text="NEXT"
+                text="Submit"
                 onPress={methods.handleSubmit(onSubmit, onError)}
                 buttonStyle={{ width: '45%', height: '100%' }}
                 textStyle={{}}
