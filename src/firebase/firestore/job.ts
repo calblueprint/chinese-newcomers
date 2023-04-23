@@ -72,7 +72,7 @@ function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
 export const createJob = async (
   job: Partial<Job>,
   collectionName: string,
-  creator: string,
+  creatorID: string,
 ): Promise<void> => {
   const docRef = collection(db, collectionName);
   try {
@@ -93,6 +93,7 @@ export const createJob = async (
       const newDoc = await addDoc(docRef, job);
       const data = {
         id: newDoc.id,
+        creator: creatorID,
       };
       await updateDoc(newDoc, data);
     }

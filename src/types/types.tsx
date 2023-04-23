@@ -32,6 +32,7 @@ export interface Job {
 export const jobInstance : Job = {
   id: "",
   date: "",
+  creator: "",
   companyName: "",
   address: "",
   contactPerson: "",

@@ -1,31 +1,34 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Text, View, Pressable, Modal } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import styles from './CardStyles';
 import objectToBooleanMap from '../../firebase/helpers';
 import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import { deleteJob, createJob } from '../../firebase/firestore/job';
+import { AuthContext } from '../../context/AuthContext';
 
 interface JobCardProps {
   job: Job;
   pending: boolean;
 }
 
-function JobCard({
-  job,
-  pending,
-}: JobCardProps) {
+function JobCard({ job, pending }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
+  const { userObject } = useContext(AuthContext);
 
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {
       await deleteJob(job.id, 'notApprovedJobs');
       if (approve) {
-        await createJob(job, 'approvedJobs');
+        if (userObject === null) {
+          console.log('No userObject found.');
+        } else {
+          await createJob(job, 'approvedJobs', userObject?.id);
+        }
       }
     } catch (e) {
       console.log(e);
