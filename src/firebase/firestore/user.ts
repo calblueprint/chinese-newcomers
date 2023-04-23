@@ -65,30 +65,14 @@ const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
 // edit this using the constants above
 export const getUser = async (id: string): Promise<GenericUser | null> => {
   const collections = userCollectionRefs(id);
-  let result = null;
-  // let existUser: GenericUser;
-  collections.forEach(async (docRef) => {
-    const docSnap = await getDoc(docRef);
+  for (let i = 0; i < collections.length; i+=1) {
+    // eslint-disable-next-line no-await-in-loop
+    const docSnap = await getDoc(collections[i]);
     if (docSnap.exists()) {
-      console.log("checking if the doc exists")
-      console.log(docSnap.exists());
-      const x = parseUser(docSnap);
-      console.log('yay works');
-      result = x;
+      return parseUser(docSnap);
     }
-  });
-  console.log('No such document!');
-  return result;
-  // const x = doc(db, ADMIN_COLLECTION_NAME, id);
-  // const docSnap = await getDoc(x);
-  // if (docSnap.exists()) {
-  //   console.log("inside for each");
-  //   const y = parseUser(docSnap);
-  //   console.log(y);
-  //   console.log('yay works');
-  //   return y;
-  // }
-  // return null;
+  }
+  return null;
 };
 
 

@@ -127,7 +127,6 @@ export const signInEmail = async (
   signInWithEmailAndPassword(auth, params.email, params.password)
     .then(async userCredential => {
       const { user } = userCredential;
-      console.log('Email sign in successful', user.email);
       const UserObject = await getUser(user.uid);
       dispatch({ type: 'SIGN_IN', userObject: UserObject });
     })
