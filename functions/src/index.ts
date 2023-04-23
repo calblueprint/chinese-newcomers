@@ -4,13 +4,14 @@ import admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore();
 
-const approvedJobsCollection = firestore.collection('approvedJobs');
+// const approvedJobsCollection = firestore.collection('approvedJobs');
+const testJobsCollection = firestore.collection('testCloudFunction');
 
 exports.updateExpiredJobs = functions.pubsub
-  .schedule('0 12 * * *') // 0 12 * * * is once a day
+  .schedule('*/10 * * * *') // 0 12 * * * is once a day
   .onRun(async () => {
     functions.logger.log('at top of cloud function');
-    const approvedJobs = approvedJobsCollection.get();
+    const approvedJobs = testJobsCollection.get(); // approvedJobsCollection
     const now = new Date();
     (await approvedJobs).forEach(async job => {
       functions.logger.log('looping through jobs collection');
@@ -18,11 +19,11 @@ exports.updateExpiredJobs = functions.pubsub
       const jobDate = new Date(job.get('date').seconds * 1000);
       const diff = now.getTime() - jobDate.getTime();
       // 60 days in milliseconds --> 5184000000
-      if (diff > 5184000000) {
+      if (diff > 259200000) {
         functions.logger.log('removing a job inside cloud function');
-        const testCloudFunctionCollection =
-          firestore.collection('testCloudFunction');
-        testCloudFunctionCollection.doc(jobId).set(job.data());
+        // const testCloudFunctionCollection =
+        //   firestore.collection('testCloudFunction');
+        // testCloudFunctionCollection.doc(jobId).set(job.data());
         job.ref.delete();
       }
     });

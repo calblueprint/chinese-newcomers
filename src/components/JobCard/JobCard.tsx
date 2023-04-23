@@ -13,10 +13,7 @@ interface JobCardProps {
   pending: boolean;
 }
 
-function JobCard({
-  job,
-  pending,
-}: JobCardProps) {
+function JobCard({ job, pending }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
 
@@ -40,6 +37,8 @@ function JobCard({
       console.log(e);
     }
   }
+
+  const date = new Date(job.date.seconds * 1000);
 
   return (
     <Pressable
@@ -83,7 +82,7 @@ function JobCard({
                   )}
                 {visibleMap.get('date') === true && (
                   <Text style={styles.modalText}>
-                    date: {job.date.toDateString()}
+                    date: {date.toDateString()}
                   </Text>
                 )}
                 {visibleMap.get('companyName') === true &&
