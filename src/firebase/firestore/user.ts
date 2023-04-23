@@ -33,41 +33,23 @@ const constructorToUserTypeMap = new Map<GenericUser, string>([
   [<Employer>{}, EMPLOYER_COLLECTION_NAME],
 ])
 
-// QueryDocumentSnapshot<DocumentData>
 const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
-  // const userId = document.id.toString();
-  // const data = document.data();
-  // const type = data.access; 
-
-  // const userType = userTypeToConstructorMap.get(type);
-
-  // if (!userType) {
-  //   console.log('User type not found.');
-  //   return null;
-  // }
-
-  // const user = {
-  //   id: userId,
-  //   ...data,
-  // }
-
-  // return user as typeof userType;
   const userId = document.id.toString();
   const data = document.data();
   const user = {
     id: userId,
     ...data
   };
+  // need to check if i have to return the user as employer/regularUser/admin
   return user as GenericUser;
 
 };
 
-// edit this using the constants above
 export const getUser = async (id: string): Promise<GenericUser | null> => {
   const collections = userCollectionRefs(id);
-  for (let i = 0; i < collections.length; i+=1) {
+  for (let docRef = 0; docRef < collections.length; docRef += 1) {
     // eslint-disable-next-line no-await-in-loop
-    const docSnap = await getDoc(collections[i]);
+    const docSnap = await getDoc(collections[docRef]);
     if (docSnap.exists()) {
       return parseUser(docSnap);
     }
@@ -83,7 +65,6 @@ export const addUser = async (user: GenericUser): Promise<void> => {
   await setDoc(itemsRef, user);
 };
 
-// the values for newField might have multiple types (string, string[], or boolean)
 export const updateUser = async(userId: string, newFields: Map<string, string | string[] | boolean>) => {
   const user = await getUser(userId);
   if (!user) {
