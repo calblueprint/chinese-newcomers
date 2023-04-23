@@ -9,8 +9,9 @@ import { ApprovalStackScreenProps } from '../../types/navigation';
 function ApprovalScreen({
   navigation,
 }: ApprovalStackScreenProps<'ApprovalScreen'>) {
-
-  const notApprovedJobs = useFirestoreListener<Job>({ collection: "notApprovedJobs" })
+  const notApprovedJobs = useFirestoreListener<Job>({
+    collection: 'notApprovedJobs',
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,12 +25,8 @@ function ApprovalScreen({
           width: '100%',
         }}
       >
-        {notApprovedJobs.map((job) => (
-          <JobCard
-            job={job}
-            key={job.id}
-            pending
-          />
+        {notApprovedJobs.map(job => (
+          <JobCard job={job} key={job.id} pending />
         ))}
         {notApprovedJobs.length === 0 && (
           <Text style={{ marginTop: '10%' }}>
