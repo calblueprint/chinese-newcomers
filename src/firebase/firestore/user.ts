@@ -95,28 +95,35 @@ export const updateUserBookmarks = async (
 
 export const removeBookmarkedJob = async (
   jobId: string,
-  userObject: User,
+  userBookmarkedJobs: string[] | undefined,
 ): Promise<void> => {
-  const index = userObject?.bookmarkedJobs.indexOf(jobId);
-  userObject?.bookmarkedJobs.splice(index, 1);
+  try {
+    if (userBookmarkedJobs !== undefined) {
+      const index = userBookmarkedJobs?.indexOf(jobId);
+      userBookmarkedJobs?.splice(index, 1);
+    }
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 };
 
 export const getBookmarks = (
   jobId: string,
-  userObject: User | null,
+  userBookmarkedJobs: string[] | undefined,
 ): boolean => {
-  if (userObject?.bookmarkedJobs.includes(jobId)) {
+  if (userBookmarkedJobs?.includes(jobId)) {
     return true;
   }
   return false;
 };
 
 export const getBookmarkedJobs = async (
-  userObject: User | null,
+  userBookmarkedJobs: string[] | undefined,
 ): Promise<Job[]> => {
   try {
     const promises: Array<Promise<Job>> = [];
-    userObject?.bookmarkedJobs.forEach(job => {
+    userBookmarkedJobs?.forEach(job => {
       promises.push(getJob(job, 'approvedJobs'));
     });
     const allJobs = await Promise.all(promises);

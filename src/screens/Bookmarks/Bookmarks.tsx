@@ -17,16 +17,15 @@ function BookmarksScreen({
   const [bookmarkedList, setBookmarkedList] = useState([] as Job[]);
   const { userObject } = useContext(AuthContext);
   const userBookmarkedJobs = userObject?.bookmarkedJobs;
-
-  const isFocused = useIsFocused();
+  console.log('bookmarks userbookmarks: ', userBookmarkedJobs);
 
   useEffect(() => {
     const fetchBookmarkedJobs = async () => {
-      const data = await getBookmarkedJobs(userObject);
+      const data = await getBookmarkedJobs(userObject?.bookmarkedJobs);
       setBookmarkedList(data);
     };
     fetchBookmarkedJobs();
-  }, [isFocused, userObject?.id, userObject]);
+  }, [userBookmarkedJobs, userObject?.id, userObject]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {
@@ -50,17 +49,12 @@ function BookmarksScreen({
           width: '100%',
         }}
       >
-        {bookmarkedList.map((job, index) => (
+        {bookmarkedList.map(job => (
           // eslint-disable-next-line react/jsx-key
           <JobCard
             job={job}
             key={job.id}
-            idx={index}
             pending
-            pendingJobs={null}
-            setPendingJobs={null}
-            filteredJobs={null}
-            setFilteredJobs={null}
             bookmarkedJobs={bookmarkedList}
             setBookmarkedJobs={setBookmarkedList}
           />

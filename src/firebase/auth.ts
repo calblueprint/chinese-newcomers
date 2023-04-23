@@ -12,7 +12,12 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { AuthDispatch } from '../context/AuthContext';
 import { db } from './config';
 import firebaseApp from './firebaseApp';
-import { checkAndAddUser, getUser } from './firestore/user';
+import {
+  checkAndAddUser,
+  getBookmarks,
+  getUser,
+  removeBookmarkedJob,
+} from './firestore/user';
 
 const auth = getAuth(firebaseApp);
 // TODO: CHANGE 'recaptcha-container' TO ID OF CAPTCHA CONTAINER
@@ -97,6 +102,21 @@ export const signUpPhoneAdmin = async (
     console.warn('Phone sign up error', error);
     throw error;
   }
+};
+
+export const changeBookmark = async (
+  dispatch: AuthDispatch,
+  params: { jobId: string; userBookmarkedJobs: string[] | undefined },
+) => {
+  if (getBookmarks(params.jobId, params.userBookmarkedJobs)) {
+    removeBookmarkedJob(params.jobId, params.userBookmarkedJobs);
+  } else {
+    params.userBookmarkedJobs?.push(params.jobId);
+  }
+  dispatch({
+    type: 'CHANGE_BOOKMARK',
+    bookmarkedArray: params.userBookmarkedJobs,
+  });
 };
 
 export const signUpEmail = async (

@@ -14,11 +14,9 @@ import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
 import Empty from '../../assets/empty.svg';
 import Filled from '../../assets/filled.svg';
-import {
-  getBookmarks,
-  removeBookmarkedJob,
-} from '../../firebase/firestore/user';
+import { getBookmarks } from '../../firebase/firestore/user';
 import { AuthContext } from '../../context/AuthContext';
+import { changeBookmark } from '../../firebase/auth';
 
 interface JobCardProps {
   job: Job;
@@ -29,24 +27,26 @@ interface JobCardProps {
 
 function JobCard({
   job,
-  idx,
   pending,
   bookmarkedJobs,
   setBookmarkedJobs,
 }: JobCardProps) {
   const { userObject } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
+  const jobId = job.id;
+  const userBookmarkedJobs = userObject?.bookmarkedJobs;
   const [bookmarkValue, setBookmarkValue] = useState<boolean>(
-    getBookmarks(job.id, userObject),
+    getBookmarks(job.id, userObject?.bookmarkedJobs),
   );
   const userObjectToString = JSON.stringify(userObject?.bookmarkedJobs);
 
   useEffect(() => {
     const getBookmarkValue = () => {
-      const bookmarks = getBookmarks(job.id, userObject);
+      const bookmarks = getBookmarks(job.id, userObject?.bookmarkedJobs);
       setBookmarkValue(bookmarks);
     };
     getBookmarkValue();
-  }, [job.id, userObjectToString, userObject]);
+  }, [job.id, userObjectToString, userObject, userBookmarkedJobs]);
 
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
@@ -73,17 +73,15 @@ function JobCard({
 
   const toggleBookmark = async (val: boolean) => {
     if (userObject !== null) {
-      if (getBookmarks(job.id, userObject)) {
-        removeBookmarkedJob(job.id, userObject);
-      } else {
-        userObject?.bookmarkedJobs?.push(job.id);
-      }
+      console.log('before:', userBookmarkedJobs);
+      changeBookmark(dispatch, { jobId, userBookmarkedJobs });
+      console.log('after:', userBookmarkedJobs);
     }
     setBookmarkValue(!val);
     if (bookmarkedJobs === null) {
       return;
     }
-    setBookmarkedJobs?.(bookmarkedJobs?.filter((_, index) => index !== idx));
+    setBookmarkedJobs?.(bookmarkedJobs?.filter(next => next.id !== job.id));
   };
 
   return (

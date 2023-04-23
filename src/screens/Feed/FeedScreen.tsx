@@ -5,7 +5,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
 import { AuthContext } from '../../context/AuthContext';
-import { getAllJobs } from '../../firebase/firestore/job';
 import { updateUserBookmarks } from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
@@ -83,7 +82,13 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
         />
 
         {filteredApprovedJobs.map(job => (
-          <JobCard job={job} key={job.id} pending={false} />
+          <JobCard
+            job={job}
+            key={job.id}
+            pending={false}
+            bookmarkedJobs={null}
+            setBookmarkedJobs={null}
+          />
         ))}
       </ScrollView>
     </SafeAreaView>
