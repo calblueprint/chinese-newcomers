@@ -35,48 +35,63 @@ const constructorToUserTypeMap = new Map<GenericUser, string>([
 
 // QueryDocumentSnapshot<DocumentData>
 const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
+  // const userId = document.id.toString();
+  // const data = document.data();
+  // const type = data.access; 
+
+  // const userType = userTypeToConstructorMap.get(type);
+
+  // if (!userType) {
+  //   console.log('User type not found.');
+  //   return null;
+  // }
+
+  // const user = {
+  //   id: userId,
+  //   ...data,
+  // }
+
+  // return user as typeof userType;
   const userId = document.id.toString();
   const data = document.data();
-  const type = data.access; 
-
-  const userType = userTypeToConstructorMap.get(type);
-
-  if (!userType) {
-    console.log('User type not found.');
-    return null;
-  }
-
   const user = {
     id: userId,
-    ...data,
-  }
+    ...data
+  };
+  return user as GenericUser;
 
-  return user as typeof userType;
 };
 
 // edit this using the constants above
 export const getUser = async (id: string): Promise<GenericUser | null> => {
-  // const docRef = doc(db, 'users', id);
-  // const docSnap = await getDoc(docRef);
+  const collections = userCollectionRefs(id);
+  let result = null;
+  // let existUser: GenericUser;
+  collections.forEach(async (docRef) => {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("checking if the doc exists")
+      console.log(docSnap.exists());
+      const x = parseUser(docSnap);
+      console.log('yay works');
+      result = x;
+    }
+  });
+  console.log('No such document!');
+  return result;
+  // const x = doc(db, ADMIN_COLLECTION_NAME, id);
+  // const docSnap = await getDoc(x);
   // if (docSnap.exists()) {
-  //   return parseUser(docSnap);
+  //   console.log("inside for each");
+  //   const y = parseUser(docSnap);
+  //   console.log(y);
+  //   console.log('yay works');
+  //   return y;
   // }
-
-  // const userRefs = userCollectionRefs(id);
-
-  // const userDocs = await Promise.all(userRefs.map((ref) => getDoc(ref)));
-  // const userDoc = userDocs.find((docSnap) => docSnap.exists);
-  // console.log(parseUser(userDoc));
-  if (userDoc === undefined) {
-    console.log("ALSJDFKALSDIJFOASDKF");
-  }
-  if (!userDoc) {
-      console.log('No such document!');
-      return null;
-  };
-  console.log('User data:', userDoc.data());
-  return parseUser(userDoc as QueryDocumentSnapshot<DocumentData>);
+  // return null;
 };
+
+
 
 export const addUser = async (user: GenericUser): Promise<void> => {
   const type = user.access;

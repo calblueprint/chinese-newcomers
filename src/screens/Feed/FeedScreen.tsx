@@ -5,6 +5,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
 import { getAllJobs } from '../../firebase/firestore/job';
+import { getUser } from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './Styles';
@@ -47,6 +48,11 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
       setFilteredList(list.filter(job => job.category === category));
     }
   }, [category, list]);
+
+  // debugging user functions
+  // console.log("hello");
+  // console.log(getUser("GhifKnsELfgFWy2b2bhw"));
+  // console.log("hello")
 
   return (
     <SafeAreaView style={styles.container}>

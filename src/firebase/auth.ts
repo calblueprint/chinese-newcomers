@@ -111,6 +111,8 @@ export const signUpEmail = async (
       console.log('Email sign up successful', user.email);
       await activatedAdmin(params.phoneNumber);
       const UserObject = await getUser(user.uid);
+      // console.log("logging userobject");
+      // console.log(UserObject);
       dispatch({ type: 'SIGN_IN', userObject: UserObject });
     })
     .catch(error => {
