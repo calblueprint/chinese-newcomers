@@ -68,69 +68,89 @@ function JobCard({
                 <Pressable onPress={() => setModalVisible(false)}>
                   <Text style={styles.modalButtonText}>X</Text>
                 </Pressable>
-                <Text style={styles.modalJobRefText}>{job.id}</Text>
+                <Text style={styles.modalJobRefText}>#{job.id}</Text>
                 <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
               </View>
               <View style={styles.modalInfo}>
                 {visibleMap.get('salary') === true && job.salary !== '' && (
-                  <Text style={styles.modalText}>salary: {job.salary} </Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.modalFieldName}>salary: </Text> 
+                    <Text>{job.salary}</Text>
+                  </Text>
                 )}
                 {visibleMap.get('contactPerson') === true &&
                   job.contactPerson !== '' && (
                     <Text style={styles.modalText}>
-                      contact: {job.contactPerson}
+                      <Text style={styles.modalFieldName}>contact: </Text> 
+                      <Text>{job.contactPerson}</Text>
                     </Text>
                   )}
                 {visibleMap.get('date') === true && job.date !== '' && (
-                  <Text style={styles.modalText}>date: {job.date}</Text>
+                  <Text style={styles.modalText}>
+                    <Text style={styles.modalFieldName}>date: </Text> 
+                    <Text>{job.date}</Text>
+                  </Text>
                 )}
                 {visibleMap.get('companyName') === true &&
                   job.companyName !== '' && (
                     <Text style={styles.modalText}>
-                      companyName: {job.companyName}
+                      <Text style={styles.modalFieldName}>companyName: </Text> 
+                      <Text>{job.companyName}</Text>
                     </Text>
                   )}
                 {visibleMap.get('address') === true && job.address !== '' && (
-                  <Text style={styles.modalText}>address: {job.address}</Text>
+                    <Text style={styles.modalText}>
+                    <Text style={styles.modalFieldName}>address: </Text> 
+                    <Text>{job.address}</Text>
+                  </Text>
                 )}
 
                 {visibleMap.get('phone') === true && job.phone !== '' && (
-                  <Text style={styles.modalText}>phone: {job.phone}</Text>
+                    <Text style={styles.modalText}>
+                    <Text style={styles.modalFieldName}>phone: </Text> 
+                    <Text>{job.phone}</Text>
+                  </Text>
                 )}
                 {visibleMap.get('languageRequirement') === true &&
                   job.languageRequirement !== '' && (
                     <Text style={styles.modalText}>
-                      language requirement: {job.languageRequirement}
+                      <Text style={styles.modalFieldName}>languageRequirement: </Text> 
+                      <Text>{job.languageRequirement}</Text>
                     </Text>
                   )}
                 {visibleMap.get('workingHours') === true &&
                   job.workingHours !== '' && (
                     <Text style={styles.modalText}>
-                      working hours: {job.workingHours}
+                      <Text style={styles.modalFieldName}>workingHours: </Text> 
+                      <Text>{job.workingHours}</Text>
                     </Text>
                   )}
                 {visibleMap.get('workingDays') === true &&
                   job.workingDays !== '' && (
                     <Text style={styles.modalText}>
-                      working days: {job.workingDays}
+                      <Text style={styles.modalFieldName}>workingDays: </Text> 
+                      <Text>{job.workingDays}</Text>
                     </Text>
                   )}
                 {visibleMap.get('probationPeriod') === true &&
                   job.probationPeriod !== '' && (
                     <Text style={styles.modalText}>
-                      probation period: {job.probationPeriod}
+                      <Text style={styles.modalFieldName}>probationPeriod: </Text> 
+                      <Text>{job.probationPeriod}</Text>
                     </Text>
                   )}
                 {visibleMap.get('employeeBenefit') === true &&
                   job.employeeBenefit !== '' && (
                     <Text style={styles.modalText}>
-                      employee benefits: {job.employeeBenefit}
+                      <Text style={styles.modalFieldName}>employeeBenefit: </Text> 
+                      <Text>{job.employeeBenefit}</Text>
                     </Text>
                   )}
                 {visibleMap.get('otherInfo') === true &&
                   job.otherInfo !== '' && (
                     <Text style={styles.modalText}>
-                      other info: {job.otherInfo}
+                      <Text style={styles.modalFieldName}>otherInfo: </Text> 
+                      <Text>{job.otherInfo}</Text>
                     </Text>
                   )}
                 {pending && (
@@ -173,7 +193,7 @@ function JobCard({
         </Modal>
       </GestureRecognizer>
       <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>{job.id}</Text>
+        <Text style={styles.jobRefText}>#{job.id}</Text>
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
