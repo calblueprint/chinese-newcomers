@@ -28,21 +28,21 @@ export interface Job {
   category: string;
 }
 
-export const jobInstance : Job = {
-  id: "",
-  date: "",
-  companyName: "",
-  address: "",
-  contactPerson: "",
-  phone: "",
-  jobPosition: "",
-  languageRequirement: "",
-  workingHours: "",
-  workingDays: "",
-  salary: "",
-  probationPeriod: "",
-  employeeBenefit: "",
-  otherInfo: "",
+export const jobInstance: Job = {
+  id: '',
+  date: new Date(),
+  companyName: '',
+  address: '',
+  contactPerson: '',
+  phone: '',
+  jobPosition: '',
+  languageRequirement: '',
+  workingHours: '',
+  workingDays: '',
+  salary: '',
+  probationPeriod: '',
+  employeeBenefit: '',
+  otherInfo: '',
   visible: Object(),
-  category: "",
-}
+  category: '',
+};
