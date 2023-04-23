@@ -2,8 +2,7 @@ import { doc, updateDoc, getDoc, getDocs, arrayRemove, arrayUnion, collection } 
 import { db } from '../config';
 import { getAllJobs, getJob, parseJob } from './job';
 
-const approvedJobsCollection = collection(db, 'approvedJobs');
-const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
+
 // Create function to add single job (either new job to notApproved or newly approved to approvedJobs) from map of employerJobs
 // Use this in job posting w/ status of pending
 export const addCreatedJobs = async (
@@ -12,8 +11,7 @@ export const addCreatedJobs = async (
     status: string,
 ): Promise<void> => {
     try {
-        // Assuming we will have employers user type in firebase later
-        const docRef = doc(db, ‘employers’, employerID);
+        const docRef = doc(db, ‘employer’, employerID);
         const data = jobID;
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -34,7 +32,7 @@ export const removeCreatedJobs = async (
     employerID: string,
 ): Promise<void> => {
     try {
-        const docRef = doc(db, ‘employers’, employerID);
+        const docRef = doc(db, ‘employer’, employerID);
         const data = jobID;
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -55,7 +53,7 @@ export const updateEmployerJobs = async (
   employerID: string,
 ): Promise<void> => {
   try {
-    const docRef = doc(db, ‘employers’, employerID);
+    const docRef = doc(db, ‘employer’, employerID);
     updateDoc(docRef, { createdJobs: employerJobs });
   } catch (e) {
     console.error(e);
@@ -63,23 +61,45 @@ export const updateEmployerJobs = async (
   }
 };
 
-// Get jobs, job.ts
+// Get all jobs from an employer's createdJobs map
 export const getAllCreatedJobs = async (
     userObject: User | null,
-    ): Promise<Job[]> => {
+  ): Promise<Job[]> => {
     try {
-        const promises: Array<Promise<Job>> = []; // declare empty array to store jobs
-        // promises.push(getAllJobs('approvedJobs'), getAllJobs('notApprovedJobs')); // append all jobs to array
-        // const allJobs = await Promise.all(promises); // get all jobs and store as allJobs
-        // return allJobs.filter(obj =>
-        //     Object.prototype.hasOwnProperty.call(obj, 'jobPosition'),
-        //     ); // filter for 
+      const employerRef = doc(db, 'employer', userObject.uid);
+      const employerSnap = await getDoc(employerRef);
+  
+      if (employerSnap.exists()) {
+        const createdJobs = employerSnap.data()?.createdJobs;
+        const promises: Array<Promise<Job>> = [];
+  
+        if (createdJobs) {
+          for (const [jobId, isApproved] of Object.entries(createdJobs)) {
+            const collectionName = isApproved ? 'approvedJobs' : 'notApprovedJobs';
+            const job = getJob(jobId, collectionName);
+            promises.push(job);
+          }
+        }
+  
+        const jobs = await Promise.all(promises);
+        return jobs;
+      } else {
+        console.log('No such employer.');
+        return [];
+      }
+    } catch (e) {
+      console.error(e);
+      throw e;
     }
-}
+  };
+  
 
 // Change status of existing job in map
 // Use when job is approved to change from pending to approved
-export const changeCreatedJobsStatus
+export const changeCreatedJobsStatus = async (
+    id: string,
+    collectionName: string,
+): Promise<>
 
 // Build out screens, filtering between approved & pending (similar to feed screen)
 

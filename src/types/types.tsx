@@ -12,6 +12,7 @@ export interface User {
 export interface Job {
   id: string;
   date: string;
+  creator: string;
   companyName: string;
   address: string;
   contactPerson: string;

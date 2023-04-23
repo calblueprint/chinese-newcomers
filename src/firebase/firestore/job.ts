@@ -72,6 +72,7 @@ function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
 export const createJob = async (
   job: Partial<Job>,
   collectionName: string,
+  creator: string,
 ): Promise<void> => {
   const docRef = collection(db, collectionName);
   try {
