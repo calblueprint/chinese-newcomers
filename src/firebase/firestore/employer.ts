@@ -1,32 +1,31 @@
-import { doc, updateDoc, getDoc, addDoc, setDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../config';
 import { getJob } from './job';
 import { Job } from '../../types/types';
+import objectToBooleanMap from '../helpers';
+import { User } from '../../types/types';
 
 // Create function to add single notApproved job
 // Use this in job posting w/ status of pending
+// TESTED & WORKING!!
 export const addCreatedJobs = async (
-  //   userObject: User | null,
   jobID: string,
   employerID: string, // using employerID instead of userObject for case of admin posting job for an employer
-  status: string,
+  status: boolean,
 ): Promise<void> => {
   try {
     const docRef = doc(db, 'employer', employerID);
     const docSnap = await getDoc(docRef);
-    const jobPath = 'createdJobs.'.concat(jobID);
     console.log('job path successfully created');
-
+    const map = new Map<string, boolean>();
+    map.set(jobID, status);
     if (docSnap.exists()) {
-      if (status == 'notApproved') {
-        console.log('creating pending job');
-        setDoc(docRef, { jobPath: false } );
-        console.log('new pending job successfully created');
-      } else {
-        console.log('creating approved job');
-        setDoc(docRef, { jobPath: true });
-        console.log('new approved job successfully created');
-      }
+      console.log('creating job');
+      //   setDoc(docRef, { createdJobs: Object.fromEntries(map) }, { merge: true });
+      await updateDoc(docRef, {
+        createdJobs: Object.fromEntries(map),
+      });
+      console.log('new job successfully created');
     } else {
       console.log('No such employer exists.');
     }
@@ -57,27 +56,18 @@ export const addCreatedJobs = async (
 //         throw e;
 //     }
 // };
-// Create function to update createdJobs with map of employerJobs
-// export const updateEmployerJobs = async (
-//   employerJobs: Map<string, boolean>,
-//   employerID: string,
-// ): Promise<void> => {
-//   try {
-//     const docRef = doc(db, ‘employer’, employerID);
-//     updateDoc(docRef, { createdJobs: employerJobs });
-//   } catch (e) {
-//     console.error(e);
-//     throw e;
-//   }
-//   };
 
 // Get all jobs from an employer's createdJobs map
+// TESTED & WORKING!!
 export const getAllCreatedJobs = async (employerID: string): Promise<Job[]> => {
   try {
     const docRef = doc(db, 'employer', employerID);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
+      console.log('docsnap exists');
       const createdJobs = docSnap.data()?.createdJobs;
+      console.log('found createdJobs');
+      console.log(createdJobs);
       const promises: Array<Promise<Job>> = [];
 
       if (createdJobs) {
@@ -91,6 +81,8 @@ export const getAllCreatedJobs = async (employerID: string): Promise<Job[]> => {
       }
 
       const jobs = await Promise.all(promises);
+      console.log('got all createdjobs');
+      console.log(jobs);
       return jobs;
     } else {
       console.log('No such employer.');
@@ -104,18 +96,24 @@ export const getAllCreatedJobs = async (employerID: string): Promise<Job[]> => {
 
 // Change status of existing job in map
 // Use when job is approved to change from pending to approved
+// TESTED & WORKING
 export const changeCreatedJobsStatus = async (
   userObject: User | null,
   jobID: string,
 ): Promise<void> => {
   try {
-    const docRef = doc(db, 'employer', userObject.id);
-    if (userObject.createdJobs.get(jobID) == false) {
-      const jobPath = 'createdJobs.'.concat(jobID);
-      console.log('job path successfully created');
-      updateDoc(docRef, { jobPath: true });
+    if (userObject === null) {
+      console.log('User not found.');
     } else {
-      console.log('This job is already approved.');
+      const createdJobsMap = objectToBooleanMap(userObject.createdJobs);
+      const docRef = doc(db, 'employer', userObject.id);
+      if (createdJobsMap.get(jobID) === false) {
+        const map = new Map<string, boolean>();
+        map.set(jobID, true);
+        await updateDoc(docRef, { createdJobs: Object.fromEntries(map) });
+      } else {
+        console.log('This job is already approved.');
+      }
     }
   } catch (e) {
     console.error(e);

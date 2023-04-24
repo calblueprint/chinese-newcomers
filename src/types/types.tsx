@@ -1,12 +1,23 @@
 export interface User {
   id: string;
   access: string;
-  createdJobs: Map<string, boolean>; // switched to map of jobIDs and bool isApproved status to match Firebase
+  createdJobs: object; // switched to map of jobIDs and bool isApproved status to match Firebase
   email: string | null;
   likedJobs: string[]; // switched to string of jobIds to match Firebase
   name: string;
   phoneNumber: string | null;
   verified: boolean;
+}
+
+export const User : User = {
+  id: "",
+  access: "",
+  createdJobs: Object(), // switched to map of jobIDs and bool isApproved status to match Firebase
+  email: "",
+  likedJobs: [], // switched to string of jobIds to match Firebase
+  name: "",
+  phoneNumber: "",
+  verified: true,
 }
 
 export interface Job {
