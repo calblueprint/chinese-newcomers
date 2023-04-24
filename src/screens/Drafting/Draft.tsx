@@ -80,6 +80,7 @@ function DraftScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     const map = new Map<string, boolean>();
+    map.set('date', true);
     map.set('companyName', companyNameIsEnabled);
     map.set('address', addressIsEnabled);
     map.set('contactPerson', contactPersonIsEnabled);
