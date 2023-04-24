@@ -78,12 +78,23 @@ export default StyleSheet.create({
     fontSize: 18,
     marginLeft: '5%',
     fontFamily: 'DMSans_500Medium',
+    fontWeight: '700',
+  },
+  modalFieldName: {
+    marginTop: '1%',
+    marginBottom: 15,
+    textAlign: 'left',
+    color: 'black',
+    fontSize: 18,
+    marginLeft: '5%',
+    fontFamily: 'DMSans_700Bold',
   },
   modalInfo: {
     width: '100%',
     height: '80%',
     display: 'flex',
     flexDirection: 'column',
+    marginTop: '8%',
   },
   jobRefText: {
     color: 'black',

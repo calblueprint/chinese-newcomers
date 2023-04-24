@@ -94,7 +94,7 @@ function DraftScreen({
     map.set('employeeBenefit', employeeBenefitIsEnabled);
     map.set('otherInfo', otherInfoIsEnabled);
     const job: Partial<Job> = {
-      date: new Timestamp(0, 0),
+      date: new Timestamp(new Date().getTime() / 1000, 0),
       companyName: data.companyName || '',
       address: data.address || '',
       contactPerson: data.contactPerson || '',
