@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface User {
   id: string;
   access: string;
@@ -11,7 +13,7 @@ export interface User {
 
 export interface Job {
   id: string;
-  date: string;
+  date: Timestamp;
   companyName: string;
   address: string;
   contactPerson: string;
@@ -28,21 +30,21 @@ export interface Job {
   category: string;
 }
 
-export const jobInstance : Job = {
-  id: "",
-  date: "",
-  companyName: "",
-  address: "",
-  contactPerson: "",
-  phone: "",
-  jobPosition: "",
-  languageRequirement: "",
-  workingHours: "",
-  workingDays: "",
-  salary: "",
-  probationPeriod: "",
-  employeeBenefit: "",
-  otherInfo: "",
+export const jobInstance: Job = {
+  id: '',
+  date: new Timestamp(0, 0),
+  companyName: '',
+  address: '',
+  contactPerson: '',
+  phone: '',
+  jobPosition: '',
+  languageRequirement: '',
+  workingHours: '',
+  workingDays: '',
+  salary: '',
+  probationPeriod: '',
+  employeeBenefit: '',
+  otherInfo: '',
   visible: Object(),
-  category: "",
-}
+  category: '',
+};
