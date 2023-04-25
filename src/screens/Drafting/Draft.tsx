@@ -125,9 +125,8 @@ function DraftScreen({
         <View style={styles.formContainer}>
           <View style={styles.top}>
             <Text style={styles.formTitle}>Job Post Draft</Text>
-            <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-              Use the toggle to determine what information you want displayed in
-              your public job posting.
+            <Text style={{ fontSize: 16, fontFamily: 'DMSans', color: '#94613D'}}>
+            Toggles determine what information is displayed in your public job posting
             </Text>
           </View>
           <FormProvider {...methods}>
@@ -151,11 +150,89 @@ function DraftScreen({
 
             <View style={styles.formTop}>
               <Switch
+                onValueChange={() =>
+                  setJobPositionIsEnabled(!jobPositionIsEnabled)
+                }
+                value={jobPositionIsEnabled}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
+              />
+              <Text style={styles.formText}>Job Position
+                <Text style={{ color: 'red' }}>*</Text>
+              </Text>
+            </View>
+            <FormInput
+              name="jobPosition"
+              label="jobPosition"
+              placeholder="Waiter, waitress"
+              rules={{ required: 'Job Position is required!' }}
+            />
+            {methods.formState.errors.jobPosition != null && (
+              <Text>Please check the Job Position.</Text>
+            )}
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
+                value={phoneIsEnabled}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
+              />
+              <Text style={styles.formText}>Phone
+                <Text style={{ color: 'red' }}>*</Text>
+              </Text>
+            </View>
+            <FormInput
+              name="phone"
+              label="phone"
+              placeholder="(510) xxx - xxxx"
+            />
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
+                value={addressIsEnabled}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
+              />
+              <Text style={styles.formText}>Address/Location
+                <Text style={{ color: 'red' }}>*</Text>
+              </Text>
+            </View>
+            <FormInput
+              name="address"
+              label="address"
+              placeholder="2400 Durant Ave., Berkeley, CA"
+            />
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setLangaugeReqIsEnabled(!languageReqIsEnabled)
+                }
+                value={languageReqIsEnabled}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
+              />
+              <Text style={styles.formText}>Language Requirement
+                <Text style={{ color: 'red' }}>*</Text>
+              </Text>
+            </View>
+            <FormInput
+              name="languageRequirement"
+              label="languageRequirement"
+              placeholder="Cantonese, English"
+              rules={{ required: 'Language Requirement is required!' }}
+            />
+            {methods.formState.errors.languageRequirement != null && (
+              <Text>Please check the Language Requirement.</Text>
+            )}
+
+            <View style={styles.formTop}>
+              <Switch
                 onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
                 value={dateIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
-              <Text style={styles.formText}>Date*</Text>
+              <Text style={styles.formText}>
+                Date<Text style={{ color: 'red' }}>*</Text>
+              </Text>
             </View>
             <FormInput
               name="date"
@@ -173,7 +250,7 @@ function DraftScreen({
                   setCompanyNameIsEnabled(!companyNameIsEnabled)
                 }
                 value={companyNameIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
               <Text style={styles.formText}>Company Name</Text>
             </View>
@@ -185,25 +262,11 @@ function DraftScreen({
 
             <View style={styles.formTop}>
               <Switch
-                onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
-                value={addressIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Address</Text>
-            </View>
-            <FormInput
-              name="address"
-              label="address"
-              placeholder="2400 Durant Ave., Berkeley, CA"
-            />
-
-            <View style={styles.formTop}>
-              <Switch
                 onValueChange={() =>
                   setContactPersonIsEnabled(!contactPersonIsEnabled)
                 }
                 value={contactPersonIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
               <Text style={styles.formText}>Contact Person</Text>
             </View>
@@ -215,65 +278,11 @@ function DraftScreen({
 
             <View style={styles.formTop}>
               <Switch
-                onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
-                value={phoneIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Phone</Text>
-            </View>
-            <FormInput
-              name="phone"
-              label="phone"
-              placeholder="(510) xxx - xxxx"
-            />
-
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() =>
-                  setJobPositionIsEnabled(!jobPositionIsEnabled)
-                }
-                value={jobPositionIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Job Position*</Text>
-            </View>
-            <FormInput
-              name="jobPosition"
-              label="jobPosition"
-              placeholder="Waiter, waitress"
-              rules={{ required: 'Job Position is required!' }}
-            />
-            {methods.formState.errors.jobPosition != null && (
-              <Text>Please check the Job Position.</Text>
-            )}
-
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() =>
-                  setLangaugeReqIsEnabled(!languageReqIsEnabled)
-                }
-                value={languageReqIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Language Requirement*</Text>
-            </View>
-            <FormInput
-              name="languageRequirement"
-              label="languageRequirement"
-              placeholder="Cantonese, English"
-              rules={{ required: 'Language Requirement is required!' }}
-            />
-            {methods.formState.errors.languageRequirement != null && (
-              <Text>Please check the Language Requirement.</Text>
-            )}
-
-            <View style={styles.formTop}>
-              <Switch
                 onValueChange={() =>
                   setWorkingHoursIsEnabled(!workingHoursIsEnabled)
                 }
                 value={workingHoursIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
               <Text style={styles.formText}>Working hours/day</Text>
             </View>
@@ -289,7 +298,7 @@ function DraftScreen({
                   setWorkingDaysIsEnabled(!workingDaysIsEnabled)
                 }
                 value={workingDaysIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
               <Text style={styles.formText}>Working days/week</Text>
             </View>
@@ -303,7 +312,7 @@ function DraftScreen({
               <Switch
                 onValueChange={() => setSalaryIsEnabled(!salaryIsEnabled)}
                 value={salaryIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
               <Text style={styles.formText}>Salary</Text>
             </View>
@@ -315,7 +324,7 @@ function DraftScreen({
                   setProbationPeriodIsEnabled(!probationPeriodIsEnabled)
                 }
                 value={probationPeriodIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
               <Text style={styles.formText}>Probation Period (if any)</Text>
             </View>
@@ -331,7 +340,7 @@ function DraftScreen({
                   setEmployeeBenefitIsEnabled(!employeeBenefitIsEnabled)
                 }
                 value={employeeBenefitIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
               <Text style={styles.formText}>Employee Benefit (if any)</Text>
             </View>
@@ -345,7 +354,7 @@ function DraftScreen({
               <Switch
                 onValueChange={() => setOtherInfoIsEnabled(!otherInfoIsEnabled)}
                 value={otherInfoIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
+                trackColor={{ false: '#767577', true: '#ABEE8B' }}
               />
               <Text style={styles.formText}>Other Information</Text>
             </View>
@@ -356,12 +365,12 @@ function DraftScreen({
             />
           </FormProvider>
           <View style={styles.bottomButtons}>
-            <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
-              <Text style={styles.buttonText}>Save to Drafts</Text>
+            <Pressable style={[styles.buttons, { backgroundColor: 'white', borderColor: '#CC433C', borderWidth: 2}]}>
+              <Text style={[styles.buttonText, { color: '#CC433C' }]}>Save Draft</Text>
             </Pressable>
             <Pressable
               onPress={methods.handleSubmit(onSubmit)}
-              style={[styles.buttons, { backgroundColor: '#CC433C' }]}
+              style={[styles.buttons, { backgroundColor: '#CC433C'}]}
             >
               <Text style={styles.buttonText}>Post Job</Text>
             </Pressable>
