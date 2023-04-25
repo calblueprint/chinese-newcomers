@@ -34,15 +34,29 @@ const constructorToUserTypeMap = new Map<GenericUser, string>([
 ])
 
 const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
+  // const userId = document.id.toString();
+  // const data = document.data();
+  // const user = {
+  //   id: userId,
+  //   ...data
+  // };
+  // // need to check if i have to return the user as employer/regularUser/admin
+  // return user as GenericUser;
   const userId = document.id.toString();
   const data = document.data();
+  const type = data.access;
+  const userType = userTypeToConstructorMap.get(type);
+  if (!userType) {
+    console.log('User type not found.');
+    return null;
+  }
   const user = {
     id: userId,
-    ...data
-  };
-  // need to check if i have to return the user as employer/regularUser/admin
-  return user as GenericUser;
-
+    ...data,
+  }
+  console.log("what is the type of this user?")
+  console.log(type);
+  return user as RegularUser;
 };
 
 export const getUser = async (id: string): Promise<GenericUser | null> => {
@@ -97,9 +111,7 @@ export const checkAndAddUser = async (
   accessLevel: string,
   phoneNumber: string | null,
 ) => {
-  console.log("check and add user");
   const userObject = await getUser(user.uid);
-  console.log("does this work");
   if (userObject !== null) {
     console.log(`Got user from users collection. Name: ${userObject.name}`);
   } else {
