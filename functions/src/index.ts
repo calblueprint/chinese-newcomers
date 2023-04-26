@@ -4,11 +4,10 @@ import admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore();
 
-const approvedJobsCollection = firestore.collection('approvedJobs');
-
 exports.updateExpiredJobs = functions.pubsub
   .schedule('0 12 * * *')
   .onRun(async () => {
+    const approvedJobsCollection = firestore.collection('approvedJobs');
     const approvedJobs = approvedJobsCollection.get();
     const now = new Date();
     (await approvedJobs).forEach(async job => {
