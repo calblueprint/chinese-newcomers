@@ -1,34 +1,36 @@
-import React, { useState, useContext } from 'react';
-import { Text, View, Image, KeyboardAvoidingView } from 'react-native';
-import { getAuth } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
 import {
-  useForm,
   FormProvider,
-  SubmitHandler,
   SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
 } from 'react-hook-form';
-import styles from './styles';
-import AuthInput from '../../../components/AuthInput/AuthInput';
-import { AuthContext } from '../../../context/AuthContext';
-import StyledButton from '../../../components/StyledButton/StyledButton';
+import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
 import logo from '../../../assets/cnsc-logo.png';
+import AuthInput from '../../../components/AuthInput/AuthInput';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { AuthContext } from '../../../context/AuthContext';
+import { signUpEmail } from '../../../firebase/auth';
+import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
-const auth = getAuth();
-
-function AdminRegisterScreen({ route, navigation }: any) {
+function AdminRegisterScreen({
+  navigation,
+  route,
+}: AuthStackScreenProps<'AdminRegisterScreen'>) {
   interface FormValues {
     email: string;
     password: string;
   }
-  const { signUpEmail } = useContext(AuthContext);
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { phoneNumber } = route.params;
+  const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      await signUpEmail(email, password, phoneNumber);
+      await signUpEmail(dispatch, { email, password, phoneNumber });
     } catch (e) {
       console.error(e);
     }
@@ -36,10 +38,6 @@ function AdminRegisterScreen({ route, navigation }: any) {
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
-
-  const onBack: any = () => {
-    navigation.goBack();
-  };
 
   return (
     <View style={styles.container}>
@@ -84,7 +82,7 @@ function AdminRegisterScreen({ route, navigation }: any) {
             <View style={styles.buttonContainer}>
               <StyledButton
                 text="back"
-                onPress={onBack}
+                onPress={() => navigation.goBack()}
                 buttonStyle={{
                   width: '45%',
                   height: '100%',

@@ -1,20 +1,27 @@
-import React, { useState, useContext } from 'react';
-import { Text, View, Image } from 'react-native';
-// import { getAuth, signOut } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
 import {
-  useForm,
   FormProvider,
-  SubmitHandler,
   SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
 } from 'react-hook-form';
-import styles from './styles';
-import NumberInput from '../../../components/NumberInput/NumberInput';
-import { getAccess, signUpPhoneAdmin } from '../../../firebase/auth';
-import { AuthContext } from '../../../context/AuthContext';
-import StyledButton from '../../../components/StyledButton/StyledButton';
+import { Image, Text, View } from 'react-native';
 import logo from '../../../assets/cnsc-logo.png';
+import NumberInput from '../../../components/NumberInput/NumberInput';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { AuthContext } from '../../../context/AuthContext';
+import {
+  getAccess,
+  signInPhone,
+  signUpPhoneAdmin,
+} from '../../../firebase/auth';
+import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
-function VerificationScreen({ route, navigation }: any) {
+function VerificationScreen({
+  route,
+  navigation,
+}: AuthStackScreenProps<'VerificationScreen'>) {
   interface FormValues {
     phoneNumber: string;
     VerificationCode: string;
@@ -22,16 +29,16 @@ function VerificationScreen({ route, navigation }: any) {
   const { ...methods } = useForm<FormValues>();
   const [verificationCode, setVerificationCode] = useState('');
   const { verificationId, phoneNumber } = route.params;
-  const { signInPhone } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
       const access = await getAccess(phoneNumber);
       if (access === false) {
-        await signInPhone(verificationId, verificationCode);
+        await signInPhone(dispatch, { verificationId, verificationCode });
       } else {
         await signUpPhoneAdmin(verificationId, verificationCode);
-        navigation.navigate('AdminRegister', { phoneNumber });
+        navigation.navigate('AdminRegisterScreen', { phoneNumber });
       }
     } catch (e) {
       console.error(e);
@@ -40,10 +47,6 @@ function VerificationScreen({ route, navigation }: any) {
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
-
-  const onBack: any = () => {
-    navigation.goBack();
-  };
 
   return (
     <View style={styles.container}>
@@ -66,7 +69,7 @@ function VerificationScreen({ route, navigation }: any) {
         <View style={styles.buttonContainer}>
           <StyledButton
             text="back"
-            onPress={onBack}
+            onPress={() => navigation.goBack()}
             buttonStyle={{
               width: '45%',
               height: '100%',

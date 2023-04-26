@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-elements';
-import { getAuth, signOut } from 'firebase/auth';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
-import JobCard from '../../components/JobCard/JobCard';
-import styles from './Styles';
-import { getAllJobs } from '../../firebase/firestore/job';
-import { Job } from '../../types/types';
+import React, { useEffect, useState } from 'react';
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
+import JobCard from '../../components/JobCard/JobCard';
+import { getAllJobs } from '../../firebase/firestore/job';
+import { getUser } from '../../firebase/firestore/user';
+import { FeedStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './Styles';
 
-const auth = getAuth();
-
-function FeedScreen({ navigation }: any) {
+function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([] as Job[]);
   const [filteredList, setFilteredList] = useState([] as Job[]);
@@ -51,6 +49,11 @@ function FeedScreen({ navigation }: any) {
     }
   }, [category, list]);
 
+  // debugging user functions
+  // console.log("hello");
+  // console.log(getUser("GhifKnsELfgFWy2b2bhw"));
+  // console.log("hello")
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
@@ -79,7 +82,16 @@ function FeedScreen({ navigation }: any) {
 
         {filteredList.map((job, index) => (
           // eslint-disable-next-line react/jsx-key
-          <JobCard job={job} idx={index} pending={false} />
+          <JobCard
+            job={job}
+            key={job.id}
+            idx={index}
+            pending={false}
+            pendingJobs={null}
+            setPendingJobs={null}
+            filteredJobs={filteredList}
+            setFilteredJobs={setFilteredList}
+          />
         ))}
       </ScrollView>
       {/* <View style={styles.footer}>

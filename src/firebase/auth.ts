@@ -1,16 +1,18 @@
 import {
+  createUserWithEmailAndPassword,
+  deleteUser,
   getAuth,
   PhoneAuthProvider,
   signInWithCredential,
+  signInWithEmailAndPassword,
   signOut,
-  createUserWithEmailAndPassword,
-  deleteUser,
   User,
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { getUser, addUser } from './firestore/user';
+import { AuthDispatch } from '../context/AuthContext';
 import { db } from './config';
 import firebaseApp from './firebaseApp';
+import { checkAndAddUser, getUser } from './firestore/user';
 
 const auth = getAuth(firebaseApp);
 // TODO: CHANGE 'recaptcha-container' TO ID OF CAPTCHA CONTAINER
@@ -72,98 +74,12 @@ export const phoneGetConfirmation = async (
   }
 };
 
-// Part 2 of signing in with phone. Confirm code using ConfirmationResult. Returns user
-export const confirmCode = async (verificationId: string, code: string) => {
-  try {
-    const credential = await PhoneAuthProvider.credential(verificationId, code);
-    const result = await signInWithCredential(auth, credential);
-    return result.user;
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
-};
-
-export const signOutUser = async (): Promise<void> => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const registerWithEmailAndPassword = async (
-  email: string,
-  password: string,
-): Promise<void> => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password,
-    );
-    const { user } = userCredential;
-    console.log(user);
-    const userObject = await getUser(user.uid);
-    if (userObject !== null) {
-      console.log(`Got user from users collection. Name: ${userObject.name}`);
-      // TODO: probably put user object into react context
-    } else {
-      console.log('Create new user flow');
-      // TODO: handle user not yet in users collection. check access collection to see what type of user to create
-      // below code just for testing
-      await addUser({
-        id: user.uid,
-        access: 'admin',
-        createdJobs: [],
-        email: user.email,
-        likedJobs: [], // switched to string of jobIds to match Firebase
-        name: 'test phone',
-        phoneNumber: user.phoneNumber,
-        verified: true,
-      });
-    }
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
-};
-
-export const logInOrRegisterWithPhoneNumber = async (
-  user: any,
-): Promise<void> => {
-  try {
-    const userObject = await getUser(user.id);
-    if (userObject !== null) {
-      console.log(`Got user from users collection. Name: ${userObject.name}`);
-      // TODO: probably put user object into react context
-    } else {
-      console.log('Create new user flow');
-      // TODO: handle user not yet in users collection. check access collection to see what type of user to create
-      // below code just for testing
-      await addUser({
-        id: user.uid,
-        access: 'regular_user',
-        createdJobs: [],
-        email: user.email,
-        likedJobs: [], // switched to string of jobIds to match Firebase
-        name: 'test phone',
-        phoneNumber: user.phoneNumber,
-        verified: true,
-        // password: null
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const signUpPhoneAdmin = async (
-  verficationId: string,
+  verificationId: string,
   code: string,
 ): Promise<void> => {
   try {
-    const credential = await PhoneAuthProvider.credential(verficationId, code);
+    const credential = await PhoneAuthProvider.credential(verificationId, code);
     const result = await signInWithCredential(auth, credential);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const user = auth.currentUser;
@@ -181,4 +97,68 @@ export const signUpPhoneAdmin = async (
     console.warn('Phone sign up error', error);
     throw error;
   }
+};
+
+export const signUpEmail = async (
+  dispatch: AuthDispatch,
+  params: { email: string; password: string; phoneNumber: string },
+) => {
+  createUserWithEmailAndPassword(auth, params.email, params.password)
+    .then(async userCredential => {
+      console.log("signup email");
+      const { user } = userCredential;
+      await checkAndAddUser(user, 'admin', params.phoneNumber);
+      console.log('Email sign up successful', user.email);
+      await activatedAdmin(params.phoneNumber);
+      const UserObject = await getUser(user.uid);
+      dispatch({ type: 'SIGN_IN', userObject: UserObject });
+    })
+    .catch(error => {
+      console.warn('Email sign up error', error);
+    });
+};
+
+export const signInEmail = async (
+  dispatch: AuthDispatch,
+  params: { email: string; password: string },
+) => {
+  signInWithEmailAndPassword(auth, params.email, params.password)
+    .then(async userCredential => {
+      const { user } = userCredential;
+      const UserObject = await getUser(user.uid);
+      dispatch({ type: 'SIGN_IN', userObject: UserObject });
+    })
+    .catch(error => {
+      console.warn('Email sign in error', error);
+    });
+};
+
+export const signInPhone = async (
+  dispatch: AuthDispatch,
+  params: { verificationId: string; verificationCode: string },
+) => {
+  try {
+    const credential = await PhoneAuthProvider.credential(
+      params.verificationId,
+      params.verificationCode,
+    );
+    const result = await signInWithCredential(auth, credential);
+    await checkAndAddUser(result.user, 'regular_user', null);
+    console.log('Phone authentication successful', result.user.phoneNumber);
+    const UserObject = await getUser(result.user.uid);
+    dispatch({ type: 'SIGN_IN', userObject: UserObject });
+  } catch (error) {
+    console.warn('Phone sign up error', error);
+    throw error;
+  }
+};
+
+export const signUserOut = async (dispatch: AuthDispatch) => {
+  try {
+    await signOut(auth);
+    console.log('Sign out successful');
+  } catch (error) {
+    console.warn('Sign out error', error);
+  }
+  dispatch({ type: 'SIGN_OUT' });
 };

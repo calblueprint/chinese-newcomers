@@ -1,21 +1,22 @@
-export interface genericUser {
+export interface GenericUser {
   id: string;
   access: string;
-  email: string | null;
   name: string;
   phoneNumber: string | null;
   verified: boolean;
 }
 
-export interface RegularUser extends genericUser {
+export interface RegularUser extends GenericUser {
   likedJobs: string[];
 }
 
-export interface Admin extends genericUser {
+export interface Admin extends GenericUser {
+  email: string | null;
   createdJobs: string[];
 }
 
-export interface Employer extends genericUser {
+export interface Employer extends GenericUser {
+  email: string | null;
   createdJobs: string[];
 }
 

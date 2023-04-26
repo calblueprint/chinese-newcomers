@@ -1,3 +1,4 @@
+import { UserCredential } from 'firebase/auth';
 import {
   deleteDoc,
   doc,
@@ -7,13 +8,9 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { UserCredential } from 'firebase/auth';
 import { db } from '../config';
-import { RegularUser, Admin, Employer, genericUser, User } from '../../types/types';
+import { RegularUser, Admin, Employer, GenericUser } from '../../types/types';
 
-// interface Dictionary<T> {
-//   [key: genericUser]: T;
-// }
 const REGULAR_USER_COLLECTION_NAME = 'regularUser';
 const ADMIN_COLLECTION_NAME = 'admin';
 const EMPLOYER_COLLECTION_NAME = 'employer';
@@ -22,84 +19,92 @@ const userCollectionRefs = (id: string) => [
   doc(db, REGULAR_USER_COLLECTION_NAME, id),
   doc(db, ADMIN_COLLECTION_NAME, id),
   doc(db, EMPLOYER_COLLECTION_NAME, id),
-]; 
+];
 
-
-const userTypeToConstructorMap = new Map<string, User>([
+const userTypeToConstructorMap = new Map<string, GenericUser>([
   [REGULAR_USER_COLLECTION_NAME, <RegularUser>{}],
   [ADMIN_COLLECTION_NAME, <Admin>{}],
   [EMPLOYER_COLLECTION_NAME, <Employer>{}],
 ]);
 
-// QueryDocumentSnapshot<DocumentData>
-const parseUser = async (document: QueryDocumentSnapshot<any>) => {
+const constructorToUserTypeMap = new Map<GenericUser, string>([
+  [<RegularUser>{}, REGULAR_USER_COLLECTION_NAME],
+  [<Admin>{}, ADMIN_COLLECTION_NAME],
+  [<Employer>{}, EMPLOYER_COLLECTION_NAME],
+]);
+
+const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
+  // const userId = document.id.toString();
+  // const data = document.data();
+  // const user = {
+  //   id: userId,
+  //   ...data
+  // };
+  // // need to check if i have to return the user as employer/regularUser/admin
+  // return user as GenericUser;
   const userId = document.id.toString();
   const data = document.data();
   const type = data.access;
-  
-  // const userConstructors: Dictionary<genericUser> = {
-  //   regular: RegularUser,
-  //   admin: Admin,
-  //   employer: Employer,
-  // }
-
   const userType = userTypeToConstructorMap.get(type);
   if (!userType) {
-    console.log('No such user type!');
+    console.log('User type not found.');
     return null;
   }
-
   const user = {
     id: userId,
     ...data,
-  }
-
-  return user as typeof userType;
-};
-
-export const getUser = async (id: string): Promise<User | null> => {
-  const userRefs = userCollectionRefs(id);
-
-  const userDocs = await Promise.all(userRefs.map((ref) => getDoc(ref)));
-  const userDoc = userDocs.find((doc) => doc.exists);
-  if (!userDoc) {
-      console.log('No such document!');
-      return null;
   };
-  console.log('User data:', userDoc.data());
-  return parseUser(userDoc);
+  console.log('what is the type of this user?');
+  console.log(type);
+  return user as RegularUser;
 };
 
-export const addUser = async (user: genericUser): Promise<void> => {
+export const getUser = async (id: string): Promise<GenericUser | null> => {
+  const collections = userCollectionRefs(id);
+  for (let docRef = 0; docRef < collections.length; docRef += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    const docSnap = await getDoc(collections[docRef]);
+    if (docSnap.exists()) {
+      return parseUser(docSnap);
+    }
+  }
+  return null;
+};
+
+export const addUser = async (user: GenericUser): Promise<void> => {
   const type = user.access;
   const itemsRef = doc(db, type, user.id);
   await setDoc(itemsRef, user);
 };
 
-export const updateUser = async(userId: string, newField: Dictionary<string>) => {
-  const user = getUser(userId);
-  const userConstructors: Dictionary<string> = {
-    RegularUser: 'regularUser',
-    Admin: 'admin',
-    Employer: 'employer',
-  };
-
-  const userType = userConstructors[user];
+export const updateUser = async (
+  userId: string,
+  newFields: Map<string, string | string[] | boolean>,
+) => {
+  const user = await getUser(userId);
+  if (!user) {
+    console.log('User does not exist.');
+    return;
+  }
+  const userType = constructorToUserTypeMap.get(user);
+  if (!userType) {
+    console.log('User type does not exist.');
+    return;
+  }
   const docRef = doc(db, userType, userId);
-  const field = Object.keys(newField)[0];
-  const data = {
-    field = newField[field];
-  };
+  const data: { [key: string]: string | string[] | boolean } = {};
+  newFields.forEach((newValue, field) => {
+    data[field] = newValue;
+  });
   await updateDoc(docRef, data);
 };
 
-export const deleteUser = async (user: genericUser): Promise<void> => {
+export const deleteUser = async (user: GenericUser): Promise<void> => {
   const type = user.access;
   const userId = user.id;
   const docRef = doc(db, type, userId);
   await deleteDoc(docRef);
-}
-
+};
 
 export const checkAndAddUser = async (
   user: UserCredential['user'],
@@ -118,6 +123,7 @@ export const checkAndAddUser = async (
       assignPhoneNumber = phoneNumber;
     }
 
+    //  might need to fix this depending on different types
     await addUser({
       id: user.uid,
       access: accessLevel,

@@ -1,21 +1,22 @@
-import React, { useState, useContext } from 'react';
-import { Text, View, Image } from 'react-native';
-import { getAuth } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
 import {
-  useForm,
   FormProvider,
-  SubmitHandler,
   SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
 } from 'react-hook-form';
-import styles from './styles';
-import AuthInput from '../../../components/AuthInput/AuthInput';
-import { AuthContext } from '../../../context/AuthContext';
-import StyledButton from '../../../components/StyledButton/StyledButton';
+import { Image, Text, View } from 'react-native';
 import logo from '../../../assets/cnsc-logo.png';
+import AuthInput from '../../../components/AuthInput/AuthInput';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { AuthContext } from '../../../context/AuthContext';
+import { signInEmail } from '../../../firebase/auth';
+import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
-const auth = getAuth();
-
-function AdminSigninScreen({ navigation }: any) {
+function AdminSigninScreen({
+  navigation,
+}: AuthStackScreenProps<'AdminSigninScreen'>) {
   interface FormValues {
     email: string;
     password: string;
@@ -23,13 +24,12 @@ function AdminSigninScreen({ navigation }: any) {
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signInEmail } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      await signInEmail(email, password);
+      await signInEmail(dispatch, { email, password });
       console.log('signed in');
-      // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
       console.error(e);
       throw e;
@@ -38,10 +38,6 @@ function AdminSigninScreen({ navigation }: any) {
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
     console.log(errors);
-
-  const onBack: any = () => {
-    navigation.goBack();
-  };
 
   return (
     <View style={styles.container}>
@@ -80,7 +76,7 @@ function AdminSigninScreen({ navigation }: any) {
           />
           <StyledButton
             text="back"
-            onPress={onBack}
+            onPress={() => navigation.goBack()}
             buttonStyle={{
               width: '100%',
               height: '100%',

@@ -7,8 +7,9 @@ import { firebaseApp } from '../../../firebase/firebaseApp';
 import '../../../translation/i18n';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
+import { AuthStackScreenProps } from '../../../types/navigation';
 
-function WelcomeScreen({ navigation }: any) {
+function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
   const recaptchaVerifier = useRef(null);
   const { t, i18n } = useTranslation();
 
@@ -24,7 +25,7 @@ function WelcomeScreen({ navigation }: any) {
       <View style={styles.buttonContainer}>
         <StyledButton
           text={t('welcomePage.signUp')}
-          onPress={() => navigation.navigate('PhoneNumberRegister')}
+          onPress={() => navigation.navigate('PhoneNumberScreen')}
           buttonStyle={{}}
           textStyle={{}}
         />
@@ -33,7 +34,7 @@ function WelcomeScreen({ navigation }: any) {
 
         <StyledButton
           text={t('welcomePage.signIn')}
-          onPress={() => navigation.navigate('Signin')}
+          onPress={() => navigation.navigate('SigninScreen')}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}
         />

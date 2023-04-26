@@ -13,6 +13,6 @@ export default StyleSheet.create({
     height: 40,
     marginBottom: '5%',
     paddingLeft: '3%',
-    paddingRight: '3%'
-  }
+    paddingRight: '3%',
+  },
 });
