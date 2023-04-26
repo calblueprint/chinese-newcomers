@@ -15,7 +15,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Timestamp } from 'firebase/firestore';
 import styles from './styles';
 import { Job } from '../../types/types';
-import { createJob } from '../../firebase/firestore/job';
+import { createJob, APPROVED_JOBS_COLLECTION, PENDING_JOBS_COLLECTION } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
 import { DraftStackScreenProps } from '../../types/navigation';
@@ -78,7 +78,7 @@ function DraftScreen({
   }
   const { ...methods } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = async data => {
+  async function saveJob(data: FormValues, collection: string) {
     const map = new Map<string, boolean>();
     map.set('date', true);
     map.set('companyName', companyNameIsEnabled);
@@ -111,13 +111,21 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
-      await createJob(job, 'notApprovedJobs');
+      await createJob(job, collection);
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
       methods.reset();
     } catch (e) {
       console.error(e);
     }
+  }
+
+  const saveToDrafts: SubmitHandler<FormValues> = async data => {
+    saveJob(data, PENDING_JOBS_COLLECTION)
+  };
+
+  const saveToFeed: SubmitHandler<FormValues> = async data => {
+    saveJob(data, APPROVED_JOBS_COLLECTION)
   };
 
   return (
@@ -323,7 +331,6 @@ function DraftScreen({
               label="employeeBenefit"
               placeholder="Insurance, paid leave, etc."
             />
-
             <View style={styles.formTop}>
               <Switch
                 onValueChange={() => setOtherInfoIsEnabled(!otherInfoIsEnabled)}
@@ -332,27 +339,24 @@ function DraftScreen({
               />
               <Text style={styles.formText}>Other Information</Text>
             </View>
-            <FormInput
-              name="otherInfo"
-              label="otherInfo"
-              placeholder="Looking for XYZ, etc."
-            />
-          </FormProvider>
-          <View style={styles.bottomButtons}>
-            <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
-              <Text style={styles.buttonText}>Save to Drafts</Text>
-            </Pressable>
-            <Pressable
-              onPress={methods.handleSubmit(onSubmit)}
-              style={[styles.buttons, { backgroundColor: '#CC433C' }]}
-            >
-              <Text style={styles.buttonText}>Post Job</Text>
-            </Pressable>
-          </View>
+          <FormInput name="otherInfo" label="otherInfo" placeholder="Looking for XYZ, etc." />
+        </FormProvider>
+        <View style={styles.bottomButtons}>
+          <Pressable 
+            onPress={methods.handleSubmit(saveToDrafts)}
+            style={[styles.buttons, { backgroundColor: '#94613D' }]}
+          >
+            <Text style={styles.buttonText}>Save to Drafts</Text>
+          </Pressable>
+          <Pressable
+            onPress={methods.handleSubmit(saveToFeed)}
+            style={[styles.buttons, { backgroundColor: '#CC433C' }]}
+          >
+            <Text style={styles.buttonText}>Post Job</Text>
+          </Pressable>
         </View>
-        {/* </ScrollView> */}
+        </View>
       </KeyboardAwareScrollView>
-      {/* <Button title="Back" style={styles.button} onPress={() => navigation.navigate('Home')} /> */}
       <Modal visible={successModalVisibile} transparent animationType="slide">
         <View style={styles.centeredView}>
           <View style={styles.modal}>
@@ -360,7 +364,6 @@ function DraftScreen({
               Congratulations! You&apos;ve submitted a job posting for{' '}
               {modalJobText}.
             </Text>
-
             <StyledButton
               text="POST ANOTHER JOB"
               textStyle={{ color: '#CC433C' }}

@@ -13,8 +13,11 @@ import {
 import { db } from '../firebaseApp';
 import { Job, jobInstance } from '../../types/types';
 
-const approvedJobsCollection = collection(db, 'approvedJobs');
-const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
+export const PENDING_JOBS_COLLECTION = "notApprovedJobs";
+export const APPROVED_JOBS_COLLECTION = "approvedJobs";
+
+const approvedJobsCollection = collection(db, APPROVED_JOBS_COLLECTION);
+const notApprovedJobsCollection = collection(db, PENDING_JOBS_COLLECTION);
 
 export const parseJob = async (document: DocumentSnapshot<DocumentData>) => {
   const jobId = document.id.toString();
@@ -75,7 +78,7 @@ export const createJob = async (
 ): Promise<void> => {
   const docRef = collection(db, collectionName);
   try {
-    if (collectionName === 'approvedJobs') {
+    if (collectionName === APPROVED_JOBS_COLLECTION) {
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
@@ -104,7 +107,7 @@ export const getAllJobs = async (collectionName: string): Promise<Job[]> => {
   try {
     const promises: Array<Promise<Job>> = [];
     const docSnap =
-      collectionName === 'approvedJobs'
+      collectionName === APPROVED_JOBS_COLLECTION
         ? await getDocs(approvedJobsCollection)
         : await getDocs(notApprovedJobsCollection);
     docSnap.forEach(job => {
