@@ -3,12 +3,12 @@ import useFirestoreListener from "react-firestore-listener";
 import { Image, SafeAreaView, ScrollView, Text, View, TouchableOpacity, GestureResponderEvent, ViewStyle, TextStyle } from "react-native";
 import Logo from "../../assets/cnsc-logo.png";
 import JobCard from "../../components/JobCard/JobCard";
-import { FeedStackScreenProps } from "../../types/navigation";
+import { EmployerStackScreenProps } from "../../types/navigation";
 import { Job } from "../../types/types";
 import styles from "../Drafting/styles";
 import StyledButton from "../../components/StyledButton/StyledButton";
 
-function EmployerHome({ navigation }: FeedStackScreenProps<‘EmployerHome’>) {
+function EmployerHome({ navigation }: EmployerStackScreenProps<'EmployerHome'>) {
   const [open, setOpen] = useState(false);
   const approvedJobs = useFirestoreListener<Job>({
     collection: "approvedJobs",

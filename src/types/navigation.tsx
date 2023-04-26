@@ -34,6 +34,13 @@ export type DraftStackParamList = {
 export type DraftStackScreenProps<T extends keyof DraftStackParamList> =
   NativeStackScreenProps<DraftStackParamList, T>;
 
+export type EmployerStackParamList = {
+  EmployerHome: undefined;
+};
+
+export type EmployerStackScreenProps<T extends keyof EmployerStackParamList> =
+  NativeStackScreenProps<EmployerStackParamList, T>;
+
 export type FeedStackParamList = {
   FeedScreen: undefined;
 };
