@@ -1,23 +1,22 @@
+import { Timestamp } from 'firebase/firestore';
 import React, { ReactElement, useState } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import {
+  Modal,
+  Pressable,
+  SafeAreaView,
+  Switch,
   Text,
   View,
-  Pressable,
-  Switch,
-  Modal,
-  SafeAreaView,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { StatusBar } from 'expo-status-bar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import styles from './styles';
-import { Job } from '../../types/types';
-import { createJob } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
+import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './styles';
 
 function DraftScreen({
   navigation,
@@ -93,7 +92,7 @@ function DraftScreen({
     map.set('employeeBenefit', employeeBenefitIsEnabled);
     map.set('otherInfo', otherInfoIsEnabled);
     const job: Partial<Job> = {
-      date: new Date(),
+      date: new Timestamp(new Date().getTime() / 1000, 0),
       companyName: data.companyName || '',
       address: data.address || '',
       contactPerson: data.contactPerson || '',
@@ -148,24 +147,6 @@ function DraftScreen({
               containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
               textStyle={{ fontFamily: 'DMSans_500Medium' }}
             />
-
-            {/* <View style={styles.formTop}>
-              <Switch
-                onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
-                value={dateIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Date*</Text>
-            </View>
-            <FormInput
-              name="date"
-              label="date"
-              placeholder="10/27/2022"
-              rules={{ required: 'Date is required!' }}
-            />
-            {methods.formState.errors.date != null && (
-              <Text>Please check the Date.</Text>
-            )} */}
 
             <View style={styles.formTop}>
               <Switch

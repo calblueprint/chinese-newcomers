@@ -1,18 +1,17 @@
-import React, { useContext, useState } from 'react';
-import {
-  FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
-import { Image, Text, View } from 'react-native';
-import logo from '../../../assets/cnsc-logo.png';
+import React, { useState, useContext } from 'react';
+import { Text, View, Image } from 'react-native';
+import { getAuth } from 'firebase/auth';
+import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import { z } from 'zod';
+import styles from './styles';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signInEmail } from '../../../firebase/auth';
+import logo from '../../../assets/cnsc-logo.png';
 import { AuthStackScreenProps } from '../../../types/navigation';
-import styles from './styles';
+
+const emailSchema = z.string().email({ message: "Oops! Invalid email. Try again." });
 
 function AdminSigninScreen({
   navigation,
@@ -24,20 +23,61 @@ function AdminSigninScreen({
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [ signInError, setSignInError ] = useState('');
   const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
+      emailSchema.parse(email);
       await signInEmail(dispatch, { email, password });
-      console.log('signed in');
+      // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
-      console.error(e);
-      throw e;
+      if (e instanceof z.ZodError) {
+        setEmailError("Oops! Invalid email. Try again.");
+      }
+      switch (e.code) {
+        case 'auth/wrong-password':
+          setSignInError(
+            'Oops! Incorrect password. Please try again.',
+          );
+          break;
+        case 'auth/user-not-found':
+          setEmailError(
+            'Oops! Incorrect email or password. Please try again.',
+          );
+          break;
+        case 'auth/missing-email':
+          setEmailError(
+            'Oops! Email is not registered as admin.',
+          );
+          break;
+        default:
+          setSignInError('');
+      }
+      console.log(e);
+    }
+    if (signInError !== '') {
+      setSignInError('');
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
-    console.log(errors);
+  const handlePasswordChange = (password) => {
+    setPassword(password);
+    setSignInError('');
+  };
+
+  const handleEmailChange = (email) => {
+    setEmail(email);
+    if (emailError !== '') {
+      setEmailError('');
+    }
+    if (signInError !== '') {
+      setSignInError('');
+    }
+  };
+
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -55,16 +95,20 @@ function AdminSigninScreen({
             name="email"
             label="email"
             placeholder=" email@email.com"
-            onChangeText={setEmail}
+            hasError={(emailError !== ''|| signInError !== '')}
+            onChangeText={(emailInput) => handleEmailChange(emailInput)}
           />
+          {emailError !== '' && <Text style={{ color: 'red' }}>{emailError}</Text> }
           <Text style={styles.smallText}>Password </Text>
           <AuthInput
             name="password"
             label="password"
             placeholder=" password"
-            onChangeText={setPassword}
+            hasError={(emailError !== ''|| signInError !== '')}
+            onChangeText={(passInput) => handlePasswordChange(passInput)}
             secureTextEntry
           />
+          {signInError !== '' && <Text style={{ color: 'red' }}>{signInError}</Text> }
         </View>
 
         <View style={styles.buttonContainer}>
