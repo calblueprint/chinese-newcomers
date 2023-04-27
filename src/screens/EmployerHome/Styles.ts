@@ -1,6 +1,37 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  activeButton: {
+    backgroundColor: '#CC433C',
+    borderRadius: 25,
+    paddingHorizontal: 25,
+    paddingVertical: 10,
+  },
+  inactiveButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 25,
+    paddingHorizontal: 25,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: '#C4C4C4',
+  },
+  activeText: {
+    color: '#FFFFFF',
+    fontFamily: 'DMSans_500Medium',
+    fontSize: 16,
+  },
+  inactiveText: {
+    color: '#C4C4C4',
+    fontFamily: 'DMSans_500Medium',
+    fontSize: 16,
+  },
+  buttonContainer: {
+    height: '21%',
+    width: '83%',
+    alignSelf: 'center',
+    alignContent: 'center',
+    marginTop: '6%',
+  },
   container: {
     height: '100%',
     width: '100%',
@@ -23,19 +54,9 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
   },
-  feedTitle: {
+  employerTitle: {
     color: '#49260C',
-    fontSize: 28,
+    fontSize: 24,
     fontFamily: 'DMSans_700Bold',
-  },
-  redSquare: {
-    height: '50%',
-    width: '20%',
-    backgroundColor: 'red',
-    borderRadius: 3,
-  },
-  footer: {
-    height: '5%',
-    width: '100%',
-  },
+  }
 });

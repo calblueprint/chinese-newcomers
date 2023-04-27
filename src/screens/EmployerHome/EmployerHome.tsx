@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState, } from "react"; 
 import useFirestoreListener from "react-firestore-listener";
-import { Image, SafeAreaView, ScrollView, Text, View, TouchableOpacity, GestureResponderEvent, ViewStyle, TextStyle } from "react-native";
+import { Image, SafeAreaView, ScrollView, Text, View, AsyncStorageStatic } from "react-native";
 import Logo from "../../assets/cnsc-logo.png";
 import JobCard from "../../components/JobCard/JobCard";
 import { EmployerStackScreenProps } from "../../types/navigation";
 import { Job } from "../../types/types";
-import styles from "../Drafting/styles";
+import styles from "./Styles";
 import StyledButton from "../../components/StyledButton/StyledButton";
 
 function EmployerHome({ navigation }: EmployerStackScreenProps<'EmployerHome'>) {
-  const [open, setOpen] = useState(false);
   const approvedJobs = useFirestoreListener<Job>({
     collection: "approvedJobs",
   });
@@ -17,47 +16,45 @@ function EmployerHome({ navigation }: EmployerStackScreenProps<'EmployerHome'>) 
     collection: "notApprovedJobs",
   });
   const [filteredJobs, setFilteredJobs] = useState([] as Job[]);
-  const [toggleFilter, setToggleFilter] = useState("all");
-//   const filters: string[] = [‘all’, ‘pending’, ‘approved’];
   const [activeFilter, setActiveFilter] = useState("all");
   const allJobs = approvedJobs.concat(notApprovedJobs);
 
   // Write filter button logic
   useEffect(() => {
-    if (toggleFilter === "all") {
+    if (activeFilter === "all") {
       setFilteredJobs(allJobs);
-    } else if (toggleFilter === "pending") {
+    } else if (activeFilter === "pending") {
       setFilteredJobs(notApprovedJobs);
     } else {
       setFilteredJobs(approvedJobs);
-    }
-  }, [allJobs, notApprovedJobs, approvedJobs]);
+    } 
+  }, [activeFilter, allJobs, notApprovedJobs, approvedJobs]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
         <Image source={Logo} style={{ width: 100, height: 100 }} />
-        <Text style={styles.feedTitle}>Jobs</Text>
+        <Text style={styles.employerTitle}>Jobs</Text>
       </View>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          alignItems: ‘center’,
-          width: ’100%’,
+          alignItems: "center",
+          width: "100%",
         }}
-      >
+        >
         {/* Making filter buttons */}
         <View style={styles.buttonContainer}>
           <StyledButton
-            text=“All”
+            text="All"
             buttonStyle={
-              activeFilter === ‘all’
+              activeFilter === "all"
                 ? [styles.activeButton, styles.buttonContainer]
                 : [styles.inactiveButton, styles.buttonContainer]
             }
             textStyle={
-              activeFilter === ‘all’ ? styles.activeText : styles.inactiveText
+              activeFilter === "all" ? styles.activeText : styles.inactiveText
             }
-            onPress={() => setActiveFilter(‘all’)}
+            onPress={() => setActiveFilter("all")}
           />
           <StyledButton
             text="Pending"
@@ -67,32 +64,28 @@ function EmployerHome({ navigation }: EmployerStackScreenProps<'EmployerHome'>) 
                 : [styles.inactiveButton, styles.buttonContainer]
             }
             textStyle={
-              activeFilter === "pending"
-                ? styles.activeText
-                : styles.inactiveText
+              activeFilter === "pending" ? styles.activeText : styles.inactiveText
             }
             onPress={() => setActiveFilter("pending")}
           />
           <StyledButton
-            text=“Approved”
+            text="Approved"
             buttonStyle={
-              activeFilter === ‘approved’
+              activeFilter === "approved"
                 ? [styles.activeButton, styles.buttonContainer]
                 : [styles.inactiveButton, styles.buttonContainer]
             }
             textStyle={
-              activeFilter === ‘approved’
-                ? styles.activeText
-                : styles.inactiveText
+              activeFilter === "approved" ? styles.activeText : styles.inactiveText
             }
-            onPress={() => setActiveFilter(‘approved’)}
+            onPress={() => setActiveFilter("approved")}
           />
         </View>
         {filteredJobs.map(job => (
           <JobCard
             job={job}
             key={job.id}
-            //   pending={false}
+            pending={false}
           />
         ))}
       </ScrollView>
