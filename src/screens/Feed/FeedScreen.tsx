@@ -49,11 +49,6 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
     }
   }, [category, list]);
 
-  // debugging user functions
-  // console.log("hello");
-  // console.log(getUser("GhifKnsELfgFWy2b2bhw"));
-  // console.log("hello")
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>

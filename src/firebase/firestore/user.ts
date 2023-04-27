@@ -3,13 +3,13 @@ import {
   deleteDoc,
   doc,
   DocumentData,
+  DocumentSnapshot,
   getDoc,
-  QueryDocumentSnapshot,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { Admin, Employer, GenericUser, RegularUser } from '../../types/types';
 import { db } from '../config';
-import { RegularUser, Admin, Employer, GenericUser } from '../../types/types';
 
 const REGULAR_USER_COLLECTION_NAME = 'regularUser';
 const ADMIN_COLLECTION_NAME = 'admin';
@@ -21,7 +21,7 @@ const userCollectionRefs = (id: string) => [
   doc(db, EMPLOYER_COLLECTION_NAME, id),
 ];
 
-const userTypeToConstructorMap = new Map<string, GenericUser>([
+export const userTypeToConstructorMap = new Map<string, GenericUser>([
   [REGULAR_USER_COLLECTION_NAME, <RegularUser>{}],
   [ADMIN_COLLECTION_NAME, <Admin>{}],
   [EMPLOYER_COLLECTION_NAME, <Employer>{}],
@@ -33,18 +33,10 @@ const constructorToUserTypeMap = new Map<GenericUser, string>([
   [<Employer>{}, EMPLOYER_COLLECTION_NAME],
 ]);
 
-const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
-  // const userId = document.id.toString();
-  // const data = document.data();
-  // const user = {
-  //   id: userId,
-  //   ...data
-  // };
-  // // need to check if i have to return the user as employer/regularUser/admin
-  // return user as GenericUser;
+const parseUser = async (document: DocumentSnapshot<DocumentData>) => {
   const userId = document.id.toString();
   const data = document.data();
-  const type = data.access;
+  const type = data?.access;
   const userType = userTypeToConstructorMap.get(type);
   if (!userType) {
     console.log('User type not found.');
@@ -54,19 +46,15 @@ const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
     id: userId,
     ...data,
   };
-  console.log('what is the type of this user?');
-  console.log(type);
-  return user as RegularUser;
+  return user as typeof userType;
 };
 
 export const getUser = async (id: string): Promise<GenericUser | null> => {
   const collections = userCollectionRefs(id);
-  for (let docRef = 0; docRef < collections.length; docRef += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    const docSnap = await getDoc(collections[docRef]);
-    if (docSnap.exists()) {
-      return parseUser(docSnap);
-    }
+  const docSnaps = await Promise.all(collections.map(c => getDoc(c)));
+  const docSnap = docSnaps.find(document => document.exists());
+  if (docSnap) {
+    return parseUser(docSnap);
   }
   return null;
 };
@@ -122,6 +110,16 @@ export const checkAndAddUser = async (
     } else if (phoneNumber) {
       assignPhoneNumber = phoneNumber;
     }
+
+    const userType = userTypeToConstructorMap.get(accessLevel);
+    const userToBeAdded: GenericUser = {
+      id: user.uid,
+      access: accessLevel,
+      likedJobs: [], // switched to string of jobIds to match Firebase
+      name: 'test phone',
+      phoneNumber: assignPhoneNumber,
+      verified: true,
+    };
 
     //  might need to fix this depending on different types
     await addUser({

@@ -1,18 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState, useRef } from 'react';
-import { Text, View, Image } from 'react-native';
-import {
-  useForm,
-  FormProvider,
-  SubmitHandler,
-  SubmitErrorHandler,
-} from 'react-hook-form';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import React, { useRef, useState } from 'react';
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import { Image, Text, View } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import styles from './styles';
 import {
-  phoneGetConfirmation,
   getActivationStatus,
+  phoneGetConfirmation,
 } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';

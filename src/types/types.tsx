@@ -4,6 +4,7 @@ export interface GenericUser {
   name: string;
   phoneNumber: string | null;
   verified: boolean;
+  likedJobs: string[];
 }
 
 export interface RegularUser extends GenericUser {
@@ -16,7 +17,6 @@ export interface Admin extends GenericUser {
 }
 
 export interface Employer extends GenericUser {
-  email: string | null;
   createdJobs: string[];
 }
 
