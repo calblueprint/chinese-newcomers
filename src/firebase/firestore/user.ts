@@ -8,8 +8,9 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { User } from '../../types/types';
+import { User, Job } from '../../types/types';
 import { db } from '../config';
+import { getJob } from './job';
 
 const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
   const userId = document.id.toString();
@@ -19,7 +20,7 @@ const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
     access: data.access,
     createdJobs: data.createdJobs, // might need to map to job objects later
     email: data.email,
-    likedJobs: data.likedJobs, // might need to map to job objects later
+    bookmarkedJobs: data.bookmarkedJobs, // might need to map to job objects later
     name: data.name,
     phoneNumber: data.phoneNumber,
     verified: data.verified,
@@ -42,18 +43,6 @@ export const getUser = async (id: string): Promise<User | null> => {
 export const addUser = async (user: User): Promise<void> => {
   const itemsRef = doc(db, 'users', user.id);
   await setDoc(itemsRef, user);
-};
-
-export const updateUser = async (
-  userId: string,
-  newLikedJobs: string[],
-): Promise<void> => {
-  const docRef = doc(db, 'users', userId);
-  // This data object changes the fields that are different from the entry in backend!
-  const data = {
-    point_gain: newLikedJobs,
-  };
-  await updateDoc(docRef, data);
 };
 
 export const deleteUser = async (userId: string): Promise<void> => {
@@ -83,10 +72,66 @@ export const checkAndAddUser = async (
       access: accessLevel,
       createdJobs: [],
       email: user.email ? user.email : null,
-      likedJobs: [], // switched to string of jobIds to match Firebase
+      bookmarkedJobs: [], // switched to string of jobIds to match Firebase
       name: 'test phone',
       phoneNumber: assignPhoneNumber,
       verified: true,
     });
+  }
+};
+
+export const updateUserBookmarks = async (
+  userBookmarkedJobs: string[] | undefined,
+  userId: string,
+): Promise<void> => {
+  try {
+    const docRef = doc(db, 'users', userId);
+    updateDoc(docRef, { bookmarkedJobs: userBookmarkedJobs });
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+export const removeBookmarkedJob = async (
+  jobId: string,
+  userBookmarkedJobs: string[] | undefined,
+): Promise<void> => {
+  try {
+    if (userBookmarkedJobs !== undefined) {
+      const index = userBookmarkedJobs?.indexOf(jobId);
+      userBookmarkedJobs?.splice(index, 1);
+    }
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+export const getBookmarks = (
+  jobId: string,
+  userBookmarkedJobs: string[] | undefined,
+): boolean => {
+  if (userBookmarkedJobs?.includes(jobId)) {
+    return true;
+  }
+  return false;
+};
+
+export const getBookmarkedJobs = async (
+  userBookmarkedJobs: string[] | undefined,
+): Promise<Job[]> => {
+  try {
+    const promises: Array<Promise<Job>> = [];
+    userBookmarkedJobs?.forEach(job => {
+      promises.push(getJob(job, 'approvedJobs'));
+    });
+    const allJobs = await Promise.all(promises);
+    return allJobs.filter(obj =>
+      Object.prototype.hasOwnProperty.call(obj, 'jobPosition'),
+    );
+  } catch (e) {
+    console.error(e);
+    throw e;
   }
 };

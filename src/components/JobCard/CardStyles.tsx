@@ -20,18 +20,20 @@ export default StyleSheet.create({
   },
   jobRef: {
     marginBottom: '3%',
-    marginLeft: '10%',
+    marginLeft: '6%',
     alignItems: 'flex-start',
     justifyContent: 'center',
     height: '15%',
   },
   jobName: {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginLeft: '10%',
+    marginLeft: '6%',
     height: '30%',
-    marginBottom: '8%',
+    marginBottom: '10%',
+    marginRight: '10%',
   },
   centeredView: {
     flex: 1,
@@ -66,7 +68,6 @@ export default StyleSheet.create({
     marginTop: '5%',
     width: '100%',
     height: '12%',
-    alignItems: 'flex-start',
     marginLeft: '5%',
     justifyContent: 'center',
   },
@@ -77,6 +78,16 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 18,
     fontFamily: 'DMSans_500Medium',
+    fontWeight: '700',
+  },
+  modalFieldName: {
+    marginTop: '1%',
+    marginBottom: 15,
+    textAlign: 'left',
+    color: 'black',
+    fontSize: 18,
+    marginLeft: '5%',
+    fontFamily: 'DMSans_700Bold',
   },
   modalFieldTitle: {
     textAlign: 'left',
@@ -101,6 +112,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     marginLeft: '5%',
     marginRight: '5%',
+    marginTop: '8%',
   },
   jobRefText: {
     color: 'black',
@@ -116,6 +128,23 @@ export default StyleSheet.create({
   modalJobNameText: {
     color: 'black',
     fontSize: 22,
+    fontWeight: 'bold',
+    display: 'flex',
+    flexDirection: 'row',
+    marginRight: 13,
+  },
+  heart: {
+    width: 40,
+    height: 40,
+    marginRight: 0,
+  },
+  jobNameModal: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+  },
+  boldModalText: {
     fontWeight: 'bold',
     fontFamily: 'DMSans_700Bold',
   },
@@ -151,4 +180,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginTop: '6%',
   },
+  fieldText: {
+    flexDirection: 'row'
+  }
 });
