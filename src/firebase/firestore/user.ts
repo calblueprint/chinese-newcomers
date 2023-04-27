@@ -4,16 +4,20 @@ import {
   doc,
   DocumentData,
   getDoc,
-  QueryDocumentSnapshot,
+  DocumentSnapshot,
   setDoc,
   updateDoc,
+  getDocs,
+  collection,
 } from 'firebase/firestore';
 import { db } from '../config';
-import { RegularUser, Admin, Employer, GenericUser } from '../../types/types';
+import { RegularUser, Admin, Employer } from '../../types/types';
 
 const REGULAR_USER_COLLECTION_NAME = 'regularUser';
 const ADMIN_COLLECTION_NAME = 'admin';
 const EMPLOYER_COLLECTION_NAME = 'employer';
+
+const collectionNames: string[] = [REGULAR_USER_COLLECTION_NAME, ADMIN_COLLECTION_NAME, EMPLOYER_COLLECTION_NAME];
 
 const userCollectionRefs = (id: string) => [
   doc(db, REGULAR_USER_COLLECTION_NAME, id),
@@ -21,88 +25,61 @@ const userCollectionRefs = (id: string) => [
   doc(db, EMPLOYER_COLLECTION_NAME, id),
 ]; 
 
-const userTypeToConstructorMap = new Map<string, GenericUser>([
-  [REGULAR_USER_COLLECTION_NAME, <RegularUser>{}],
-  [ADMIN_COLLECTION_NAME, <Admin>{}],
-  [EMPLOYER_COLLECTION_NAME, <Employer>{}],
-]);
 
-const constructorToUserTypeMap = new Map<GenericUser, string>([
-  [<RegularUser>{}, REGULAR_USER_COLLECTION_NAME],
-  [<Admin>{}, ADMIN_COLLECTION_NAME],
-  [<Employer>{}, EMPLOYER_COLLECTION_NAME],
-])
-
-const parseUser = async (document: QueryDocumentSnapshot<DocumentData>) => {
-  // const userId = document.id.toString();
-  // const data = document.data();
-  // const user = {
-  //   id: userId,
-  //   ...data
-  // };
-  // // need to check if i have to return the user as employer/regularUser/admin
-  // return user as GenericUser;
+const parseUser = async (document: DocumentSnapshot<DocumentData>) => {
   const userId = document.id.toString();
   const data = document.data();
-  const type = data.access;
-  const userType = userTypeToConstructorMap.get(type);
-  if (!userType) {
-    console.log('User type not found.');
-    return null;
-  }
+  const type = data?.access;
   const user = {
     id: userId,
     ...data,
   }
-  console.log("what is the type of this user?")
-  console.log(type);
-  return user as RegularUser;
+  if (type === "admin") {
+    return user as Admin;
+  } 
+  if (type === "regularUser") {
+    return user as RegularUser;
+  } 
+  return user as Employer;
+
 };
 
-export const getUser = async (id: string): Promise<GenericUser | null> => {
+export const getUser = async (id: string): Promise<RegularUser | null> => {
   const collections = userCollectionRefs(id);
-  for (let docRef = 0; docRef < collections.length; docRef += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    const docSnap = await getDoc(collections[docRef]);
-    if (docSnap.exists()) {
-      return parseUser(docSnap);
-    }
+  const docSnaps = await Promise.all(collections.map(c => getDoc(c)))
+  const docSnap = docSnaps.find(document => document.exists())
+  if (docSnap) {
+    return parseUser(docSnap);
   }
   return null;
 };
 
 
-
-export const addUser = async (user: GenericUser): Promise<void> => {
+export const addUser = async (user: RegularUser): Promise<void> => {
   const type = user.access;
   const itemsRef = doc(db, type, user.id);
   await setDoc(itemsRef, user);
 };
 
-export const updateUser = async(userId: string, newFields: Map<string, string | string[] | boolean>) => {
-  const user = await getUser(userId);
-  if (!user) {
-    console.log('User does not exist.')
-    return;
-  }
-  const userType = constructorToUserTypeMap.get(user)
-  if (!userType) {
-    console.log('User type does not exist.')
-    return;
-  }
+export const updateUser = async(userId: string, newFields: Map<string, string | string[] | boolean>, userType: string) => {
   const docRef = doc(db, userType, userId);
-  const data: { [key: string]: string | string[] | boolean } = {};
-  newFields.forEach((newValue, field) => {
-    data[field] = newValue;
-  });
-  await updateDoc(docRef, data);
+  await updateDoc(docRef, Object.fromEntries(newFields));
 };
 
-export const deleteUser = async (user: GenericUser): Promise<void> => {
-  const type = user.access;
-  const userId = user.id;
-  const docRef = doc(db, type, userId);
-  await deleteDoc(docRef);
+
+const attemptDeleteUserFromCollection = async (phoneNumber: string, collectionName: string): Promise<void> => {
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  querySnapshot.forEach(async (document) => {
+    if (document.exists()) {
+      if (document.data().get('phoneNumber') === phoneNumber) {
+        await deleteDoc(document.ref);
+      }
+    }}
+  )
+}
+
+export const deleteUserFromFirestore = async (phoneNumber: string): Promise<void> => {
+  collectionNames.map(col => attemptDeleteUserFromCollection(phoneNumber, col))
 }
 
 
@@ -113,7 +90,7 @@ export const checkAndAddUser = async (
 ) => {
   const userObject = await getUser(user.uid);
   if (userObject !== null) {
-    console.log(`Got user from users collection. Name: ${userObject.name}`);
+    console.log('Got user from users collection');
   } else {
     console.log('Create new user flow');
     let assignPhoneNumber = null;

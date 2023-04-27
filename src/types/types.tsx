@@ -1,38 +1,26 @@
 
-export interface GenericUser {
+export interface RegularUser {
   id: string;
   access: string;
-  name: string;
   phoneNumber: string | null;
   verified: boolean;
-}
-
-export interface RegularUser extends GenericUser {
   likedJobs: string[];
 }
 
-export interface Admin extends GenericUser {
+export interface Admin extends RegularUser {
   email: string | null;
   createdJobs: string[];
 }
 
-export interface Employer extends GenericUser {
+export interface Employer extends RegularUser {
+  name: string | null;
   email: string | null;
   createdJobs: string[]; 
+  address: string | null;
+  company: string | null;
+  website: string | null;
 }
 
-// export interface Job {
-//   contact_info: string;
-//   description: string;
-//   employer: string;
-//   // note: look into what type the date should be in
-//   end_date: Date;
-//   hours: number;
-//   // note: maybe set type to User
-//   job_creator: string;
-//   salary: number;
-//   start_date: string;
-// }
 
 export interface Job {
   id: string;

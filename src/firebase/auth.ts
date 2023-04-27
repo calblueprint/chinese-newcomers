@@ -83,6 +83,7 @@ export const signUpPhoneAdmin = async (
     const result = await signInWithCredential(auth, credential);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const user = auth.currentUser;
+    console.log("IS THIS WORKING PLS")
     if (user == null) {
       console.warn('null user error'); // TODO: handle null user case
     }
@@ -143,7 +144,7 @@ export const signInPhone = async (
       params.verificationCode,
     );
     const result = await signInWithCredential(auth, credential);
-    await checkAndAddUser(result.user, 'regular_user', null);
+    await checkAndAddUser(result.user, 'regularUser', null);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const UserObject = await getUser(result.user.uid);
     dispatch({ type: 'SIGN_IN', userObject: UserObject });
