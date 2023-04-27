@@ -7,7 +7,7 @@ import EmployerHome from '../../screens/EmployerHome/EmployerHome';
 
 const EmployerStack = createNativeStackNavigator<EmployerStackParamList>();
 
-export default function ApprovalStackNavigator() {
+export default function EmployerStackNavigator() {
   return (
     <EmployerStack.Navigator
       screenOptions={{
