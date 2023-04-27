@@ -1,22 +1,54 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Text, View, Pressable, Modal } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Modal, Pressable, Text, View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import styles from './CardStyles';
+import Empty from '../../assets/empty.svg';
+import Filled from '../../assets/filled.svg';
+import { AuthContext } from '../../context/AuthContext';
+import { changeBookmark } from '../../firebase/auth';
+import {
+  createJob,
+  deleteJob,
+  removeBookmarkedJobFromAllUsers,
+} from '../../firebase/firestore/job';
+import { getBookmarks } from '../../firebase/firestore/user';
 import objectToBooleanMap from '../../firebase/helpers';
-import StyledButton from '../StyledButton/StyledButton';
 import { Job } from '../../types/types';
-import { deleteJob, createJob } from '../../firebase/firestore/job';
+import StyledButton from '../StyledButton/StyledButton';
+import styles from './CardStyles';
 
 interface JobCardProps {
   job: Job;
   pending: boolean;
+  bookmarkedJobs: Job[] | null;
+  setBookmarkedJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
 }
 
-function JobCard({ job, pending }: JobCardProps) {
+function JobCard({
+  job,
+  pending,
+  bookmarkedJobs,
+  setBookmarkedJobs,
+}: JobCardProps) {
+  const { userObject } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
+  const jobId = job.id;
+  const userBookmarkedJobs = userObject?.bookmarkedJobs;
+  const [bookmarkValue, setBookmarkValue] = useState<boolean>(
+    getBookmarks(job.id, userObject?.bookmarkedJobs),
+  );
+  const userObjectToString = JSON.stringify(userObject?.bookmarkedJobs);
+
+  useEffect(() => {
+    const getBookmarkValue = () => {
+      const bookmarks = getBookmarks(job.id, userObject?.bookmarkedJobs);
+      setBookmarkValue(bookmarks);
+    };
+    getBookmarkValue();
+  }, [job.id, userObjectToString, userObject, userBookmarkedJobs]);
+
   const [modalVisible, setModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
-
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {
@@ -32,12 +64,24 @@ function JobCard({ job, pending }: JobCardProps) {
   async function removeJob() {
     setModalVisible(false);
     try {
-      await deleteJob(job.id, 'approvedJobs');
+      await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs');
     } catch (e) {
       console.log(e);
     }
   }
 
+  const toggleBookmark = async (val: boolean) => {
+    if (userObject !== null) {
+      console.log('before:', userBookmarkedJobs);
+      changeBookmark(dispatch, { jobId, userBookmarkedJobs });
+      console.log('after:', userBookmarkedJobs);
+    }
+    setBookmarkValue(!val);
+    if (bookmarkedJobs === null) {
+      return;
+    }
+    setBookmarkedJobs?.(bookmarkedJobs?.filter(next => next.id !== job.id));
+  };
   const date = new Date(job.date.seconds * 1000);
 
   return (
@@ -202,6 +246,13 @@ function JobCard({ job, pending }: JobCardProps) {
       </View>
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
+        <Pressable
+          onPress={() => {
+            toggleBookmark(bookmarkValue);
+          }}
+        >
+          {bookmarkValue ? <Filled /> : <Empty />}
+        </Pressable>
       </View>
     </Pressable>
   );
