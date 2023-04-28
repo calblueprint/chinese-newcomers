@@ -17,7 +17,7 @@ const REGULAR_USER_COLLECTION_NAME = 'regularUser';
 const ADMIN_COLLECTION_NAME = 'admin';
 const EMPLOYER_COLLECTION_NAME = 'employer';
 
-const collectionNames: string[] = [REGULAR_USER_COLLECTION_NAME, ADMIN_COLLECTION_NAME, EMPLOYER_COLLECTION_NAME];
+const collectionNames: string[] = [ADMIN_COLLECTION_NAME, REGULAR_USER_COLLECTION_NAME, EMPLOYER_COLLECTION_NAME];
 
 const userCollectionRefs = (id: string) => [
   doc(db, REGULAR_USER_COLLECTION_NAME, id),
@@ -71,7 +71,7 @@ const attemptDeleteUserFromCollection = async (phoneNumber: string, collectionNa
   const querySnapshot = await getDocs(collection(db, collectionName));
   querySnapshot.forEach(async (document) => {
     if (document.exists()) {
-      if (document.data().get('phoneNumber') === phoneNumber) {
+      if (document.data().phoneNumber === phoneNumber) {
         await deleteDoc(document.ref);
       }
     }}
