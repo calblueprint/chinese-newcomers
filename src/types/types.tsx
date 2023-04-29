@@ -1,14 +1,26 @@
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp } from "firebase/firestore";
 
-export interface User {
+export interface RegularUser {
   id: string;
   access: string;
-  createdJobs: string[]; // switched to string of jobIds to match Firebase
-  email: string | null;
-  bookmarkedJobs: string[]; // switched to string of jobIds to match Firebase
-  name: string;
   phoneNumber: string | null;
   verified: boolean;
+  bookmarkedJobs: string[];
+}
+
+export interface Admin extends RegularUser {
+  email: string | null;
+  createdJobs: string[];
+}
+
+export interface Employer extends RegularUser {
+  name: string | null;
+  email: string | null;
+  createdJobs: string[]; 
+  address: string | null;
+  company: string | null;
+  website: string |
+   null;
 }
 
 export interface Job {
@@ -21,13 +33,12 @@ export interface Job {
   jobPosition: string;
   languageRequirement: string;
   workingHours: string;
-  workingDays: string;
-  salary: string;
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
   visible: object;
   category: string;
+  salary: string;
 }
 
 export const jobInstance: Job = {

@@ -1,12 +1,9 @@
-import { User } from '../types/types';
+import { RegularUser } from '../types/types';
 
-const getEmptyUser = (): User => ({
+const getEmptyUser = (): RegularUser => ({
   id: '',
   access: '',
-  createdJobs: [],
-  email: '',
   bookmarkedJobs: [],
-  name: '',
   phoneNumber: '',
   verified: false,
 });

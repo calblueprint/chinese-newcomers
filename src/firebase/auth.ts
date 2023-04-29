@@ -1,6 +1,6 @@
 import {
   PhoneAuthProvider,
-  User,
+  RegularUser,
   createUserWithEmailAndPassword,
   deleteUser,
   getAuth,
@@ -88,10 +88,11 @@ export const signUpPhoneAdmin = async (
     const result = await signInWithCredential(auth, credential);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const user = auth.currentUser;
+    console.log("IS THIS WORKING PLS")
     if (user == null) {
       console.warn('null user error'); // TODO: handle null user case
     }
-    deleteUser(user as User)
+    deleteUser(user as RegularUser)
       .then(() => {
         console.log('User successfully deleted');
       })
@@ -123,6 +124,21 @@ export const signUpEmail = async (
   dispatch: AuthDispatch,
   params: { email: string; password: string; phoneNumber: string },
 ) => {
+<<<<<<< HEAD
+  createUserWithEmailAndPassword(auth, params.email, params.password)
+    .then(async userCredential => {
+      console.log("signup email");
+      const { user } = userCredential;
+      await checkAndAddUser(user, 'admin', params.phoneNumber);
+      console.log('Email sign up successful', user.email);
+      await activatedAdmin(params.phoneNumber);
+      const UserObject = await getUser(user.uid);
+      dispatch({ type: 'SIGN_IN', userObject: UserObject });
+    })
+    .catch(error => {
+      console.warn('Email sign up error', error);
+    });
+=======
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     params.email,
@@ -134,12 +150,24 @@ export const signUpEmail = async (
   await activatedAdmin(params.phoneNumber);
   const UserObject = await getUser(user.uid);
   dispatch({ type: 'SIGN_IN', userObject: UserObject });
+>>>>>>> main
 };
 
 export const signInEmail = async (
   dispatch: AuthDispatch,
   params: { email: string; password: string },
 ) => {
+<<<<<<< HEAD
+  signInWithEmailAndPassword(auth, params.email, params.password)
+    .then(async userCredential => {
+      const { user } = userCredential;
+      const UserObject = await getUser(user.uid);
+      dispatch({ type: 'SIGN_IN', userObject: UserObject });
+    })
+    .catch(error => {
+      console.warn('Email sign in error', error);
+    });
+=======
   const userCredential = await signInWithEmailAndPassword(
     auth, 
     params.email, 
@@ -159,6 +187,7 @@ export const signInEmail = async (
   //   .catch(error => {
   //     console.warn('Email sign in error', error);
   //   });
+>>>>>>> main
 };
 
 export const signInPhone = async (
@@ -171,7 +200,7 @@ export const signInPhone = async (
       params.verificationCode,
     );
     const result = await signInWithCredential(auth, credential);
-    await checkAndAddUser(result.user, 'regular_user', null);
+    await checkAndAddUser(result.user, 'regularUser', null);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const UserObject = await getUser(result.user.uid);
     dispatch({ type: 'SIGN_IN', userObject: UserObject });
