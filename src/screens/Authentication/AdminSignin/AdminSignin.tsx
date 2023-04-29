@@ -1,15 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { Text, View, Image } from 'react-native';
-import { getAuth } from 'firebase/auth';
-import { useForm, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import React, { useContext, useState } from 'react';
+import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { Image, Text, View } from 'react-native';
 import { z } from 'zod';
-import styles from './styles';
+import logo from '../../../assets/cnsc-logo.png';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signInEmail } from '../../../firebase/auth';
-import logo from '../../../assets/cnsc-logo.png';
 import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
 const emailSchema = z.string().email({ message: "Oops! Invalid email. Try again." });
 
@@ -30,9 +29,12 @@ function AdminSigninScreen({
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
       emailSchema.parse(email);
+      console.log("hellooooooo")
       await signInEmail(dispatch, { email, password });
+      console.log("wtf")
       // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
+      // console.log("wtf")
       if (e instanceof z.ZodError) {
         setEmailError("Oops! Invalid email. Try again.");
       }

@@ -1,12 +1,12 @@
 import {
   PhoneAuthProvider,
+  User,
   createUserWithEmailAndPassword,
   deleteUser,
   getAuth,
   signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
-  User,
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { AuthDispatch } from '../context/AuthContext';
@@ -88,7 +88,6 @@ export const signUpPhoneAdmin = async (
     const result = await signInWithCredential(auth, credential);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const user = auth.currentUser;
-    console.log("IS THIS WORKING PLS")
     if (user == null) {
       console.warn('null user error'); // TODO: handle null user case
     }
@@ -124,34 +123,42 @@ export const signUpEmail = async (
   dispatch: AuthDispatch,
   params: { email: string; password: string; phoneNumber: string },
 ) => {
-  createUserWithEmailAndPassword(auth, params.email, params.password)
-    .then(async userCredential => {
-      console.log("signup email");
-      const { user } = userCredential;
-      await checkAndAddUser(user, 'admin', params.phoneNumber);
-      console.log('Email sign up successful', user.email);
-      await activatedAdmin(params.phoneNumber);
-      const UserObject = await getUser(user.uid);
-      dispatch({ type: 'SIGN_IN', userObject: UserObject });
-    })
-    .catch(error => {
-      console.warn('Email sign up error', error);
-    });
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    params.email,
+    params.password,
+  );
+  const { user } = userCredential;
+  await checkAndAddUser(user, 'admin', params.phoneNumber);
+  console.log('Email sign up successful', user.email);
+  await activatedAdmin(params.phoneNumber);
+  const UserObject = await getUser(user.uid);
+  dispatch({ type: 'SIGN_IN', userObject: UserObject });
 };
 
 export const signInEmail = async (
   dispatch: AuthDispatch,
   params: { email: string; password: string },
 ) => {
-  signInWithEmailAndPassword(auth, params.email, params.password)
-    .then(async userCredential => {
-      const { user } = userCredential;
-      const UserObject = await getUser(user.uid);
-      dispatch({ type: 'SIGN_IN', userObject: UserObject });
-    })
-    .catch(error => {
-      console.warn('Email sign in error', error);
-    });
+  const userCredential = await signInWithEmailAndPassword(
+    auth, 
+    params.email, 
+    params.password
+  );
+  const { user } = userCredential;
+  console.log('Email sign in successful', user.email);
+  const UserObject = await getUser(user.uid);
+  dispatch({ type: 'SIGN_IN', userObject: UserObject });
+  // signInWithEmailAndPassword(auth, params.email, params.password)
+  //   .then(async userCredential => {
+  //     const { user } = userCredential;
+  //     console.log('Email sign in successful', user.email);
+  //     const UserObject = await getUser(user.uid);
+  //     dispatch({ type: 'SIGN_IN', userObject: UserObject });
+  //   })
+  //   .catch(error => {
+  //     console.warn('Email sign in error', error);
+  //   });
 };
 
 export const signInPhone = async (
@@ -164,7 +171,7 @@ export const signInPhone = async (
       params.verificationCode,
     );
     const result = await signInWithCredential(auth, credential);
-    await checkAndAddUser(result.user, 'regularUser', null);
+    await checkAndAddUser(result.user, 'regular_user', null);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const UserObject = await getUser(result.user.uid);
     dispatch({ type: 'SIGN_IN', userObject: UserObject });
