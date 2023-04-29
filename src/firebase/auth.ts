@@ -160,7 +160,7 @@ export const signInPhone = async (
       params.verificationCode,
     );
     const result = await signInWithCredential(auth, credential);
-    await checkAndAddUser(result.user, 'regular_user', null);
+    await checkAndAddUser(result.user, 'regularUser', null);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const UserObject = await getUser(result.user.uid);
     dispatch({ type: 'SIGN_IN', userObject: UserObject });

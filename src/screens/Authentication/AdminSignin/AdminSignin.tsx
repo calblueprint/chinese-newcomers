@@ -29,12 +29,8 @@ function AdminSigninScreen({
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
       emailSchema.parse(email);
-      console.log("hellooooooo")
       await signInEmail(dispatch, { email, password });
-      console.log("wtf")
-      // navigation.navigate('Root', { screen: 'Home' });
     } catch (e) {
-      // console.log("wtf")
       if (e instanceof z.ZodError) {
         setEmailError("Oops! Invalid email. Try again.");
       }
