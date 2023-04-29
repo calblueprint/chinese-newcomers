@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
+import { Job, JobFormValues } from '../../types/types';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
 import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
-import { Job } from '../../types/types';
-import styles from './styles';
 
 function DraftScreen({
   navigation,
@@ -58,25 +58,9 @@ function DraftScreen({
   const [successModalVisibile, setSuccessModalVisible] = React.useState(false);
   const [modalJobText, setModalJobText] = React.useState('');
 
-  interface FormValues {
-    // date: Date;
-    companyName: string;
-    address: string;
-    contactPerson: string;
-    phone: string;
-    jobPosition: string;
-    languageRequirement: string;
-    workingHours: string;
-    workingDays: string;
-    salary: string;
-    probationPeriod: string;
-    employeeBenefit: string;
-    category: string;
-    otherInfo: string;
-  }
-  const { ...methods } = useForm<FormValues>();
+  const { ...methods } = useForm<JobFormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = async data => {
+  const onSubmit: SubmitHandler<JobFormValues> = async data => {
     const map = new Map<string, boolean>();
     map.set('date', true);
     map.set('companyName', companyNameIsEnabled);

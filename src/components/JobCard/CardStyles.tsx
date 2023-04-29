@@ -77,7 +77,6 @@ export default StyleSheet.create({
     textAlign: 'left',
     color: 'black',
     fontSize: 18,
-    marginLeft: '5%',
     fontFamily: 'DMSans_500Medium',
     fontWeight: '700',
   },
@@ -90,11 +89,29 @@ export default StyleSheet.create({
     marginLeft: '5%',
     fontFamily: 'DMSans_700Bold',
   },
-  modalInfo: {
+  modalFieldTitle: {
+    textAlign: 'left',
+    color: 'black',
+    fontSize: 18,
+    fontFamily: 'DMSans_500Medium',
+  },
+  modalInput: {
+    borderWidth: 2,
+    borderRadius: 3,
+    borderColor: '#49260C',
     width: '100%',
+    height: 40,
+    marginBottom: '5%',
+    paddingLeft: '3%',
+    paddingRight: '3%',
+  },
+  modalInfo: {
+    width: '90%',
     height: '80%',
     display: 'flex',
     flexDirection: 'column',
+    marginLeft: '5%',
+    marginRight: '5%',
     marginTop: '8%',
   },
   jobRefText: {
@@ -163,4 +180,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginTop: '6%',
   },
+  fieldText: {
+    flexDirection: 'row'
+  }
 });

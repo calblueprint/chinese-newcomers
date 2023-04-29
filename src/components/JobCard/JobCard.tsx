@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useContext, useEffect, useState } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Modal, Pressable, Text, View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Empty from '../../assets/empty.svg';
@@ -8,12 +8,12 @@ import { AuthContext } from '../../context/AuthContext';
 import { changeBookmark } from '../../firebase/auth';
 import {
   createJob,
-  deleteJob,
-  removeBookmarkedJobFromAllUsers,
+  deleteJob, removeBookmarkedJobFromAllUsers, updatejob
 } from '../../firebase/firestore/job';
 import { getBookmarks } from '../../firebase/firestore/user';
 import objectToBooleanMap from '../../firebase/helpers';
-import { Job } from '../../types/types';
+import { Job, JobFormValues, jobInstance } from '../../types/types';
+import FormInput from "../JobPostFormInput/JobPostFormInput";
 import StyledButton from '../StyledButton/StyledButton';
 import styles from './CardStyles';
 
@@ -30,6 +30,10 @@ function JobCard({
   bookmarkedJobs,
   setBookmarkedJobs,
 }: JobCardProps) {
+  const [jobState, setJobState] = useState(job);
+  const [modalVisible, setModalVisible] = useState(false);
+  const visibleMap = objectToBooleanMap(jobState.visible);
+
   const { userObject } = useContext(AuthContext);
   const { dispatch } = useContext(AuthContext);
   const jobId = job.id;
@@ -46,15 +50,13 @@ function JobCard({
     };
     getBookmarkValue();
   }, [job.id, userObjectToString, userObject, userBookmarkedJobs]);
-
-  const [modalVisible, setModalVisible] = useState(false);
-  const visibleMap = objectToBooleanMap(job.visible);
-  async function handleAction(approve: boolean) {
+  
+  async function handlePendingAction(approve: boolean) {
     setModalVisible(false);
     try {
-      await deleteJob(job.id, 'notApprovedJobs');
+      await deleteJob(jobState.id, 'notApprovedJobs');
       if (approve) {
-        await createJob(job, 'approvedJobs');
+        await createJob(jobState, 'approvedJobs');
       }
     } catch (e) {
       console.log(e);
@@ -64,17 +66,48 @@ function JobCard({
   async function removeJob() {
     setModalVisible(false);
     try {
+      await deleteJob(jobState.id, 'approvedJobs');
       await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs');
     } catch (e) {
       console.log(e);
     }
   }
 
+  const [editing, setEditing] = useState(false);
+
+  const jobCardField = (field: string, value: string | object) => {
+    if (visibleMap.get(field) && value !== '') {
+      return (editing ? 
+        <View>
+          <Text style={styles.modalFieldTitle}>{field}</Text>
+          <FormInput
+              name={field}
+              label={field}
+              defaultValue={value}
+              rules={{ required: 'Date is required!' }}
+            />
+        </View> : 
+        <View style={styles.fieldText}>
+          <Text style={styles.jobNameText}>{field}: </Text>
+          <Text style={styles.modalText}>{value as string}</Text>
+        </View>)
+    }
+    return null;
+  }
+
+  const onSave: SubmitHandler<JobFormValues> = async data => {
+    setEditing(false);
+    const updatedJob = Object.assign(jobState, data);
+    setJobState({...jobState});
+    updatejob(updatedJob);
+  }
+
+  const { ...methods } = useForm<JobFormValues>();
+
+  const jobKeys = Object.keys(jobInstance);
   const toggleBookmark = async (val: boolean) => {
     if (userObject !== null) {
-      console.log('before:', userBookmarkedJobs);
       changeBookmark(dispatch, { jobId, userBookmarkedJobs });
-      console.log('after:', userBookmarkedJobs);
     }
     setBookmarkValue(!val);
     if (bookmarkedJobs === null) {
@@ -82,6 +115,7 @@ function JobCard({
     }
     setBookmarkedJobs?.(bookmarkedJobs?.filter(next => next.id !== job.id));
   };
+  
   const date = new Date(job.date.seconds * 1000);
 
   return (
@@ -103,6 +137,7 @@ function JobCard({
           animationType="slide"
           onRequestClose={() => {
             setModalVisible(false);
+            setEditing(false);
           }}
         >
           <View style={styles.centeredView}>
@@ -111,102 +146,29 @@ function JobCard({
                 <Pressable onPress={() => setModalVisible(false)}>
                   <Text style={styles.modalButtonText}>X</Text>
                 </Pressable>
-                <Text style={styles.modalJobRefText}>#{job.id}</Text>
-                <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
+                <Text style={styles.modalJobRefText}>#{jobState.id}</Text>
+                <Text style={styles.modalJobNameText}>{jobState.jobPosition}</Text>
               </View>
+              <FormProvider {...methods}>
               <View style={styles.modalInfo}>
-                {visibleMap.get('salary') === true && job.salary !== '' && (
-                  <Text style={styles.modalText}>
-                    <Text style={styles.modalFieldName}>salary: </Text>
-                    <Text>{job.salary}</Text>
-                  </Text>
-                )}
-                {visibleMap.get('contactPerson') === true &&
-                  job.contactPerson !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>contact: </Text>
-                      <Text>{job.contactPerson}</Text>
-                    </Text>
-                  )}
+                
+              <View>
                 {visibleMap.get('date') === true && (
                   <Text style={styles.modalText}>
                     <Text style={styles.modalFieldName}>date: </Text>
                     <Text>{date.toDateString()}</Text>
                   </Text>
                 )}
-                {visibleMap.get('companyName') === true &&
-                  job.companyName !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>companyName: </Text>
-                      <Text>{job.companyName}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('address') === true && job.address !== '' && (
-                  <Text style={styles.modalText}>
-                    <Text style={styles.modalFieldName}>address: </Text>
-                    <Text>{job.address}</Text>
-                  </Text>
-                )}
-
-                {visibleMap.get('phone') === true && job.phone !== '' && (
-                  <Text style={styles.modalText}>
-                    <Text style={styles.modalFieldName}>phone: </Text>
-                    <Text>{job.phone}</Text>
-                  </Text>
-                )}
-                {visibleMap.get('languageRequirement') === true &&
-                  job.languageRequirement !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>
-                        languageRequirement:{' '}
-                      </Text>
-                      <Text>{job.languageRequirement}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('workingHours') === true &&
-                  job.workingHours !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>workingHours: </Text>
-                      <Text>{job.workingHours}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('workingDays') === true &&
-                  job.workingDays !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>workingDays: </Text>
-                      <Text>{job.workingDays}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('probationPeriod') === true &&
-                  job.probationPeriod !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>
-                        probationPeriod:{' '}
-                      </Text>
-                      <Text>{job.probationPeriod}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('employeeBenefit') === true &&
-                  job.employeeBenefit !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>
-                        employeeBenefit:{' '}
-                      </Text>
-                      <Text>{job.employeeBenefit}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('otherInfo') === true &&
-                  job.otherInfo !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>otherInfo: </Text>
-                      <Text>{job.otherInfo}</Text>
-                    </Text>
-                  )}
+                {jobKeys.map((k) => (
+                  (k !== "date" && jobCardField(k, jobState[k as keyof typeof jobState]))
+                ))}
+              </View>
+                
                 {pending && (
                   <View style={styles.buttonContainer}>
                     <StyledButton
                       text="decline"
-                      onPress={async () => handleAction(false)}
+                      onPress={async () => handlePendingAction(false)}
                       buttonStyle={{
                         width: '45%',
                         height: '50%',
@@ -217,13 +179,13 @@ function JobCard({
                     />
                     <StyledButton
                       text="approve"
-                      onPress={async () => handleAction(true)}
+                      onPress={async () => handlePendingAction(true)}
                       buttonStyle={{ width: '45%', height: '50%' }}
                       textStyle={{ fontSize: 16 }}
                     />
                   </View>
                 )}
-                {!pending && (
+                {!pending && !editing && (
                   <View style={styles.singleButtonContainer}>
                     <StyledButton
                       text="remove"
@@ -234,18 +196,50 @@ function JobCard({
                       }}
                       textStyle={{}}
                     />
+                    <StyledButton
+                      text="edit"
+                      onPress={() => setEditing(true)}
+                      buttonStyle={{
+                        width: '45%',
+                        height: '50%',
+                      }}
+                      textStyle={{}}
+                    />
+                  </View>
+                )}
+                {editing && (
+                  <View style={styles.singleButtonContainer}>
+                    <StyledButton
+                      text="Save"
+                      onPress={methods.handleSubmit(onSave)}
+                      buttonStyle={{
+                        width: '45%',
+                        height: '50%',
+                      }}
+                      textStyle={{}}
+                    />
+                    <StyledButton
+                      text="Discard"
+                      onPress={() => setEditing(false)}
+                      buttonStyle={{
+                        width: '45%',
+                        height: '50%',
+                      }}
+                      textStyle={{}}
+                    />
                   </View>
                 )}
               </View>
+              </FormProvider>
             </View>
           </View>
         </Modal>
       </GestureRecognizer>
       <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>#{job.id}</Text>
+        <Text style={styles.jobRefText}>#{jobState.id}</Text>
       </View>
       <View style={styles.jobName}>
-        <Text style={styles.jobNameText}>{job.jobPosition}</Text>
+        <Text style={styles.jobNameText}>{jobState.jobPosition}</Text>
         <Pressable
           onPress={() => {
             toggleBookmark(bookmarkValue);
