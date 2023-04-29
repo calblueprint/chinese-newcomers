@@ -12,7 +12,7 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   top: {
-    marginTop: '5%',
+    marginTop: 80,
   },
   refId: {
     fontSize: 14,
@@ -46,10 +46,10 @@ export default StyleSheet.create({
   bottomButtons: {
     flexDirection: 'row',
     alignContent: 'space-around',
-    marginBottom: '10%',
+    marginBottom: 150,
   },
   buttons: {
-    width: '45%',
+    width: 150,
     height: '22%',
     margin: 5,
     borderRadius: 5,
@@ -71,10 +71,9 @@ export default StyleSheet.create({
   },
   modal: {
     width: '80%',
-    height: '50%',
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 7,
     padding: 35,
     paddingHorizontal: 39,
     alignItems: 'center',
@@ -89,8 +88,11 @@ export default StyleSheet.create({
     elevation: 5,
   },
   modalText: {
-    marginBottom: 20,
+    marginBottom: 30,
     ...theme.textVariants.h3,
+    fontSize: 18,
+    textAlign: 'center',
+    lineHeight: 22, 
   },
   modalX: {
     display: 'flex',
@@ -98,4 +100,7 @@ export default StyleSheet.create({
     top: '5%',
     right: '5%',
   },
+  bottomText: {
+    marginTop: 10
+  }
 });

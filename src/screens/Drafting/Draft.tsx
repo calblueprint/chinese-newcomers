@@ -124,30 +124,11 @@ function DraftScreen({
       <KeyboardAwareScrollView style={styles.form}>
         <View style={styles.formContainer}>
           <View style={styles.top}>
-            <Text style={styles.formTitle}>Job Post Draft</Text>
             <Text style={{ fontSize: 16, fontFamily: 'DMSans', color: '#94613D'}}>
             Toggles determine what information is displayed in your public job posting
             </Text>
           </View>
           <FormProvider {...methods}>
-            <View style={styles.formTop}>
-              <Text
-                style={[styles.formText, { marginLeft: 0, marginBottom: 4 }]}
-              >
-                Category
-              </Text>
-            </View>
-            <DropDownPicker
-              open={open}
-              value={category}
-              items={categories.map(c => ({ label: c, value: c }))}
-              setOpen={setOpen}
-              setValue={setCategory}
-              listMode="SCROLLVIEW"
-              containerStyle={{ width: '100%', marginBottom: 10, height: '3%' }}
-              textStyle={{ fontFamily: 'DMSans_500Medium' }}
-            />
-
             <View style={styles.formTop}>
               <Switch
                 onValueChange={() =>
@@ -165,6 +146,12 @@ function DraftScreen({
               label="jobPosition"
               placeholder="Waiter, waitress"
               rules={{ required: 'Job Position is required!' }}
+              style={{
+                width: 320,
+                borderWidth: 2,
+                borderRadius: 3,
+                marginBottom: 5,
+              }}
             />
             {methods.formState.errors.jobPosition != null && (
               <Text>Please check the Job Position.</Text>
@@ -374,6 +361,8 @@ function DraftScreen({
             >
               <Text style={styles.buttonText}>Post Job</Text>
             </Pressable>
+
+            <Text style={styles.bottomText}>Employee Benefit (if any)</Text>
           </View>
         </View>
         {/* </ScrollView> */}
@@ -382,15 +371,14 @@ function DraftScreen({
       <Modal visible={successModalVisibile} transparent animationType="slide">
         <View style={styles.centeredView}>
           <View style={styles.modal}>
-            <Text style={styles.modalText}>
-              Congratulations! You&apos;ve submitted a job posting for{' '}
-              {modalJobText}.
+          <Text style={{ ...styles.modalText, color: '#000000' }}>
+            Congratulations! You&apos;ve submitted a job posting for{' '}{modalJobText}.
+            Your post is currently under review and will appear on your home page when approved.
             </Text>
-
             <StyledButton
               text="POST ANOTHER JOB"
-              textStyle={{ color: '#CC433C' }}
-              buttonStyle={{ backgroundColor: 'white', width: '100%' }}
+              textStyle={{ fontSize: 14 }}
+              buttonStyle={{ width: 230, height: 44, marginBottom: 10 }}
               onPress={() => {
                 navigation.goBack();
                 setSuccessModalVisible(false);
@@ -398,9 +386,9 @@ function DraftScreen({
               }}
             />
             <StyledButton
-              text="VIEW JOB FEED"
-              textStyle={{}}
-              buttonStyle={{ width: '100%' }}
+              text="SEE HOME SCREEN"
+              textStyle={{ color: '#CC433C', fontSize: 14 }}
+              buttonStyle={{ backgroundColor: 'white', width: 230, height: 44 }}
               onPress={() => {
                 navigation.goBack();
                 setSuccessModalVisible(false);
