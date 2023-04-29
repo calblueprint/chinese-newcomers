@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import PhoneInput from 'react-native-phone-number-input';
+import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 import {
   phoneGetConfirmation,
@@ -17,7 +18,6 @@ import {
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
-import { AuthStackScreenProps } from '../../../types/navigation';
 
 function PhoneNumberScreen({
   navigation,
@@ -29,16 +29,22 @@ function PhoneNumberScreen({
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
   const phoneInput = useRef<PhoneInput>(null);
 
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
-      const checkValid = phoneInput.current?.isValidNumber(phoneNumber);
+      const validatePhoneNumber = () => {
+        if (phoneInput.current?.isValidNumber(phoneNumber)) {
+          setPhoneError('');
+          return true;
+        } setPhoneError('Oops! Invalid phone number. Please try again.');
+      };
+      setValid(validatePhoneNumber());
       console.log(valid);
-      setValid(checkValid ?? false);
       // To Do: render error label
       const activated = await getActivationStatus(phoneNumber);
-      if (!activated) {
+      if (!activated && valid) {
         const verificationId = await phoneGetConfirmation(
           phoneNumber,
           recaptchaVerifier,
@@ -54,7 +60,15 @@ function PhoneNumberScreen({
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = errors =>
+    console.log(errors);
+
+  const handlePhoneChange = phoneNumber => {
+    setPhoneNumber(phoneNumber);
+    if (phoneError !== '') {
+      setPhoneError('');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -74,11 +88,17 @@ function PhoneNumberScreen({
               ref={phoneInput}
               placeholder="4151234567"
               defaultValue={phoneNumber}
-              onChangeFormattedText={text => {
-                setPhoneNumber(text);
-              }}
+              onChangeFormattedText={
+                newPhoneInput => handlePhoneChange(newPhoneInput)
+                //   text => {
+                //   //setPhoneNumber(text);
+                // }
+              }
               defaultCode="US"
             />
+            {phoneError !== '' && (
+              <Text style={{ color: 'red' }}>{phoneError}</Text>
+            )}
           </View>
           <View style={styles.buttonContainer}>
             <StyledButton
@@ -109,4 +129,4 @@ function PhoneNumberScreen({
   );
 }
 
-export default PhoneNumberScreen;
+export default PhoneNumberScreen

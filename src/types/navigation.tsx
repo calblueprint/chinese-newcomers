@@ -43,11 +43,19 @@ export type SignoutStackParamList = {
 export type SignoutStackScreenProps<T extends keyof SignoutStackParamList> =
   NativeStackScreenProps<SignoutStackParamList, T>;
 
+export type BookmarksStackParamList = {
+  BookmarksScreen: undefined;
+};
+
+export type BookmarksStackScreenProps<T extends keyof BookmarksStackParamList> =
+  NativeStackScreenProps<BookmarksStackParamList, T>;
+
 export type BottomTabParamList = {
   Feed: undefined;
   Draft: undefined;
   Approval: undefined;
   Signout: undefined;
+  Bookmarks: undefined;
 };
 
 export type BottomTabScreenProps<T extends keyof BottomTabParamList> =

@@ -5,7 +5,7 @@ const getEmptyUser = (): User => ({
   access: '',
   createdJobs: [],
   email: '',
-  likedJobs: [],
+  bookmarkedJobs: [],
   name: '',
   phoneNumber: '',
   verified: false,
