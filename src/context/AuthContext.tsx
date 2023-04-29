@@ -17,7 +17,8 @@ export interface AuthState {
 export type AuthContextAction =
   | { type: 'RESTORE_USER'; userObject: RegularUser | null }
   | { type: 'SIGN_IN'; userObject: RegularUser | null }
-  | { type: 'SIGN_OUT' };
+  | { type: 'SIGN_OUT' }
+  | { type: 'CHANGE_BOOKMARK'; bookmarkedArray: string[] | undefined };
 
 export const useAuthReducer = () =>
   useReducer(
@@ -34,6 +35,14 @@ export const useAuthReducer = () =>
             ...prevState,
             isLoading: false,
             userObject: action.userObject,
+          };
+        case 'CHANGE_BOOKMARK':
+          return {
+            ...prevState,
+            userObject: {
+              ...prevState.userObject,
+              bookmarkedJobs: action.bookmarkedArray,
+            } as RegularUser,
           };
         case 'SIGN_OUT':
           return {

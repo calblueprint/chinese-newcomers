@@ -10,8 +10,9 @@ import {
   getDocs,
   collection,
 } from 'firebase/firestore';
+import { RegularUser, Admin, Employer, Job } from '../../types/types';
 import { db } from '../config';
-import { RegularUser, Admin, Employer } from '../../types/types';
+import { getJob } from './job';
 
 const REGULAR_USER_COLLECTION_NAME = 'regularUser';
 const ADMIN_COLLECTION_NAME = 'admin';
@@ -82,6 +83,10 @@ export const deleteUserFromFirestore = async (phoneNumber: string): Promise<void
   collectionNames.map(col => attemptDeleteUserFromCollection(phoneNumber, col))
 }
 
+export const deleteUser = async (userId: string): Promise<void> => {
+  const docRef = doc(db, 'users', userId);
+  await deleteDoc(docRef);
+};
 
 export const checkAndAddUser = async (
   user: UserCredential['user'],
@@ -106,10 +111,66 @@ export const checkAndAddUser = async (
       access: accessLevel,
       createdJobs: [],
       email: user.email ? user.email : null,
-      likedJobs: [], // switched to string of jobIds to match Firebase
+      bookmarkedJobs: [], // switched to string of jobIds to match Firebase
       name: 'test phone',
       phoneNumber: assignPhoneNumber,
       verified: true,
     });
+  }
+};
+
+export const updateUserBookmarks = async (
+  userBookmarkedJobs: string[] | undefined,
+  userId: string,
+): Promise<void> => {
+  try {
+    const docRef = doc(db, 'users', userId);
+    updateDoc(docRef, { bookmarkedJobs: userBookmarkedJobs });
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+export const removeBookmarkedJob = async (
+  jobId: string,
+  userBookmarkedJobs: string[] | undefined,
+): Promise<void> => {
+  try {
+    if (userBookmarkedJobs !== undefined) {
+      const index = userBookmarkedJobs?.indexOf(jobId);
+      userBookmarkedJobs?.splice(index, 1);
+    }
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+export const getBookmarks = (
+  jobId: string,
+  userBookmarkedJobs: string[] | undefined,
+): boolean => {
+  if (userBookmarkedJobs?.includes(jobId)) {
+    return true;
+  }
+  return false;
+};
+
+export const getBookmarkedJobs = async (
+  userBookmarkedJobs: string[] | undefined,
+): Promise<Job[]> => {
+  try {
+    const promises: Array<Promise<Job>> = [];
+    userBookmarkedJobs?.forEach(job => {
+      promises.push(getJob(job, 'approvedJobs'));
+    });
+    const allJobs = await Promise.all(promises);
+    return allJobs.filter(obj =>
+      Object.prototype.hasOwnProperty.call(obj, 'jobPosition'),
+    );
+  } catch (e) {
+    console.error(e);
+    throw e;
   }
 };
