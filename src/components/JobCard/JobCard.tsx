@@ -77,7 +77,6 @@ function JobCard({
 
   const jobCardField = (field: string, value: string | object) => {
     if (visibleMap.get(field) && value !== '') {
-      const staticText = `${field}: ${value}`;
       return (editing ? 
         <View>
           <Text style={styles.modalFieldTitle}>{field}</Text>
@@ -87,7 +86,11 @@ function JobCard({
               defaultValue={value}
               rules={{ required: 'Date is required!' }}
             />
-        </View> : <View style={styles.fieldText}><Text style={styles.jobNameText}>{field}: </Text><Text style={styles.modalText}>{value as string}</Text></View>)
+        </View> : 
+        <View style={styles.fieldText}>
+          <Text style={styles.jobNameText}>{field}: </Text>
+          <Text style={styles.modalText}>{value as string}</Text>
+        </View>)
     }
     return null;
   }

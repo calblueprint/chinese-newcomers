@@ -6,6 +6,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
+import { ScreenStackHeaderConfig } from 'react-native-screens';
 import { z } from 'zod';
 import logo from '../../../assets/cnsc-logo.png';
 import AuthInput from '../../../components/AuthInput/AuthInput';
@@ -62,15 +63,15 @@ function AdminRegisterScreen({
     }
   };
 
-  const handleEmailChange = email => {
-    setEmail(email);
+  const handleEmailChange = e:  => {
+    setEmail(e);
     if (emailError !== '') {
       setEmailError('');
     }
   };
 
-  const handlePasswordChange = password => {
-    setPassword(password);
+  const handlePasswordChange = p => {
+    setPassword(p);
     if (passwordError !== '') {
       setPasswordError('');
     }
