@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useContext, useEffect, useState } from 'react';
-import { Modal, Pressable, Text, View } from 'react-native';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Empty from '../../assets/empty.svg';
 import Filled from '../../assets/filled.svg';
 import { AuthContext } from '../../context/AuthContext';
@@ -91,12 +97,7 @@ function JobCard({
         setModalVisible(true);
       }}
     >
-      <GestureRecognizer
-        style={{ flex: 1 }}
-        onSwipeDown={() => {
-          setModalVisible(false);
-        }}
-      >
+      <View>
         <Modal
           transparent
           visible={modalVisible}
@@ -105,142 +106,162 @@ function JobCard({
             setModalVisible(false);
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <View style={styles.modalHeader}>
-                <Pressable onPress={() => setModalVisible(false)}>
-                  <Text style={styles.modalButtonText}>X</Text>
-                </Pressable>
-                <Text style={styles.modalJobRefText}>#{job.id}</Text>
-                <Text style={styles.modalJobNameText}>{job.jobPosition}</Text>
-              </View>
-              <View style={styles.modalInfo}>
-                {visibleMap.get('salary') === true && job.salary !== '' && (
-                  <Text style={styles.modalText}>
-                    <Text style={styles.modalFieldName}>salary: </Text>
-                    <Text>{job.salary}</Text>
-                  </Text>
-                )}
-                {visibleMap.get('contactPerson') === true &&
-                  job.contactPerson !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>contact: </Text>
-                      <Text>{job.contactPerson}</Text>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPressOut={() => {
+              setModalVisible(false);
+            }}
+            style={styles.centeredView}
+          >
+            <ScrollView style={styles.scrollView}>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => console.log('do nothing')}
+              >
+                <View style={styles.modalView}>
+                  {/* header */}
+                  <View style={styles.modalHeader}>
+                    <Pressable
+                      onPress={() => setModalVisible(false)}
+                      style={styles.exitButton}
+                    >
+                      <Text style={styles.modalButtonText}>x</Text>
+                    </Pressable>
+                    <Text style={styles.modalJobRefText}>#{job.id}</Text>
+                    <Text style={styles.modalJobNameText}>
+                      {job.jobPosition}
                     </Text>
-                  )}
-                {visibleMap.get('date') === true && (
-                  <Text style={styles.modalText}>
-                    <Text style={styles.modalFieldName}>date: </Text>
-                    <Text>{date.toDateString()}</Text>
-                  </Text>
-                )}
-                {visibleMap.get('companyName') === true &&
-                  job.companyName !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>companyName: </Text>
-                      <Text>{job.companyName}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('address') === true && job.address !== '' && (
-                  <Text style={styles.modalText}>
-                    <Text style={styles.modalFieldName}>address: </Text>
-                    <Text>{job.address}</Text>
-                  </Text>
-                )}
+                  </View>
 
-                {visibleMap.get('phone') === true && job.phone !== '' && (
-                  <Text style={styles.modalText}>
-                    <Text style={styles.modalFieldName}>phone: </Text>
-                    <Text>{job.phone}</Text>
-                  </Text>
-                )}
-                {visibleMap.get('languageRequirement') === true &&
-                  job.languageRequirement !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>
-                        languageRequirement:{' '}
+                  <View style={styles.modalInfo}>
+                    {visibleMap.get('date') === true && (
+                      <Text style={styles.modalText}>
+                        <Text style={styles.modalFieldName}>Date: </Text>
+                        <Text>{date.toDateString()}</Text>
                       </Text>
-                      <Text>{job.languageRequirement}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('workingHours') === true &&
-                  job.workingHours !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>workingHours: </Text>
-                      <Text>{job.workingHours}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('workingDays') === true &&
-                  job.workingDays !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>workingDays: </Text>
-                      <Text>{job.workingDays}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('probationPeriod') === true &&
-                  job.probationPeriod !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>
-                        probationPeriod:{' '}
+                    )}
+                    {visibleMap.get('companyName') === true &&
+                      job.companyName !== '' && (
+                        <Text style={styles.modalText}>
+                          <Text style={styles.modalFieldName}>
+                            Company Name:{' '}
+                          </Text>
+                          <Text>{job.companyName}</Text>
+                        </Text>
+                      )}
+                    {visibleMap.get('address') === true &&
+                      job.address !== '' && (
+                        <Text style={styles.modalText}>
+                          <Text style={styles.modalFieldName}>Location: </Text>
+                          <Text>{job.address}</Text>
+                        </Text>
+                      )}
+                    {visibleMap.get('contactPerson') === true &&
+                      job.contactPerson !== '' && (
+                        <Text style={styles.modalText}>
+                          <Text style={styles.modalFieldName}>
+                            Contact Person:{' '}
+                          </Text>
+                          <Text>{job.contactPerson}</Text>
+                        </Text>
+                      )}
+                    {visibleMap.get('phone') === true && job.phone !== '' && (
+                      <Text style={styles.modalText}>
+                        <Text style={styles.modalFieldName}>Phone: </Text>
+                        <Text>{job.phone}</Text>
                       </Text>
-                      <Text>{job.probationPeriod}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('employeeBenefit') === true &&
-                  job.employeeBenefit !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>
-                        employeeBenefit:{' '}
+                    )}
+                    {visibleMap.get('languageRequirement') === true &&
+                      job.languageRequirement !== '' && (
+                        <Text style={styles.modalText}>
+                          <Text style={styles.modalFieldName}>
+                            Language Requirement:{' '}
+                          </Text>
+                          <Text>{job.languageRequirement}</Text>
+                        </Text>
+                      )}
+                    {visibleMap.get('workingHours') === true &&
+                      job.workingHours !== '' && (
+                        <Text style={styles.modalText}>
+                          <Text style={styles.modalFieldName}>Hours/day: </Text>
+                          <Text>{job.workingHours}</Text>
+                        </Text>
+                      )}
+                    {visibleMap.get('workingDays') === true &&
+                      job.workingDays !== '' && (
+                        <Text style={styles.modalText}>
+                          <Text style={styles.modalFieldName}>Days/week: </Text>
+                          <Text>{job.workingDays}</Text>
+                        </Text>
+                      )}
+                    {visibleMap.get('salary') === true && job.salary !== '' && (
+                      <Text style={styles.modalText}>
+                        <Text style={styles.modalFieldName}>Salary: </Text>
+                        <Text>{job.salary}</Text>
                       </Text>
-                      <Text>{job.employeeBenefit}</Text>
-                    </Text>
-                  )}
-                {visibleMap.get('otherInfo') === true &&
-                  job.otherInfo !== '' && (
-                    <Text style={styles.modalText}>
-                      <Text style={styles.modalFieldName}>otherInfo: </Text>
-                      <Text>{job.otherInfo}</Text>
-                    </Text>
-                  )}
-                {pending && (
-                  <View style={styles.buttonContainer}>
-                    <StyledButton
-                      text="decline"
-                      onPress={async () => handleAction(false)}
-                      buttonStyle={{
-                        width: '45%',
-                        height: '50%',
-                        backgroundColor: '#FFFFFF',
-                        borderColor: '#CC433C',
-                      }}
-                      textStyle={{ fontSize: 16, color: '#CC433C' }}
-                    />
-                    <StyledButton
-                      text="approve"
-                      onPress={async () => handleAction(true)}
-                      buttonStyle={{ width: '45%', height: '50%' }}
-                      textStyle={{ fontSize: 16 }}
-                    />
+                    )}
+                    {visibleMap.get('employeeBenefit') === true &&
+                      job.employeeBenefit !== '' && (
+                        <Text style={styles.modalText}>
+                          <Text style={styles.modalFieldName}>
+                            Employee Benefit:{' '}
+                          </Text>
+                          <Text>{job.employeeBenefit}</Text>
+                        </Text>
+                      )}
+                    {visibleMap.get('otherInfo') === true &&
+                      job.otherInfo !== '' && (
+                        <Text style={styles.modalText}>
+                          <Text style={styles.modalFieldName}>
+                            Other Information:{' '}
+                          </Text>
+                          <Text>{job.otherInfo}</Text>
+                        </Text>
+                      )}
                   </View>
-                )}
-                {!pending && (
-                  <View style={styles.singleButtonContainer}>
-                    <StyledButton
-                      text="remove"
-                      onPress={async () => removeJob()}
-                      buttonStyle={{
-                        width: '45%',
-                        height: '50%',
-                      }}
-                      textStyle={{}}
-                    />
-                  </View>
-                )}
-              </View>
-            </View>
-          </View>
+                </View>
+
+                <View>
+                  {pending && (
+                    <View style={styles.buttonContainer}>
+                      <StyledButton
+                        text="decline"
+                        onPress={async () => handleAction(false)}
+                        buttonStyle={{
+                          width: 135,
+                          height: 55,
+                          backgroundColor: '#FFFFFF',
+                          borderColor: '#CC433C',
+                        }}
+                        textStyle={{ fontSize: 16, color: '#CC433C' }}
+                      />
+                      <StyledButton
+                        text="approve"
+                        onPress={async () => handleAction(true)}
+                        buttonStyle={{ width: 135, height: 55 }}
+                        textStyle={{ fontSize: 16 }}
+                      />
+                    </View>
+                  )}
+                  {!pending && (
+                    <View style={styles.singleButtonContainer}>
+                      <StyledButton
+                        text="remove"
+                        onPress={async () => removeJob()}
+                        buttonStyle={{
+                          width: 135,
+                          height: 55,
+                        }}
+                        textStyle={{}}
+                      />
+                    </View>
+                  )}
+                </View>
+              </TouchableOpacity>
+            </ScrollView>
+          </TouchableOpacity>
         </Modal>
-      </GestureRecognizer>
+      </View>
       <View style={styles.jobRef}>
         <Text style={styles.jobRefText}>#{job.id}</Text>
       </View>

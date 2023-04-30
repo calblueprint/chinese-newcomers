@@ -1,6 +1,6 @@
 import React from 'react';
 import useFirestoreListener from 'react-firestore-listener';
-import { SafeAreaView, ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import JobCard from '../../components/JobCard/JobCard';
 import { ApprovalStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
@@ -14,7 +14,7 @@ function ApprovalScreen({
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -37,7 +37,7 @@ function ApprovalScreen({
           </Text>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
