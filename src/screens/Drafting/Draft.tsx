@@ -6,6 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
+import { GetText } from '../../context/AuthContext';
 import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
@@ -117,8 +118,7 @@ function DraftScreen({
         <View style={styles.formContainer}>
           <View style={styles.top}>
             <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-              Use the toggle to determine what information you want displayed in
-              your public job posting.
+              {GetText('Toggles determine what information is displayed')}
             </Text>
           </View>
           <FormProvider {...methods}>
@@ -148,7 +148,7 @@ function DraftScreen({
                 value={companyNameIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Company Name</Text>
+              <Text style={styles.formText}>{GetText('Company Name')}</Text>
             </View>
             <FormInput
               name="companyName"
@@ -162,7 +162,7 @@ function DraftScreen({
                 value={addressIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Address</Text>
+              <Text style={styles.formText}>{GetText('Address/Location')}</Text>
             </View>
             <FormInput
               name="address"
@@ -178,7 +178,7 @@ function DraftScreen({
                 value={contactPersonIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Contact Person</Text>
+              <Text style={styles.formText}>{GetText('Contact Person')}</Text>
             </View>
             <FormInput
               name="contactPerson"
@@ -192,7 +192,7 @@ function DraftScreen({
                 value={phoneIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Phone</Text>
+              <Text style={styles.formText}>{GetText('Phone')}</Text>
             </View>
             <FormInput
               name="phone"
@@ -228,7 +228,9 @@ function DraftScreen({
                 value={languageReqIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Language Requirement*</Text>
+              <Text style={styles.formText}>
+                {GetText('Language Requirement')}
+              </Text>
             </View>
             <FormInput
               name="languageRequirement"
@@ -278,7 +280,7 @@ function DraftScreen({
                 value={salaryIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Salary</Text>
+              <Text style={styles.formText}>{GetText('Salary')}</Text>
             </View>
             <FormInput name="salary" label="salary" placeholder="$36/hr" />
 
@@ -290,7 +292,7 @@ function DraftScreen({
                 value={probationPeriodIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Probation Period (if any)</Text>
+              <Text style={styles.formText}>{GetText('Probation Period')}</Text>
             </View>
             <FormInput
               name="probationPeriod"
@@ -306,7 +308,9 @@ function DraftScreen({
                 value={employeeBenefitIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Employee Benefit (if any)</Text>
+              <Text style={styles.formText}>
+                {GetText('Employee Benefit (if any)')}
+              </Text>
             </View>
             <FormInput
               name="employeeBenefit"
@@ -320,7 +324,9 @@ function DraftScreen({
                 value={otherInfoIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Other Information</Text>
+              <Text style={styles.formText}>
+                {GetText('Other Information')}
+              </Text>
             </View>
             <FormInput
               name="otherInfo"
@@ -330,13 +336,13 @@ function DraftScreen({
           </FormProvider>
           <View style={styles.bottomButtons}>
             <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
-              <Text style={styles.buttonText}>Save to Drafts</Text>
+              <Text style={styles.buttonText}>{GetText('Save Draft')}</Text>
             </Pressable>
             <Pressable
               onPress={methods.handleSubmit(onSubmit)}
               style={[styles.buttons, { backgroundColor: '#CC433C' }]}
             >
-              <Text style={styles.buttonText}>Post Job</Text>
+              <Text style={styles.buttonText}>{GetText('Post Job')}</Text>
             </Pressable>
           </View>
         </View>

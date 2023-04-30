@@ -1,17 +1,17 @@
-import React, { useRef } from 'react';
-import { Text, View, Image } from 'react-native';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import { useTranslation } from 'react-i18next';
-import styles from './styles';
-import { firebaseApp } from '../../../firebase/firebaseApp';
-import '../../../translation/i18n';
-import StyledButton from '../../../components/StyledButton/StyledButton';
+import React, { useRef } from 'react';
+import { Image, Text, View } from 'react-native';
 import logo from '../../../assets/cnsc-logo.png';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { firebaseApp } from '../../../firebase/firebaseApp';
+import '../../../translation/languages';
 import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
 function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
   const recaptchaVerifier = useRef(null);
-  const { t, i18n } = useTranslation();
+
+  const [langModalVisibile, setLangModalVisible] = React.useState(true);
 
   return (
     <View style={styles.container}>
@@ -19,21 +19,23 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
         <Image source={logo} style={styles.logo} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.welcomeText}>{t('welcomePage.welcome')}</Text>
-        <Text style={styles.subText}>{t('welcomePage.setUp')}</Text>
+        <Text style={styles.welcomeText}>Welcome!</Text>
+        <Text style={styles.subText}>
+          Chinese Newcomers Service Center Job Portal
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         <StyledButton
-          text={t('welcomePage.signUp')}
+          text="SIGN UP"
           onPress={() => navigation.navigate('UserTypeScreen')}
           buttonStyle={{}}
           textStyle={{}}
         />
 
-        <Text style={styles.orText}> {t('welcomePage.or')} </Text>
+        <Text style={styles.orText}> OR </Text>
 
         <StyledButton
-          text={t('welcomePage.signIn')}
+          text="SIGN IN"
           onPress={() => navigation.navigate('SigninScreen')}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}

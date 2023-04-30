@@ -9,6 +9,8 @@ import {
   User,
 } from 'firebase/auth';
 import { AuthDispatch } from '../context/AuthContext';
+import { checkAndGetLang } from '../translation/languages';
+import { Dictionary } from '../types/types';
 import firebaseApp from './firebaseApp';
 import { activateUser } from './firestore/access';
 import {
@@ -16,6 +18,7 @@ import {
   getBookmarks,
   getUser,
   removeBookmarkedJob,
+  updateUser,
 } from './firestore/user';
 
 const auth = getAuth(firebaseApp);
@@ -147,4 +150,16 @@ export const signUserOut = async (dispatch: AuthDispatch) => {
     console.warn('Sign out error', error);
   }
   dispatch({ type: 'SIGN_OUT' });
+};
+
+export const updateLanguage = async (
+  dispatch: AuthDispatch,
+  langUpdate: React.Dispatch<React.SetStateAction<Dictionary>>,
+  params: { language: string },
+) => {
+  const user = await getUser(auth.currentUser.uid);
+  const map: Map<string, string> = new Map([['language', params.language]]);
+  updateUser(user?.id, map, user?.access);
+  langUpdate(checkAndGetLang(params.language));
+  dispatch({ type: 'UPDATE_LANGUAGE', language: params.language });
 };
