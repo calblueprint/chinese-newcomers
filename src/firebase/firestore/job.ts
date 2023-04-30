@@ -87,7 +87,6 @@ export const createJob = async (
   try {
     if (collectionName === 'approvedJobs') {
       const oldID = job.id;
-      const deleteOld: Record<string, boolean> = {};
       const employerRef = doc(db, 'employer', creatorID);
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
@@ -99,10 +98,8 @@ export const createJob = async (
         additionalZero +
         (monthlyCounter + 1).toString();
       const parsedJob = parseFirestoreListenerJob(jobId, job);
-      // const { userObject } = useContext(AuthContext);
       await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
-      // deleteOld[`createdJobs.${oldID}`].?\deleteField();
       await updateDoc(employerRef, `createdJobs.${oldID}`, deleteField());
       changeCreatedJobsStatus(creatorID, jobId);
     } else {
@@ -113,7 +110,6 @@ export const createJob = async (
         approved: false,
       };
       await updateDoc(newDoc, data);
-      // await setDoc(doc(db, collectionName, data.id), data);
       addCreatedJobs(data.id, creatorID, false);
     }
   } catch (error) {

@@ -145,7 +145,8 @@ export const changeCreatedJobsStatus = async (
     console.log(jobID);
     createdUpdate[`createdJobs.${jobID}`] = true;
     await updateDoc(docRef, createdUpdate);
-    approvedUpdate[`${jobID}.approved`] = true;
+    // Not changing approved field
+    approvedUpdate["approved"] = true;
     await updateDoc(approvedRef, approvedUpdate);
     // await updateDoc(docRef, {jobID: deleteField()});
     // const job = await getJob(jobID, 'notApprovedJobs');
