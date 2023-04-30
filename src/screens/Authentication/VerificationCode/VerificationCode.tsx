@@ -33,13 +33,14 @@ function VerificationScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
-      const access = await getAccess(phoneNumber);
-      if (access === false) {
-        await signInPhone(dispatch, { verificationId, verificationCode });
-      } else {
-        await signUpPhoneAdmin(verificationId, verificationCode);
-        navigation.navigate('AdminRegisterScreen', { phoneNumber });
-      }
+      // const access = await getAccess(phoneNumber);
+      // if (access === false) {
+      //   await signInPhone(dispatch, { verificationId, verificationCode });
+      // } else {
+      //   await signUpPhoneAdmin(verificationId, verificationCode);
+      //   navigation.navigate('UserTypeScreen', { phoneNumber });
+      // }
+      navigation.navigate('UserTypeScreen', {phoneNumber});
     } catch (e) {
       console.error(e);
     }

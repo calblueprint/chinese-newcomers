@@ -7,6 +7,7 @@ import PhoneNumberScreen from '../../screens/Authentication/PhoneNumber/PhoneNum
 import SigninScreen from '../../screens/Authentication/Signin/Signin';
 import VerificationScreen from '../../screens/Authentication/VerificationCode/VerificationCode';
 import WelcomeScreen from '../../screens/Authentication/Welcome/Welcome';
+import UserTypeScreen from '../../screens/Authentication/UserType/UserType';
 import { AuthStackParamList } from '../../types/navigation';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -31,6 +32,10 @@ export default function AuthStackNavigator() {
       <AuthStack.Screen
         name="VerificationScreen"
         component={VerificationScreen}
+      />
+      <AuthStack.Screen
+        name="UserTypeScreen"
+        component={UserTypeScreen}
       />
       <AuthStack.Screen
         name="AdminRegisterScreen"
