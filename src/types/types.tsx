@@ -14,6 +14,8 @@ export interface User {
 export interface Job {
   id: string;
   date: Timestamp;
+  creator: string;
+  approved: boolean;
   companyName: string;
   address: string;
   contactPerson: string;
@@ -33,6 +35,8 @@ export interface Job {
 export const jobInstance: Job = {
   id: '',
   date: new Timestamp(0, 0),
+  creator: "",
+  approved: false,
   companyName: '',
   address: '',
   contactPerson: '',

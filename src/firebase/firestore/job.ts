@@ -64,7 +64,9 @@ export const getMonthlyCounter = async (): Promise<number> => {
 
 function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
   const jobKeys = Object.keys(jobInstance);
-  const parsedJob = Object.fromEntries(jobKeys.map(k => [k, job[k as keyof typeof job]]));
+  const parsedJob = Object.fromEntries(
+    jobKeys.map(k => [k, job[k as keyof typeof job]]),
+  );
   parsedJob.id = jobId;
   return parsedJob;
 }
@@ -72,6 +74,7 @@ function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
 export const createJob = async (
   job: Partial<Job>,
   collectionName: string,
+  creatorID: string,
 ): Promise<void> => {
   const docRef = collection(db, collectionName);
   try {
@@ -92,6 +95,8 @@ export const createJob = async (
       const newDoc = await addDoc(docRef, job);
       const data = {
         id: newDoc.id,
+        creator: creatorID,
+        approved: false,
       };
       await updateDoc(newDoc, data);
     }

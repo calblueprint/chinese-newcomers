@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useContext } from 'react';
 import {
   Text,
   View,
@@ -19,6 +19,7 @@ import { createJob } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
 import { DraftStackScreenProps } from '../../types/navigation';
+import { AuthContext } from '../../context/AuthContext';
 
 function DraftScreen({
   navigation,
@@ -62,6 +63,7 @@ function DraftScreen({
 
   interface FormValues {
     date: string;
+    creator: string;
     companyName: string;
     address: string;
     contactPerson: string;
@@ -77,6 +79,7 @@ function DraftScreen({
     otherInfo: string;
   }
   const { ...methods } = useForm<FormValues>();
+  const { userObject } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     const map = new Map<string, boolean>();
@@ -111,7 +114,11 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
-      await createJob(job, 'notApprovedJobs');
+      if (userObject === null) {
+        console.log('User not found');
+      } else {
+        await createJob(job, 'notApprovedJobs', userObject?.id);
+      }
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
       methods.reset();

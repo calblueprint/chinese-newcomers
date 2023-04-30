@@ -6,6 +6,7 @@ import FeedStackNavigator from '../stacks/FeedStackNavigator';
 import DraftStackNavigator from '../stacks/DraftStackNavigator';
 import ApprovalStackNavigator from '../stacks/ApprovalStackNavigator';
 import SignoutStackNavigator from '../stacks/SignOutStackNavigator';
+import EmployerStackNavigator from '../stacks/EmployerStackNavigator';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
@@ -68,6 +69,13 @@ function AdminStack(): ReactElement {
       <Tab.Screen
         name="Signout"
         component={SignoutStackNavigator}
+        options={{
+          tabBarIcon: LogoutVariantIcon,
+        }}
+      />
+      <Tab.Screen
+        name="EmployerHome"
+        component={EmployerStackNavigator}
         options={{
           tabBarIcon: LogoutVariantIcon,
         }}
