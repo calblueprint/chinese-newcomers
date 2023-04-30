@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { updateUserBookmarks } from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
-import styles from './Styles';
+import styles from './styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const { userObject } = useContext(AuthContext);
