@@ -12,7 +12,9 @@ import { signInPhone, signUpPhoneAdmin } from '../../../firebase/auth';
 import { getAccess } from '../../../firebase/firestore/access';
 import { AuthContext } from '../../../context/AuthContext';
 
-function UserTypeScreen({ navigation }: AuthStackScreenProps<'UserTypeScreen'>) {
+function UserTypeScreen({
+  navigation,
+}: AuthStackScreenProps<'UserTypeScreen'>) {
   const recaptchaVerifier = useRef(null);
   const { t, i18n } = useTranslation();
   const { dispatch } = useContext(AuthContext);
@@ -29,7 +31,7 @@ function UserTypeScreen({ navigation }: AuthStackScreenProps<'UserTypeScreen'>) 
   // }
 
   function phoneNumberNavigate(type: string) {
-    navigation.navigate('PhoneNumberScreen', { userType: type })
+    navigation.navigate('PhoneNumberScreen', { userType: type });
   }
 
   return (
@@ -43,19 +45,19 @@ function UserTypeScreen({ navigation }: AuthStackScreenProps<'UserTypeScreen'>) 
       <View style={styles.buttonContainer}>
         <StyledButton
           text="job seeker"
-          onPress={() => phoneNumberNavigate("jobSeeker")}
+          onPress={() => phoneNumberNavigate('jobSeeker')}
           buttonStyle={{}}
           textStyle={{}}
         />
         <StyledButton
           text="Employer"
-          onPress={() => phoneNumberNavigate("employer")}
+          onPress={() => phoneNumberNavigate('employer')}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}
         />
         <StyledButton
           text="Admin"
-          onPress={() => phoneNumberNavigate("admin")}
+          onPress={() => phoneNumberNavigate('admin')}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}
         />

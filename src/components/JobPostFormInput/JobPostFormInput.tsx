@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { TextInput, TextInputProps, View } from 'react-native';
-import { AutoGrowTextInput } from 'react-native-auto-grow-textinput';
 import { useController, UseControllerProps } from 'react-hook-form';
-import styles from './JobPostFormInputStyle';
+import { TextInputProps, View } from 'react-native';
+import { AutoGrowTextInput } from 'react-native-auto-grow-textinput';
+import styles from './styles';
 
 interface FormInputProps extends TextInputProps, UseControllerProps {
   label: string;

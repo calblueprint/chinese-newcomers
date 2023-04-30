@@ -6,7 +6,9 @@ import { signUserOut } from '../../../firebase/auth';
 import { AdminSettingsStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
-function EmployerApprovalScreen({navigation}: AdminSettingsStackScreenProps<'EmployerApprovalScreen'>): ReactElement {
+function EmployerApprovalScreen({
+  navigation,
+}: AdminSettingsStackScreenProps<'EmployerApprovalScreen'>): ReactElement {
   const { dispatch } = useContext(AuthContext);
 
   return (

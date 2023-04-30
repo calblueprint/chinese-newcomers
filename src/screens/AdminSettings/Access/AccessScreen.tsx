@@ -1,13 +1,19 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useRef, useState } from 'react';
 import {
-  FormProvider, SubmitErrorHandler, SubmitHandler, useForm
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
 } from 'react-hook-form';
 import { Text, View } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import Toast from 'react-native-toast-message';
 import StyledButton from '../../../components/StyledButton/StyledButton';
-import { addAccess, getActivationStatus } from '../../../firebase/firestore/access';
+import {
+  addAccess,
+  getActivationStatus,
+} from '../../../firebase/firestore/access';
 import styles from './Styles';
 
 import { AdminSettingsStackScreenProps } from '../../../types/navigation';
@@ -42,13 +48,10 @@ function AccessScreen({
       // To Do: render error label
       const activated = await getActivationStatus(phoneNumber);
       if (!activated && userType !== '' && valid) {
-        await addAccess(
-          phoneNumber,
-          userType
-        );
+        await addAccess(phoneNumber, userType);
         showSuccessToast();
       }
-      console.log(valid)
+      console.log(valid);
     } catch (error) {
       console.log(error);
     }
@@ -59,53 +62,68 @@ function AccessScreen({
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-      <FormProvider {...methods}>
-        <View style={styles.textContainer}>
-          <Text style={styles.headingText}>Invite an Admin or Employer to the app!</Text>
-          <Text style={styles.subText}>
-            We'll send them an invite over text.{' '}
-          </Text>
-        </View>
-        <View>
-        <View style={styles.phonenumberContainer}>
-            <PhoneInput
-              ref={phoneInput}
-              placeholder="4151234567"
-              defaultValue={phoneNumber}
-              onChangeFormattedText={text => {
-                setPhoneNumber(text);
-              }}
-              defaultCode="US"
-            />
+        <FormProvider {...methods}>
+          <View style={styles.textContainer}>
+            <Text style={styles.headingText}>
+              Invite an Admin or Employer to the app!
+            </Text>
+            <Text style={styles.subText}>
+              We'll send them an invite over text.{' '}
+            </Text>
           </View>
-          <Text style={styles.subTextRadio}>
-            Choose a user type:
-          </Text>
-        <View style={styles.buttonContainer}>
-          
-          <StyledButton 
-            text='admin' 
-            buttonStyle={userType === 'admin' ? styles.selectedRadioButton : styles.unselectedRadioButton} 
-            onPress={() => setUserType('admin')}
-            textStyle={userType === 'admin' ? { fontSize: 16} : styles.selectedTextStyle}
-          />
-          <StyledButton 
-            text='employer' 
-            buttonStyle={userType === 'employer' ? styles.selectedRadioButton : styles.unselectedRadioButton} 
-            onPress={() => setUserType('employer')}
-            textStyle={userType === 'employer' ? { fontSize: 16 } : styles.selectedTextStyle}
-          />
-        </View>
-          <View style={styles.buttonContainer}>
-            <StyledButton
-              text="Submit"
-              onPress={methods.handleSubmit(onSubmit, onError)}
-              buttonStyle={{ width: '45%', height: '100%', marginTop: '5%' }}
-              textStyle={{ fontSize: 16 }}
-            />
+          <View>
+            <View style={styles.phonenumberContainer}>
+              <PhoneInput
+                ref={phoneInput}
+                placeholder="4151234567"
+                defaultValue={phoneNumber}
+                onChangeFormattedText={text => {
+                  setPhoneNumber(text);
+                }}
+                defaultCode="US"
+              />
+            </View>
+            <Text style={styles.subTextRadio}>Choose a user type:</Text>
+            <View style={styles.buttonContainer}>
+              <StyledButton
+                text="admin"
+                buttonStyle={
+                  userType === 'admin'
+                    ? styles.selectedRadioButton
+                    : styles.unselectedRadioButton
+                }
+                onPress={() => setUserType('admin')}
+                textStyle={
+                  userType === 'admin'
+                    ? { fontSize: 16 }
+                    : styles.selectedTextStyle
+                }
+              />
+              <StyledButton
+                text="employer"
+                buttonStyle={
+                  userType === 'employer'
+                    ? styles.selectedRadioButton
+                    : styles.unselectedRadioButton
+                }
+                onPress={() => setUserType('employer')}
+                textStyle={
+                  userType === 'employer'
+                    ? { fontSize: 16 }
+                    : styles.selectedTextStyle
+                }
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <StyledButton
+                text="Submit"
+                onPress={methods.handleSubmit(onSubmit, onError)}
+                buttonStyle={{ width: '45%', height: '100%', marginTop: '5%' }}
+                textStyle={{ fontSize: 16 }}
+              />
+            </View>
           </View>
-        </View>
-      </FormProvider>
+        </FormProvider>
       </View>
       <Toast />
     </View>

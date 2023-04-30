@@ -15,7 +15,7 @@ import { getBookmarks } from '../../firebase/firestore/user';
 import objectToBooleanMap from '../../firebase/helpers';
 import { Job } from '../../types/types';
 import StyledButton from '../StyledButton/StyledButton';
-import styles from './CardStyles';
+import styles from './styles';
 
 interface JobCardProps {
   job: Job;
