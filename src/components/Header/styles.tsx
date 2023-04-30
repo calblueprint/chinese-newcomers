@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    width: '100%', 
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -12,9 +12,9 @@ export default StyleSheet.create({
     fontFamily: 'DMSans_700Bold',
   },
   headerStyle: {
-    backgroundColor: 'white', 
-    height: 125, 
+    backgroundColor: 'white',
+    height: 125,
     borderBottomColor: 'black',
     borderBottomWidth: StyleSheet.hairlineWidth,
-  }
+  },
 });

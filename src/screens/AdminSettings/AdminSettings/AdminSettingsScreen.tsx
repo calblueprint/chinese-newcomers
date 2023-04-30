@@ -6,7 +6,9 @@ import { signUserOut } from '../../../firebase/auth';
 import { AdminSettingsStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
-function AdminSettingsScreen({navigation}: AdminSettingsStackScreenProps<'AdminSettingsScreen'>): ReactElement {
+function AdminSettingsScreen({
+  navigation,
+}: AdminSettingsStackScreenProps<'AdminSettingsScreen'>): ReactElement {
   const { dispatch } = useContext(AuthContext);
 
   return (
@@ -26,6 +28,12 @@ function AdminSettingsScreen({navigation}: AdminSettingsStackScreenProps<'AdminS
       <StyledButton
         text="Approve Employers"
         onPress={() => navigation.navigate('EmployerApprovalScreen')}
+        buttonStyle={{ width: '45%', height: '5%' }}
+        textStyle={{}}
+      />
+      <StyledButton
+        text="Expired Jobs"
+        onPress={() => navigation.navigate('ExpiredJobsScreen')}
         buttonStyle={{ width: '45%', height: '5%' }}
         textStyle={{}}
       />
