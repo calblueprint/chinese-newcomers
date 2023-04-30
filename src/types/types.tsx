@@ -1,30 +1,31 @@
-export interface User {
+import { Timestamp } from "firebase/firestore";
+
+export interface RegularUser {
   id: string;
   access: string;
-  createdJobs: string[]; // switched to string of jobIds to match Firebase
-  email: string | null;
-  likedJobs: string[]; // switched to string of jobIds to match Firebase
-  name: string;
   phoneNumber: string | null;
   verified: boolean;
+  bookmarkedJobs: string[];
 }
 
-// export interface Job {
-//   contact_info: string;
-//   description: string;
-//   employer: string;
-//   // note: look into what type the date should be in
-//   end_date: Date;
-//   hours: number;
-//   // note: maybe set type to User
-//   job_creator: string;
-//   salary: number;
-//   start_date: string;
-// }
+export interface Admin extends RegularUser {
+  email: string | null;
+  createdJobs: string[];
+}
+
+export interface Employer extends RegularUser {
+  name: string | null;
+  email: string | null;
+  createdJobs: string[]; 
+  address: string | null;
+  company: string | null;
+  website: string |
+   null;
+}
 
 export interface Job {
   id: string;
-  date: string;
+  date: Timestamp;
   companyName: string;
   address: string;
   contactPerson: string;
@@ -32,12 +33,29 @@ export interface Job {
   jobPosition: string;
   languageRequirement: string;
   workingHours: string;
-  workingDays: string;
-  salary: string;
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
   visible: object;
-  liked: boolean;
   category: string;
+  salary: string;
 }
+
+export const jobInstance: Job = {
+  id: '',
+  date: new Timestamp(0, 0),
+  companyName: '',
+  address: '',
+  contactPerson: '',
+  phone: '',
+  jobPosition: '',
+  languageRequirement: '',
+  workingHours: '',
+  workingDays: '',
+  salary: '',
+  probationPeriod: '',
+  employeeBenefit: '',
+  otherInfo: '',
+  visible: Object(),
+  category: '',
+};

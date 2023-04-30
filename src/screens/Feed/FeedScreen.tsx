@@ -1,18 +1,35 @@
-import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import useFirestoreListener from 'react-firestore-listener';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
 import { getAllJobs } from '../../firebase/firestore/job';
+import { deleteUserFromFirestore, getUser, updateUser, updateUserBookmarks } from '../../firebase/firestore/user';
+import { AuthContext } from '../../context/AuthContext';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
-import styles from './Styles';
+import styles from './styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
+  const { userObject } = useContext(AuthContext);
+  const userBookmarkedJobs = userObject?.bookmarkedJobs;
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', async () => {
+      if (userObject?.id === undefined) {
+        return;
+      }
+      await updateUserBookmarks(userBookmarkedJobs, userObject?.id);
+    });
+    return unsubscribe;
+  }, [navigation, userObject?.id, userBookmarkedJobs]);
+
   const [open, setOpen] = useState(false);
-  const [list, setList] = useState([] as Job[]);
-  const [filteredList, setFilteredList] = useState([] as Job[]);
+  const approvedJobs = useFirestoreListener<Job>({
+    collection: 'approvedJobs',
+  });
+  const [filteredApprovedJobs, setFilteredApprovedJobs] = useState([] as Job[]);
   const [category, setCategory] = useState('all');
   const categories: string[] = [
     'all',
@@ -29,24 +46,19 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
     'other',
   ];
 
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      const data = await getAllJobs('approvedJobs');
-      setList(data);
-      setFilteredList(data);
-    };
-    fetchJobs();
-  }, [isFocused]);
-
   useEffect(() => {
     if (category === 'all') {
-      setFilteredList(list);
+      setFilteredApprovedJobs(approvedJobs);
     } else {
-      setFilteredList(list.filter(job => job.category === category));
+      setFilteredApprovedJobs(
+        approvedJobs.filter(job => job.category === category),
+      );
     }
-  }, [category, list]);
+  }, [category, approvedJobs]);
+
+  getUser("MgmTA51BoyUQpj9DDk7K7x2ef872");
+  updateUser("MgmTA51BoyUQpj9DDk7K7x2ef872", {},"admin")
+  deleteUserFromFirestore("+15103654407");
 
   return (
     <SafeAreaView style={styles.container}>
@@ -74,23 +86,16 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
           textStyle={{ fontFamily: 'DMSans_500Medium' }}
         />
 
-        {filteredList.map((job, index) => (
-          // eslint-disable-next-line react/jsx-key
+        {filteredApprovedJobs.map(job => (
           <JobCard
             job={job}
             key={job.id}
-            idx={index}
             pending={false}
-            pendingJobs={null}
-            setPendingJobs={null}
-            filteredJobs={filteredList}
-            setFilteredJobs={setFilteredList}
+            bookmarkedJobs={null}
+            setBookmarkedJobs={null}
           />
         ))}
       </ScrollView>
-      {/* <View style={styles.footer}>
-        <Button title="Back" onPress={() => navigation.navigate('Home')} />
-      </View> */}
     </SafeAreaView>
   );
 }
