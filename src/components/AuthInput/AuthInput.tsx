@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { TextInput, TextInputProps, View } from 'react-native';
 import { useController, UseControllerProps } from 'react-hook-form';
+import { TextInput, TextInputProps, View } from 'react-native';
 import styles from './styles';
 
 interface AuthInputProps extends TextInputProps, UseControllerProps {

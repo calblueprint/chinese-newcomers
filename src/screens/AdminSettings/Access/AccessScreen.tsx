@@ -14,7 +14,7 @@ import {
   addAccess,
   getActivationStatus,
 } from '../../../firebase/firestore/access';
-import styles from './Styles';
+import styles from './styles';
 
 import { AdminSettingsStackScreenProps } from '../../../types/navigation';
 

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import Logo from '../../assets/cnsc-logo.png';
+import SignoutIcon from '../../assets/sign-out.svg';
 import { AuthContext } from '../../context/AuthContext';
 import { signUserOut } from '../../firebase/auth';
-import SignoutIcon from '../../assets/sign-out.svg';
 import styles from './styles';
 
 interface HeaderProps {

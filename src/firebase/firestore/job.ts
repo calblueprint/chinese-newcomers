@@ -1,19 +1,18 @@
 import {
-  getDoc,
-  doc,
-  collection,
   addDoc,
-  getDocs,
+  arrayRemove,
+  collection,
+  deleteDoc,
+  doc,
   DocumentData,
   DocumentSnapshot,
-  updateDoc,
+  getDoc,
+  getDocs,
   setDoc,
-  deleteDoc,
-  arrayRemove,
+  updateDoc,
 } from 'firebase/firestore';
-import { G } from 'react-native-svg';
-import { db } from '../firebaseApp';
 import { Job, jobInstance } from '../../types/types';
+import { db } from '../firebaseApp';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');

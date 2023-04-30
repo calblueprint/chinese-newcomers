@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import React from 'react';
 import useFirestoreListener from 'react-firestore-listener';
+import { SafeAreaView, ScrollView, Text } from 'react-native';
 import JobCard from '../../components/JobCard/JobCard';
-import styles from './Styles';
-import { Job } from '../../types/types';
 import { ApprovalStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './styles';
 
 function ApprovalScreen({
   navigation,

@@ -1,5 +1,5 @@
-import { getDoc, doc, collection, updateDoc, setDoc } from 'firebase/firestore';
-import { Access, EmployerRequest } from '../../types/types';
+import { doc, setDoc } from 'firebase/firestore';
+import { EmployerRequest } from '../../types/types';
 import { db } from '../firebaseApp';
 
 // const Collection = collection(db, 'access');

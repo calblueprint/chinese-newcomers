@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useIsFocused } from '@react-navigation/native';
-import { Text, View, SafeAreaView, ScrollView } from 'react-native';
-import { BookmarksStackScreenProps } from '../../types/navigation';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import JobCard from '../../components/JobCard/JobCard';
-import { Job } from '../../types/types';
-import styles from './styles';
+import { AuthContext } from '../../context/AuthContext';
 import {
   getBookmarkedJobs,
   updateUserBookmarks,
 } from '../../firebase/firestore/user';
-import { AuthContext } from '../../context/AuthContext';
+import { BookmarksStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './styles';
 
 function BookmarksScreen({
   navigation,

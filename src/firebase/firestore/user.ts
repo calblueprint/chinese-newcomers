@@ -1,16 +1,16 @@
 import { UserCredential } from 'firebase/auth';
 import {
+  collection,
   deleteDoc,
   doc,
   DocumentData,
-  getDoc,
   DocumentSnapshot,
+  getDoc,
+  getDocs,
   setDoc,
   updateDoc,
-  getDocs,
-  collection,
 } from 'firebase/firestore';
-import { RegularUser, Admin, Employer, Job } from '../../types/types';
+import { Admin, Employer, Job, RegularUser } from '../../types/types';
 import { db } from '../config';
 import { getJob } from './job';
 
