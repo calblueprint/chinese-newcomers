@@ -3,7 +3,7 @@ import {
   FormProvider,
   SubmitErrorHandler,
   SubmitHandler,
-  useForm,
+  useForm
 } from 'react-hook-form';
 import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
 import { z } from 'zod';
@@ -17,10 +17,10 @@ import styles from './styles';
 
 const emailSchema = z.string().email({ message: 'Invalid email address' });
 
-function AdminRegisterScreen({
-  navigation,
+function EmailPasswordRegisterScreen({
   route,
-}: AuthStackScreenProps<'AdminRegisterScreen'>) {
+  navigation,
+}: AuthStackScreenProps<'EmailPasswordRegisterScreen'>) {
   interface FormValues {
     email: string;
     password: string;
@@ -28,7 +28,7 @@ function AdminRegisterScreen({
   const { ...methods } = useForm<FormValues>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { phoneNumber } = route.params;
+  const { phoneNumber, userType } = route.params;
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
@@ -41,7 +41,7 @@ function AdminRegisterScreen({
     }
     try {
       emailSchema.parse(email);
-      await signUpEmail(dispatch, { email, password, phoneNumber });
+      await signUpEmail(dispatch, { email, password, phoneNumber, userType });
     } catch (e) {
       if (e instanceof z.ZodError) {
         setEmailError('Oops! Invalid email. Try again.');
@@ -158,4 +158,4 @@ function AdminRegisterScreen({
   );
 }
 
-export default AdminRegisterScreen;
+export default EmailPasswordRegisterScreen;

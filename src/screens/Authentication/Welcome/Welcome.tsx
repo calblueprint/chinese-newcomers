@@ -25,7 +25,7 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
       <View style={styles.buttonContainer}>
         <StyledButton
           text={t('welcomePage.signUp')}
-          onPress={() => navigation.navigate('PhoneNumberScreen')}
+          onPress={() => navigation.navigate('UserTypeScreen')}
           buttonStyle={{}}
           textStyle={{}}
         />

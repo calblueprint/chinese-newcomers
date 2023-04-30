@@ -5,11 +5,9 @@ import {
   signInWithEmailAndPassword,
   signOut, User
 } from 'firebase/auth';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { AuthDispatch } from '../context/AuthContext';
-import { db } from './config';
 import firebaseApp from './firebaseApp';
-import { activatedAdmin } from './firestore/access';
+import { activateUser } from './firestore/access';
 import {
   checkAndAddUser,
   getBookmarks,
@@ -81,14 +79,14 @@ export const changeBookmark = async (
 
 export const signUpEmail = async (
   dispatch: AuthDispatch,
-  params: { email: string; password: string; phoneNumber: string },
+  params: { email: string; password: string; phoneNumber: string, userType: string },
 ) => {
   createUserWithEmailAndPassword(auth, params.email, params.password)
   .then(async userCredential => {
     const { user } = userCredential;
-    await checkAndAddUser(user, 'admin', params.phoneNumber);
+    await checkAndAddUser(user, params.userType, params.phoneNumber);
     console.log('Email sign up successful', user.email);
-    await activatedAdmin(params.phoneNumber);
+    await activateUser(params.phoneNumber);
     const UserObject = await getUser(user.uid);
     dispatch({ type: 'SIGN_IN', userObject: UserObject });
   })

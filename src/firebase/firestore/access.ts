@@ -1,10 +1,7 @@
 import {
-  getDoc,
-  doc,
-  collection,
-  updateDoc,
-  setDoc,
+  collection, doc, getDoc, setDoc, updateDoc
 } from 'firebase/firestore';
+import { Access } from '../../types/types';
 import { db } from '../firebaseApp';
 
 const accessCollection = collection(db, 'access');
@@ -14,18 +11,16 @@ export const addAccess = async (phoneNumber: string, userType: string) => {
   await setDoc(doc(db, 'access', phoneNumber), accessObject);
 }
 
-export const getAccess = async (id: string): Promise<boolean> => {
+export const getAccess = async (id: string): Promise<Access | null> => {
   const docRef = doc(db, 'access', id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    console.log('Admin access');
-    return true;
+    return docSnap.data() as Access;
   }
-  console.log('not admin');
-  return false;
+  return null;
 };
 
-export const activatedAdmin = async (phoneNumber: string): Promise<void> => {
+export const activateUser = async (phoneNumber: string): Promise<void> => {
   const docRef = doc(db, 'access', phoneNumber);
   const data = {
     activated: true,

@@ -2,12 +2,13 @@ import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bott
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type AuthStackParamList = {
-  AdminRegisterScreen: { phoneNumber: string };
+  EmailPasswordRegisterScreen: { phoneNumber: string, userType: string };
   EmployerRegisterScreen: { phoneNumber: string };
   AdminSigninScreen: undefined;
-  PhoneNumberScreen: undefined;
+  PhoneNumberScreen: { userType: string };
   SigninScreen: undefined;
-  VerificationScreen: { verificationId: string; phoneNumber: string };
+  VerificationScreen: { verificationId: string; phoneNumber: string, userType: string };
+  UserTypeScreen: undefined;
   WelcomeScreen: undefined;
 };
 
