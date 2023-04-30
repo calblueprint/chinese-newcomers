@@ -3,10 +3,10 @@ import { View } from 'react-native';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signUserOut } from '../../../firebase/auth';
-import { SignoutStackScreenProps } from '../../../types/navigation';
+import { AdminSettingsStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
-function SignoutScreen({navigation}: SignoutStackScreenProps<'SignoutScreen'>): ReactElement {
+function AdminSettingsScreen({navigation}: AdminSettingsStackScreenProps<'AdminSettingsScreen'>): ReactElement {
   const { dispatch } = useContext(AuthContext);
 
   return (
@@ -23,8 +23,14 @@ function SignoutScreen({navigation}: SignoutStackScreenProps<'SignoutScreen'>): 
         buttonStyle={{ width: '45%', height: '5%' }}
         textStyle={{}}
       />
+      <StyledButton
+        text="Approve Employers"
+        onPress={() => navigation.navigate('EmployerApprovalScreen')}
+        buttonStyle={{ width: '45%', height: '5%' }}
+        textStyle={{}}
+      />
     </View>
   );
 }
 
-export default SignoutScreen;
+export default AdminSettingsScreen;

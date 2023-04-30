@@ -36,13 +36,14 @@ export type FeedStackParamList = {
 export type FeedStackScreenProps<T extends keyof FeedStackParamList> =
   NativeStackScreenProps<FeedStackParamList, T>;
 
-export type SignoutStackParamList = {
-  SignoutScreen: undefined;
+export type AdminSettingsStackParamList = {
+  AdminSettingsScreen: undefined;
   AccessScreen: undefined;
+  EmployerApprovalScreen: undefined;
 };
 
-export type SignoutStackScreenProps<T extends keyof SignoutStackParamList> =
-  NativeStackScreenProps<SignoutStackParamList, T>;
+export type AdminSettingsStackScreenProps<T extends keyof AdminSettingsStackParamList> =
+  NativeStackScreenProps<AdminSettingsStackParamList, T>;
 
 export type BookmarksStackParamList = {
   BookmarksScreen: undefined;

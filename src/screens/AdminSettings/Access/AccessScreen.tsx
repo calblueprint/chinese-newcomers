@@ -1,24 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState, useRef } from 'react';
-import { Text, View, Image, Picker, Pressable } from 'react-native';
+import React, { useRef, useState } from 'react';
 import {
-  useForm,
-  FormProvider,
-  SubmitHandler,
-  SubmitErrorHandler,
+  FormProvider, SubmitErrorHandler, SubmitHandler, useForm
 } from 'react-hook-form';
+import { Text, View } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import Toast from 'react-native-toast-message';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { addAccess, getActivationStatus } from '../../../firebase/firestore/access';
 import styles from './Styles';
-import { addAccess, getActivationStatus } from '../../firebase/firestore/access';
-import { firebaseApp } from '../../firebase/config';
-import StyledButton from '../../components/StyledButton/StyledButton';
 
-import { SignoutStackScreenProps } from '../../types/navigation';
+import { AdminSettingsStackScreenProps } from '../../../types/navigation';
 
 function AccessScreen({
   navigation,
-}: SignoutStackScreenProps<'AccessScreen'>) {
+}: AdminSettingsStackScreenProps<'AccessScreen'>) {
   interface FormValues {
     phoneNumber: string;
   }
