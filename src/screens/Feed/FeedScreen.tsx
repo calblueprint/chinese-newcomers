@@ -1,12 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import useFirestoreListener from 'react-firestore-listener';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
-import { getAllJobs } from '../../firebase/firestore/job';
-import { deleteUserFromFirestore, getUser, updateUser, updateUserBookmarks } from '../../firebase/firestore/user';
 import { AuthContext } from '../../context/AuthContext';
+import {
+  deleteUserFromFirestore,
+  getUser,
+  updateUser,
+  updateUserBookmarks,
+} from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './styles';
@@ -56,9 +60,9 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
     }
   }, [category, approvedJobs]);
 
-  getUser("MgmTA51BoyUQpj9DDk7K7x2ef872");
-  updateUser("MgmTA51BoyUQpj9DDk7K7x2ef872", {},"admin")
-  deleteUserFromFirestore("+15103654407");
+  getUser('MgmTA51BoyUQpj9DDk7K7x2ef872');
+  updateUser('MgmTA51BoyUQpj9DDk7K7x2ef872', {}, 'admin');
+  deleteUserFromFirestore('+15103654407');
 
   return (
     <SafeAreaView style={styles.container}>
