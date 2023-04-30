@@ -37,6 +37,7 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     marginLeft: 18,
     height: 38,
+    width: 285,
     marginBottom: 22,
   },
   jobNameText: {

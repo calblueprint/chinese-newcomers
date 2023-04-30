@@ -30,10 +30,8 @@ function AccountCheckIcon({ color }: IconProps) {
   );
 }
 
-function LogoutVariantIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="logout-variant" color={color} size={26} />
-  );
+function SettingsIcon({ color }: IconProps) {
+  return <MaterialCommunityIcons name="cog" color={color} size={26} />;
 }
 
 function BookmarkOutlineIcon({ color }: IconProps) {
@@ -73,17 +71,17 @@ function AdminStack(): ReactElement {
         }}
       />
       <Tab.Screen
-        name="Signout"
-        component={SignoutStackNavigator}
-        options={{
-          tabBarIcon: LogoutVariantIcon,
-        }}
-      />
-      <Tab.Screen
         name="Bookmarks"
         component={BookmarksStackNavigator}
         options={{
           tabBarIcon: BookmarkOutlineIcon,
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SignoutStackNavigator}
+        options={{
+          tabBarIcon: SettingsIcon,
         }}
       />
     </Tab.Navigator>
