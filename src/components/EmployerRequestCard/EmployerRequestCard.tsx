@@ -1,34 +1,18 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import React, { useContext, useEffect, useState } from 'react';
-import { Modal, Pressable, Text, View } from 'react-native';
-import GestureRecognizer from 'react-native-swipe-gestures';
-import Empty from '../../assets/empty.svg';
-import Filled from '../../assets/filled.svg';
-import { AuthContext } from '../../context/AuthContext';
-import { changeBookmark } from '../../firebase/auth';
+import React from 'react';
+import { Pressable, Text, View } from 'react-native';
 import { addAccess } from '../../firebase/firestore/access';
 import { deleteEmployerRequest } from '../../firebase/firestore/employerRequest';
-import {
-  createJob,
-  deleteJob,
-  removeBookmarkedJobFromAllUsers,
-} from '../../firebase/firestore/job';
-import { getBookmarks } from '../../firebase/firestore/user';
-import objectToBooleanMap from '../../firebase/helpers';
-import { EmployerRequest, Job } from '../../types/types';
-import StyledButton from '../StyledButton/StyledButton';
+import { EmployerRequest } from '../../types/types';
 import styles from './styles';
 
 interface EmployerRequestCardProps {
-  employerRequest: EmployerRequest
+  employerRequest: EmployerRequest;
 }
 
-function EmployerRequestCard({
-  employerRequest
-}: EmployerRequestCardProps) {
-
+function EmployerRequestCard({ employerRequest }: EmployerRequestCardProps) {
   function approve() {
-    addAccess(employerRequest.phoneNumber, "employer"); 
+    addAccess(employerRequest.phoneNumber, 'employer');
     deleteEmployerRequest(employerRequest.phoneNumber);
   }
 
@@ -37,31 +21,21 @@ function EmployerRequestCard({
   }
 
   return (
-    <View style={styles.cardContainer}>
-      <View style={styles.jobRef}>
-        <Text style={styles.jobRefText}>{employerRequest.companyName}</Text>
+    <Pressable style={styles.cardContainer}>
+      <View style={styles.cardView}>
+        <View style={styles.textView}>
+          <Text style={styles.businessNameText}>
+            {employerRequest.businessName}
+          </Text>
+          <Text style={styles.infoText}>{employerRequest.phoneNumber}</Text>
+          <Text style={styles.infoText}>{employerRequest.website}</Text>
+        </View>
+        <View style={styles.buttonView}>
+          <Pressable onPress={() => decline()} style={styles.declineButton} />
+          <Pressable onPress={() => approve()} style={styles.approveButton} />
+        </View>
       </View>
-      <View style={styles.jobName}>
-        <Text style={styles.jobNameText}>{employerRequest.phoneNumber}</Text>
-        <Text style={styles.jobNameText}>{employerRequest.website}</Text>
-        <Pressable
-          onPress={() => decline()}
-          buttonStyle={{
-            width: '45%',
-            height: '50%',
-            backgroundColor: '#FFFFFF',
-            borderColor: '#CC433C',
-          }}
-          textStyle={{ fontSize: 16, color: '#CC433C' }}
-        />
-        <Pressable
-          text="approve"
-          onPress={() => approve()}
-          buttonStyle={{ width: '45%', height: '50%' }}
-          textStyle={{ fontSize: 16 }}
-        />
-      </View>
-    </View>
+    </Pressable>
   );
 }
 
