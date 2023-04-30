@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import React, { ReactElement } from 'react';
 import { BottomTabParamList } from '../../types/navigation';
-import FeedStackNavigator from '../stacks/FeedStackNavigator';
-import SignoutStackNavigator from '../stacks/SignOutStackNavigator';
+import SignoutStackNavigator from '../stacks/AdminSettingsStackNavigator';
 import BookmarksStackNavigator from '../stacks/BookmarksStackNavigator';
+import FeedStackNavigator from '../stacks/FeedStackNavigator';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
 

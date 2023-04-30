@@ -3,12 +3,14 @@ import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const scale = windowWidth / 390;
-const leftMargin = '7%';
+console.log(windowWidth);
+console.log(scale);
+console.log(windowHeight);
+const leftMargin = '9%';
 
 export default StyleSheet.create({
   container: {
     width: '100%',
-    height: '100%',
     display: 'flex',
     flex: 1,
     backgroundColor: '#fff',
@@ -16,10 +18,10 @@ export default StyleSheet.create({
   },
   logoContainer: {
     width: '100%',
-    height: windowHeight * 0.13,
+    height: '13%',
     justifyContent: 'flex-start',
     marginLeft: leftMargin,
-    marginTop: '15%',
+    marginTop: '8%',
   },
   logo: {
     resizeMode: 'contain',
@@ -27,48 +29,35 @@ export default StyleSheet.create({
     width: '22%',
   },
   textContainer: {
-    width: '80%',
-    height: '15%',
+    width: '76%',
+    height: '25%',
     justifyContent: 'space-between',
     marginLeft: leftMargin,
-    marginTop: '8%',
-  },
-  inputContainer: {
-    width: '82%',
-    marginTop: '10%',
-    marginLeft: leftMargin,
+    marginTop: '35%',
   },
   buttonContainer: {
-    height: windowHeight * 0.05,
-    width: '82%',
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: '6%',
-    marginLeft: leftMargin,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    height: '38%',
+    alignItems: 'center',
+    marginTop: '22%',
   },
-  headingText: {
+  welcomeText: {
     fontFamily: 'DMSans_500Medium',
     color: '#49260C',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(30 * scale)),
     fontWeight: '500',
     letterSpacing: 0.5,
   },
   subText: {
     fontFamily: 'DMSans_500Medium',
     color: '#94613D',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
-    fontWeight: '500',
-    letterSpacing: 0.5,
-  },
-  smallText: {
-    fontFamily: 'DMSans_500Medium',
-    color: '#94613D',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(14 * scale)),
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(16 * scale)),
     fontWeight: '400',
-    letterSpacing: 0.5,
   },
-  form: {
-    height: '100%'
-  }
+  orText: {
+    color: '#CC433C',
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(18 * scale)),
+    fontWeight: '500',
+  },
 });

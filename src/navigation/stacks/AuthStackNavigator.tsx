@@ -1,10 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import AdminRegisterScreen from '../../screens/Authentication/AdminRegister/AdminRegister';
-import EmployerRegisterScreen from '../../screens/Authentication/EmployerRegister/EmployerRegister';
+import EmailPasswordRegisterScreen from '../../screens/Authentication/EmailPasswordRegister/EmailPasswordRegister';
 import AdminSigninScreen from '../../screens/Authentication/AdminSignin/AdminSignin';
+import EmployerRegisterScreen from '../../screens/Authentication/EmployerRegister/EmployerRegister';
 import PhoneNumberScreen from '../../screens/Authentication/PhoneNumber/PhoneNumber';
 import SigninScreen from '../../screens/Authentication/Signin/Signin';
+import UserTypeScreen from '../../screens/Authentication/UserType/UserType';
 import VerificationScreen from '../../screens/Authentication/VerificationCode/VerificationCode';
 import WelcomeScreen from '../../screens/Authentication/Welcome/Welcome';
 import { AuthStackParamList } from '../../types/navigation';
@@ -32,11 +33,12 @@ export default function AuthStackNavigator() {
         name="VerificationScreen"
         component={VerificationScreen}
       />
+      <AuthStack.Screen name="UserTypeScreen" component={UserTypeScreen} />
       <AuthStack.Screen
-        name="AdminRegisterScreen"
-        component={AdminRegisterScreen}
+        name="EmailPasswordRegisterScreen"
+        component={EmailPasswordRegisterScreen}
       />
-       <AuthStack.Screen
+      <AuthStack.Screen
         name="EmployerRegisterScreen"
         component={EmployerRegisterScreen}
       />

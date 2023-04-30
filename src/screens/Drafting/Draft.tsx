@@ -1,14 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 import React, { ReactElement, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import {
-  Modal,
-  Pressable,
-  SafeAreaView,
-  Switch,
-  Text,
-  View,
-} from 'react-native';
+import { Modal, Pressable, Switch, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
@@ -110,9 +103,9 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
-      await createJob(job, 'notApprovedJobs');
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
+      await createJob(job, 'notApprovedJobs');
       methods.reset();
     } catch (e) {
       console.error(e);
@@ -120,11 +113,10 @@ function DraftScreen({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <KeyboardAwareScrollView style={styles.form}>
         <View style={styles.formContainer}>
           <View style={styles.top}>
-            <Text style={styles.formTitle}>Job Post Draft</Text>
             <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
               {GetText('Toggles determine what information is displayed')}
             </Text>
@@ -394,7 +386,7 @@ function DraftScreen({
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    height: '100%',
+    height: '80%',
     width: '100%',
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#EBEBEB',
     flexDirection: 'column',
   },
   categoryText: {

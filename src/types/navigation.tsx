@@ -2,12 +2,17 @@ import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bott
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type AuthStackParamList = {
-  AdminRegisterScreen: { phoneNumber: string };
+  EmailPasswordRegisterScreen: { phoneNumber: string; userType: string };
   EmployerRegisterScreen: { phoneNumber: string };
   AdminSigninScreen: undefined;
-  PhoneNumberScreen: undefined;
+  PhoneNumberScreen: { userType: string };
   SigninScreen: undefined;
-  VerificationScreen: { verificationId: string; phoneNumber: string };
+  VerificationScreen: {
+    verificationId: string;
+    phoneNumber: string;
+    userType: string;
+  };
+  UserTypeScreen: undefined;
   WelcomeScreen: undefined;
 };
 
@@ -36,13 +41,15 @@ export type FeedStackParamList = {
 export type FeedStackScreenProps<T extends keyof FeedStackParamList> =
   NativeStackScreenProps<FeedStackParamList, T>;
 
-export type SignoutStackParamList = {
-  SignoutScreen: undefined;
+export type AdminSettingsStackParamList = {
+  AdminSettingsScreen: undefined;
   AccessScreen: undefined;
+  EmployerApprovalScreen: undefined;
 };
 
-export type SignoutStackScreenProps<T extends keyof SignoutStackParamList> =
-  NativeStackScreenProps<SignoutStackParamList, T>;
+export type AdminSettingsStackScreenProps<
+  T extends keyof AdminSettingsStackParamList,
+> = NativeStackScreenProps<AdminSettingsStackParamList, T>;
 
 export type BookmarksStackParamList = {
   BookmarksScreen: undefined;

@@ -26,14 +26,17 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.welcomeButtons}
-          onPress={() => navigation.navigate('PhoneNumberScreen')}
-        >
-          <Text style={styles.welcomeButtonText}>SIGN UP</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.welcomeButtons, { backgroundColor: '#fff' }]}
+        <StyledButton
+          text={t('welcomePage.signUp')}
+          onPress={() => navigation.navigate('UserTypeScreen')}
+          buttonStyle={{}}
+          textStyle={{}}
+        />
+
+        <Text style={styles.orText}> {t('welcomePage.or')} </Text>
+
+        <StyledButton
+          text={t('welcomePage.signIn')}
           onPress={() => navigation.navigate('SigninScreen')}
         >
           <Text style={[styles.welcomeButtonText, { color: '#D82D1F' }]}>

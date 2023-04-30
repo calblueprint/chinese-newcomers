@@ -11,15 +11,14 @@ import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import PhoneInput from 'react-native-phone-number-input';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
-import {
-  phoneGetConfirmation,
-} from '../../../firebase/auth';
+import { phoneGetConfirmation } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
 import { getActivationStatus } from '../../../firebase/firestore/access';
 
 function PhoneNumberScreen({
+  route,
   navigation,
 }: AuthStackScreenProps<'PhoneNumberScreen'>) {
   interface FormValues {
@@ -32,13 +31,17 @@ function PhoneNumberScreen({
   const [phoneError, setPhoneError] = useState('');
   const phoneInput = useRef<PhoneInput>(null);
 
+  const { userType } = route.params;
+
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
       const validatePhoneNumber = () => {
         if (phoneInput.current?.isValidNumber(phoneNumber)) {
           setPhoneError('');
           return true;
-        } setPhoneError('Oops! Invalid phone number. Please try again.');
+        }
+        setPhoneError('Oops! Invalid phone number. Please try again.');
+        return false;
       };
       setValid(validatePhoneNumber());
       console.log(valid);
@@ -53,6 +56,7 @@ function PhoneNumberScreen({
         navigation.navigate('VerificationScreen', {
           verificationId,
           phoneNumber,
+          userType,
         });
       }
     } catch (error) {
@@ -60,8 +64,7 @@ function PhoneNumberScreen({
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = errors =>
-    console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
 
   const handlePhoneChange = phoneNumber => {
     setPhoneNumber(phoneNumber);
@@ -129,4 +132,4 @@ function PhoneNumberScreen({
   );
 }
 
-export default PhoneNumberScreen
+export default PhoneNumberScreen;

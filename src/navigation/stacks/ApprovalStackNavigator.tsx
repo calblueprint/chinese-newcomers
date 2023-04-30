@@ -1,18 +1,27 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import ApprovalScreen from '../../screens/Approval/ApprovalScreen';
 import { ApprovalStackParamList } from '../../types/navigation';
+import Header from '../../components/Header/Header';
+import styles from '../../components/Header/styles';
 
-const ApprovalStack = createNativeStackNavigator<ApprovalStackParamList>();
+const ApprovalStack = createStackNavigator<ApprovalStackParamList>();
+
+function ApprovalHeader() {
+  return <Header title="Approve Jobs" />;
+}
 
 export default function ApprovalStackNavigator() {
   return (
-    <ApprovalStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <ApprovalStack.Screen name="ApprovalScreen" component={ApprovalScreen} />
+    <ApprovalStack.Navigator>
+      <ApprovalStack.Screen
+        name="ApprovalScreen"
+        component={ApprovalScreen}
+        options={{
+          headerTitle: ApprovalHeader,
+          headerStyle: styles.headerStyle,
+        }}
+      />
     </ApprovalStack.Navigator>
   );
 }

@@ -1,19 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import useFirestoreListener from 'react-firestore-listener';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
 import { AuthContext } from '../../context/AuthContext';
-import {
-  deleteUserFromFirestore,
-  getUser,
-  updateUser,
-  updateUserBookmarks,
-} from '../../firebase/firestore/user';
+import { updateUserBookmarks } from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
-import styles from './styles';
+import styles from './Styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const { userObject } = useContext(AuthContext);
@@ -60,21 +54,14 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
     }
   }, [category, approvedJobs]);
 
-  getUser('MgmTA51BoyUQpj9DDk7K7x2ef872');
-  updateUser('MgmTA51BoyUQpj9DDk7K7x2ef872', {}, 'admin');
-  deleteUserFromFirestore('+15103654407');
-
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.feedHeader}>
-        <Image source={Logo} style={{ width: 100, height: 100 }} />
-        <Text style={styles.feedTitle}>Welcome!</Text>
-      </View>
+    <View style={styles.container}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
           alignItems: 'center',
           width: '100%',
+          marginTop: '8%',
         }}
       >
         <Text style={styles.categoryText}> Filter By Category: </Text>
@@ -100,7 +87,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
           />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

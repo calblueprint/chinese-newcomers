@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import React from 'react';
 import useFirestoreListener from 'react-firestore-listener';
+import { ScrollView, Text, View } from 'react-native';
 import JobCard from '../../components/JobCard/JobCard';
-import styles from './Styles';
-import { Job } from '../../types/types';
 import { ApprovalStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './styles';
 
 function ApprovalScreen({
   navigation,
@@ -14,10 +14,7 @@ function ApprovalScreen({
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.feedHeader}>
-        <Text style={styles.feedTitle}>Pending Job Posts</Text>
-      </View>
+    <View style={styles.container}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -40,7 +37,7 @@ function ApprovalScreen({
           </Text>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
