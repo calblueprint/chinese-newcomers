@@ -14,12 +14,6 @@ import { AuthContext } from '../../context/AuthContext';
 function EmployerHome({
   navigation,
 }: EmployerStackScreenProps<'EmployerHome'>) {
-  // const approvedJobs = useFirestoreListener<Job>({
-  //   collection: "approvedJobs",
-  // });
-  // const notApprovedJobs = useFirestoreListener<Job>({
-  //   collection: "notApprovedJobs",
-  // });
   const [jobs, setJobs] = useState([] as Job[]);
   const [filteredJobs, setFilteredJobs] = useState([] as Job[]);
   const [activeFilter, setActiveFilter] = useState('all');
@@ -36,7 +30,6 @@ function EmployerHome({
         console.log(data);
         setJobs(data);
         setFilteredJobs(data);
-
       }
     };
     console.log('fetching created jobs');
@@ -56,7 +49,7 @@ function EmployerHome({
     } else {
       setFilteredJobs(approvedJobs);
     }
-  }, [activeFilter, userObject?.createdJobs]);
+  }, [activeFilter, userObject?.createdJobs, jobs]);
 
   return (
     <SafeAreaView style={styles.container}>

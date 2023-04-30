@@ -12,6 +12,7 @@ import { DraftStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './styles';
 import { AuthContext } from '../../context/AuthContext';
+import { addCreatedJobs } from '../../firebase/firestore/employer';
 
 function DraftScreen({
   navigation,
@@ -110,6 +111,7 @@ function DraftScreen({
         console.log('User not found');
       } else {
         await createJob(job, 'notApprovedJobs', userObject?.id);
+        console.log("created job");
       }
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);

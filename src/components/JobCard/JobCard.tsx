@@ -55,8 +55,12 @@ function JobCard({
 
   const [modalVisible, setModalVisible] = useState(false);
   console.log("visible job");
+  console.log(job.id);
   console.log(job.visible);
   const visibleMap = objectToBooleanMap(job.visible);
+  const { userObject } = useContext(AuthContext);
+
+
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {

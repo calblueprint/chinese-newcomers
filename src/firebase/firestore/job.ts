@@ -10,9 +10,14 @@ import {
   getDocs,
   setDoc,
   updateDoc,
+  deleteField,
+  FieldValue,
 } from 'firebase/firestore';
-import { Job, jobInstance } from '../../types/types';
+import { useContext } from 'react';
 import { db } from '../firebaseApp';
+import { Job, jobInstance } from '../../types/types';
+import { addCreatedJobs, changeCreatedJobsStatus } from './employer';
+import { AuthContext } from '../../context/AuthContext';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
@@ -81,6 +86,9 @@ export const createJob = async (
   const docRef = collection(db, collectionName);
   try {
     if (collectionName === 'approvedJobs') {
+      const oldID = job.id;
+      const deleteOld: Record<string, boolean> = {};
+      const employerRef = doc(db, 'employer', creatorID);
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
@@ -91,8 +99,12 @@ export const createJob = async (
         additionalZero +
         (monthlyCounter + 1).toString();
       const parsedJob = parseFirestoreListenerJob(jobId, job);
+      // const { userObject } = useContext(AuthContext);
       await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
+      // deleteOld[`createdJobs.${oldID}`].?\deleteField();
+      await updateDoc(employerRef, `createdJobs.${oldID}`, deleteField());
+      changeCreatedJobsStatus(creatorID, jobId);
     } else {
       const newDoc = await addDoc(docRef, job);
       const data = {
@@ -101,6 +113,8 @@ export const createJob = async (
         approved: false,
       };
       await updateDoc(newDoc, data);
+      // await setDoc(doc(db, collectionName, data.id), data);
+      addCreatedJobs(data.id, creatorID, false);
     }
   } catch (error) {
     console.log(error);
