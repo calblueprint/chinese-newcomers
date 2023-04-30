@@ -36,11 +36,12 @@ function VerificationScreen({
       const accessObject = await getAccess(phoneNumber);
       if (!accessObject) {
         // nav to employer or user based on prop
-        if (userType === "employer") {
+        if (verificationCode) { // if the request exists 
+          
+        } else if (userType === "employer") {
           console.log("hello");
           navigation.navigate('EmployerRegisterScreen', { phoneNumber })
-        }
-        if (userType === "jobSeeker") {
+        } else if (userType === "jobSeeker") {
           await signInPhone(dispatch, { verificationId, verificationCode });
         }
         
@@ -50,7 +51,7 @@ function VerificationScreen({
         if (accessObject.access === "admin") {
           if (!accessObject.activated) {
             await signUpPhoneAdmin(verificationId, verificationCode);
-            navigation.navigate('AdminRegisterScreen', { phoneNumber, userType: "admin" });
+            navigation.navigate('EmailPasswordRegisterScreen', { phoneNumber, userType: "admin" });
           } else {
             console.log("error state");
           }
@@ -58,7 +59,7 @@ function VerificationScreen({
         if (accessObject.access === "employer") {
           // error state
           if (!accessObject.activated) {
-            navigation.navigate('AdminRegisterScreen', { phoneNumber, userType: "employer" });
+            navigation.navigate('EmailPasswordRegisterScreen', { phoneNumber, userType: "employer" });
           } else {
             // error state
           }
