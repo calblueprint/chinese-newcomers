@@ -7,7 +7,6 @@ import {
   SubmitHandler,
   SubmitErrorHandler,
 } from 'react-hook-form';
-import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import PhoneInput from 'react-native-phone-number-input';
 import Toast from 'react-native-toast-message';
 import styles from './Styles';
@@ -109,10 +108,6 @@ function AccessScreen({
               textStyle={{ fontSize: 16 }}
             />
           </View>
-          <FirebaseRecaptchaVerifierModal
-            ref={recaptchaVerifier}
-            firebaseConfig={firebaseApp.options}
-          />
         </View>
       </FormProvider>
       </View>
