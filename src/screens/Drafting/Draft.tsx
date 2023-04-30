@@ -109,9 +109,9 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
-      await createJob(job, 'notApprovedJobs');
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
+      await createJob(job, 'notApprovedJobs');
       methods.reset();
     } catch (e) {
       console.error(e);
