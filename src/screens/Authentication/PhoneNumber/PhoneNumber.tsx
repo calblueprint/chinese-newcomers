@@ -13,11 +13,11 @@ import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 import {
   phoneGetConfirmation,
-  getActivationStatus,
 } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
+import { getActivationStatus } from '../../../firebase/firestore/access';
 
 function PhoneNumberScreen({
   navigation,

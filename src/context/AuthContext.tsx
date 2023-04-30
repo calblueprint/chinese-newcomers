@@ -2,7 +2,8 @@ import { getAuth } from 'firebase/auth';
 import React, { createContext, useEffect, useMemo, useReducer } from 'react';
 import firebaseApp from '../firebase/firebaseApp';
 import { getUser } from '../firebase/firestore/user';
-import { RegularUser } from '../types/types';
+import { langToDictMap } from '../translation/languages';
+import { Dictionary, RegularUser } from '../types/types';
 
 export type AuthDispatch = React.Dispatch<AuthContextAction>;
 
@@ -12,16 +13,16 @@ export interface AuthState {
   isLoading: boolean;
   userObject: RegularUser | null;
   dispatch: AuthDispatch;
-  langState: string | null;
-  langUpdate: React.Dispatch<React.SetStateAction<string>>;
+  langState: Dictionary | null;
+  langUpdate: React.Dispatch<React.SetStateAction<Dictionary>>;
 }
 
 export type AuthContextAction =
   | { type: 'RESTORE_USER'; userObject: RegularUser | null }
   | { type: 'SIGN_IN'; userObject: RegularUser | null }
   | { type: 'SIGN_OUT' }
-  | { type: 'CHANGE_BOOKMARK'; bookmarkedArray: string[] | undefined };
-// add 'change_lang' --> updates user object lnagauge field to the languageg passed in (prob only param)
+  | { type: 'CHANGE_BOOKMARK'; bookmarkedArray: string[] | undefined }
+  | { type: 'UPDATE_LANGUAGE'; language: string | undefined };
 
 export const useAuthReducer = () =>
   useReducer(
@@ -45,6 +46,14 @@ export const useAuthReducer = () =>
             userObject: {
               ...prevState.userObject,
               bookmarkedJobs: action.bookmarkedArray,
+            } as RegularUser,
+          };
+        case 'UPDATE_LANGUAGE':
+          return {
+            ...prevState,
+            userObject: {
+              ...prevState.userObject,
+              language: action.language,
             } as RegularUser,
           };
         case 'SIGN_OUT':
@@ -84,7 +93,7 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [authState, dispatch] = useAuthReducer();
-  const [langState, langUpdate] = React.useState(); // set this state in the useAuthReducer switch statement --> a dictionary
+  const [langState, langUpdate] = React.useState<Dictionary>(); // set this state in the useAuthReducer switch statement --> a dictionary
 
   // Subscribe to auth state changes and restore the user if they're already signed in
   useEffect(() => {
@@ -92,10 +101,18 @@ export function AuthContextProvider({
       let UserObject: RegularUser | null = null;
       if (user) {
         UserObject = await getUser(user.uid);
+        if (UserObject?.language) {
+          const val = langToDictMap.get(UserObject?.language);
+          langUpdate(val);
+        }
       }
       dispatch({
         type: 'RESTORE_USER',
         userObject: UserObject,
+      });
+      dispatch({
+        type: 'UPDATE_LANGUAGE',
+        language: UserObject?.language,
       });
     });
     return unsubscribe;
@@ -105,8 +122,10 @@ export function AuthContextProvider({
     () => ({
       ...authState,
       dispatch,
+      langState,
+      langUpdate,
     }),
-    [authState, dispatch],
+    [authState, dispatch, langState, langUpdate],
   );
 
   return (

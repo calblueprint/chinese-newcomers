@@ -127,8 +127,6 @@ function DraftScreen({
             <Text style={styles.formTitle}>Job Post Draft</Text>
             <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
               {GetText('Toggles determine what information is displayed')}
-              {/* Use the toggle to determine what information you want displayed in
-              your public job posting. */}
             </Text>
           </View>
           <FormProvider {...methods}>

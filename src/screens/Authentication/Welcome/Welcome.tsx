@@ -4,13 +4,12 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Modal } from 'react-native-paper';
 import logo from '../../../assets/cnsc-logo.png';
 import { firebaseApp } from '../../../firebase/firebaseApp';
-import '../../../translation/i18n';
+import '../../../translation/languages';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
 function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
   const recaptchaVerifier = useRef(null);
-  // const { t, i18n } = useTranslation();
 
   const [langModalVisibile, setLangModalVisible] = React.useState(true);
 
@@ -61,7 +60,11 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.modalButtons}
-                onPress={() => setLangModalVisible(false)}
+                onPress={() => {
+                  setLangModalVisible(false);
+                  // TODO: call updateLanguage
+                  // updateLanguage(dispatch, )
+                }}
               >
                 <Text style={styles.modalButtonsText}>中文</Text>
               </TouchableOpacity>
