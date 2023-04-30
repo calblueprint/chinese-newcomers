@@ -4,10 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomTabParamList } from '../../types/navigation';
 import FeedStackNavigator from '../stacks/FeedStackNavigator';
 import DraftStackNavigator from '../stacks/DraftStackNavigator';
-import ApprovalStackNavigator from '../stacks/ApprovalStackNavigator';
 import SignoutStackNavigator from '../stacks/SignOutStackNavigator';
-import BookmarksStackNavigator from '../stacks/BookmarksStackNavigator';
-import Empty from '../../assets/empty.svg';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
@@ -25,25 +22,13 @@ function NoteTextOutlineIcon({ color }: IconProps) {
   );
 }
 
-function AccountCheckIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="account-check" color={color} size={26} />
-  );
-}
-
 function LogoutVariantIcon({ color }: IconProps) {
   return (
     <MaterialCommunityIcons name="logout-variant" color={color} size={26} />
   );
 }
 
-function BookmarkOutlineIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="bookmark-outline" color={color} size={26} />
-  );
-}
-
-function AdminStack(): ReactElement {
+function EmployerStack(): ReactElement {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -67,28 +52,14 @@ function AdminStack(): ReactElement {
         }}
       />
       <Tab.Screen
-        name="Approval"
-        component={ApprovalStackNavigator}
-        options={{
-          tabBarIcon: AccountCheckIcon,
-        }}
-      />
-      <Tab.Screen
         name="Signout"
         component={SignoutStackNavigator}
         options={{
           tabBarIcon: LogoutVariantIcon,
         }}
       />
-      <Tab.Screen
-        name="Bookmarks"
-        component={BookmarksStackNavigator}
-        options={{
-          tabBarIcon: BookmarkOutlineIcon,
-        }}
-      />
     </Tab.Navigator>
   );
 }
 
-export default AdminStack;
+export default EmployerStack;
