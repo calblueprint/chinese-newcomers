@@ -40,7 +40,7 @@ function VerificationScreen({
       //   await signUpPhoneAdmin(verificationId, verificationCode);
       //   navigation.navigate('UserTypeScreen', { phoneNumber });
       // }
-      navigation.navigate('UserTypeScreen', {phoneNumber});
+      navigation.navigate('UserTypeScreen', { verificationId, verificationCode, phoneNumber });
     } catch (e) {
       console.error(e);
     }

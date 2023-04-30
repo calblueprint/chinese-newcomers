@@ -8,7 +8,7 @@ export type AuthStackParamList = {
   PhoneNumberScreen: undefined;
   SigninScreen: undefined;
   VerificationScreen: { verificationId: string; phoneNumber: string };
-  UserTypeScreen: { phoneNumber: string };;
+  UserTypeScreen: { verificationId: string, verificationCode: string, phoneNumber: string };
   WelcomeScreen: undefined;
 };
 

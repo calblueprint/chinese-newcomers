@@ -10,20 +10,22 @@ import logo from '../../../assets/cnsc-logo.png';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import { getAccess, signInPhone, signUpPhoneAdmin } from '../../../firebase/auth';
 
-function signUp(phoneNumber: string) {
-  const access = await getAccess(phoneNumber);
-  if (access === false) {
-    await signInPhone(dispatch, { verificationId, verificationCode });
-  } else {
-    await signUpPhoneAdmin(verificationId, verificationCode);
-    navigation.navigate('UserTypeScreen', { phoneNumber });
-  }
-}
 
 function UserTypeScreen({ navigation, route }: AuthStackScreenProps<'UserTypeScreen'>) {
   const recaptchaVerifier = useRef(null);
   const { t, i18n } = useTranslation();
-  const { phoneNumber } = route.params;
+  const { verificationId, verificationCode, phoneNumber } = route.params;
+
+  async function signUp() {
+    const access = await getAccess(phoneNumber);
+    if (access === false) {
+      await signInPhone(dispatch, { verificationId, verificationCode });
+    } else {
+      await signUpPhoneAdmin(verificationId, verificationCode);
+      const nextScreen = (access == "employer") ? "EmployerRegisterScreen" : "AdminRegisterScreen";
+      navigation.navigate(nextScreen, { phoneNumber });
+    }
+  }
 
   return (
     <View style={styles.container}>
