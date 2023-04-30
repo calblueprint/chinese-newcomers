@@ -41,21 +41,29 @@ export default StyleSheet.create({
   formText: {
     fontSize: 18,
     marginLeft: 12,
+    marginTop: 3,
     fontFamily: 'DMSans_500Medium',
+  },
+  toggleText: {
+    fontSize: 16, 
+    fontFamily: 'DMSans', 
+    color: '#94613D', 
+    textAlign:'center'
   },
   bottomButtons: {
     flexDirection: 'row',
     alignContent: 'space-around',
-    marginBottom: 150,
+    // height: 80,
+    marginBottom: 30,
   },
   buttons: {
     width: 150,
-    height: '22%',
+    height: 45,
     margin: 5,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '8%',
+    marginTop: 30,
   },
   buttonText: {
     fontSize: 17,
@@ -101,6 +109,15 @@ export default StyleSheet.create({
     right: '5%',
   },
   bottomText: {
-    marginTop: 10
+    fontSize: 14,
+    color: '#D82D1F',
+    fontFamily: 'DMSans_500Medium',
+    textAlign: 'center',
+    marginBottom: 30,
+    marginTop: 20,
+  },
+  errorText: {
+    color:'#D82D1F',
+    fontSize: 13,
   }
 });

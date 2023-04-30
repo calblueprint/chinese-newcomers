@@ -122,7 +122,7 @@ function DraftScreen({
       <KeyboardAwareScrollView style={styles.form}>
         <View style={styles.formContainer}>
           <View style={styles.top}>
-            <Text style={{ fontSize: 16, fontFamily: 'DMSans', color: '#94613D'}}>
+            <Text style={styles.toggleText}>
             Toggles determine what information is displayed in your public job posting
             </Text>
           </View>
@@ -144,19 +144,13 @@ function DraftScreen({
               label="jobPosition"
               placeholder="Waiter, waitress"
               rules={{ required: 'Job Position is required!' }}
-              style={{
-                width: 320,
-                borderWidth: 2,
-                borderRadius: 3,
-                marginBottom: 5,
-              }}
             />
             {methods.formState.errors.jobPosition != null && (
-              <Text>Please check the Job Position.</Text>
+              <Text style={styles.errorText}>Please check the Job Position.</Text>
             )}
 
             <View style={styles.formTop}>
-              <Switch
+              <Switch 
                 onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
                 value={phoneIsEnabled}
                 trackColor={{ false: '#767577', true: '#ABEE8B' }}
@@ -168,8 +162,12 @@ function DraftScreen({
             <FormInput
               name="phone"
               label="phone"
-              placeholder="(510) xxx - xxxx"
+              placeholder= "(510) xxx - xxxx"
+              rules={{ required: 'Phone is required!' }}
             />
+            {methods.formState.errors.phone != null && (
+              <Text style={styles.errorText}>Please check the Phone.</Text>
+            )}
 
             <View style={styles.formTop}>
               <Switch
@@ -185,7 +183,11 @@ function DraftScreen({
               name="address"
               label="address"
               placeholder="2400 Durant Ave., Berkeley, CA"
+              rules={{ required: 'Address is required!' }}
             />
+            {methods.formState.errors.address != null && (
+              <Text style={styles.errorText}>Please check the address.</Text>
+            )}
 
             <View style={styles.formTop}>
               <Switch
@@ -206,10 +208,10 @@ function DraftScreen({
               rules={{ required: 'Language Requirement is required!' }}
             />
             {methods.formState.errors.languageRequirement != null && (
-              <Text>Please check the Language Requirement.</Text>
+              <Text style={styles.errorText}>Please check the Language Requirement.</Text>
             )}
 
-            <View style={styles.formTop}>
+            {/* <View style={styles.formTop}>
               <Switch
                 onValueChange={() => setDateIsEnabled(!dateIsEnabled)}
                 value={dateIsEnabled}
@@ -227,7 +229,7 @@ function DraftScreen({
             />
             {methods.formState.errors.date != null && (
               <Text>Please check the Date.</Text>
-            )}
+            )} */}
 
             <View style={styles.formTop}>
               <Switch
@@ -359,9 +361,10 @@ function DraftScreen({
             >
               <Text style={styles.buttonText}>Post Job</Text>
             </Pressable>
-
-            <Text style={styles.bottomText}>Employee Benefit (if any)</Text>
           </View>
+          {/* <Text style={styles.bottomText}>
+              Make sure to fill out all required fields at the top of the screen!
+          </Text> */}
         </View>
         {/* </ScrollView> */}
       </KeyboardAwareScrollView>
