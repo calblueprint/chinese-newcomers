@@ -33,7 +33,7 @@ function ExpiredJobsScreen({
         ))}
         {expiredJobs.length === 0 && (
           <Text style={{ marginTop: '10%' }}>
-            No pending job drafts to review!
+            No expired jobs currently!
           </Text>
         )}
       </ScrollView>
