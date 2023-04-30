@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import useFirestoreListener from 'react-firestore-listener';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
-import { getAllJobs } from '../../firebase/firestore/job';
-import { deleteUserFromFirestore, getUser, updateUser, updateUserBookmarks } from '../../firebase/firestore/user';
 import { AuthContext } from '../../context/AuthContext';
+import { updateUserBookmarks } from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './styles';
@@ -57,14 +55,13 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   }, [category, approvedJobs]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      
+    <View style={styles.container}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
           alignItems: 'center',
           width: '100%',
-          marginTop: '8%'
+          marginTop: '8%',
         }}
       >
         <Text style={styles.categoryText}> Filter By Category: </Text>
@@ -90,7 +87,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
           />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
