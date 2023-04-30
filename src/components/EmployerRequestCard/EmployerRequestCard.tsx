@@ -44,8 +44,7 @@ function EmployerRequestCard({
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{employerRequest.phoneNumber}</Text>
         <Text style={styles.jobNameText}>{employerRequest.website}</Text>
-        <StyledButton
-          text="decline"
+        <Pressable
           onPress={() => decline()}
           buttonStyle={{
             width: '45%',
@@ -55,7 +54,7 @@ function EmployerRequestCard({
           }}
           textStyle={{ fontSize: 16, color: '#CC433C' }}
         />
-        <StyledButton
+        <Pressable
           text="approve"
           onPress={() => approve()}
           buttonStyle={{ width: '45%', height: '50%' }}
