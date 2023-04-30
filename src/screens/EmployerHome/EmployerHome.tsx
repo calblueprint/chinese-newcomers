@@ -1,45 +1,62 @@
-import React, { useEffect, useState, useContext } from "react"; 
-import useFirestoreListener from "react-firestore-listener";
-import { Image, SafeAreaView, ScrollView, Text, View } from "react-native";
-import Logo from "../../assets/cnsc-logo.png";
-import JobCard from "../../components/JobCard/JobCard";
-import { EmployerStackScreenProps } from "../../types/navigation";
-import { Job } from "../../types/types";
-import styles from "./Styles";
-import StyledButton from "../../components/StyledButton/StyledButton";
-import { AuthContext } from "../../context/AuthContext";
-import { getAllCreatedJobs } from "firebase/firestore/employer";
+import React, { useEffect, useState, useContext } from 'react';
+import useFirestoreListener from 'react-firestore-listener';
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { query } from 'firebase/firestore';
+import { getAllCreatedJobs } from '../../firebase/firestore/employer';
+import Logo from '../../assets/cnsc-logo.png';
+import JobCard from '../../components/JobCard/JobCard';
+import { EmployerStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './Styles';
+import StyledButton from '../../components/StyledButton/StyledButton';
+import { AuthContext } from '../../context/AuthContext';
 
-function EmployerHome({ navigation }: EmployerStackScreenProps<'EmployerHome'>) {
+function EmployerHome({
+  navigation,
+}: EmployerStackScreenProps<'EmployerHome'>) {
   // const approvedJobs = useFirestoreListener<Job>({
   //   collection: "approvedJobs",
   // });
   // const notApprovedJobs = useFirestoreListener<Job>({
   //   collection: "notApprovedJobs",
   // });
+  const [jobs, setJobs] = useState([] as Job[]);
   const [filteredJobs, setFilteredJobs] = useState([] as Job[]);
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeFilter, setActiveFilter] = useState('all');
   const { userObject } = useContext(AuthContext);
-  // const allJobs = approvedJobs.concat(notApprovedJobs);
+  // Screen shows all jobs by default
+  useEffect(() => {
+    const fetchCreatedJobs = async () => {
+      if (userObject === null) {
+        console.log('No user found.');
+      } else {
+        // console.log(userObject);
+        const data = await getAllCreatedJobs(userObject.id);
+        console.log('getting data');
+        console.log(data);
+        setJobs(data);
+        setFilteredJobs(data);
 
-  // Write filter button logic
- useEffect(() => {
-  const fetchCreatedJobs = async () => {
-    const data = await getAllCreatedJobs(userObject?.id);
-      setFilteredJobs(data);
-  };
-  fetchCreatedJobs();
- }, [userObject, userObject?.id]);
+      }
+    };
+    console.log('fetching created jobs');
+    fetchCreatedJobs();
+    setActiveFilter('all');
+  }, [userObject, userObject?.id]);
 
   useEffect(() => {
-    if (activeFilter === "all") {
-      setFilteredJobs(allJobs);
-    } else if (activeFilter === "pending") {
+    // const allJobs = filteredJobs;
+    const notApprovedJobs = jobs.filter(job => !job.approved);
+    const approvedJobs = jobs.filter(job => job.approved);
+
+    if (activeFilter === 'all') {
+      setFilteredJobs(jobs);
+    } else if (activeFilter === 'pending') {
       setFilteredJobs(notApprovedJobs);
     } else {
       setFilteredJobs(approvedJobs);
-    } 
-  }, [activeFilter, allJobs, notApprovedJobs, approvedJobs]);
+    }
+  }, [activeFilter, userObject?.createdJobs]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,57 +64,63 @@ function EmployerHome({ navigation }: EmployerStackScreenProps<'EmployerHome'>) 
         <Image source={Logo} style={{ width: 100, height: 100 }} />
         <Text style={styles.employerTitle}>Jobs</Text>
       </View>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          alignItems: "center",
-          width: "100%",
-        }}
-        >
-        {/* Making filter buttons */}
-        <View style={styles.buttonContainer}>
+      <View style={styles.buttonContainer}>
           <StyledButton
             text="All"
             buttonStyle={
-              activeFilter === "all"
-                ? [styles.activeButton, styles.buttonContainer]
-                : [styles.inactiveButton, styles.buttonContainer]
+              activeFilter === 'all'
+                ? styles.activeButton
+                : styles.inactiveButton
             }
             textStyle={
-              activeFilter === "all" ? styles.activeText : styles.inactiveText
+              activeFilter === 'all' ? styles.activeText : styles.inactiveText
             }
-            onPress={() => setActiveFilter("all")}
+            onPress={() => setActiveFilter('all')}
           />
           <StyledButton
             text="Pending"
             buttonStyle={
-              activeFilter === "pending"
-                ? [styles.activeButton, styles.buttonContainer]
-                : [styles.inactiveButton, styles.buttonContainer]
+              activeFilter === 'pending'
+                ? styles.activeButton
+                : styles.inactiveButton
             }
             textStyle={
-              activeFilter === "pending" ? styles.activeText : styles.inactiveText
+              activeFilter === 'pending'
+                ? styles.activeText
+                : styles.inactiveText
             }
-            onPress={() => setActiveFilter("pending")}
+            onPress={() => setActiveFilter('pending')}
           />
           <StyledButton
             text="Approved"
             buttonStyle={
-              activeFilter === "approved"
-                ? [styles.activeButton, styles.buttonContainer]
-                : [styles.inactiveButton, styles.buttonContainer]
+              activeFilter === 'approved'
+                ? styles.activeButton
+                : styles.inactiveButton
             }
             textStyle={
-              activeFilter === "approved" ? styles.activeText : styles.inactiveText
+              activeFilter === 'approved'
+                ? styles.activeText
+                : styles.inactiveText
             }
-            onPress={() => setActiveFilter("approved")}
+            onPress={() => setActiveFilter('approved')}
           />
-        </View>
+      </View>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          alignItems: 'center',
+          width: '100%',
+          // marginRight: 10,
+        }}
+      >
+        {/* Making filter buttons */}
+        
         {filteredJobs.map(job => (
-          <JobCard
-            job={job}
-            key={job.id}
-            pending={false}
+          <JobCard 
+          job={job} 
+          key={job.id} 
+          pending 
           />
         ))}
       </ScrollView>

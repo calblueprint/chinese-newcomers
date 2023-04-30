@@ -54,13 +54,19 @@ function JobCard({
   }, [job.id, userObjectToString, userObject, userBookmarkedJobs]);
 
   const [modalVisible, setModalVisible] = useState(false);
+  console.log("visible job");
+  console.log(job.visible);
   const visibleMap = objectToBooleanMap(job.visible);
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {
       await deleteJob(job.id, 'notApprovedJobs');
       if (approve) {
-        await createJob(job, 'approvedJobs');
+        if (userObject === null) {
+          console.log('No userObject found.');
+        } else {
+          await createJob(job, 'approvedJobs', userObject.id);
+        }
       }
     } catch (e) {
       console.log(e);
