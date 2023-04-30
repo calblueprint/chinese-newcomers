@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import useFirestoreListener from "react-firestore-listener"
+import useFirestoreListener from 'react-firestore-listener';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
-import styles from './Styles';
+import styles from './styles';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const [open, setOpen] = useState(false);
-  const approvedJobs = useFirestoreListener<Job>({ collection: "approvedJobs" })
+  const approvedJobs = useFirestoreListener<Job>({
+    collection: 'approvedJobs',
+  });
   const [filteredApprovedJobs, setFilteredApprovedJobs] = useState([] as Job[]);
   const [category, setCategory] = useState('all');
   const categories: string[] = [
@@ -32,7 +34,9 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
     if (category === 'all') {
       setFilteredApprovedJobs(approvedJobs);
     } else {
-      setFilteredApprovedJobs(approvedJobs.filter(job => job.category === category));
+      setFilteredApprovedJobs(
+        approvedJobs.filter(job => job.category === category),
+      );
     }
   }, [category, approvedJobs]);
 
@@ -45,7 +49,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          alignItems: 'center' ,
+          alignItems: 'center',
           width: '100%',
         }}
       >
@@ -62,12 +66,8 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
           textStyle={{ fontFamily: 'DMSans_500Medium' }}
         />
 
-        {filteredApprovedJobs.map((job) => (
-          <JobCard
-            job={job}
-            key={job.id}
-            pending={false}
-          />
+        {filteredApprovedJobs.map(job => (
+          <JobCard job={job} key={job.id} pending={false} />
         ))}
       </ScrollView>
     </SafeAreaView>
