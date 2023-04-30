@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Text, View, Image } from 'react-native';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { useTranslation } from 'react-i18next';
@@ -8,23 +8,28 @@ import '../../../translation/i18n';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import logo from '../../../assets/cnsc-logo.png';
 import { AuthStackScreenProps } from '../../../types/navigation';
-import { getAccess, signInPhone, signUpPhoneAdmin } from '../../../firebase/auth';
+import { signInPhone, signUpPhoneAdmin } from '../../../firebase/auth';
+import { getAccess } from '../../../firebase/firestore/access';
+import { AuthContext } from '../../../context/AuthContext';
 
-
-function UserTypeScreen({ navigation, route }: AuthStackScreenProps<'UserTypeScreen'>) {
+function UserTypeScreen({ navigation }: AuthStackScreenProps<'UserTypeScreen'>) {
   const recaptchaVerifier = useRef(null);
   const { t, i18n } = useTranslation();
-  const { verificationId, verificationCode, phoneNumber } = route.params;
+  const { dispatch } = useContext(AuthContext);
 
-  async function signUp() {
-    const access = await getAccess(phoneNumber);
-    if (access === false) {
-      await signInPhone(dispatch, { verificationId, verificationCode });
-    } else {
-      await signUpPhoneAdmin(verificationId, verificationCode);
-      const nextScreen = (access == "employer") ? "EmployerRegisterScreen" : "AdminRegisterScreen";
-      navigation.navigate(nextScreen, { phoneNumber });
-    }
+  // async function signUp() {
+  //   const accessObject = await getAccess(phoneNumber);
+  //   if (!accessObject) {
+  //     await signInPhone(dispatch, { verificationId, verificationCode });
+  //   } else {
+  //     await signUpPhoneAdmin(verificationId, verificationCode);
+  //     const nextScreen = (accessObject.access == "employer") ? "EmployerRegisterScreen" : "AdminRegisterScreen";
+  //     navigation.navigate(nextScreen, { phoneNumber });
+  //   }
+  // }
+
+  function phoneNumberNavigate(type: string) {
+    navigation.navigate('PhoneNumberScreen', { userType: type })
   }
 
   return (
@@ -38,19 +43,19 @@ function UserTypeScreen({ navigation, route }: AuthStackScreenProps<'UserTypeScr
       <View style={styles.buttonContainer}>
         <StyledButton
           text="job seeker"
-          onPress={() => navigation.navigate('PhoneNumberScreen')}
+          onPress={() => phoneNumberNavigate("jobSeeker")}
           buttonStyle={{}}
           textStyle={{}}
         />
         <StyledButton
           text="Employer"
-          onPress={() => navigation.navigate('EmployerScreen')}
+          onPress={() => phoneNumberNavigate("employer")}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}
         />
         <StyledButton
           text="Admin"
-          onPress={() => navigation.navigate('SigninScreen')}
+          onPress={() => phoneNumberNavigate("admin")}
           buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
           textStyle={{ color: '#CC433C' }}
         />

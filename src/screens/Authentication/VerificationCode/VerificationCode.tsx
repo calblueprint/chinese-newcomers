@@ -14,9 +14,7 @@ import {
   signInPhone,
   signUpPhoneAdmin,
 } from '../../../firebase/auth';
-import {
-  getAccess,
-} from '../../../firebase/firestore/access'
+import { getAccess } from '../../../firebase/firestore/access';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -30,19 +28,42 @@ function VerificationScreen({
   }
   const { ...methods } = useForm<FormValues>();
   const [verificationCode, setVerificationCode] = useState('');
-  const { verificationId, phoneNumber } = route.params;
+  const { verificationId, phoneNumber, userType } = route.params;
   const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
-      // const access = await getAccess(phoneNumber);
-      // if (access === false) {
-      //   await signInPhone(dispatch, { verificationId, verificationCode });
-      // } else {
-      //   await signUpPhoneAdmin(verificationId, verificationCode);
-      //   navigation.navigate('UserTypeScreen', { phoneNumber });
-      // }
-      navigation.navigate('UserTypeScreen', { verificationId, verificationCode, phoneNumber });
+      const accessObject = await getAccess(phoneNumber);
+      if (!accessObject) {
+        // nav to employer or user based on prop
+        if (userType === "employer") {
+          console.log("hello");
+          navigation.navigate('EmployerRegisterScreen', { phoneNumber })
+        }
+        if (userType === "jobSeeker") {
+          await signInPhone(dispatch, { verificationId, verificationCode });
+        }
+        
+      } else {
+        // check type of doc, if employer then nav to error
+        // if admin: navigate to email password
+        if (accessObject.access === "admin") {
+          if (!accessObject.activated) {
+            await signUpPhoneAdmin(verificationId, verificationCode);
+            navigation.navigate('AdminRegisterScreen', { phoneNumber, userType: "admin" });
+          } else {
+            console.log("error state");
+          }
+        }
+        if (accessObject.access === "employer") {
+          // error state
+          if (!accessObject.activated) {
+            navigation.navigate('AdminRegisterScreen', { phoneNumber, userType: "employer" });
+          } else {
+            // error state
+          }
+        }
+      }
     } catch (e) {
       console.error(e);
     }

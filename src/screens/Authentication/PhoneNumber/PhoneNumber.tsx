@@ -20,6 +20,7 @@ import logo from '../../../assets/cnsc-logo.png';
 import { getActivationStatus } from '../../../firebase/firestore/access';
 
 function PhoneNumberScreen({
+  route,
   navigation,
 }: AuthStackScreenProps<'PhoneNumberScreen'>) {
   interface FormValues {
@@ -32,13 +33,18 @@ function PhoneNumberScreen({
   const [phoneError, setPhoneError] = useState('');
   const phoneInput = useRef<PhoneInput>(null);
 
+  const { userType } = route.params;
+
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
       const validatePhoneNumber = () => {
         if (phoneInput.current?.isValidNumber(phoneNumber)) {
           setPhoneError('');
           return true;
-        } setPhoneError('Oops! Invalid phone number. Please try again.');
+        } 
+        setPhoneError('Oops! Invalid phone number. Please try again.');
+        return false;
+        
       };
       setValid(validatePhoneNumber());
       console.log(valid);
@@ -53,6 +59,7 @@ function PhoneNumberScreen({
         navigation.navigate('VerificationScreen', {
           verificationId,
           phoneNumber,
+          userType
         });
       }
     } catch (error) {

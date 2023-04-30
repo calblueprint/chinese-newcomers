@@ -1,5 +1,10 @@
 import { Timestamp } from "firebase/firestore";
 
+export interface Access {
+  activated: boolean
+  access: string
+}
+
 export interface RegularUser {
   id: string;
   access: string;
@@ -19,8 +24,13 @@ export interface Employer extends RegularUser {
   createdJobs: string[]; 
   address: string | null;
   company: string | null;
-  website: string |
-   null;
+  website: string | null;
+}
+
+export interface EmployerRequest {
+  companyName: string;
+  phoneNumber: string;
+  website: string;
 }
 
 export interface Job {
@@ -59,3 +69,4 @@ export const jobInstance: Job = {
   visible: Object(),
   category: '',
 };
+
