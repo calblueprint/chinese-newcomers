@@ -50,6 +50,7 @@ export interface Job {
   visible: object;
   category: string;
   salary: string;
+  workingDays: string;
 }
 
 export const jobInstance: Job = {
