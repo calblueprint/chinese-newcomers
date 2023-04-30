@@ -17,8 +17,10 @@ interface JobCardProps {
 function JobCard({ job, pending }: JobCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   console.log("visible job");
+  console.log(job.id);
   console.log(job.visible);
   const visibleMap = objectToBooleanMap(job.visible);
+  console.log(visibleMap);
   const { userObject } = useContext(AuthContext);
 
 
