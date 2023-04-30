@@ -1,9 +1,12 @@
 import {
   createUserWithEmailAndPassword,
   deleteUser,
-  getAuth, PhoneAuthProvider, signInWithCredential,
+  getAuth,
+  PhoneAuthProvider,
+  signInWithCredential,
   signInWithEmailAndPassword,
-  signOut, User
+  signOut,
+  User,
 } from 'firebase/auth';
 import { AuthDispatch } from '../context/AuthContext';
 import firebaseApp from './firebaseApp';
@@ -12,7 +15,7 @@ import {
   checkAndAddUser,
   getBookmarks,
   getUser,
-  removeBookmarkedJob
+  removeBookmarkedJob,
 } from './firestore/user';
 
 const auth = getAuth(firebaseApp);
@@ -79,20 +82,25 @@ export const changeBookmark = async (
 
 export const signUpEmail = async (
   dispatch: AuthDispatch,
-  params: { email: string; password: string; phoneNumber: string, userType: string },
+  params: {
+    email: string;
+    password: string;
+    phoneNumber: string;
+    userType: string;
+  },
 ) => {
   createUserWithEmailAndPassword(auth, params.email, params.password)
-  .then(async userCredential => {
-    const { user } = userCredential;
-    await checkAndAddUser(user, params.userType, params.phoneNumber);
-    console.log('Email sign up successful', user.email);
-    await activateUser(params.phoneNumber);
-    const UserObject = await getUser(user.uid);
-    dispatch({ type: 'SIGN_IN', userObject: UserObject });
-  })
-  .catch(error => {
-    console.warn('Email sign up error', error);
-  });
+    .then(async userCredential => {
+      const { user } = userCredential;
+      await checkAndAddUser(user, params.userType, params.phoneNumber);
+      console.log('Email sign up successful', user.email);
+      await activateUser(params.phoneNumber);
+      const UserObject = await getUser(user.uid);
+      dispatch({ type: 'SIGN_IN', userObject: UserObject });
+    })
+    .catch(error => {
+      console.warn('Email sign up error', error);
+    });
 };
 
 export const signInEmail = async (

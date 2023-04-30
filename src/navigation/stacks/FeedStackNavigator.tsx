@@ -8,18 +8,18 @@ import styles from '../../components/Header/styles';
 const FeedStack = createStackNavigator<FeedStackParamList>();
 
 function FeedHeader() {
-  return <Header title="Jobs"/>
+  return <Header title="Jobs" />;
 }
 
 export default function FeedStackNavigator() {
   return (
     <FeedStack.Navigator>
-      <FeedStack.Screen 
-        name="FeedScreen" 
-        component={FeedScreen}  
+      <FeedStack.Screen
+        name="FeedScreen"
+        component={FeedScreen}
         options={{
           headerTitle: FeedHeader,
-          headerStyle: styles.headerStyle
+          headerStyle: styles.headerStyle,
         }}
       />
     </FeedStack.Navigator>

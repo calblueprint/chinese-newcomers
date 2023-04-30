@@ -33,15 +33,12 @@ export default function AuthStackNavigator() {
         name="VerificationScreen"
         component={VerificationScreen}
       />
-      <AuthStack.Screen
-        name="UserTypeScreen"
-        component={UserTypeScreen}
-      />
+      <AuthStack.Screen name="UserTypeScreen" component={UserTypeScreen} />
       <AuthStack.Screen
         name="EmailPasswordRegisterScreen"
         component={EmailPasswordRegisterScreen}
       />
-       <AuthStack.Screen
+      <AuthStack.Screen
         name="EmployerRegisterScreen"
         component={EmployerRegisterScreen}
       />

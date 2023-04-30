@@ -56,7 +56,6 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
 
   return (
     <View style={styles.container}>
-
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,

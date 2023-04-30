@@ -1,18 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   FormProvider,
   SubmitErrorHandler,
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Toast from 'react-native-toast-message';
 import logo from '../../../assets/cnsc-logo.png';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
-import { signUpEmail } from '../../../firebase/auth';
 import { createEmployerRequest } from '../../../firebase/firestore/employerRequest';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import { EmployerRequest } from '../../../types/types';
@@ -23,7 +21,7 @@ function EmployerRegisterScreen({
   route,
 }: AuthStackScreenProps<'EmployerRegisterScreen'>) {
   interface FormValues {
-    phoneNumber : string;
+    phoneNumber: string;
     password: string;
   }
   const { ...methods } = useForm<FormValues>();
@@ -32,9 +30,9 @@ function EmployerRegisterScreen({
   const onSubmit: SubmitHandler<EmployerRequest> = async data => {
     try {
       // send request
-      const request: EmployerRequest = {...data}
+      const request: EmployerRequest = { ...data };
       await createEmployerRequest(request);
-      navigation.navigate("WelcomeScreen");
+      navigation.navigate('WelcomeScreen');
     } catch (e) {
       console.error(e);
     }
@@ -58,20 +56,11 @@ function EmployerRegisterScreen({
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.smallText}>Name of Business *</Text>
-            <AuthInput
-              name="businessName"
-              label="businessName"
-            />
+            <AuthInput name="businessName" label="businessName" />
             <Text style={styles.smallText}>Phone Number *</Text>
-            <AuthInput
-              name="phoneNumber"
-              label="phoneNumber"
-            />
+            <AuthInput name="phoneNumber" label="phoneNumber" />
             <Text style={styles.smallText}>Website *</Text>
-            <AuthInput
-              name="website"
-              label="website"
-            />
+            <AuthInput name="website" label="website" />
           </View>
           <View style={styles.buttonContainer}>
             <StyledButton

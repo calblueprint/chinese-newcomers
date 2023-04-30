@@ -69,6 +69,6 @@ export default StyleSheet.create({
     letterSpacing: 0.5,
   },
   form: {
-    height: '100%'
-  }
+    height: '100%',
+  },
 });

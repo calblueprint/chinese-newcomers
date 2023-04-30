@@ -1,19 +1,17 @@
-import {
-  getDoc,
-  doc,
-  collection,
-  updateDoc,
-  setDoc,
-} from 'firebase/firestore';
-import { Access, EmployerRequest } from '../../types/types';
+import { doc, setDoc } from 'firebase/firestore';
+import { EmployerRequest } from '../../types/types';
 import { db } from '../firebaseApp';
 
 // const Collection = collection(db, 'access');
 
-
-export const createEmployerRequest = async (employerRequest: EmployerRequest) => {
-  await setDoc(doc(db, 'employerRequests', employerRequest.phoneNumber), employerRequest);
-}
+export const createEmployerRequest = async (
+  employerRequest: EmployerRequest,
+) => {
+  await setDoc(
+    doc(db, 'employerRequests', employerRequest.phoneNumber),
+    employerRequest,
+  );
+};
 
 // export const getAccess = async (id: string): Promise<Access | null> => {
 //   const docRef = doc(db, 'access', id);

@@ -4,7 +4,7 @@ import { ScrollView, Text, View } from 'react-native';
 import JobCard from '../../components/JobCard/JobCard';
 import { ApprovalStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
-import styles from './Styles';
+import styles from './styles';
 
 function ApprovalScreen({
   navigation,
