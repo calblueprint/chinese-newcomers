@@ -13,6 +13,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
+import { GetText } from '../../context/AuthContext';
 import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
@@ -125,8 +126,9 @@ function DraftScreen({
           <View style={styles.top}>
             <Text style={styles.formTitle}>Job Post Draft</Text>
             <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-              Use the toggle to determine what information you want displayed in
-              your public job posting.
+              {GetText('Toggles determine what information is displayed')}
+              {/* Use the toggle to determine what information you want displayed in
+              your public job posting. */}
             </Text>
           </View>
           <FormProvider {...methods}>

@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from 'firebase/firestore';
 
 export interface RegularUser {
   id: string;
@@ -6,6 +6,7 @@ export interface RegularUser {
   phoneNumber: string | null;
   verified: boolean;
   bookmarkedJobs: string[];
+  // language
 }
 
 export interface Admin extends RegularUser {
@@ -16,11 +17,10 @@ export interface Admin extends RegularUser {
 export interface Employer extends RegularUser {
   name: string | null;
   email: string | null;
-  createdJobs: string[]; 
+  createdJobs: string[];
   address: string | null;
   company: string | null;
-  website: string |
-   null;
+  website: string | null;
 }
 
 export interface Job {
@@ -33,6 +33,7 @@ export interface Job {
   jobPosition: string;
   languageRequirement: string;
   workingHours: string;
+  workingDays: string;
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
