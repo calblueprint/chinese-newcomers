@@ -56,10 +56,6 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
     }
   }, [category, approvedJobs]);
 
-  getUser("MgmTA51BoyUQpj9DDk7K7x2ef872");
-  updateUser("MgmTA51BoyUQpj9DDk7K7x2ef872", {},"admin")
-  deleteUserFromFirestore("+15103654407");
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
