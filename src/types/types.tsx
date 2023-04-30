@@ -43,6 +43,7 @@ export interface Job {
   jobPosition: string;
   languageRequirement: string;
   workingHours: string;
+  workingDays: string;
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
