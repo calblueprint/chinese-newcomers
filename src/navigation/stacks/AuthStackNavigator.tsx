@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import AdminRegisterScreen from '../../screens/Authentication/AdminRegister/AdminRegister';
+import EmployerRegisterScreen from '../../screens/Authentication/EmployerRegister/EmployerRegister';
 import AdminSigninScreen from '../../screens/Authentication/AdminSignin/AdminSignin';
 import PhoneNumberScreen from '../../screens/Authentication/PhoneNumber/PhoneNumber';
 import SigninScreen from '../../screens/Authentication/Signin/Signin';
@@ -34,6 +35,10 @@ export default function AuthStackNavigator() {
       <AuthStack.Screen
         name="AdminRegisterScreen"
         component={AdminRegisterScreen}
+      />
+       <AuthStack.Screen
+        name="EmployerRegisterScreen"
+        component={EmployerRegisterScreen}
       />
     </AuthStack.Navigator>
   );

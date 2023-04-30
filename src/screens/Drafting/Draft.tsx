@@ -1,23 +1,21 @@
+import { Timestamp } from 'firebase/firestore';
 import React, { ReactElement, useState } from 'react';
-import {
-  Text,
-  View,
-  Pressable,
-  Switch,
-  Modal,
-  SafeAreaView,
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { StatusBar } from 'expo-status-bar';
-import DropDownPicker from 'react-native-dropdown-picker';
+import {
+  Modal,
+  Pressable,
+  SafeAreaView,
+  Switch,
+  Text,
+  View
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import styles from './styles';
-import { Job } from '../../types/types';
-import { createJob } from '../../firebase/firestore/job';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
+import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './styles';
 
 function DraftScreen({
   navigation,
@@ -38,7 +36,7 @@ function DraftScreen({
     'other',
   ];
 
-  const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
+  // const [dateIsEnabled, setDateIsEnabled] = React.useState(true);
   const [companyNameIsEnabled, setCompanyNameIsEnabled] = React.useState(true);
   const [addressIsEnabled, setAddressIsEnabled] = React.useState(true);
   const [contactPersonIsEnabled, setContactPersonIsEnabled] =
@@ -60,7 +58,7 @@ function DraftScreen({
   const [modalJobText, setModalJobText] = React.useState('');
 
   interface FormValues {
-    date: string;
+    // date: Date;
     companyName: string;
     address: string;
     contactPerson: string;
@@ -79,7 +77,7 @@ function DraftScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     const map = new Map<string, boolean>();
-    map.set('date', dateIsEnabled);
+    map.set('date', true);
     map.set('companyName', companyNameIsEnabled);
     map.set('address', addressIsEnabled);
     map.set('contactPerson', contactPersonIsEnabled);
@@ -93,7 +91,7 @@ function DraftScreen({
     map.set('employeeBenefit', employeeBenefitIsEnabled);
     map.set('otherInfo', otherInfoIsEnabled);
     const job: Partial<Job> = {
-      date: data.date || '',
+      date: new Timestamp(new Date().getTime() / 1000, 0),
       companyName: data.companyName || '',
       address: data.address || '',
       contactPerson: data.contactPerson || '',
