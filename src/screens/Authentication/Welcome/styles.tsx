@@ -2,12 +2,6 @@ import { Dimensions, StyleSheet } from 'react-native';
 import globalStyles from '../../../styles/theme';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const scale = windowWidth / 390;
-// console.log(windowWidth);
-// console.log(scale);
-// console.log(windowHeight);
-// const leftMargin = '9%';
 
 export default StyleSheet.create({
   container: {
@@ -81,26 +75,19 @@ export default StyleSheet.create({
     width: windowWidth,
     backgroundColor: 'white',
     alignItems: 'center',
-    // shadowColor: '#000',
     borderRadius: 20,
     borderColor: globalStyles.colors.background,
     borderWidth: 2,
-    // shadowOpacity: 0.25,
     elevation: 5,
   },
   modalHeader: {
     marginTop: 50,
     width: windowWidth,
     alignItems: 'center',
-    // height: '12%',
-    // marginLeft: '5%',
-    // justifyContent: 'center',
   },
   modalChooseLang: {
     ...globalStyles.textVariants.h3,
-    // color: '#49260C',
     fontSize: 28,
-    // textAlign: 'center',
   },
   modalButtonsContainer: {
     height: 170,
