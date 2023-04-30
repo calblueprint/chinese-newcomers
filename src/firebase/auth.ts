@@ -18,6 +18,7 @@ import {
   getBookmarks,
   getUser,
   removeBookmarkedJob,
+  updateUser,
 } from './firestore/user';
 
 const auth = getAuth(firebaseApp);
@@ -151,6 +152,9 @@ export const updateLanguage = async (
   langUpdate: React.Dispatch<React.SetStateAction<Dictionary>>,
   params: { language: string },
 ) => {
+  const user = await getUser(auth.currentUser.uid);
+  const map: Map<string, string> = new Map([['language', params.language]]);
+  updateUser(user?.id, map, user?.access);
   langUpdate(checkAndGetLang(params.language));
   dispatch({ type: 'UPDATE_LANGUAGE', language: params.language });
 };
