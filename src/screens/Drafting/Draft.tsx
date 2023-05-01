@@ -143,48 +143,22 @@ function DraftScreen({
             <View style={styles.formTop}>
               <Switch
                 onValueChange={() =>
-                  setCompanyNameIsEnabled(!companyNameIsEnabled)
+                  setJobPositionIsEnabled(!jobPositionIsEnabled)
                 }
-                value={companyNameIsEnabled}
+                value={jobPositionIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Company Name')}</Text>
+              <Text style={styles.formText}>{GetText('Job Position')}</Text>
             </View>
             <FormInput
-              name="companyName"
-              label="companyName"
-              placeholder="Lucky Dim Sum"
+              name="jobPosition"
+              label="jobPosition"
+              placeholder="Waiter, waitress"
+              rules={{ required: 'Job Position is required!' }}
             />
-
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
-                value={addressIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>{GetText('Address/Location')}</Text>
-            </View>
-            <FormInput
-              name="address"
-              label="address"
-              placeholder="2400 Durant Ave., Berkeley, CA"
-            />
-
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() =>
-                  setContactPersonIsEnabled(!contactPersonIsEnabled)
-                }
-                value={contactPersonIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>{GetText('Contact Person')}</Text>
-            </View>
-            <FormInput
-              name="contactPerson"
-              label="contactPerson"
-              placeholder="Amelia Bedelia"
-            />
+            {methods.formState.errors.jobPosition != null && (
+              <Text>Please check the Job Position.</Text>
+            )}
 
             <View style={styles.formTop}>
               <Switch
@@ -202,23 +176,17 @@ function DraftScreen({
 
             <View style={styles.formTop}>
               <Switch
-                onValueChange={() =>
-                  setJobPositionIsEnabled(!jobPositionIsEnabled)
-                }
-                value={jobPositionIsEnabled}
+                onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
+                value={addressIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Job Position*</Text>
+              <Text style={styles.formText}>{GetText('Address/Location')}</Text>
             </View>
             <FormInput
-              name="jobPosition"
-              label="jobPosition"
-              placeholder="Waiter, waitress"
-              rules={{ required: 'Job Position is required!' }}
+              name="address"
+              label="address"
+              placeholder="2400 Durant Ave., Berkeley, CA"
             />
-            {methods.formState.errors.jobPosition != null && (
-              <Text>Please check the Job Position.</Text>
-            )}
 
             <View style={styles.formTop}>
               <Switch
@@ -245,12 +213,46 @@ function DraftScreen({
             <View style={styles.formTop}>
               <Switch
                 onValueChange={() =>
+                  setCompanyNameIsEnabled(!companyNameIsEnabled)
+                }
+                value={companyNameIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>{GetText('Company Name')}</Text>
+            </View>
+            <FormInput
+              name="companyName"
+              label="companyName"
+              placeholder="Lucky Dim Sum"
+            />
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setContactPersonIsEnabled(!contactPersonIsEnabled)
+                }
+                value={contactPersonIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>{GetText('Contact Person')}</Text>
+            </View>
+            <FormInput
+              name="contactPerson"
+              label="contactPerson"
+              placeholder="Amelia Bedelia"
+            />
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
                   setWorkingHoursIsEnabled(!workingHoursIsEnabled)
                 }
                 value={workingHoursIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Working hours/day</Text>
+              <Text style={styles.formText}>
+                {GetText('Working hours/day')}
+              </Text>
             </View>
             <FormInput
               name="workingHours"
@@ -266,7 +268,9 @@ function DraftScreen({
                 value={workingDaysIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Working days/week</Text>
+              <Text style={styles.formText}>
+                {GetText('Working days/week')}
+              </Text>
             </View>
             <FormInput
               name="workingDays"
@@ -308,9 +312,7 @@ function DraftScreen({
                 value={employeeBenefitIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>
-                {GetText('Employee Benefit (if any)')}
-              </Text>
+              <Text style={styles.formText}>{GetText('Employee Benefit')}</Text>
             </View>
             <FormInput
               name="employeeBenefit"
