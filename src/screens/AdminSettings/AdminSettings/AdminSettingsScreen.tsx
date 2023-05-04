@@ -9,7 +9,7 @@ import styles from './styles';
 function AdminSettingsScreen({
   navigation,
 }: AdminSettingsStackScreenProps<'AdminSettingsScreen'>): ReactElement {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, langUpdate } = useContext(AuthContext);
 
   function langUpdate(value: SetStateAction<Dictionary>): void {
     throw new Error('Function not implemented.');
