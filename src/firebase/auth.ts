@@ -121,10 +121,12 @@ export const signInEmail = async (
       const { user } = userCredential;
       console.log('Email sign in successful', user.email);
       const UserObject = await getUser(user.uid);
-      // if uswe obj
-      const map: Map<string, string> = new Map([['language', params.language]]);
-      updateUser(UserObject.id, map, UserObject?.access); // TODO: userobject vs user
-      console.log(UserObject?.language);
+      if (UserObject) {
+        const map: Map<string, string> = new Map([
+          ['language', params.language],
+        ]);
+        updateUser(UserObject.id, map, UserObject?.access);
+      }
       dispatch({ type: 'SIGN_IN', userObject: UserObject });
     })
     .catch(error => {
@@ -171,9 +173,13 @@ export const updateLanguage = async (
   langUpdate: React.Dispatch<React.SetStateAction<Dictionary>>,
   params: { language: string },
 ) => {
-  const user = await getUser(auth.currentUser.uid);
-  const map: Map<string, string> = new Map([['language', params.language]]);
-  updateUser(user?.id, map, user?.access);
-  langUpdate(checkAndGetLang(params.language));
-  dispatch({ type: 'UPDATE_LANGUAGE', language: params.language });
+  if (auth.currentUser) {
+    const user = await getUser(auth.currentUser.uid);
+    if (user) {
+      const map: Map<string, string> = new Map([['language', params.language]]);
+      updateUser(user.id, map, user.access);
+      langUpdate(checkAndGetLang(params.language));
+      dispatch({ type: 'UPDATE_LANGUAGE', language: params.language });
+    }
+  }
 };
