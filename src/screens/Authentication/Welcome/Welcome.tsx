@@ -11,8 +11,6 @@ import styles from './styles';
 function WelcomeScreen({ navigation }: AuthStackScreenProps<'WelcomeScreen'>) {
   const recaptchaVerifier = useRef(null);
 
-  const [langModalVisibile, setLangModalVisible] = React.useState(true);
-
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
