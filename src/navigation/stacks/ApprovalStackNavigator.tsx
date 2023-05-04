@@ -8,19 +8,19 @@ import styles from '../../components/Header/styles';
 const ApprovalStack = createStackNavigator<ApprovalStackParamList>();
 
 function ApprovalHeader() {
-  return <Header title="Approve Jobs"/>
+  return <Header title="Approve Jobs" />;
 }
 
 export default function ApprovalStackNavigator() {
   return (
     <ApprovalStack.Navigator>
-      <ApprovalStack.Screen 
-        name="ApprovalScreen" 
+      <ApprovalStack.Screen
+        name="ApprovalScreen"
         component={ApprovalScreen}
         options={{
           headerTitle: ApprovalHeader,
-          headerStyle: styles.headerStyle
-        }} 
+          headerStyle: styles.headerStyle,
+        }}
       />
     </ApprovalStack.Navigator>
   );

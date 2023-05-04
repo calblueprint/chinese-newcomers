@@ -3,7 +3,7 @@ import {
   FormProvider,
   SubmitErrorHandler,
   SubmitHandler,
-  useForm
+  useForm,
 } from 'react-hook-form';
 import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
 import { z } from 'zod';
@@ -37,7 +37,7 @@ function EmailPasswordRegisterScreen({
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     if (confirmPass !== password) {
-      setConfirmError('Oops! These passwords do not match. Please try again.')
+      setConfirmError('Oops! These passwords do not match. Please try again.');
     }
     try {
       emailSchema.parse(email);
@@ -122,7 +122,7 @@ function EmailPasswordRegisterScreen({
                 name="confirmPassword"
                 label="confirmPassword"
                 placeholder=" password"
-                hasError={(passwordError !== '') || (confirmError !== '')}
+                hasError={passwordError !== '' || confirmError !== ''}
                 onChangeText={setConfirmPass}
               />
               {passwordError !== '' && (

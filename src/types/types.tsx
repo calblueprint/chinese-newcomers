@@ -11,6 +11,7 @@ export interface RegularUser {
   phoneNumber: string | null;
   verified: boolean;
   bookmarkedJobs: string[];
+  language: string;
 }
 
 export interface Admin extends RegularUser {
@@ -43,6 +44,7 @@ export interface Job {
   jobPosition: string;
   languageRequirement: string;
   workingHours: string;
+  workingDays: string;
   probationPeriod: string;
   employeeBenefit: string;
   otherInfo: string;
@@ -69,3 +71,10 @@ export const jobInstance: Job = {
   visible: Object(),
   category: '',
 };
+<<<<<<< HEAD
+=======
+
+export type Dictionary = {
+  [key: string]: any;
+};
+>>>>>>> main

@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useIsFocused } from '@react-navigation/native';
-import { Text, View, SafeAreaView, ScrollView } from 'react-native';
-import { BookmarksStackScreenProps } from '../../types/navigation';
+import { ScrollView, Text, View } from 'react-native';
 import JobCard from '../../components/JobCard/JobCard';
-import { Job } from '../../types/types';
-import styles from './styles';
+import { AuthContext } from '../../context/AuthContext';
 import {
   getBookmarkedJobs,
   updateUserBookmarks,
 } from '../../firebase/firestore/user';
-import { AuthContext } from '../../context/AuthContext';
+import { BookmarksStackScreenProps } from '../../types/navigation';
+import { Job } from '../../types/types';
+import styles from './styles';
 
 function BookmarksScreen({
   navigation,
@@ -38,7 +37,7 @@ function BookmarksScreen({
   }, [navigation, userObject?.id, userBookmarkedJobs]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.feedHeader}>
         <Text style={styles.feedTitle}> Bookmarked Jobs </Text>
       </View>
@@ -63,7 +62,7 @@ function BookmarksScreen({
           <Text style={{ marginTop: '10%' }}>No bookmarked jobs!</Text>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

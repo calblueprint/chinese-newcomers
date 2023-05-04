@@ -1,23 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState, useRef } from 'react';
-import { Text, View, Image } from 'react-native';
-import {
-  useForm,
-  FormProvider,
-  SubmitHandler,
-  SubmitErrorHandler,
-} from 'react-hook-form';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import PhoneInput from 'react-native-phone-number-input';
+import React, { useRef, useState } from 'react';
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import { Image, Text, View } from 'react-native';
+import PhoneInput, { isValidNumber } from 'react-native-phone-number-input';
+import logo from '../../../assets/cnsc-logo.png';
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import { phoneGetConfirmation } from '../../../firebase/auth';
+import { firebaseApp } from '../../../firebase/config';
+import { getActivationStatus } from '../../../firebase/firestore/access';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
-import {
-  phoneGetConfirmation,
-} from '../../../firebase/auth';
-import { firebaseApp } from '../../../firebase/config';
-import StyledButton from '../../../components/StyledButton/StyledButton';
-import logo from '../../../assets/cnsc-logo.png';
-import { getActivationStatus } from '../../../firebase/firestore/access';
 
 function PhoneNumberScreen({
   route,
@@ -29,37 +27,35 @@ function PhoneNumberScreen({
   const { ...methods } = useForm<FormValues>();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [valid, setValid] = useState(false);
   const [phoneError, setPhoneError] = useState('');
   const phoneInput = useRef<PhoneInput>(null);
 
   const { userType } = route.params;
 
+  const validatePhoneNumber = () => {
+    const countryCode = phoneInput.current?.getCountryCode();
+    if (countryCode && isValidNumber(phoneNumber, countryCode)) {
+      setPhoneError('');
+      return true;
+    }
+    setPhoneError('Oops! Invalid phone number. Please try again.');
+    return false;
+  };
+
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
-      const validatePhoneNumber = () => {
-        if (phoneInput.current?.isValidNumber(phoneNumber)) {
-          setPhoneError('');
-          return true;
-        } 
-        setPhoneError('Oops! Invalid phone number. Please try again.');
-        return false;
-        
-      };
-      setValid(validatePhoneNumber());
-      console.log(valid);
+      const validPhoneNumber = validatePhoneNumber();
       // To Do: render error label
       const activated = await getActivationStatus(phoneNumber);
-      if (!activated && valid) {
+      if (!activated && validPhoneNumber) {
         const verificationId = await phoneGetConfirmation(
           phoneNumber,
           recaptchaVerifier,
         );
-        console.log(verificationId);
         navigation.navigate('VerificationScreen', {
           verificationId,
           phoneNumber,
-          userType
+          userType,
         });
       }
     } catch (error) {
@@ -67,11 +63,10 @@ function PhoneNumberScreen({
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = errors =>
-    console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = errors => console.log(errors);
 
-  const handlePhoneChange = phoneNumber => {
-    setPhoneNumber(phoneNumber);
+  const handlePhoneChange = (newPhoneNumber: string) => {
+    setPhoneNumber(newPhoneNumber);
     if (phoneError !== '') {
       setPhoneError('');
     }
@@ -95,11 +90,8 @@ function PhoneNumberScreen({
               ref={phoneInput}
               placeholder="4151234567"
               defaultValue={phoneNumber}
-              onChangeFormattedText={
-                newPhoneInput => handlePhoneChange(newPhoneInput)
-                //   text => {
-                //   //setPhoneNumber(text);
-                // }
+              onChangeFormattedText={newPhoneInput =>
+                handlePhoneChange(newPhoneInput)
               }
               defaultCode="US"
             />
@@ -136,4 +128,4 @@ function PhoneNumberScreen({
   );
 }
 
-export default PhoneNumberScreen
+export default PhoneNumberScreen;

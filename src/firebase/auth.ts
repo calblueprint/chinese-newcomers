@@ -1,18 +1,24 @@
 import {
   createUserWithEmailAndPassword,
   deleteUser,
-  getAuth, PhoneAuthProvider, signInWithCredential,
+  getAuth,
+  PhoneAuthProvider,
+  signInWithCredential,
   signInWithEmailAndPassword,
-  signOut, User
+  signOut,
+  User,
 } from 'firebase/auth';
 import { AuthDispatch } from '../context/AuthContext';
+import { checkAndGetLang } from '../translation/languages';
+import { Dictionary } from '../types/types';
 import firebaseApp from './firebaseApp';
 import { activateUser } from './firestore/access';
 import {
   checkAndAddUser,
   getBookmarks,
   getUser,
-  removeBookmarkedJob
+  removeBookmarkedJob,
+  updateUser,
 } from './firestore/user';
 
 const auth = getAuth(firebaseApp);
@@ -79,20 +85,25 @@ export const changeBookmark = async (
 
 export const signUpEmail = async (
   dispatch: AuthDispatch,
-  params: { email: string; password: string; phoneNumber: string, userType: string },
+  params: {
+    email: string;
+    password: string;
+    phoneNumber: string;
+    userType: string;
+  },
 ) => {
   createUserWithEmailAndPassword(auth, params.email, params.password)
-  .then(async userCredential => {
-    const { user } = userCredential;
-    await checkAndAddUser(user, params.userType, params.phoneNumber);
-    console.log('Email sign up successful', user.email);
-    await activateUser(params.phoneNumber);
-    const UserObject = await getUser(user.uid);
-    dispatch({ type: 'SIGN_IN', userObject: UserObject });
-  })
-  .catch(error => {
-    console.warn('Email sign up error', error);
-  });
+    .then(async userCredential => {
+      const { user } = userCredential;
+      await checkAndAddUser(user, params.userType, params.phoneNumber);
+      console.log('Email sign up successful', user.email);
+      await activateUser(params.phoneNumber);
+      const UserObject = await getUser(user.uid);
+      dispatch({ type: 'SIGN_IN', userObject: UserObject });
+    })
+    .catch(error => {
+      console.warn('Email sign up error', error);
+    });
 };
 
 export const signInEmail = async (
@@ -139,4 +150,16 @@ export const signUserOut = async (dispatch: AuthDispatch) => {
     console.warn('Sign out error', error);
   }
   dispatch({ type: 'SIGN_OUT' });
+};
+
+export const updateLanguage = async (
+  dispatch: AuthDispatch,
+  langUpdate: React.Dispatch<React.SetStateAction<Dictionary>>,
+  params: { language: string },
+) => {
+  const user = await getUser(auth.currentUser.uid);
+  const map: Map<string, string> = new Map([['language', params.language]]);
+  updateUser(user?.id, map, user?.access);
+  langUpdate(checkAndGetLang(params.language));
+  dispatch({ type: 'UPDATE_LANGUAGE', language: params.language });
 };

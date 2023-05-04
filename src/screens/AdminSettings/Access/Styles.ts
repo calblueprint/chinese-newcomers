@@ -67,9 +67,10 @@ export default StyleSheet.create({
     height: '100%',
   },
   selectedTextStyle: {
-    fontSize: 16, color: '#CC433C'
+    fontSize: 16,
+    color: '#CC433C',
   },
   formContainer: {
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });

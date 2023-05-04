@@ -2,14 +2,14 @@ import React, { ReactElement, useContext } from 'react';
 import useFirestoreListener from 'react-firestore-listener';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import EmployerRequestCard from '../../../components/EmployerRequestCard/EmployerRequestCard';
-import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
-import { signUserOut } from '../../../firebase/auth';
 import { AdminSettingsStackScreenProps } from '../../../types/navigation';
 import { EmployerRequest } from '../../../types/types';
 import styles from './styles';
 
-function EmployerApprovalScreen({navigation}: AdminSettingsStackScreenProps<'EmployerApprovalScreen'>): ReactElement {
+function EmployerApprovalScreen({
+  navigation,
+}: AdminSettingsStackScreenProps<'EmployerApprovalScreen'>): ReactElement {
   const { dispatch } = useContext(AuthContext);
 
   const employerRequests = useFirestoreListener<EmployerRequest>({

@@ -1,5 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import { Image, Text, View } from 'react-native';
 import { z } from 'zod';
 import logo from '../../../assets/cnsc-logo.png';
@@ -10,7 +15,9 @@ import { signInEmail } from '../../../firebase/auth';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
-const emailSchema = z.string().email({ message: "Oops! Invalid email. Try again." });
+const emailSchema = z
+  .string()
+  .email({ message: 'Oops! Invalid email. Try again.' });
 
 function AdminSigninScreen({
   navigation,
@@ -23,7 +30,7 @@ function AdminSigninScreen({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [ signInError, setSignInError ] = useState('');
+  const [signInError, setSignInError] = useState('');
   const { dispatch } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
@@ -32,23 +39,17 @@ function AdminSigninScreen({
       await signInEmail(dispatch, { email, password });
     } catch (e) {
       if (e instanceof z.ZodError) {
-        setEmailError("Oops! Invalid email. Try again.");
+        setEmailError('Oops! Invalid email. Try again.');
       }
       switch (e.code) {
         case 'auth/wrong-password':
-          setSignInError(
-            'Oops! Incorrect password. Please try again.',
-          );
+          setSignInError('Oops! Incorrect password. Please try again.');
           break;
         case 'auth/user-not-found':
-          setEmailError(
-            'Oops! Incorrect email or password. Please try again.',
-          );
+          setEmailError('Oops! Incorrect email or password. Please try again.');
           break;
         case 'auth/missing-email':
-          setEmailError(
-            'Oops! Email is not registered as admin.',
-          );
+          setEmailError('Oops! Email is not registered as admin.');
           break;
         default:
           setSignInError('');
@@ -60,12 +61,12 @@ function AdminSigninScreen({
     }
   };
 
-  const handlePasswordChange = (password) => {
+  const handlePasswordChange = password => {
     setPassword(password);
     setSignInError('');
   };
 
-  const handleEmailChange = (email) => {
+  const handleEmailChange = email => {
     setEmail(email);
     if (emailError !== '') {
       setEmailError('');
@@ -75,7 +76,8 @@ function AdminSigninScreen({
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => console.log(errors);
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) =>
+    console.log(errors);
 
   return (
     <View style={styles.container}>
@@ -93,20 +95,24 @@ function AdminSigninScreen({
             name="email"
             label="email"
             placeholder=" email@email.com"
-            hasError={(emailError !== ''|| signInError !== '')}
-            onChangeText={(emailInput) => handleEmailChange(emailInput)}
+            hasError={emailError !== '' || signInError !== ''}
+            onChangeText={emailInput => handleEmailChange(emailInput)}
           />
-          {emailError !== '' && <Text style={{ color: 'red' }}>{emailError}</Text> }
+          {emailError !== '' && (
+            <Text style={{ color: 'red' }}>{emailError}</Text>
+          )}
           <Text style={styles.smallText}>Password </Text>
           <AuthInput
             name="password"
             label="password"
             placeholder=" password"
-            hasError={(emailError !== ''|| signInError !== '')}
-            onChangeText={(passInput) => handlePasswordChange(passInput)}
+            hasError={emailError !== '' || signInError !== ''}
+            onChangeText={passInput => handlePasswordChange(passInput)}
             secureTextEntry
           />
-          {signInError !== '' && <Text style={{ color: 'red' }}>{signInError}</Text> }
+          {signInError !== '' && (
+            <Text style={{ color: 'red' }}>{signInError}</Text>
+          )}
         </View>
 
         <View style={styles.buttonContainer}>

@@ -1,18 +1,12 @@
 import { Timestamp } from 'firebase/firestore';
 import React, { ReactElement, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import {
-  Modal,
-  Pressable,
-  SafeAreaView,
-  Switch,
-  Text,
-  View,
-} from 'react-native';
+import { Modal, Pressable, Switch, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
+import { GetText } from '../../context/AuthContext';
 import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
@@ -109,9 +103,9 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
-      await createJob(job, 'notApprovedJobs');
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
+      await createJob(job, 'notApprovedJobs');
       methods.reset();
     } catch (e) {
       console.error(e);
@@ -119,13 +113,12 @@ function DraftScreen({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <KeyboardAwareScrollView style={styles.form}>
         <View style={styles.formContainer}>
           <View style={styles.top}>
             <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-              Use the toggle to determine what information you want displayed in
-              your public job posting.
+              {GetText('Toggles determine what information is displayed')}
             </Text>
           </View>
           <FormProvider {...methods}>
@@ -150,72 +143,12 @@ function DraftScreen({
             <View style={styles.formTop}>
               <Switch
                 onValueChange={() =>
-                  setCompanyNameIsEnabled(!companyNameIsEnabled)
-                }
-                value={companyNameIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Company Name</Text>
-            </View>
-            <FormInput
-              name="companyName"
-              label="companyName"
-              placeholder="Lucky Dim Sum"
-            />
-
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
-                value={addressIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Address</Text>
-            </View>
-            <FormInput
-              name="address"
-              label="address"
-              placeholder="2400 Durant Ave., Berkeley, CA"
-            />
-
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() =>
-                  setContactPersonIsEnabled(!contactPersonIsEnabled)
-                }
-                value={contactPersonIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Contact Person</Text>
-            </View>
-            <FormInput
-              name="contactPerson"
-              label="contactPerson"
-              placeholder="Amelia Bedelia"
-            />
-
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
-                value={phoneIsEnabled}
-                trackColor={{ false: '#767577', true: '#000000' }}
-              />
-              <Text style={styles.formText}>Phone</Text>
-            </View>
-            <FormInput
-              name="phone"
-              label="phone"
-              placeholder="(510) xxx - xxxx"
-            />
-
-            <View style={styles.formTop}>
-              <Switch
-                onValueChange={() =>
                   setJobPositionIsEnabled(!jobPositionIsEnabled)
                 }
                 value={jobPositionIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Job Position*</Text>
+              <Text style={styles.formText}>{GetText('Job Position')}</Text>
             </View>
             <FormInput
               name="jobPosition"
@@ -229,13 +162,43 @@ function DraftScreen({
 
             <View style={styles.formTop}>
               <Switch
+                onValueChange={() => setPhoneIsEnabled(!phoneIsEnabled)}
+                value={phoneIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>{GetText('Phone')}</Text>
+            </View>
+            <FormInput
+              name="phone"
+              label="phone"
+              placeholder="(510) xxx - xxxx"
+            />
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() => setAddressIsEnabled(!addressIsEnabled)}
+                value={addressIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>{GetText('Address/Location')}</Text>
+            </View>
+            <FormInput
+              name="address"
+              label="address"
+              placeholder="2400 Durant Ave., Berkeley, CA"
+            />
+
+            <View style={styles.formTop}>
+              <Switch
                 onValueChange={() =>
                   setLangaugeReqIsEnabled(!languageReqIsEnabled)
                 }
                 value={languageReqIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Language Requirement*</Text>
+              <Text style={styles.formText}>
+                {GetText('Language Requirement')}
+              </Text>
             </View>
             <FormInput
               name="languageRequirement"
@@ -250,12 +213,46 @@ function DraftScreen({
             <View style={styles.formTop}>
               <Switch
                 onValueChange={() =>
+                  setCompanyNameIsEnabled(!companyNameIsEnabled)
+                }
+                value={companyNameIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>{GetText('Company Name')}</Text>
+            </View>
+            <FormInput
+              name="companyName"
+              label="companyName"
+              placeholder="Lucky Dim Sum"
+            />
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setContactPersonIsEnabled(!contactPersonIsEnabled)
+                }
+                value={contactPersonIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>{GetText('Contact Person')}</Text>
+            </View>
+            <FormInput
+              name="contactPerson"
+              label="contactPerson"
+              placeholder="Amelia Bedelia"
+            />
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
                   setWorkingHoursIsEnabled(!workingHoursIsEnabled)
                 }
                 value={workingHoursIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Working hours/day</Text>
+              <Text style={styles.formText}>
+                {GetText('Working hours/day')}
+              </Text>
             </View>
             <FormInput
               name="workingHours"
@@ -271,7 +268,9 @@ function DraftScreen({
                 value={workingDaysIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Working days/week</Text>
+              <Text style={styles.formText}>
+                {GetText('Working days/week')}
+              </Text>
             </View>
             <FormInput
               name="workingDays"
@@ -285,7 +284,7 @@ function DraftScreen({
                 value={salaryIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Salary</Text>
+              <Text style={styles.formText}>{GetText('Salary')}</Text>
             </View>
             <FormInput name="salary" label="salary" placeholder="$36/hr" />
 
@@ -297,7 +296,7 @@ function DraftScreen({
                 value={probationPeriodIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Probation Period (if any)</Text>
+              <Text style={styles.formText}>{GetText('Probation Period')}</Text>
             </View>
             <FormInput
               name="probationPeriod"
@@ -313,7 +312,7 @@ function DraftScreen({
                 value={employeeBenefitIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Employee Benefit (if any)</Text>
+              <Text style={styles.formText}>{GetText('Employee Benefit')}</Text>
             </View>
             <FormInput
               name="employeeBenefit"
@@ -327,7 +326,9 @@ function DraftScreen({
                 value={otherInfoIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>Other Information</Text>
+              <Text style={styles.formText}>
+                {GetText('Other Information')}
+              </Text>
             </View>
             <FormInput
               name="otherInfo"
@@ -337,13 +338,13 @@ function DraftScreen({
           </FormProvider>
           <View style={styles.bottomButtons}>
             <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
-              <Text style={styles.buttonText}>Save to Drafts</Text>
+              <Text style={styles.buttonText}>{GetText('Save Draft')}</Text>
             </Pressable>
             <Pressable
               onPress={methods.handleSubmit(onSubmit)}
               style={[styles.buttons, { backgroundColor: '#CC433C' }]}
             >
-              <Text style={styles.buttonText}>Post Job</Text>
+              <Text style={styles.buttonText}>{GetText('Post Job')}</Text>
             </Pressable>
           </View>
         </View>
@@ -387,7 +388,7 @@ function DraftScreen({
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 }
 

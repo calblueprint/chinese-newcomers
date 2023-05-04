@@ -1,24 +1,21 @@
-import {
-  getDoc,
-  doc,
-  collection,
-  updateDoc,
-  setDoc,
-  deleteDoc,
-} from 'firebase/firestore';
-import { Access, EmployerRequest } from '../../types/types';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+import { EmployerRequest } from '../../types/types';
 import { db } from '../firebaseApp';
 
 const collectionName = "employerRequest"
 
+export const createEmployerRequest = async (
+  employerRequest: EmployerRequest,
+) => {
+  await setDoc(
+    doc(db, 'employerRequests', employerRequest.phoneNumber),
+    employerRequest,
+  );
+};
 
-export const createEmployerRequest = async (employerRequest: EmployerRequest) => {
-  await setDoc(doc(db, 'employerRequests', employerRequest.phoneNumber), employerRequest);
-}
-
-export const checkEmployerRequest = async (phoneNumber: string) => {
-  await getDoc();
-}
+// export const checkEmployerRequest = async (phoneNumber: string) => {
+//   await getDoc();
+// }
 
 export const deleteEmployerRequest = async (
   employerRequestId: string

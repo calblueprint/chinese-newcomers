@@ -7,20 +7,21 @@ import EmployerApprovalScreen from '../../screens/AdminSettings/EmployerApproval
 import { AdminSettingsStackParamList } from '../../types/navigation';
 import styles from '../../components/Header/styles';
 
-const AdminSettingsStack = createStackNavigator<AdminSettingsStackParamList>();
 
 function EmployerApprovalHeader() {
   return <Header title="Approve Employers"/>
 }
+const AdminSettingsStack =
+  createStackNavigator<AdminSettingsStackParamList>();
 
 export default function AdminSettingsStackNavigator() {
   return (
     <AdminSettingsStack.Navigator
-      // screenOptions={{
-      //   headerShown: false,
-      // }}
     >
-      <AdminSettingsStack.Screen name="AdminSettingsScreen" component={AdminSettingsScreen} />
+      <AdminSettingsStack.Screen
+        name="AdminSettingsScreen"
+        component={AdminSettingsScreen}
+      />
       <AdminSettingsStack.Screen name="AccessScreen" component={AccessScreen} />
       <AdminSettingsStack.Screen 
         name="EmployerApprovalScreen" 
