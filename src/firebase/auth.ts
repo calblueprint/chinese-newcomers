@@ -160,7 +160,6 @@ export const updateLanguage = async (
   const user = await getUser(auth.currentUser.uid);
   const map: Map<string, string> = new Map([['language', params.language]]);
   updateUser(user?.id, map, user?.access);
-  console.log(checkAndGetLang(params.language));
   langUpdate(checkAndGetLang(params.language));
   dispatch({ type: 'UPDATE_LANGUAGE', language: params.language });
 };

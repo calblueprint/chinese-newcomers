@@ -62,8 +62,8 @@ export type BottomTabParamList = {
   Feed: undefined;
   Draft: undefined;
   Approval: undefined;
-  Signout: undefined;
   Bookmarks: undefined;
+  Settings: undefined;
 };
 
 export type BottomTabScreenProps<T extends keyof BottomTabParamList> =
