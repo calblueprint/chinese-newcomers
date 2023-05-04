@@ -28,10 +28,6 @@ export default StyleSheet.create({
     flexDirection: 'column',
     width: 170,
     justifyContent: 'space-around',
-<<<<<<< HEAD
-    alignContent: 'flex-start',
-=======
->>>>>>> main
   },
   businessNameText: {
     color: 'black',

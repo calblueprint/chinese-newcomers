@@ -2,7 +2,7 @@ import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { EmployerRequest } from '../../types/types';
 import { db } from '../firebaseApp';
 
-const collectionName = "employerRequest"
+const collectionName = "employerRequests"
 
 export const createEmployerRequest = async (
   employerRequest: EmployerRequest,
@@ -21,6 +21,7 @@ export const deleteEmployerRequest = async (
   employerRequestId: string
 ): Promise<void> => {
   try {
+    console.log("what");
     const docRef = doc(db, collectionName, employerRequestId);
     await deleteDoc(docRef);
   } catch (e) {

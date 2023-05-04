@@ -71,10 +71,7 @@ export const jobInstance: Job = {
   visible: Object(),
   category: '',
 };
-<<<<<<< HEAD
-=======
 
 export type Dictionary = {
   [key: string]: any;
 };
->>>>>>> main
