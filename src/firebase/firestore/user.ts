@@ -101,6 +101,7 @@ export const checkAndAddUser = async (
   user: UserCredential['user'],
   accessLevel: string,
   phoneNumber: string | null,
+  language: string,
 ) => {
   const userObject = await getUser(user.uid);
   if (userObject !== null) {
@@ -124,6 +125,7 @@ export const checkAndAddUser = async (
       name: 'test phone',
       phoneNumber: assignPhoneNumber,
       verified: true,
+      language,
     });
   }
 };

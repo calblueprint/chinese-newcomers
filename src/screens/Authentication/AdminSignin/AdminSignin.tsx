@@ -12,6 +12,7 @@ import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signInEmail } from '../../../firebase/auth';
+import { dictToLang } from '../../../translation/languages';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -31,12 +32,13 @@ function AdminSigninScreen({
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [signInError, setSignInError] = useState('');
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, langState } = useContext(AuthContext);
+  const language = dictToLang(langState);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
       emailSchema.parse(email);
-      await signInEmail(dispatch, { email, password });
+      await signInEmail(dispatch, { email, password, language });
     } catch (e) {
       if (e instanceof z.ZodError) {
         setEmailError('Oops! Invalid email. Try again.');

@@ -1,12 +1,7 @@
-import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+import globalStyles from '../../../styles/theme';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const scale = windowWidth / 390;
-console.log(windowWidth);
-console.log(scale);
-console.log(windowHeight);
-const leftMargin = '9%';
 
 export default StyleSheet.create({
   container: {
@@ -17,47 +12,102 @@ export default StyleSheet.create({
     flexDirection: 'column',
   },
   logoContainer: {
-    width: '100%',
-    height: '13%',
-    justifyContent: 'flex-start',
-    marginLeft: leftMargin,
-    marginTop: '8%',
+    alignItems: 'center',
+    marginTop: 130,
   },
   logo: {
     resizeMode: 'contain',
-    height: '100%',
-    width: '22%',
+    height: 130,
+    width: 130,
   },
   textContainer: {
-    width: '76%',
-    height: '25%',
-    justifyContent: 'space-between',
-    marginLeft: leftMargin,
-    marginTop: '35%',
+    width: 340,
+    height: 170,
+    display: 'flex',
+    alignSelf: 'center',
+    justifyContent: 'space-evenly',
+    marginTop: 20,
   },
   buttonContainer: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    height: '38%',
     alignItems: 'center',
-    marginTop: '22%',
+    marginTop: 90,
+    justifyContent: 'space-around',
+    height: 200,
   },
   welcomeText: {
-    fontFamily: 'DMSans_500Medium',
-    color: '#49260C',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(30 * scale)),
-    fontWeight: '500',
+    ...globalStyles.textVariants.h1,
+    color: '#CC433C',
+    fontSize: 45,
     letterSpacing: 0.5,
+    textAlign: 'center',
   },
   subText: {
-    fontFamily: 'DMSans_500Medium',
-    color: '#94613D',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(16 * scale)),
-    fontWeight: '400',
+    ...globalStyles.textVariants.h2,
+    color: '#49260C',
+    fontSize: 25,
+    textAlign: 'center',
+    lineHeight: 35,
   },
-  orText: {
-    color: '#CC433C',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(18 * scale)),
-    fontWeight: '500',
+  welcomeButtons: {
+    backgroundColor: '#CC433C',
+    width: 300,
+    height: 59,
+    borderRadius: 7,
+    borderColor: '#D82D1F',
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  welcomeButtonText: {
+    ...globalStyles.textVariants.h3,
+    color: globalStyles.colors.background,
+    fontSize: 18,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    marginTop: 480,
+    height: 350,
+    width: windowWidth,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    shadowColor: '#000',
+    borderRadius: 20,
+    borderColor: globalStyles.colors.background,
+    borderWidth: 2,
+    shadowOpacity: 0.25,
+    elevation: 5,
+  },
+  modalHeader: {
+    marginTop: 50,
+    width: windowWidth,
+    alignItems: 'center',
+  },
+  modalChooseLang: {
+    ...globalStyles.textVariants.h3,
+    fontSize: 28,
+  },
+  modalButtonsContainer: {
+    height: 170,
+    width: 280,
+    alignItems: 'center',
+    marginTop: 32,
+    justifyContent: 'space-around',
+  },
+  modalButtons: {
+    backgroundColor: '#CC433C',
+    width: 230,
+    height: 57,
+    borderRadius: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalButtonsText: {
+    ...globalStyles.textVariants.h3,
+    color: globalStyles.colors.background,
   },
 });

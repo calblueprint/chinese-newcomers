@@ -90,12 +90,18 @@ export const signUpEmail = async (
     password: string;
     phoneNumber: string;
     userType: string;
+    language: string;
   },
 ) => {
   createUserWithEmailAndPassword(auth, params.email, params.password)
     .then(async userCredential => {
       const { user } = userCredential;
-      await checkAndAddUser(user, params.userType, params.phoneNumber);
+      await checkAndAddUser(
+        user,
+        params.userType,
+        params.phoneNumber,
+        params.language,
+      );
       console.log('Email sign up successful', user.email);
       await activateUser(params.phoneNumber);
       const UserObject = await getUser(user.uid);
@@ -108,13 +114,17 @@ export const signUpEmail = async (
 
 export const signInEmail = async (
   dispatch: AuthDispatch,
-  params: { email: string; password: string },
+  params: { email: string; password: string; language: string },
 ) => {
   signInWithEmailAndPassword(auth, params.email, params.password)
     .then(async userCredential => {
       const { user } = userCredential;
       console.log('Email sign in successful', user.email);
       const UserObject = await getUser(user.uid);
+      // if uswe obj
+      const map: Map<string, string> = new Map([['language', params.language]]);
+      updateUser(UserObject.id, map, UserObject?.access); // TODO: userobject vs user
+      console.log(UserObject?.language);
       dispatch({ type: 'SIGN_IN', userObject: UserObject });
     })
     .catch(error => {
@@ -124,7 +134,11 @@ export const signInEmail = async (
 
 export const signInPhone = async (
   dispatch: AuthDispatch,
-  params: { verificationId: string; verificationCode: string },
+  params: {
+    verificationId: string;
+    verificationCode: string;
+    language: string;
+  },
 ) => {
   try {
     const credential = await PhoneAuthProvider.credential(
@@ -132,7 +146,7 @@ export const signInPhone = async (
       params.verificationCode,
     );
     const result = await signInWithCredential(auth, credential);
-    await checkAndAddUser(result.user, 'regularUser', null);
+    await checkAndAddUser(result.user, 'regularUser', null, params.language);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const UserObject = await getUser(result.user.uid);
     dispatch({ type: 'SIGN_IN', userObject: UserObject });

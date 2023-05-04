@@ -12,6 +12,7 @@ import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signInPhone, signUpPhoneAdmin } from '../../../firebase/auth';
 import { getAccess } from '../../../firebase/firestore/access';
+import { dictToLang } from '../../../translation/languages';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -26,7 +27,8 @@ function VerificationScreen({
   const { ...methods } = useForm<FormValues>();
   const [verificationCode, setVerificationCode] = useState('');
   const { verificationId, phoneNumber, userType } = route.params;
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, langState } = useContext(AuthContext);
+  const language = dictToLang(langState);
 
   const onSubmit: SubmitHandler<FormValues> = async () => {
     try {
@@ -38,7 +40,11 @@ function VerificationScreen({
           navigation.navigate('EmployerRegisterScreen', { phoneNumber });
         }
         if (userType === 'jobSeeker') {
-          await signInPhone(dispatch, { verificationId, verificationCode });
+          await signInPhone(dispatch, {
+            verificationId,
+            verificationCode,
+            language,
+          });
         }
       } else {
         // check type of doc, if employer then nav to error

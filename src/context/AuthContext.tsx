@@ -2,7 +2,7 @@ import { getAuth } from 'firebase/auth';
 import React, { createContext, useEffect, useMemo, useReducer } from 'react';
 import firebaseApp from '../firebase/firebaseApp';
 import { getUser } from '../firebase/firestore/user';
-import { langToDictMap } from '../translation/languages';
+import { dictionaryList, langToDictMap } from '../translation/languages';
 import { Dictionary, RegularUser } from '../types/types';
 
 export type AuthDispatch = React.Dispatch<AuthContextAction>;
@@ -13,7 +13,7 @@ export interface AuthState {
   isLoading: boolean;
   userObject: RegularUser | null;
   dispatch: AuthDispatch;
-  langState: Dictionary | null;
+  langState: Dictionary;
   langUpdate: React.Dispatch<React.SetStateAction<Dictionary>>;
 }
 
@@ -70,7 +70,7 @@ export const useAuthReducer = () =>
       isLoading: true,
       userObject: null,
       dispatch: () => null,
-      langState: null,
+      langState: dictionaryList.EN,
       langUpdate: () => null,
     },
   );
@@ -93,7 +93,7 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [authState, dispatch] = useAuthReducer();
-  const [langState, langUpdate] = React.useState<Dictionary>(); // set this state in the useAuthReducer switch statement --> a dictionary
+  const [langState, langUpdate] = React.useState<Dictionary>(dictionaryList.EN); // set this state in the useAuthReducer switch statement --> a dictionary
 
   // Subscribe to auth state changes and restore the user if they're already signed in
   useEffect(() => {

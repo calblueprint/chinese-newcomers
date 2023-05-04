@@ -16,3 +16,6 @@ export const langToDictMap: Map<string, Dictionary> = new Map([
 
 export const checkAndGetLang = (language: string): Dictionary =>
   langToDictMap.has(language) ? langToDictMap.get(language) : dictionaryList.EN;
+
+export const dictToLang = (langMap: Dictionary | null): string =>
+  langMap === CN ? 'chinese' : 'english';
