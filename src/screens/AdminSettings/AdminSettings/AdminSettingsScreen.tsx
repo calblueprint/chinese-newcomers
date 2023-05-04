@@ -11,10 +11,6 @@ function AdminSettingsScreen({
 }: AdminSettingsStackScreenProps<'AdminSettingsScreen'>): ReactElement {
   const { dispatch, langUpdate } = useContext(AuthContext);
 
-  function langUpdate(value: SetStateAction<Dictionary>): void {
-    throw new Error('Function not implemented.');
-  }
-
   return (
     <View style={styles.container}>
       <StyledButton
