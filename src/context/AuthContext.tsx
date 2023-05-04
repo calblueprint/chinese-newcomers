@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import firebaseApp from '../firebase/firebaseApp';
 import { getUser } from '../firebase/firestore/user';
-import { dictionaryList, langToDictMap } from '../translation/languages';
+import { checkAndGetLang, dictionaryList } from '../translation/languages';
 import { Dictionary, RegularUser } from '../types/types';
 
 export type AuthDispatch = React.Dispatch<AuthContextAction>;
@@ -81,23 +81,11 @@ export const useAuthReducer = () =>
     },
   );
 
-// get translated string function
-// export const I18n = ({ str }) => {
-//   const dict = useContext(AuthContext).langState;
-//   const translated = dict && dict[str] ? dict[str] : str;
-//   return translated;
-// };
-
 export const Translate = (str: string) => {
   const dict = useContext(AuthContext).langState;
   const translated = dict && dict[str] ? dict[str] : str;
   return translated;
 };
-
-// wrapper function for I18n
-// export function GetText(str: string) {
-//   return <I18n str={str} />;
-// }
 
 export function AuthContextProvider({
   children,
@@ -114,8 +102,7 @@ export function AuthContextProvider({
       if (user) {
         UserObject = await getUser(user.uid);
         if (UserObject?.language) {
-          const val = langToDictMap.get(UserObject?.language);
-          langUpdate(val);
+          langUpdate(checkAndGetLang(UserObject.language));
         }
       }
       dispatch({

@@ -27,7 +27,7 @@ function VerificationScreen({
   const { ...methods } = useForm<FormValues>();
   const [verificationCode, setVerificationCode] = useState('');
   const { verificationId, phoneNumber, userType } = route.params;
-  const { dispatch, langState } = useContext(AuthContext);
+  const { dispatch, langState, langUpdate } = useContext(AuthContext);
   const language = dictToLang(langState);
 
   const onSubmit: SubmitHandler<FormValues> = async () => {
@@ -40,7 +40,7 @@ function VerificationScreen({
           navigation.navigate('EmployerRegisterScreen', { phoneNumber });
         }
         if (userType === 'jobSeeker') {
-          await signInPhone(dispatch, {
+          await signInPhone(dispatch, langUpdate, {
             verificationId,
             verificationCode,
             language,

@@ -32,13 +32,15 @@ function AdminSigninScreen({
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [signInError, setSignInError] = useState('');
-  const { dispatch, langState } = useContext(AuthContext);
+  const { dispatch, langState, langUpdate } = useContext(AuthContext);
+  // const [language, setLanguage] = useState('');
+
   const language = dictToLang(langState);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
       emailSchema.parse(email);
-      await signInEmail(dispatch, { email, password, language });
+      await signInEmail(dispatch, langUpdate, { email, password, language });
     } catch (e) {
       if (e instanceof z.ZodError) {
         setEmailError('Oops! Invalid email. Try again.');

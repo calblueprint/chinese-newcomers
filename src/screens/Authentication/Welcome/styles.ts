@@ -79,8 +79,13 @@ export default StyleSheet.create({
     borderRadius: 20,
     borderColor: globalStyles.colors.background,
     borderWidth: 2,
-    shadowOpacity: 0.25,
-    elevation: 5,
+    shadowOpacity: 0.95,
+    elevation: 50,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowRadius: 200,
   },
   modalHeader: {
     marginTop: 50,

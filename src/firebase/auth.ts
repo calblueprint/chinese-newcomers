@@ -8,6 +8,7 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
+import { SetStateAction } from 'react';
 import { AuthDispatch } from '../context/AuthContext';
 import { checkAndGetLang } from '../translation/languages';
 import { Dictionary } from '../types/types';
@@ -114,6 +115,7 @@ export const signUpEmail = async (
 
 export const signInEmail = async (
   dispatch: AuthDispatch,
+  langUpdate: React.Dispatch<SetStateAction<Dictionary>>,
   params: { email: string; password: string; language: string },
 ) => {
   signInWithEmailAndPassword(auth, params.email, params.password)
@@ -121,11 +123,16 @@ export const signInEmail = async (
       const { user } = userCredential;
       console.log('Email sign in successful', user.email);
       const UserObject = await getUser(user.uid);
+      console.log(UserObject);
       if (UserObject) {
+        console.log(params.language);
         const map: Map<string, string> = new Map([
           ['language', params.language],
         ]);
-        updateUser(UserObject.id, map, UserObject?.access);
+        await updateUser(UserObject.id, map, UserObject.access);
+        UserObject.language = params.language;
+        langUpdate(checkAndGetLang(params.language));
+        console.log(UserObject);
       }
       dispatch({ type: 'SIGN_IN', userObject: UserObject });
     })
@@ -136,6 +143,7 @@ export const signInEmail = async (
 
 export const signInPhone = async (
   dispatch: AuthDispatch,
+  langUpdate: React.Dispatch<SetStateAction<Dictionary>>,
   params: {
     verificationId: string;
     verificationCode: string;
@@ -149,6 +157,7 @@ export const signInPhone = async (
     );
     const result = await signInWithCredential(auth, credential);
     await checkAndAddUser(result.user, 'regularUser', null, params.language);
+    langUpdate(checkAndGetLang(params.language));
     console.log('Phone authentication successful', result.user.phoneNumber);
     const UserObject = await getUser(result.user.uid);
     dispatch({ type: 'SIGN_IN', userObject: UserObject });
@@ -177,7 +186,7 @@ export const updateLanguage = async (
     const user = await getUser(auth.currentUser.uid);
     if (user) {
       const map: Map<string, string> = new Map([['language', params.language]]);
-      updateUser(user.id, map, user.access);
+      await updateUser(user.id, map, user.access);
       langUpdate(checkAndGetLang(params.language));
       dispatch({ type: 'UPDATE_LANGUAGE', language: params.language });
     }
