@@ -1,8 +1,8 @@
-import { doc, setDoc } from 'firebase/firestore';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { EmployerRequest } from '../../types/types';
 import { db } from '../firebaseApp';
 
-// const Collection = collection(db, 'access');
+const collectionName = "employerRequests"
 
 export const createEmployerRequest = async (
   employerRequest: EmployerRequest,
@@ -11,6 +11,23 @@ export const createEmployerRequest = async (
     doc(db, 'employerRequests', employerRequest.phoneNumber),
     employerRequest,
   );
+};
+
+// export const checkEmployerRequest = async (phoneNumber: string) => {
+//   await getDoc();
+// }
+
+export const deleteEmployerRequest = async (
+  employerRequestId: string
+): Promise<void> => {
+  try {
+    console.log("what");
+    const docRef = doc(db, collectionName, employerRequestId);
+    await deleteDoc(docRef);
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
 };
 
 // export const getAccess = async (id: string): Promise<Access | null> => {

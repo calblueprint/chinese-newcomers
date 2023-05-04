@@ -29,7 +29,7 @@ export interface Employer extends RegularUser {
 }
 
 export interface EmployerRequest {
-  companyName: string;
+  businessName: string;
   phoneNumber: string;
   website: string;
 }
