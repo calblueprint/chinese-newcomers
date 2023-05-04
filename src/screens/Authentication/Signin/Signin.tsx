@@ -19,15 +19,27 @@ function SigninScreen({
         </Text>
       </View>
       <View style={styles.buttonContainer}>
+      <StyledButton
+          text="job seeker"
+          onPress={() => navigation.navigate('PhoneNumberScreen', { userType: "jobSeeker"})}
+          buttonStyle={{ width: '100%', height: '42%',
+          }}
+          textStyle={{ }}
+        />
         <StyledButton
           text="admin"
           onPress={() => navigation.navigate('AdminSigninScreen')}
-          buttonStyle={{ width: '100%', height: '42%' }}
-          textStyle={{}}
+          buttonStyle={{
+            backgroundColor: '#FFFFFF',
+            borderColor: '#CC433C',
+            width: '100%',
+            height: '42%',
+          }}
+          textStyle={{ color: '#CC433C' }}
         />
         <StyledButton
-          text="job seeker"
-          onPress={() => navigation.navigate('PhoneNumberScreen')}
+          text="employer"
+          onPress={() => navigation.navigate('AdminSigninScreen')}
           buttonStyle={{
             backgroundColor: '#FFFFFF',
             borderColor: '#CC433C',
