@@ -46,7 +46,7 @@ function VerificationScreen({
         if (accessObject.access === 'admin') {
           if (!accessObject.activated) {
             await signUpPhoneAdmin(verificationId, verificationCode);
-            navigation.navigate('AdminRegisterScreen', {
+            navigation.navigate('EmailPasswordRegisterScreen', {
               phoneNumber,
               userType: 'admin',
             });
@@ -57,7 +57,7 @@ function VerificationScreen({
         if (accessObject.access === 'employer') {
           // error state
           if (!accessObject.activated) {
-            navigation.navigate('AdminRegisterScreen', {
+            navigation.navigate('EmailPasswordRegisterScreen', {
               phoneNumber,
               userType: 'employer',
             });

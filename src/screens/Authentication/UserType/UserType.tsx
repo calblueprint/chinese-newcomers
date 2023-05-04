@@ -12,16 +12,6 @@ function UserTypeScreen({
   navigation,
 }: AuthStackScreenProps<'UserTypeScreen'>) {
   const recaptchaVerifier = useRef(null);
-  // async function signUp() {
-  //   const accessObject = await getAccess(phoneNumber);
-  //   if (!accessObject) {
-  //     await signInPhone(dispatch, { verificationId, verificationCode });
-  //   } else {
-  //     await signUpPhoneAdmin(verificationId, verificationCode);
-  //     const nextScreen = (accessObject.access == "employer") ? "EmployerRegisterScreen" : "AdminRegisterScreen";
-  //     navigation.navigate(nextScreen, { phoneNumber });
-  //   }
-  // }
 
   function phoneNumberNavigate(type: string) {
     navigation.navigate('PhoneNumberScreen', { userType: type });
@@ -33,11 +23,11 @@ function UserTypeScreen({
         <Image source={logo} style={styles.logo} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.welcomeText}>{t('chooseTypeScreen.title')}</Text>
+        <Text style={styles.welcomeText}>Choose your account type</Text>
       </View>
       <View style={styles.buttonContainer}>
         <StyledButton
-          text="job seeker"
+          text="Job Seeker"
           onPress={() => phoneNumberNavigate('jobSeeker')}
           buttonStyle={{}}
           textStyle={{}}
