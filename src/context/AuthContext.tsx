@@ -110,10 +110,6 @@ export function AuthContextProvider({
         type: 'RESTORE_USER',
         userObject: UserObject,
       });
-      dispatch({
-        type: 'UPDATE_LANGUAGE',
-        language: UserObject?.language,
-      });
     });
     return unsubscribe;
   }, [dispatch]);
