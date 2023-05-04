@@ -2,6 +2,7 @@ import React, { ReactElement, useContext } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import { AuthContext } from '../context/AuthContext';
 import AdminStack from './BottomTabNavigators/AdminBottomTabNavigator';
+import EmployerStack from './BottomTabNavigators/EmployerBottomTabNavigator';
 import UserStack from './BottomTabNavigators/UserBottomTabNavigator';
 import AuthStackNavigator from './stacks/AuthStackNavigator';
 
@@ -12,10 +13,13 @@ export default function AppNavigator() {
     activeStack = <LoadingSpinner />;
   } else if (userObject === null) {
     activeStack = <AuthStackNavigator />;
-  } else {
-    activeStack =
-      userObject.access === 'admin' ? <AdminStack /> : <UserStack />;
-  }
+  } else if (userObject.access === 'admin') {
+      activeStack = <AdminStack />
+    } else if (userObject.access === 'employer') {
+      activeStack = <EmployerStack />
+    } else {
+      activeStack = <UserStack />
+    }
 
   return activeStack;
 }
