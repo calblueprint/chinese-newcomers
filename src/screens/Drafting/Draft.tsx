@@ -48,12 +48,12 @@ function DraftScreen({
   const [employeeBenefitIsEnabled, setEmployeeBenefitIsEnabled] =
     React.useState(true);
   const [otherInfoIsEnabled, setOtherInfoIsEnabled] = React.useState(true);
-
+  const [applicationStepsIsEnabled, setApplicationStepsIsEnabled] =
+    React.useState(true);
   const [successModalVisibile, setSuccessModalVisible] = React.useState(false);
   const [modalJobText, setModalJobText] = React.useState('');
 
   interface FormValues {
-    // date: Date;
     companyName: string;
     address: string;
     contactPerson: string;
@@ -67,6 +67,7 @@ function DraftScreen({
     employeeBenefit: string;
     category: string;
     otherInfo: string;
+    applicationSteps: string;
   }
   const { ...methods } = useForm<FormValues>();
 
@@ -100,6 +101,7 @@ function DraftScreen({
       employeeBenefit: data.employeeBenefit || '',
       category,
       otherInfo: data.otherInfo || '',
+      applicationSteps: data.applicationSteps || '',
       visible: Object.fromEntries(map),
     };
     try {
@@ -333,6 +335,24 @@ function DraftScreen({
             <FormInput
               name="otherInfo"
               label="otherInfo"
+              placeholder="Looking for XYZ, etc."
+            />
+
+            <View style={styles.formTop}>
+              <Switch
+                onValueChange={() =>
+                  setApplicationStepsIsEnabled(!applicationStepsIsEnabled)
+                }
+                value={applicationStepsIsEnabled}
+                trackColor={{ false: '#767577', true: '#000000' }}
+              />
+              <Text style={styles.formText}>
+                {GetText('Application Steps')}
+              </Text>
+            </View>
+            <FormInput
+              name="applicationSteps"
+              label="applicationSteps"
               placeholder="Looking for XYZ, etc."
             />
           </FormProvider>
