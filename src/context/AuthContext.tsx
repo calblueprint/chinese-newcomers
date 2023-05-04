@@ -1,5 +1,11 @@
 import { getAuth } from 'firebase/auth';
-import React, { createContext, useEffect, useMemo, useReducer } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
 import firebaseApp from '../firebase/firebaseApp';
 import { getUser } from '../firebase/firestore/user';
 import { dictionaryList, langToDictMap } from '../translation/languages';
@@ -76,16 +82,22 @@ export const useAuthReducer = () =>
   );
 
 // get translated string function
-const I18n = ({ str }) => {
-  const dict = React.useContext(AuthContext).langState;
+// export const I18n = ({ str }) => {
+//   const dict = useContext(AuthContext).langState;
+//   const translated = dict && dict[str] ? dict[str] : str;
+//   return translated;
+// };
+
+export const Translate = (str: string) => {
+  const dict = useContext(AuthContext).langState;
   const translated = dict && dict[str] ? dict[str] : str;
   return translated;
 };
 
 // wrapper function for I18n
-export function GetText(str: string) {
-  return <I18n str={str} />;
-}
+// export function GetText(str: string) {
+//   return <I18n str={str} />;
+// }
 
 export function AuthContextProvider({
   children,
