@@ -106,6 +106,9 @@ export const checkAndAddUser = async (
   const userObject = await getUser(user.uid);
   if (userObject !== null) {
     console.log('Got user from users collection');
+    const map: Map<string, string> = new Map([['language', language]]);
+    await updateUser(userObject.id, map, userObject.access);
+    userObject.language = language;
   } else {
     console.log('Create new user flow');
     let assignPhoneNumber = null;

@@ -123,9 +123,7 @@ export const signInEmail = async (
       const { user } = userCredential;
       console.log('Email sign in successful', user.email);
       const UserObject = await getUser(user.uid);
-      console.log(UserObject);
       if (UserObject) {
-        console.log(params.language);
         const map: Map<string, string> = new Map([
           ['language', params.language],
         ]);
@@ -156,6 +154,7 @@ export const signInPhone = async (
       params.verificationCode,
     );
     const result = await signInWithCredential(auth, credential);
+    console.log(params.language);
     await checkAndAddUser(result.user, 'regularUser', null, params.language);
     langUpdate(checkAndGetLang(params.language));
     console.log('Phone authentication successful', result.user.phoneNumber);
