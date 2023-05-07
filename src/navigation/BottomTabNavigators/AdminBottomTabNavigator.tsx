@@ -84,6 +84,13 @@ function AdminStack(): ReactElement {
           tabBarIcon: SettingsIcon,
         }}
       />
+      <Tab.Screen
+        name="EmployerHome"
+        component={EmployerStackNavigator}
+        options={{
+          tabBarIcon: LogoutVariantIcon,
+        }}
+      />
     </Tab.Navigator>
   );
 }

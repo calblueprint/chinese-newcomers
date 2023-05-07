@@ -1,7 +1,15 @@
 import { Timestamp } from 'firebase/firestore';
 import React, { ReactElement, useState, useContext } from 'react';
+import {
+  Text,
+  View,
+  Pressable,
+  Switch,
+  Modal,
+  SafeAreaView,
+} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Modal, Pressable, Switch, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
