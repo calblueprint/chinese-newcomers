@@ -128,18 +128,40 @@ export const changeCreatedJobsStatus = async (
   jobID: string,
 ): Promise<void> => {
   try {
+    console.log("reached change status");
     const createdUpdate: Record<string,boolean> = {};
     const approvedUpdate: Record<string,boolean> = {};
     const docRef = doc(db, 'employer', employerID);
     const approvedRef = doc(db, 'approvedJobs', jobID);
     console.log(docRef);
+    // const createdJobsMap = objectToBooleanMap(userObject.createdJobs);
+    // if (docSnap.exists()) {
+    //   console.log('creating job');
+    //   // setDoc(docRef, { createdJobs: Object.fromEntries(map) }, { merge: true });
+      // await updateDoc(docRef, {
+      //   createdJobs: Object.fromEntries(map),
+      // });
 
     // TODO: DELETE NOT APPROVED ENTRY 
     console.log(jobID);
     createdUpdate[`createdJobs.${jobID}`] = true;
     await updateDoc(docRef, createdUpdate);
+    // Not changing approved field
+    console.log(approvedUpdate["approved"]);
     approvedUpdate["approved"] = true;
     await updateDoc(approvedRef, approvedUpdate);
+    // await updateDoc(docRef, {jobID: deleteField()});
+    // const job = await getJob(jobID, 'notApprovedJobs');
+    // const updatedJob = { ...job, approved: true };
+    // await updateDoc(docRef, {
+    //   notApprovedJobs: {
+    //     [jobID]: null,
+    //   },
+    //   approvedJobs: {
+    //     [jobID]: updatedJob,
+    //   },
+    // });
+    // (await getJob(jobID, "notApprovedJobs")).approved = true;
   } catch (e) {
     console.error(e);
     throw e;

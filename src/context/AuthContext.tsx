@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useMemo, useReducer } from 'react';
 import firebaseApp from '../firebase/firebaseApp';
 import { getUser } from '../firebase/firestore/user';
 import { langToDictMap } from '../translation/languages';
-import { Dictionary, RegularUser } from '../types/types';
+import { Admin, Dictionary, Employer, RegularUser } from '../types/types';
 
 export type AuthDispatch = React.Dispatch<AuthContextAction>;
 
@@ -11,7 +11,7 @@ export const AuthContext = createContext<AuthState>({} as AuthState);
 
 export interface AuthState {
   isLoading: boolean;
-  userObject: RegularUser | null;
+  userObject: RegularUser | Employer | Admin | null;
   dispatch: AuthDispatch;
   langState: Dictionary | null;
   langUpdate: React.Dispatch<React.SetStateAction<Dictionary>>;

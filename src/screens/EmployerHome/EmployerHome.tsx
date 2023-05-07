@@ -113,7 +113,9 @@ function EmployerHome({
           <JobCard 
           job={job} 
           key={job.id} 
-          pending 
+          pending={false}
+          bookmarkedJobs={null}
+          setBookmarkedJobs={null}
           />
         ))}
       </ScrollView>
