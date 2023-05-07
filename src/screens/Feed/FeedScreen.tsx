@@ -62,6 +62,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
           alignItems: 'center',
           width: '100%',
           marginTop: '8%',
+          paddingBottom: 50,
         }}
       >
         <Text style={styles.categoryText}> Filter By Category: </Text>
