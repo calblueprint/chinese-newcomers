@@ -1,4 +1,5 @@
 import React, { ReactElement, useContext } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import { AuthContext } from '../context/AuthContext';
 import AdminStack from './BottomTabNavigators/AdminBottomTabNavigator';
@@ -12,14 +13,18 @@ export default function AppNavigator() {
   if (isLoading) {
     activeStack = <LoadingSpinner />;
   } else if (userObject === null) {
-    activeStack = <AuthStackNavigator />;
+    activeStack = (
+      <SafeAreaProvider>
+        <AuthStackNavigator />
+      </SafeAreaProvider>
+    );
   } else if (userObject.access === 'admin') {
-      activeStack = <AdminStack />
-    } else if (userObject.access === 'employer') {
-      activeStack = <EmployerStack />
-    } else {
-      activeStack = <UserStack />
-    }
+    activeStack = <AdminStack />;
+  } else if (userObject.access === 'employer') {
+    activeStack = <EmployerStack />;
+  } else {
+    activeStack = <UserStack />;
+  }
 
   return activeStack;
 }

@@ -1,7 +1,9 @@
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import React, { useRef } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import logo from '../../../assets/cnsc-logo.png';
+import Back from '../../../assets/left-back.svg';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { firebaseApp } from '../../../firebase/firebaseApp';
 import '../../../translation/languages';
@@ -18,12 +20,13 @@ function UserTypeScreen({
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
         <Image source={logo} style={styles.logo} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.welcomeText}>Choose your account type</Text>
+        <Text style={styles.headerText}>Who Are You?</Text>
+        <Text style={styles.subText}>Choose your account type</Text>
       </View>
       <View style={styles.buttonContainer}>
         <StyledButton
@@ -35,21 +38,32 @@ function UserTypeScreen({
         <StyledButton
           text="Employer"
           onPress={() => phoneNumberNavigate('employer')}
-          buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
-          textStyle={{ color: '#CC433C' }}
+          buttonStyle={{}}
+          textStyle={{}}
         />
         <StyledButton
           text="Admin"
           onPress={() => phoneNumberNavigate('admin')}
-          buttonStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CC433C' }}
-          textStyle={{ color: '#CC433C' }}
+          buttonStyle={{}}
+          textStyle={{}}
         />
       </View>
+
+      <Pressable
+        onPress={() => navigation.goBack()}
+        style={styles.backButtonContainer}
+      >
+        <View style={styles.svgContainer}>
+          <Back />
+        </View>
+        <Text style={styles.backText}> Back</Text>
+      </Pressable>
+
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={firebaseApp.options}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 export default UserTypeScreen;
