@@ -1,13 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {
-  EmployerStackParamList,
-} from '../../types/navigation';
 import EmployerHome from '../../screens/EmployerHome/EmployerHome';
+import { EmployerStackParamList } from '../../types/navigation';
 
 const EmployerStack = createNativeStackNavigator<EmployerStackParamList>();
 
-export default function EmployerStackNavigator() {
+export default function EmployerHomeStackNavigator() {
   return (
     <EmployerStack.Navigator
       screenOptions={{
