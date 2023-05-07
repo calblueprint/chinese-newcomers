@@ -59,6 +59,15 @@ export const theme = {
       lineHeight: 20,
       color: '#49260C',
     },
+    logoContainer: {
+      height: 100,
+      width: 100,
+      justifyContent: 'flex-start',
+      aspectRatio: 1,
+      marginLeft: 35,
+      marginTop: 25,
+      resizeMode: 'contain',
+    },
   },
   breakpoints: {
     phone: 0,
@@ -69,6 +78,17 @@ export const theme = {
       ...Button.small,
       ...Button.rounded,
       ...Button.dropShadow,
+    },
+  },
+  containers: {
+    logoContainer: {
+      height: 100,
+      width: 100,
+      // justifyContent: 'flex-start',
+      aspectRatio: 1,
+      marginLeft: 35,
+      marginTop: 25,
+      resizeMode: 'contain',
     },
   },
 };

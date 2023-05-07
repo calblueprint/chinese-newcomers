@@ -1,7 +1,5 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import globalStyles from '../../../styles/theme';
-
-const windowWidth = Dimensions.get('window').width;
 
 export default StyleSheet.create({
   container: {
@@ -10,47 +8,46 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     flexDirection: 'column',
+    borderWidth: 4,
+    borderColor: 'red',
   },
   logoContainer: {
-    alignItems: 'center',
-    marginTop: 130,
+    ...globalStyles.textVariants.body2,
   },
   logo: {
     resizeMode: 'contain',
-    height: 130,
-    width: 130,
+    height: '100%',
   },
   textContainer: {
     width: 340,
-    height: 170,
+    height: 100,
     display: 'flex',
     alignSelf: 'center',
     justifyContent: 'space-evenly',
-    marginTop: 20,
+    marginTop: 60,
   },
   buttonContainer: {
     alignItems: 'center',
-    marginTop: 90,
+    marginTop: 65,
     justifyContent: 'space-around',
-    height: 200,
+    height: 300,
   },
-  welcomeText: {
-    ...globalStyles.textVariants.h1,
-    color: '#CC433C',
-    fontSize: 45,
+  headerText: {
+    ...globalStyles.textVariants.h2,
+    color: '#49260C',
     letterSpacing: 0.5,
     textAlign: 'center',
   },
   subText: {
-    ...globalStyles.textVariants.h2,
-    color: '#49260C',
-    fontSize: 25,
+    ...globalStyles.textVariants.h3,
+    fontSize: 18,
+    color: '#94613D',
     textAlign: 'center',
     lineHeight: 35,
   },
   welcomeButtons: {
     backgroundColor: '#CC433C',
-    width: 300,
+    width: 307,
     height: 59,
     borderRadius: 7,
     borderColor: '#D82D1F',
@@ -58,54 +55,28 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  welcomeButtonText: {
-    ...globalStyles.textVariants.h3,
-    color: globalStyles.colors.background,
-    fontSize: 18,
+  backButton: {
+    height: '100%',
+    width: '100%',
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
+  backText: {
+    fontFamily: 'DMSans_400Regular',
+    fontSize: 20,
+    textDecorationLine: 'underline',
   },
-  modalView: {
-    marginTop: 480,
-    height: 350,
-    width: windowWidth,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    borderRadius: 20,
-    borderColor: globalStyles.colors.background,
-    borderWidth: 2,
-    elevation: 5,
-  },
-  modalHeader: {
-    marginTop: 50,
-    width: windowWidth,
-    alignItems: 'center',
-  },
-  modalChooseLang: {
-    ...globalStyles.textVariants.h3,
-    fontSize: 28,
-  },
-  modalButtonsContainer: {
-    height: 170,
-    width: 280,
-    alignItems: 'center',
-    marginTop: 32,
-    justifyContent: 'space-around',
-  },
-  modalButtons: {
-    backgroundColor: '#CC433C',
-    width: 230,
-    height: 57,
-    borderRadius: 7,
+  backButtonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 10,
   },
-  modalButtonsText: {
-    ...globalStyles.textVariants.h3,
-    color: globalStyles.colors.background,
+  svgContainer: {
+    width: 22,
+    height: 22,
+    aspectRatio: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });
