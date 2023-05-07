@@ -51,6 +51,7 @@ export interface Job {
   visible: object;
   category: string;
   salary: string;
+  applicationSteps: string;
 }
 
 export const jobInstance: Job = {
@@ -70,6 +71,7 @@ export const jobInstance: Job = {
   otherInfo: '',
   visible: Object(),
   category: '',
+  applicationSteps: '',
 };
 
 export type Dictionary = {

@@ -54,6 +54,7 @@ function JobCard({
   }, [job.id, userObjectToString, userObject, userBookmarkedJobs]);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [nextStepsModalVisible, setNextStepsModalVisible] = useState(false);
   const visibleMap = objectToBooleanMap(job.visible);
   async function handleAction(approve: boolean) {
     setModalVisible(false);
@@ -222,7 +223,7 @@ function JobCard({
                 </View>
 
                 <View>
-                  {pending && (
+                  {pending && userObject?.access === 'admin' && (
                     <View style={styles.buttonContainer}>
                       <StyledButton
                         text="decline"
@@ -244,24 +245,61 @@ function JobCard({
                     </View>
                   )}
                   {!pending && (
-                    <View style={styles.singleButtonContainer}>
-                      <StyledButton
-                        text="remove"
-                        onPress={async () => removeJob()}
-                        buttonStyle={{
-                          width: 135,
-                          height: 55,
-                        }}
-                        textStyle={{}}
-                      />
+                    <View
+                      style={
+                        userObject?.access === 'admin'
+                          ? styles.buttonContainer
+                          : styles.singleButtonContainer
+                      }
+                    >
+                      {job.applicationSteps !== undefined && (
+                        <StyledButton
+                          text="next steps"
+                          onPress={() => {
+                            setNextStepsModalVisible(true);
+                          }}
+                          buttonStyle={{
+                            width: 135,
+                            height: 55,
+                          }}
+                          textStyle={{}}
+                        />
+                      )}
+                      {userObject?.access === 'admin' && (
+                        <StyledButton
+                          text="remove"
+                          onPress={async () => removeJob()}
+                          buttonStyle={{
+                            width: 135,
+                            height: 55,
+                          }}
+                          textStyle={{}}
+                        />
+                      )}
                     </View>
                   )}
                 </View>
               </TouchableOpacity>
             </ScrollView>
           </TouchableOpacity>
+          <Modal visible={nextStepsModalVisible} transparent>
+            <View style={styles.nextStepsCenteredView}>
+              <View style={styles.nextStepsModalView}>
+                <View style={styles.nextStepsExit}>
+                  <Pressable
+                    onPress={() => setNextStepsModalVisible(false)}
+                    style={styles.exitButton}
+                  >
+                    <Text style={styles.modalButtonText}>x</Text>
+                  </Pressable>
+                </View>
+                <Text>{job.applicationSteps}</Text>
+              </View>
+            </View>
+          </Modal>
         </Modal>
       </View>
+
       <View style={styles.jobRef}>
         <Text style={styles.jobRefText}>#{job.id}</Text>
       </View>
