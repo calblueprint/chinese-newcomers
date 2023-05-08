@@ -6,6 +6,7 @@ import logo from '../../../assets/cnsc-logo.png';
 import Back from '../../../assets/left-back.svg';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { firebaseApp } from '../../../firebase/firebaseApp';
+import globalstyles from '../../../styles/globalstyles';
 import '../../../translation/languages';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
@@ -21,8 +22,8 @@ function UserTypeScreen({
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
+      <View style={globalstyles.logoContainer}>
+        <Image source={logo} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.headerText}>Who Are You?</Text>

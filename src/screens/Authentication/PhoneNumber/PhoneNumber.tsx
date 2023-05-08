@@ -8,12 +8,15 @@ import {
   useForm,
 } from 'react-hook-form';
 import { Image, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input';
 import logo from '../../../assets/cnsc-logo.png';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { phoneGetConfirmation } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
 import { getActivationStatus } from '../../../firebase/firestore/access';
+import globalstyles from '../../../styles/globalstyles';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -73,9 +76,9 @@ function PhoneNumberScreen({
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
+    <SafeAreaView style={styles.container}>
+      <View style={globalstyles.logoContainer}>
+        <Image source={logo} />
       </View>
       <FormProvider {...methods}>
         <View style={styles.textContainer}>
@@ -124,7 +127,7 @@ function PhoneNumberScreen({
           />
         </View>
       </FormProvider>
-    </View>
+    </SafeAreaView>
   );
 }
 
