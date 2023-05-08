@@ -10,7 +10,7 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     backgroundColor: 'white',
     borderRadius: 7,
-    borderColor: '#FFFFFFF',
+    borderColor: '#C59675',
     borderWidth: 1,
     shadowOffset: {
       width: 0,

@@ -38,4 +38,10 @@ export default StyleSheet.create({
     height: '5%',
     width: '100%',
   },
+  noJobsText: {
+    display: 'flex',
+    fontFamily: 'DMSans_500Medium',
+    fontSize: 20,
+    marginTop: 160,
+  },
 });

@@ -28,6 +28,7 @@ interface JobCardProps {
   pending: boolean;
   bookmarkedJobs: Job[] | null;
   setBookmarkedJobs: React.Dispatch<React.SetStateAction<Job[]>> | null;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>> | null;
 }
 
 function JobCard({
@@ -35,6 +36,7 @@ function JobCard({
   pending,
   bookmarkedJobs,
   setBookmarkedJobs,
+  setOpen,
 }: JobCardProps) {
   const { userObject } = useContext(AuthContext);
   const { dispatch } = useContext(AuthContext);
@@ -90,11 +92,18 @@ function JobCard({
   };
   const date = new Date(job.date.seconds * 1000);
 
+  function closeDropdown() {
+    setModalVisible(true);
+    if (setOpen !== null) {
+      setOpen(false);
+    }
+  }
+
   return (
     <Pressable
       style={styles.cardContainer}
       onPress={() => {
-        setModalVisible(true);
+        closeDropdown();
       }}
     >
       <View>
