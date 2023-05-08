@@ -5,13 +5,16 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { Image, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import logo from '../../../assets/cnsc-logo.png';
+import Back from '../../../assets/left-back.svg';
 import NumberInput from '../../../components/NumberInput/NumberInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signInPhone, signUpPhoneAdmin } from '../../../firebase/auth';
 import { getAccess } from '../../../firebase/firestore/access';
+import globalstyles from '../../../styles/globalstyles';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -75,9 +78,9 @@ function VerificationScreen({
     console.log(errors);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
+    <SafeAreaView style={styles.container}>
+      <View style={globalstyles.logoContainer}>
+        <Image source={logo} />
       </View>
       <FormProvider {...methods}>
         <View style={styles.textContainer}>
@@ -93,17 +96,15 @@ function VerificationScreen({
           />
         </View>
         <View style={styles.buttonContainer}>
-          <StyledButton
-            text="back"
+          <Pressable
             onPress={() => navigation.goBack()}
-            buttonStyle={{
-              width: '45%',
-              height: '100%',
-              backgroundColor: '#FFFFFF',
-              borderColor: '#CC433C',
-            }}
-            textStyle={{ fontSize: 16, color: '#CC433C' }}
-          />
+            style={styles.backButtonContainer}
+          >
+            <View style={styles.svgContainer}>
+              <Back />
+            </View>
+            <Text style={styles.backText}> Back</Text>
+          </Pressable>
           <StyledButton
             text="NEXT"
             onPress={methods.handleSubmit(onSubmit, onError)}
@@ -112,7 +113,7 @@ function VerificationScreen({
           />
         </View>
       </FormProvider>
-    </View>
+    </SafeAreaView>
   );
 }
 
