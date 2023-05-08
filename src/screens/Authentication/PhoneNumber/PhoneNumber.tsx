@@ -7,11 +7,11 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { Image, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
+import { Image, Pressable, Text, View } from 'react-native';
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import logo from '../../../assets/cnsc-logo.png';
+import Back from '../../../assets/left-back.svg';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { phoneGetConfirmation } from '../../../firebase/auth';
 import { firebaseApp } from '../../../firebase/config';
@@ -103,17 +103,15 @@ function PhoneNumberScreen({
             )}
           </View>
           <View style={styles.buttonContainer}>
-            <StyledButton
-              text="back"
+            <Pressable
               onPress={() => navigation.goBack()}
-              buttonStyle={{
-                width: '45%',
-                height: '100%',
-                backgroundColor: '#FFFFFF',
-                borderColor: '#CC433C',
-              }}
-              textStyle={{ fontSize: 16, color: '#CC433C' }}
-            />
+              style={styles.backButtonContainer}
+            >
+              <View style={styles.svgContainer}>
+                <Back />
+              </View>
+              <Text style={styles.backText}> Back</Text>
+            </Pressable>
             <StyledButton
               text="next"
               onPress={methods.handleSubmit(onSubmit, onError)}
