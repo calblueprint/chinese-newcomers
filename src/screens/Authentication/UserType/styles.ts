@@ -8,15 +8,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     flexDirection: 'column',
-    borderWidth: 4,
-    borderColor: 'red',
-  },
-  logoContainer: {
-    ...globalStyles.textVariants.body2,
-  },
-  logo: {
-    resizeMode: 'contain',
-    height: '100%',
   },
   textContainer: {
     width: 340,

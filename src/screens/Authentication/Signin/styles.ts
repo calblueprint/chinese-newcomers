@@ -1,11 +1,5 @@
-import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-console.log(windowHeight);
-const scale = windowWidth / 390;
-const heightscale = windowHeight / 844;
-const leftMargin = '8%';
+import { StyleSheet } from 'react-native';
+import globalStyles from '../../../styles/theme';
 
 export default StyleSheet.create({
   container: {
@@ -15,51 +9,65 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column',
   },
-  logoContainer: {
-    width: '100%',
-    height: '13%',
-    justifyContent: 'flex-start',
-    marginLeft: leftMargin,
-    marginTop: '8%',
-  },
-  logo: {
-    resizeMode: 'contain',
-    height: '100%',
-    width: '22%',
-  },
   textContainer: {
-    width: '70%',
-    height: '12%',
-    justifyContent: 'space-between',
-    marginLeft: leftMargin,
-    marginTop: '30%',
+    width: 340,
+    height: 100,
+    display: 'flex',
+    alignSelf: 'center',
+    justifyContent: 'space-evenly',
+    marginTop: 60,
   },
   buttonContainer: {
-    height: '21%',
-    width: '83%',
-    alignSelf: 'center',
-    alignContent: 'center',
-    marginTop: '6%',
-  },
-  backButtonContainer: {
-    height: '21%',
-    width: '83%',
-    alignSelf: 'center',
     alignItems: 'center',
-    marginTop: '35%',
+    marginTop: 65,
+    justifyContent: 'space-around',
+    height: 300,
   },
-  headingText: {
-    fontFamily: 'DMSans_500Medium',
+  headerText: {
+    ...globalStyles.textVariants.h2,
     color: '#49260C',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(30 * scale)),
-    fontWeight: '500',
-    letterSpacing: 0.55,
+    letterSpacing: 0.5,
+    textAlign: 'center',
   },
   subText: {
-    fontFamily: 'DMSans_500Medium',
+    ...globalStyles.textVariants.h3,
+    fontSize: 18,
     color: '#94613D',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
-    fontWeight: '500',
-    letterSpacing: 0.5,
+    textAlign: 'center',
+    lineHeight: 35,
+  },
+  welcomeButtons: {
+    backgroundColor: '#CC433C',
+    width: 307,
+    height: 59,
+    borderRadius: 7,
+    borderColor: '#D82D1F',
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backButton: {
+    height: '100%',
+    width: '100%',
+  },
+  backText: {
+    fontFamily: 'DMSans_400Regular',
+    fontSize: 20,
+    textDecorationLine: 'underline',
+  },
+  backButtonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  svgContainer: {
+    width: 22,
+    height: 22,
+    aspectRatio: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });
