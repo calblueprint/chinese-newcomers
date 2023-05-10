@@ -1,18 +1,11 @@
 import {
-  addDoc,
-  arrayRemove,
-  collection,
-  deleteDoc,
-  doc,
-  DocumentData,
-  DocumentSnapshot,
-  getDoc,
-  getDocs,
-  setDoc,
-  updateDoc,
+  addDoc, arrayRemove, collection, deleteDoc,
+  deleteField, doc, DocumentData,
+  DocumentSnapshot, getDoc, getDocs, setDoc, updateDoc
 } from 'firebase/firestore';
 import { Job, jobInstance } from '../../types/types';
 import { db } from '../firebaseApp';
+import { addCreatedJobs, changeCreatedJobsStatus, removeCreatedJobs } from './employer';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
@@ -60,7 +53,6 @@ export const getMonthlyCounter = async (): Promise<number> => {
     await updateMonthlyCounter(now, 0);
     return 0;
   }
-
   return data?.monthlyCounter;
 };
 
@@ -76,10 +68,13 @@ function parseFirestoreListenerJob(jobId: string, job: Partial<Job>) {
 export const createJob = async (
   job: Partial<Job>,
   collectionName: string,
+  creatorID: string,
 ): Promise<void> => {
   const docRef = collection(db, collectionName);
   try {
     if (collectionName === 'approvedJobs') {
+      const oldID = job.id;
+      const employerRef = doc(db, 'employer', creatorID);
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
@@ -92,12 +87,18 @@ export const createJob = async (
       const parsedJob = parseFirestoreListenerJob(jobId, job);
       await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
+      await updateDoc(employerRef, `createdJobs.${oldID}`, deleteField());
+      
+      changeCreatedJobsStatus(creatorID, jobId);
     } else {
       const newDoc = await addDoc(docRef, job);
       const data = {
         id: newDoc.id,
+        creator: creatorID,
+        approved: false,
       };
       await updateDoc(newDoc, data);
+      addCreatedJobs(data.id, creatorID, false);
     }
   } catch (error) {
     console.log(error);
@@ -140,9 +141,11 @@ export const deleteJob = async (
 export const removeBookmarkedJobFromAllUsers = async (
   jobId: string,
   collectionName: string,
+  jobCreator: string,
 ): Promise<void> => {
   try {
     deleteJob(jobId, collectionName);
+    removeCreatedJobs(jobId, jobCreator)
     const docSnap = await getDocs(userCollection);
     docSnap.forEach(async user => {
       const userRef = doc(db, 'users', user.data().id);

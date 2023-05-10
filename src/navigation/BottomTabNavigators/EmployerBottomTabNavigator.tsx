@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react';
 import { BottomTabParamList } from '../../types/navigation';
 import SignoutStackNavigator from '../stacks/AdminSettingsStackNavigator';
 import DraftStackNavigator from '../stacks/DraftStackNavigator';
-import FeedStackNavigator from '../stacks/FeedStackNavigator';
+import EmployerHomeStackNavigator from '../stacks/EmployerHomeStackNavigator';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
@@ -39,7 +39,7 @@ function EmployerStack(): ReactElement {
     >
       <Tab.Screen
         name="Feed"
-        component={FeedStackNavigator}
+        component={EmployerHomeStackNavigator}
         options={{
           tabBarIcon: HomeOutlineIcon,
         }}

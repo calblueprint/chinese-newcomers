@@ -22,7 +22,7 @@ export interface Admin extends RegularUser {
 export interface Employer extends RegularUser {
   name: string | null;
   email: string | null;
-  createdJobs: string[];
+  createdJobs: object;
   address: string | null;
   company: string | null;
   website: string | null;
@@ -37,6 +37,8 @@ export interface EmployerRequest {
 export interface Job {
   id: string;
   date: Timestamp;
+  creator: string;
+  approved: boolean;
   companyName: string;
   address: string;
   contactPerson: string;
@@ -56,6 +58,8 @@ export interface Job {
 export const jobInstance: Job = {
   id: '',
   date: new Timestamp(0, 0),
+  creator: "",
+  approved: false,
   companyName: '',
   address: '',
   contactPerson: '',

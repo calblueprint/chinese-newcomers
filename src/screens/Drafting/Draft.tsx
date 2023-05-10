@@ -1,12 +1,13 @@
 import { Timestamp } from 'firebase/firestore';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useContext } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Modal, Pressable, Switch, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
-import { GetText } from '../../context/AuthContext';
+import { GetText, AuthContext } from '../../context/AuthContext';
 import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
@@ -54,6 +55,7 @@ function DraftScreen({
 
   interface FormValues {
     // date: Date;
+    creator: string;
     companyName: string;
     address: string;
     contactPerson: string;
@@ -69,6 +71,7 @@ function DraftScreen({
     otherInfo: string;
   }
   const { ...methods } = useForm<FormValues>();
+  const { userObject } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     const map = new Map<string, boolean>();
@@ -103,9 +106,13 @@ function DraftScreen({
       visible: Object.fromEntries(map),
     };
     try {
+      if (userObject === null) {
+        console.log('User not found');
+      } else {
+        await createJob(job, 'notApprovedJobs', userObject?.id);
+      }
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
-      await createJob(job, 'notApprovedJobs');
       methods.reset();
     } catch (e) {
       console.error(e);
