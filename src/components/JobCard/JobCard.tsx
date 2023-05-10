@@ -12,13 +12,14 @@ import Empty from '../../assets/empty.svg';
 import Filled from '../../assets/filled.svg';
 import { AuthContext } from '../../context/AuthContext';
 import { changeBookmark } from '../../firebase/auth';
+import { removeCreatedJobs } from '../../firebase/firestore/employer';
 import {
   createJob,
   deleteJob,
   removeBookmarkedJobFromAllUsers,
 } from '../../firebase/firestore/job';
 import { getBookmarks } from '../../firebase/firestore/user';
-import objectToBooleanMap from '../../firebase/helpers';
+import { objectToBooleanMap } from '../../firebase/helpers';
 import { Job } from '../../types/types';
 import StyledButton from '../StyledButton/StyledButton';
 import styles from './styles';
@@ -54,9 +55,6 @@ function JobCard({
   }, [job.id, userObjectToString, userObject, userBookmarkedJobs]);
 
   const [modalVisible, setModalVisible] = useState(false);
-  console.log('visible job');
-  console.log(job.id);
-  console.log(job.visible);
   const visibleMap = objectToBooleanMap(job.visible);
 
   async function handleAction(approve: boolean) {
@@ -69,6 +67,8 @@ function JobCard({
         } else {
           await createJob(job, 'approvedJobs', job.creator);
         }
+      } else {
+        removeCreatedJobs(job.id, job.creator)
       }
     } catch (e) {
       console.log(e);
@@ -78,7 +78,7 @@ function JobCard({
   async function removeJob() {
     setModalVisible(false);
     try {
-      await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs');
+      await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs', job.creator);
     } catch (e) {
       console.log(e);
     }
@@ -86,9 +86,7 @@ function JobCard({
 
   const toggleBookmark = async (val: boolean) => {
     if (userObject !== null) {
-      console.log('before:', userBookmarkedJobs);
       changeBookmark(dispatch, { jobId, userBookmarkedJobs });
-      console.log('after:', userBookmarkedJobs);
     }
     setBookmarkValue(!val);
     if (bookmarkedJobs === null) {
@@ -251,7 +249,7 @@ function JobCard({
                       />
                     </View>
                   )}
-                  {!pending && (
+                  {!pending && userObject?.access === "admin" && (
                     <View style={styles.singleButtonContainer}>
                       <StyledButton
                         text="remove"

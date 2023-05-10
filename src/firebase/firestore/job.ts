@@ -1,25 +1,15 @@
 import {
-  getDoc,
-  doc,
-  collection,
-  addDoc,
-  getDocs,
-  DocumentData,
-  DocumentSnapshot,
-  updateDoc,
-  setDoc,
-  deleteDoc,
-  deleteField,
-  FieldValue,
+  addDoc, arrayRemove, collection, deleteDoc,
+  deleteField, doc, DocumentData,
+  DocumentSnapshot, getDoc, getDocs, setDoc, updateDoc
 } from 'firebase/firestore';
-import { useContext } from 'react';
-import { db } from '../firebaseApp';
 import { Job, jobInstance } from '../../types/types';
-import { addCreatedJobs, changeCreatedJobsStatus } from './employer';
-import { AuthContext } from '../../context/AuthContext';
+import { db } from '../firebaseApp';
+import { addCreatedJobs, changeCreatedJobsStatus, removeCreatedJobs } from './employer';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
+const userCollection = collection(db, 'users');
 
 export const parseJob = async (document: DocumentSnapshot<DocumentData>) => {
   const jobId = document.id.toString();
@@ -63,7 +53,6 @@ export const getMonthlyCounter = async (): Promise<number> => {
     await updateMonthlyCounter(now, 0);
     return 0;
   }
-
   return data?.monthlyCounter;
 };
 
@@ -143,6 +132,27 @@ export const deleteJob = async (
   try {
     const docRef = doc(db, collectionName, jobId);
     await deleteDoc(docRef);
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
+export const removeBookmarkedJobFromAllUsers = async (
+  jobId: string,
+  collectionName: string,
+  jobCreator: string,
+): Promise<void> => {
+  try {
+    deleteJob(jobId, collectionName);
+    removeCreatedJobs(jobId, jobCreator)
+    const docSnap = await getDocs(userCollection);
+    docSnap.forEach(async user => {
+      const userRef = doc(db, 'users', user.data().id);
+      if (user.data().bookmarkedJobs.includes(jobId)) {
+        await updateDoc(userRef, { bookmarkedJobs: arrayRemove(jobId) });
+      }
+    });
   } catch (e) {
     console.warn(e);
     throw e;

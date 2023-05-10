@@ -22,7 +22,7 @@ export interface Admin extends RegularUser {
 export interface Employer extends RegularUser {
   name: string | null;
   email: string | null;
-  createdJobs: string[];
+  createdJobs: object;
   address: string | null;
   company: string | null;
   website: string | null;

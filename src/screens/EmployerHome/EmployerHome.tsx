@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import useFirestoreListener from 'react-firestore-listener';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
-import { query } from 'firebase/firestore';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { getAllCreatedJobs } from '../../firebase/firestore/employer';
-import Logo from '../../assets/cnsc-logo.png';
 import JobCard from '../../components/JobCard/JobCard';
 import { EmployerStackScreenProps } from '../../types/navigation';
-import { Job } from '../../types/types';
-import styles from './Styles';
+import { Employer, Job } from '../../types/types';
+import styles from './styles';
 import StyledButton from '../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -18,27 +15,23 @@ function EmployerHome({
   const [filteredJobs, setFilteredJobs] = useState([] as Job[]);
   const [activeFilter, setActiveFilter] = useState('all');
   const { userObject } = useContext(AuthContext);
+  const employerObject = userObject as Employer;
   // Screen shows all jobs by default
   useEffect(() => {
     const fetchCreatedJobs = async () => {
       if (userObject === null) {
         console.log('No user found.');
       } else {
-        // console.log(userObject);
         const data = await getAllCreatedJobs(userObject.id);
-        console.log('getting data');
-        console.log(data);
         setJobs(data);
         setFilteredJobs(data);
       }
     };
-    console.log('fetching created jobs');
     fetchCreatedJobs();
     setActiveFilter('all');
   }, [userObject, userObject?.id]);
 
   useEffect(() => {
-    // const allJobs = filteredJobs;
     const notApprovedJobs = jobs.filter(job => !job.approved);
     const approvedJobs = jobs.filter(job => job.approved);
 
@@ -49,14 +42,10 @@ function EmployerHome({
     } else {
       setFilteredJobs(approvedJobs);
     }
-  }, [activeFilter, userObject?.createdJobs, jobs]);
+  }, [activeFilter, employerObject?.createdJobs, jobs]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.feedHeader}>
-        <Image source={Logo} style={{ width: 100, height: 100 }} />
-        <Text style={styles.employerTitle}>Jobs</Text>
-      </View>
       <View style={styles.buttonContainer}>
           <StyledButton
             text="All"
@@ -104,20 +93,24 @@ function EmployerHome({
           flexGrow: 1,
           alignItems: 'center',
           width: '100%',
-          // marginRight: 10,
         }}
       >
         {/* Making filter buttons */}
         
         {filteredJobs.map(job => (
           <JobCard 
-          job={job} 
-          key={job.id} 
-          pending={false}
-          bookmarkedJobs={null}
-          setBookmarkedJobs={null}
+            job={job} 
+            key={job.id} 
+            pending={false}
+            bookmarkedJobs={null}
+            setBookmarkedJobs={null}
           />
         ))}
+        {filteredJobs.length === 0 && (
+          <Text style={{ marginTop: '10%' }}>
+            No jobs here!
+          </Text>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

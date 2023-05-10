@@ -1,9 +1,10 @@
 // takes firebase visible object and converts to map
-const objectToBooleanMap = (obj: object): Map<string, boolean> =>
+export const objectToBooleanMap = (obj: object): Map<string, boolean> =>
   new Map(
     Array.from(Object.entries(obj), ([k, v]) =>
       v instanceof Object ? [k, objectToBooleanMap(v)] : [k, v],
     ),
   );
 
-export default objectToBooleanMap;
+export const mapToObject = (map: Map<string, boolean>): object => Object.fromEntries(Array.from(map.entries(), ([k, v]) => [k, v]))
+
