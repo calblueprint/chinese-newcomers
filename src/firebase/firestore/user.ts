@@ -101,10 +101,14 @@ export const checkAndAddUser = async (
   user: UserCredential['user'],
   accessLevel: string,
   phoneNumber: string | null,
+  language: string,
 ) => {
   const userObject = await getUser(user.uid);
   if (userObject !== null) {
     console.log('Got user from users collection');
+    const map: Map<string, string> = new Map([['language', language]]);
+    await updateUser(userObject.id, map, userObject.access);
+    userObject.language = language;
   } else {
     console.log('Create new user flow');
     let assignPhoneNumber = null;
@@ -124,6 +128,7 @@ export const checkAndAddUser = async (
       name: 'test phone',
       phoneNumber: assignPhoneNumber,
       verified: true,
+      language,
     });
   }
 };

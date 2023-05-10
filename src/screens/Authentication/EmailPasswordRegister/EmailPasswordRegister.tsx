@@ -12,6 +12,7 @@ import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signUpEmail } from '../../../firebase/auth';
+import { dictToLang } from '../../../translation/languages';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -33,7 +34,8 @@ function EmailPasswordRegisterScreen({
   const [passwordError, setPasswordError] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [confirmError, setConfirmError] = useState('');
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, langState } = useContext(AuthContext);
+  const language = dictToLang(langState);
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
     if (confirmPass !== password) {
@@ -41,7 +43,13 @@ function EmailPasswordRegisterScreen({
     }
     try {
       emailSchema.parse(email);
-      await signUpEmail(dispatch, { email, password, phoneNumber, userType });
+      await signUpEmail(dispatch, {
+        email,
+        password,
+        phoneNumber,
+        userType,
+        language,
+      });
     } catch (e) {
       if (e instanceof z.ZodError) {
         setEmailError('Oops! Invalid email. Try again.');

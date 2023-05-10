@@ -6,7 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../../components/JobPostFormInput/JobPostFormInput';
 import StyledButton from '../../components/StyledButton/StyledButton';
-import { GetText } from '../../context/AuthContext';
+import { Translate } from '../../context/AuthContext';
 import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
@@ -118,7 +118,7 @@ function DraftScreen({
         <View style={styles.formContainer}>
           <View style={styles.top}>
             <Text style={{ fontSize: 12, fontFamily: 'DMSans_400Regular' }}>
-              {GetText('Toggles determine what information is displayed')}
+              {Translate('Toggles determine what information is displayed')}
             </Text>
           </View>
           <FormProvider {...methods}>
@@ -148,7 +148,7 @@ function DraftScreen({
                 value={jobPositionIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Job Position')}</Text>
+              <Text style={styles.formText}>{Translate('Job Position')}</Text>
             </View>
             <FormInput
               name="jobPosition"
@@ -166,7 +166,7 @@ function DraftScreen({
                 value={phoneIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Phone')}</Text>
+              <Text style={styles.formText}>{Translate('Phone')}</Text>
             </View>
             <FormInput
               name="phone"
@@ -180,7 +180,9 @@ function DraftScreen({
                 value={addressIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Address/Location')}</Text>
+              <Text style={styles.formText}>
+                {Translate('Address/Location')}
+              </Text>
             </View>
             <FormInput
               name="address"
@@ -197,7 +199,7 @@ function DraftScreen({
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
               <Text style={styles.formText}>
-                {GetText('Language Requirement')}
+                {Translate('Language Requirement')}
               </Text>
             </View>
             <FormInput
@@ -218,7 +220,7 @@ function DraftScreen({
                 value={companyNameIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Company Name')}</Text>
+              <Text style={styles.formText}>{Translate('Company Name')}</Text>
             </View>
             <FormInput
               name="companyName"
@@ -234,7 +236,7 @@ function DraftScreen({
                 value={contactPersonIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Contact Person')}</Text>
+              <Text style={styles.formText}>{Translate('Contact Person')}</Text>
             </View>
             <FormInput
               name="contactPerson"
@@ -251,7 +253,7 @@ function DraftScreen({
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
               <Text style={styles.formText}>
-                {GetText('Working hours/day')}
+                {Translate('Working hours/day')}
               </Text>
             </View>
             <FormInput
@@ -269,7 +271,7 @@ function DraftScreen({
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
               <Text style={styles.formText}>
-                {GetText('Working days/week')}
+                {Translate('Working days/week')}
               </Text>
             </View>
             <FormInput
@@ -284,7 +286,7 @@ function DraftScreen({
                 value={salaryIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Salary')}</Text>
+              <Text style={styles.formText}>{Translate('Salary')}</Text>
             </View>
             <FormInput name="salary" label="salary" placeholder="$36/hr" />
 
@@ -296,7 +298,9 @@ function DraftScreen({
                 value={probationPeriodIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Probation Period')}</Text>
+              <Text style={styles.formText}>
+                {Translate('Probation Period')}
+              </Text>
             </View>
             <FormInput
               name="probationPeriod"
@@ -312,7 +316,9 @@ function DraftScreen({
                 value={employeeBenefitIsEnabled}
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
-              <Text style={styles.formText}>{GetText('Employee Benefit')}</Text>
+              <Text style={styles.formText}>
+                {Translate('Employee Benefit')}
+              </Text>
             </View>
             <FormInput
               name="employeeBenefit"
@@ -327,7 +333,7 @@ function DraftScreen({
                 trackColor={{ false: '#767577', true: '#000000' }}
               />
               <Text style={styles.formText}>
-                {GetText('Other Information')}
+                {Translate('Other Information')}
               </Text>
             </View>
             <FormInput
@@ -338,13 +344,13 @@ function DraftScreen({
           </FormProvider>
           <View style={styles.bottomButtons}>
             <Pressable style={[styles.buttons, { backgroundColor: '#94613D' }]}>
-              <Text style={styles.buttonText}>{GetText('Save Draft')}</Text>
+              <Text style={styles.buttonText}>{Translate('Save Draft')}</Text>
             </Pressable>
             <Pressable
               onPress={methods.handleSubmit(onSubmit)}
               style={[styles.buttons, { backgroundColor: '#CC433C' }]}
             >
-              <Text style={styles.buttonText}>{GetText('Post Job')}</Text>
+              <Text style={styles.buttonText}>{Translate('Post Job')}</Text>
             </Pressable>
           </View>
         </View>
