@@ -18,10 +18,14 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
       if (userObject?.id === undefined) {
         return;
       }
-      await updateUserBookmarks(userBookmarkedJobs, userObject?.id);
+      await updateUserBookmarks(
+        userBookmarkedJobs,
+        userObject?.id,
+        userObject?.access,
+      );
     });
     return unsubscribe;
-  }, [navigation, userObject?.id, userBookmarkedJobs]);
+  }, [navigation, userObject?.id, userBookmarkedJobs, userObject?.access]);
 
   const [open, setOpen] = useState(false);
   const approvedJobs = useFirestoreListener<Job>({

@@ -68,7 +68,7 @@ function JobCard({
           await createJob(job, 'approvedJobs', job.creator);
         }
       } else {
-        removeCreatedJobs(job.id, job.creator)
+        removeCreatedJobs(job.id, job.creator);
       }
     } catch (e) {
       console.log(e);
@@ -78,7 +78,7 @@ function JobCard({
   async function removeJob() {
     setModalVisible(false);
     try {
-      await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs', job.creator);
+      await removeBookmarkedJobFromAllUsers(job.id, job.creator);
     } catch (e) {
       console.log(e);
     }
@@ -249,7 +249,7 @@ function JobCard({
                       />
                     </View>
                   )}
-                  {!pending && userObject?.access === "admin" && (
+                  {!pending && userObject?.access === 'admin' && (
                     <View style={styles.singleButtonContainer}>
                       <StyledButton
                         text="remove"

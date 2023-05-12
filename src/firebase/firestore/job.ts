@@ -1,15 +1,38 @@
 import {
-  addDoc, arrayRemove, collection, deleteDoc,
-  deleteField, doc, DocumentData,
-  DocumentSnapshot, getDoc, getDocs, setDoc, updateDoc
+  addDoc,
+  arrayRemove,
+  collection,
+  deleteDoc,
+  deleteField,
+  doc,
+  DocumentData,
+  DocumentSnapshot,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { Job, jobInstance } from '../../types/types';
 import { db } from '../firebaseApp';
-import { addCreatedJobs, changeCreatedJobsStatus, removeCreatedJobs } from './employer';
+import {
+  ADMIN_COLLECTION,
+  EMPLOYER_COLLECTION,
+  REGULAR_USER_COLLECTION,
+} from './constants';
+import {
+  addCreatedJobs,
+  changeCreatedJobsStatus,
+  removeCreatedJobs,
+} from './employer';
+
+const collectionNames: string[] = [
+  ADMIN_COLLECTION,
+  REGULAR_USER_COLLECTION,
+  EMPLOYER_COLLECTION,
+];
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
-const userCollection = collection(db, 'users');
 
 export const parseJob = async (document: DocumentSnapshot<DocumentData>) => {
   const jobId = document.id.toString();
@@ -88,7 +111,7 @@ export const createJob = async (
       await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
       await updateDoc(employerRef, `createdJobs.${oldID}`, deleteField());
-      
+
       changeCreatedJobsStatus(creatorID, jobId);
     } else {
       const newDoc = await addDoc(docRef, job);
@@ -138,21 +161,29 @@ export const deleteJob = async (
   }
 };
 
+const removeBookmarkedJobFromUserType = async (
+  collectionName: string,
+  jobId: string,
+): Promise<void> => {
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  querySnapshot.forEach(async user => {
+    const userRef = doc(db, collectionName, user.data().id);
+    if (user.data().bookmarkedJobs.includes(jobId)) {
+      await updateDoc(userRef, { bookmarkedJobs: arrayRemove(jobId) });
+    }
+  });
+};
+
 export const removeBookmarkedJobFromAllUsers = async (
   jobId: string,
-  collectionName: string,
   jobCreator: string,
 ): Promise<void> => {
   try {
-    deleteJob(jobId, collectionName);
-    removeCreatedJobs(jobId, jobCreator)
-    const docSnap = await getDocs(userCollection);
-    docSnap.forEach(async user => {
-      const userRef = doc(db, 'users', user.data().id);
-      if (user.data().bookmarkedJobs.includes(jobId)) {
-        await updateDoc(userRef, { bookmarkedJobs: arrayRemove(jobId) });
-      }
-    });
+    deleteJob(jobId, 'approvedJobs');
+    removeCreatedJobs(jobId, jobCreator);
+    collectionNames.map(collectionName =>
+      removeBookmarkedJobFromUserType(collectionName, jobId),
+    );
   } catch (e) {
     console.warn(e);
     throw e;
