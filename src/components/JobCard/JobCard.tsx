@@ -284,15 +284,18 @@ function JobCard({
       <View style={styles.jobRef}>
         <Text style={styles.jobRefText}>#{job.id}</Text>
       </View>
+
       <View style={styles.jobName}>
         <Text style={styles.jobNameText}>{job.jobPosition}</Text>
-        <Pressable
-          onPress={() => {
-            toggleBookmark(bookmarkValue);
-          }}
-        >
-          {bookmarkValue ? <Filled /> : <Empty />}
-        </Pressable>
+        {!pending && (
+          <Pressable
+            onPress={() => {
+              toggleBookmark(bookmarkValue);
+            }}
+          >
+            {bookmarkValue ? <Filled /> : <Empty />}
+          </Pressable>
+        )}
       </View>
     </Pressable>
   );
