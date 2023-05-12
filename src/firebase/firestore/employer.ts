@@ -4,6 +4,7 @@ import { db } from '../config';
 import { objectToBooleanMap, mapToObject } from '../helpers';
 import { getJob } from './job';
 
+// TODO: find all use cases and ensure they are support for admins as well as employers
 // Create function to add single notApproved job
 // Use this in job posting w/ status of pending
 export const addCreatedJobs = async (
@@ -22,6 +23,7 @@ export const addCreatedJobs = async (
   }
 };
 
+// TODO: find all use cases and ensure they are support for admins as well as employers
 // Create function to remove single job (either notApproved or approvedJobs) from map of employerJobs
 export const removeCreatedJobs = async (
   jobID: string,
@@ -70,6 +72,7 @@ export const getAllCreatedJobs = async (employerID: string): Promise<Job[]> => {
   }
 };
 
+// TODO: find all use cases and ensure they are support for admins as well as employers
 // Change status of existing job in map
 // Use when job is approved to change from pending to approved
 export const changeCreatedJobsStatus = async (

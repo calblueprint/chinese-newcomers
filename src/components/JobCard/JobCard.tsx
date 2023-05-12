@@ -18,7 +18,7 @@ import {
   deleteJob,
   removeBookmarkedJobFromAllUsers,
 } from '../../firebase/firestore/job';
-import { getBookmarks } from '../../firebase/firestore/user';
+import { getBookmarks, getUser } from '../../firebase/firestore/user';
 import { objectToBooleanMap } from '../../firebase/helpers';
 import { Job } from '../../types/types';
 import StyledButton from '../StyledButton/StyledButton';
@@ -68,7 +68,10 @@ function JobCard({
           await createJob(job, 'approvedJobs', job.creator, userObject.access);
         }
       } else {
-        removeCreatedJobs(job.id, job.creator)
+        const creator = await getUser(job.creator);
+        if (creator?.access === "employer") {
+          removeCreatedJobs(job.id, job.creator)
+        }
       }
     } catch (e) {
       console.log(e);
@@ -78,7 +81,11 @@ function JobCard({
   async function removeJob() {
     setModalVisible(false);
     try {
-      await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs', job.creator);
+      await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs');
+      const creator = await getUser(job.creator);
+      if (creator?.access === "employer") {
+        removeCreatedJobs(job.id, job.creator)
+      }
     } catch (e) {
       console.log(e);
     }

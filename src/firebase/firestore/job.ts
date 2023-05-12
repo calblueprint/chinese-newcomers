@@ -5,7 +5,7 @@ import {
 } from 'firebase/firestore';
 import { Job, jobInstance } from '../../types/types';
 import { db } from '../firebaseApp';
-import { addCreatedJobs, changeCreatedJobsStatus, removeCreatedJobs } from './employer';
+import { addCreatedJobs, changeCreatedJobsStatus } from './employer';
 
 const approvedJobsCollection = collection(db, 'approvedJobs');
 const notApprovedJobsCollection = collection(db, 'notApprovedJobs');
@@ -89,8 +89,9 @@ export const createJob = async (
       await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
       await updateDoc(employerRef, `createdJobs.${oldID}`, deleteField());
-      
-      changeCreatedJobsStatus(creatorID, jobId);
+      if (creatorAccess === "employer") {
+        changeCreatedJobsStatus(creatorID, jobId);
+      }   
     } else {
       const newDoc = await addDoc(docRef, job);
       const data = {
@@ -144,11 +145,9 @@ export const deleteJob = async (
 export const removeBookmarkedJobFromAllUsers = async (
   jobId: string,
   collectionName: string,
-  jobCreator: string,
 ): Promise<void> => {
   try {
     deleteJob(jobId, collectionName);
-    removeCreatedJobs(jobId, jobCreator)
     const docSnap = await getDocs(userCollection);
     docSnap.forEach(async user => {
       const userRef = doc(db, 'users', user.data().id);
