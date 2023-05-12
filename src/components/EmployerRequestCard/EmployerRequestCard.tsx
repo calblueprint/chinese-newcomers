@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
+import Checkmark from '../../assets/checkmark.svg';
+import Xmark from '../../assets/x.svg';
 import { addAccess } from '../../firebase/firestore/access';
 import { deleteEmployerRequest } from '../../firebase/firestore/employerRequest';
 import { EmployerRequest } from '../../types/types';
@@ -31,8 +33,12 @@ function EmployerRequestCard({ employerRequest }: EmployerRequestCardProps) {
           <Text style={styles.infoText}>{employerRequest.website}</Text>
         </View>
         <View style={styles.buttonView}>
-          <Pressable onPress={() => decline()} style={styles.declineButton} />
-          <Pressable onPress={() => approve()} style={styles.approveButton} />
+          <Pressable onPress={() => decline()} style={styles.declineButton}>
+            <Xmark />
+          </Pressable>
+          <Pressable onPress={() => approve()} style={styles.approveButton} >
+            <Checkmark />
+          </Pressable>
         </View>
       </View>
     </Pressable>

@@ -54,6 +54,10 @@ export type AdminSettingsStackParamList = {
   EmployerApprovalScreen: undefined;
 };
 
+export type EmployerApprovalStackParamList = {
+  EmployerApprovalScreen: undefined;
+}
+
 export type AdminSettingsStackScreenProps<
   T extends keyof AdminSettingsStackParamList,
 > = NativeStackScreenProps<AdminSettingsStackParamList, T>;

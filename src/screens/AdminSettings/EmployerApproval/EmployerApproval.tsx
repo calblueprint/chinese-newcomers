@@ -10,16 +10,13 @@ import styles from './styles';
 function EmployerApprovalScreen({
   navigation,
 }: AdminSettingsStackScreenProps<'EmployerApprovalScreen'>): ReactElement {
-  const { dispatch } = useContext(AuthContext);
 
   const employerRequests = useFirestoreListener<EmployerRequest>({
     collection: 'employerRequests',
   });
 
-  return (
-    
-    <SafeAreaView style={styles.cardContainer}>
-      
+  return (    
+    <View style={styles.container}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -32,7 +29,7 @@ function EmployerApprovalScreen({
           <EmployerRequestCard key={request.phoneNumber} employerRequest={request} />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
