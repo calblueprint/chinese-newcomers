@@ -65,7 +65,7 @@ function JobCard({
         if (userObject === null) {
           console.log('No userObject found.');
         } else {
-          await createJob(job, 'approvedJobs', job.creator);
+          await createJob(job, 'approvedJobs', job.creator, userObject.access);
         }
       } else {
         removeCreatedJobs(job.id, job.creator)
