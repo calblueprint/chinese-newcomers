@@ -38,7 +38,8 @@ function JobCard({
   setBookmarkedJobs,
 }: JobCardProps) {
   const { userObject } = useContext(AuthContext);
-  const isAdmin = userObject?.access === 'admin';
+  const isAdminOrEmployer =
+    userObject?.access === 'admin' || userObject?.access === 'employer';
   const { dispatch } = useContext(AuthContext);
   const jobId = job.id;
   const userBookmarkedJobs = userObject?.bookmarkedJobs;
@@ -148,13 +149,14 @@ function JobCard({
                   </View>
 
                   <View style={styles.modalInfo}>
-                    {(visibleMap.get('date') === true || isAdmin) && (
+                    {(visibleMap.get('date') === true || isAdminOrEmployer) && (
                       <Text style={styles.modalText}>
                         <Text style={styles.modalFieldName}>Date: </Text>
                         <Text>{date.toDateString()}</Text>
                       </Text>
                     )}
-                    {(visibleMap.get('companyName') === true || isAdmin) &&
+                    {(visibleMap.get('companyName') === true ||
+                      isAdminOrEmployer) &&
                       job.companyName !== '' && (
                         <Text style={styles.modalText}>
                           <Text style={styles.modalFieldName}>
@@ -163,14 +165,16 @@ function JobCard({
                           <Text>{job.companyName}</Text>
                         </Text>
                       )}
-                    {(visibleMap.get('address') === true || isAdmin) &&
+                    {(visibleMap.get('address') === true ||
+                      isAdminOrEmployer) &&
                       job.address !== '' && (
                         <Text style={styles.modalText}>
                           <Text style={styles.modalFieldName}>Location: </Text>
                           <Text>{job.address}</Text>
                         </Text>
                       )}
-                    {(visibleMap.get('contactPerson') === true || isAdmin) &&
+                    {(visibleMap.get('contactPerson') === true ||
+                      isAdminOrEmployer) &&
                       job.contactPerson !== '' && (
                         <Text style={styles.modalText}>
                           <Text style={styles.modalFieldName}>
@@ -179,7 +183,7 @@ function JobCard({
                           <Text>{job.contactPerson}</Text>
                         </Text>
                       )}
-                    {(isAdmin ||
+                    {(isAdminOrEmployer ||
                       (visibleMap.get('phone') === true &&
                         job.phone !== '')) && (
                       <Text style={styles.modalText}>
@@ -188,7 +192,7 @@ function JobCard({
                       </Text>
                     )}
                     {(visibleMap.get('languageRequirement') === true ||
-                      isAdmin) &&
+                      isAdminOrEmployer) &&
                       job.languageRequirement !== '' && (
                         <Text style={styles.modalText}>
                           <Text style={styles.modalFieldName}>
@@ -197,14 +201,16 @@ function JobCard({
                           <Text>{job.languageRequirement}</Text>
                         </Text>
                       )}
-                    {(visibleMap.get('workingHours') === true || isAdmin) &&
+                    {(visibleMap.get('workingHours') === true ||
+                      isAdminOrEmployer) &&
                       job.workingHours !== '' && (
                         <Text style={styles.modalText}>
                           <Text style={styles.modalFieldName}>Hours/day: </Text>
                           <Text>{job.workingHours}</Text>
                         </Text>
                       )}
-                    {(visibleMap.get('workingDays') === true || isAdmin) &&
+                    {(visibleMap.get('workingDays') === true ||
+                      isAdminOrEmployer) &&
                       job.workingDays !== '' && (
                         <Text style={styles.modalText}>
                           <Text style={styles.modalFieldName}>Days/week: </Text>
@@ -213,13 +219,14 @@ function JobCard({
                       )}
                     {((visibleMap.get('salary') === true &&
                       job.salary !== '') ||
-                      isAdmin) && (
+                      isAdminOrEmployer) && (
                       <Text style={styles.modalText}>
                         <Text style={styles.modalFieldName}>Salary: </Text>
                         <Text>{job.salary}</Text>
                       </Text>
                     )}
-                    {(visibleMap.get('employeeBenefit') === true || isAdmin) &&
+                    {(visibleMap.get('employeeBenefit') === true ||
+                      isAdminOrEmployer) &&
                       job.employeeBenefit !== '' && (
                         <Text style={styles.modalText}>
                           <Text style={styles.modalFieldName}>
@@ -228,7 +235,8 @@ function JobCard({
                           <Text>{job.employeeBenefit}</Text>
                         </Text>
                       )}
-                    {(visibleMap.get('otherInfo') === true || isAdmin) &&
+                    {(visibleMap.get('otherInfo') === true ||
+                      isAdminOrEmployer) &&
                       job.otherInfo !== '' && (
                         <Text style={styles.modalText}>
                           <Text style={styles.modalFieldName}>
