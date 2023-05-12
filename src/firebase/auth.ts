@@ -20,6 +20,7 @@ import {
   removeBookmarkedJob,
   updateUser,
 } from './firestore/user';
+import { REGULAR_USER_COLLECTION } from './firestore/constants';
 
 const auth = getAuth(firebaseApp);
 // TODO: CHANGE 'recaptcha-container' TO ID OF CAPTCHA CONTAINER
@@ -132,7 +133,7 @@ export const signInPhone = async (
       params.verificationCode,
     );
     const result = await signInWithCredential(auth, credential);
-    await checkAndAddUser(result.user, 'regularUser', null);
+    await checkAndAddUser(result.user, REGULAR_USER_COLLECTION, null);
     console.log('Phone authentication successful', result.user.phoneNumber);
     const UserObject = await getUser(result.user.uid);
     dispatch({ type: 'SIGN_IN', userObject: UserObject });

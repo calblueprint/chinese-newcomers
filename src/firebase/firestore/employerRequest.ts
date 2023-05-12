@@ -1,6 +1,7 @@
 import { deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { EmployerRequest } from '../../types/types';
 import { db } from '../firebaseApp';
+import { EMPLOYER_REQUESTS_COLLECTION } from './constants';
 
 const collectionName = "employerRequests"
 
@@ -8,7 +9,7 @@ export const createEmployerRequest = async (
   employerRequest: EmployerRequest,
 ) => {
   await setDoc(
-    doc(db, 'employerRequests', employerRequest.phoneNumber),
+    doc(db, EMPLOYER_REQUESTS_COLLECTION, employerRequest.phoneNumber),
     employerRequest,
   );
 };
