@@ -81,7 +81,7 @@ function JobCard({
   async function removeJob() {
     setModalVisible(false);
     try {
-      await removeBookmarkedJobFromAllUsers(job.id, 'approvedJobs');
+      await removeBookmarkedJobFromAllUsers(job.id);
       const creator = await getUser(job.creator);
       if (creator?.access === "employer") {
         removeCreatedJobs(job.id, job.creator)
@@ -256,7 +256,7 @@ function JobCard({
                       />
                     </View>
                   )}
-                  {!pending && userObject?.access === "admin" && (
+                  {!pending && userObject?.access === 'admin' && (
                     <View style={styles.singleButtonContainer}>
                       <StyledButton
                         text="remove"

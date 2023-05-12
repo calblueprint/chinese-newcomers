@@ -131,9 +131,10 @@ export const checkAndAddUser = async (
 export const updateUserBookmarks = async (
   userBookmarkedJobs: string[] | undefined,
   userId: string,
+  accessLevel: string,
 ): Promise<void> => {
   try {
-    const docRef = doc(db, 'users', userId);
+    const docRef = doc(db, accessLevel, userId);
     updateDoc(docRef, { bookmarkedJobs: userBookmarkedJobs });
   } catch (e) {
     console.error(e);
