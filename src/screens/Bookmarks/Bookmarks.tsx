@@ -31,7 +31,11 @@ function BookmarksScreen({
       if (userObject?.id === undefined) {
         return;
       }
-      await updateUserBookmarks(userBookmarkedJobs, userObject?.id);
+      await updateUserBookmarks(
+        userBookmarkedJobs,
+        userObject?.id,
+        userObject?.access,
+      );
     });
     return unsubscribe;
   }, [navigation, userObject?.id, userBookmarkedJobs]);
