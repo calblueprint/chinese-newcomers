@@ -5,13 +5,22 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Pressable,
+  Text,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { z } from 'zod';
 import logo from '../../../assets/cnsc-logo.png';
+import Back from '../../../assets/left-back.svg';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signUpEmail } from '../../../firebase/auth';
+import globalstyles from '../../../styles/globalstyles';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -80,81 +89,81 @@ function EmailPasswordRegisterScreen({
     console.log(errors);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.keyboardviewContainer}>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior="position"
-          contentContainerStyle={styles.container}
-        >
-          <View style={styles.logoContainer}>
-            <Image source={logo} style={styles.logo} />
+    <SafeAreaView style={styles.container}>
+      {/* <View style={styles.keyboardviewContainer}> */}
+      <KeyboardAvoidingView behavior="position">
+        <View style={globalstyles.logoContainer}>
+          <Image source={logo} />
+        </View>
+        <FormProvider {...methods}>
+          <View style={styles.textContainer}>
+            <Text style={styles.headingText}>Great! </Text>
+            <Text style={styles.subText}>
+              Enter your email & create a password:{' '}
+            </Text>
           </View>
-          <FormProvider {...methods}>
-            <View style={styles.textContainer}>
-              <Text style={styles.headingText}>Great! </Text>
-              <Text style={styles.subText}>
-                Now, enter your email & create a password:{' '}
-              </Text>
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.smallText}>Email address</Text>
-              <AuthInput
-                name="email"
-                label="email"
-                placeholder=" email@email.com"
-                hasError={emailError !== ''}
-                onChangeText={emailInput => handleEmailChange(emailInput)}
-              />
-              {emailError !== '' && (
+          <View style={styles.inputContainer}>
+            <Text style={styles.smallText}>Email address</Text>
+            <AuthInput
+              name="email"
+              label="email"
+              placeholder=" email@email.com"
+              hasError={emailError !== ''}
+              onChangeText={emailInput => handleEmailChange(emailInput)}
+            />
+            {emailError !== '' && (
+              <View style={styles.errorText}>
                 <Text style={{ color: 'red' }}>{emailError}</Text>
-              )}
-              <Text style={styles.smallText}>Create Password </Text>
-              <AuthInput
-                name="password"
-                label="password"
-                placeholder=" password"
-                hasError={passwordError !== ''}
-                onChangeText={passInput => handlePasswordChange(passInput)}
-              />
-              <Text style={styles.smallText}>Verify Password </Text>
-              <AuthInput
-                name="confirmPassword"
-                label="confirmPassword"
-                placeholder=" password"
-                hasError={passwordError !== '' || confirmError !== ''}
-                onChangeText={setConfirmPass}
-              />
-              {passwordError !== '' && (
+              </View>
+            )}
+            <Text style={styles.smallText}>Create Password </Text>
+            <AuthInput
+              name="password"
+              label="password"
+              placeholder=" password"
+              hasError={passwordError !== ''}
+              onChangeText={passInput => handlePasswordChange(passInput)}
+            />
+            <Text style={styles.smallText}>Verify Password </Text>
+            <AuthInput
+              name="confirmPassword"
+              label="confirmPassword"
+              placeholder=" password"
+              hasError={passwordError !== '' || confirmError !== ''}
+              onChangeText={setConfirmPass}
+            />
+            {passwordError !== '' && (
+              <View style={styles.errorText}>
                 <Text style={{ color: 'red' }}>{passwordError}</Text>
-              )}
-              {confirmError !== '' && (
+              </View>
+            )}
+            {confirmError !== '' && (
+              <View style={styles.errorText}>
                 <Text style={{ color: 'red' }}>{confirmError}</Text>
-              )}
-            </View>
+              </View>
+            )}
             <View style={styles.buttonContainer}>
-              <StyledButton
-                text="back"
+              <Pressable
                 onPress={() => navigation.goBack()}
-                buttonStyle={{
-                  width: '45%',
-                  height: '100%',
-                  backgroundColor: '#FFFFFF',
-                  borderColor: '#CC433C',
-                }}
-                textStyle={{ fontSize: 16, color: '#CC433C' }}
-              />
+                style={styles.backButtonContainer}
+              >
+                <View style={styles.svgContainer}>
+                  <Back />
+                </View>
+                <Text style={styles.backText}> Back</Text>
+              </Pressable>
               <StyledButton
                 text="NEXT"
                 onPress={methods.handleSubmit(onSubmit, onError)}
-                buttonStyle={{ width: '45%', height: '100%' }}
-                textStyle={{}}
+                buttonStyle={{ width: 128, height: 32 }}
+                textStyle={{ fontSize: 16 }}
               />
             </View>
-          </FormProvider>
-        </KeyboardAvoidingView>
-      </View>
-    </View>
+          </View>
+        </FormProvider>
+      </KeyboardAvoidingView>
+      {/* </View> */}
+    </SafeAreaView>
   );
 }
 

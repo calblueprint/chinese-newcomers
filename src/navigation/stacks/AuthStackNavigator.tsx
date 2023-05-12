@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import EmailPasswordRegisterScreen from '../../screens/Authentication/EmailPasswordRegister/EmailPasswordRegister';
 import AdminSigninScreen from '../../screens/Authentication/AdminSignin/AdminSignin';
+import EmailPasswordRegisterScreen from '../../screens/Authentication/EmailPasswordRegister/EmailPasswordRegister';
 import EmployerRegisterScreen from '../../screens/Authentication/EmployerRegister/EmployerRegister';
 import PhoneNumberScreen from '../../screens/Authentication/PhoneNumber/PhoneNumber';
 import SigninScreen from '../../screens/Authentication/Signin/Signin';

@@ -1,68 +1,58 @@
 import React, { ReactElement } from 'react';
-import { Text, View, Image } from 'react-native';
-import styles from './styles';
-import StyledButton from '../../../components/StyledButton/StyledButton';
+import { Image, Pressable, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import logo from '../../../assets/cnsc-logo.png';
+import Back from '../../../assets/left-back.svg';
+
+import StyledButton from '../../../components/StyledButton/StyledButton';
+import globalstyles from '../../../styles/globalstyles';
 import { AuthStackScreenProps } from '../../../types/navigation';
+import styles from './styles';
 
 function SigninScreen({
   navigation,
 }: AuthStackScreenProps<'SigninScreen'>): ReactElement {
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
+    <SafeAreaView style={styles.container}>
+      <View style={globalstyles.logoContainer}>
+        <Image source={logo} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.headingText}>
-          Are you an admin or a job seeker?{' '}
-        </Text>
+        <Text style={styles.headerText}>Who Are You?</Text>
+        <Text style={styles.subText}>Choose your account type</Text>
       </View>
       <View style={styles.buttonContainer}>
-      <StyledButton
+        <StyledButton
           text="job seeker"
-          onPress={() => navigation.navigate('PhoneNumberScreen', { userType: "jobSeeker"})}
-          buttonStyle={{ width: '100%', height: '42%',
-          }}
-          textStyle={{ }}
+          onPress={() =>
+            navigation.navigate('PhoneNumberScreen', { userType: 'jobSeeker' })
+          }
+          buttonStyle={{}}
+          textStyle={{}}
         />
         <StyledButton
           text="admin"
           onPress={() => navigation.navigate('AdminSigninScreen')}
-          buttonStyle={{
-            backgroundColor: '#FFFFFF',
-            borderColor: '#CC433C',
-            width: '100%',
-            height: '42%',
-          }}
-          textStyle={{ color: '#CC433C' }}
+          buttonStyle={{}}
+          textStyle={{}}
         />
         <StyledButton
           text="employer"
           onPress={() => navigation.navigate('AdminSigninScreen')}
-          buttonStyle={{
-            backgroundColor: '#FFFFFF',
-            borderColor: '#CC433C',
-            width: '100%',
-            height: '42%',
-          }}
-          textStyle={{ color: '#CC433C' }}
+          buttonStyle={{}}
+          textStyle={{}}
         />
       </View>
-      <View style={styles.backButtonContainer}>
-        <StyledButton
-          text="back"
-          onPress={() => navigation.goBack()}
-          buttonStyle={{
-            backgroundColor: '#FFFFFF',
-            borderColor: '#CC433C',
-            width: '50%',
-            height: '30%',
-          }}
-          textStyle={{ color: '#CC433C' }}
-        />
-      </View>
-    </View>
+      <Pressable
+        onPress={() => navigation.goBack()}
+        style={styles.backButtonContainer}
+      >
+        <View style={styles.svgContainer}>
+          <Back />
+        </View>
+        <Text style={styles.backText}> Back</Text>
+      </Pressable>
+    </SafeAreaView>
   );
 }
 

@@ -1,10 +1,5 @@
-import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const scale = windowWidth / 390;
-
-const leftMargin = '7%';
+import { StyleSheet } from 'react-native';
+import globalStyles from '../../../styles/theme';
 
 export default StyleSheet.create({
   container: {
@@ -14,52 +9,62 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column',
   },
-  logoContainer: {
-    width: '100%',
-    height: '13%',
-    justifyContent: 'flex-start',
-    marginLeft: leftMargin,
-    marginTop: '15%',
-  },
-  logo: {
-    resizeMode: 'contain',
-    height: '100%',
-    width: '22%',
-  },
   textContainer: {
-    width: '60%',
-    height: '17%',
+    width: 300,
+    height: 100,
+    display: 'flex',
+    marginLeft: 35,
     justifyContent: 'space-between',
-    marginLeft: leftMargin,
-    marginTop: '8%',
+    marginTop: 60,
   },
   verificationContainer: {
-    width: '84%',
-    height: '6%',
-    marginTop: '4%',
-    marginLeft: leftMargin,
+    width: 320,
+    height: 25,
+    marginTop: 40,
+    marginLeft: 35,
   },
   buttonContainer: {
-    height: '5%',
-    width: '83%',
-    alignSelf: 'center',
-    alignItems: 'flex-end',
+    height: 40,
+    width: '80%',
     flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: '8%',
+    marginTop: 40,
   },
   headingText: {
-    fontFamily: 'DMSans_500Medium',
+    ...globalStyles.textVariants.body1,
+    lineHeight: 28,
+    fontSize: 24,
     color: '#49260C',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(31 * scale)),
-    fontWeight: '500',
     letterSpacing: 0.5,
+    textAlign: 'left',
   },
   subText: {
-    fontFamily: 'DMSans_500Medium',
+    ...globalStyles.textVariants.body1,
+    fontSize: 18,
     color: '#94613D',
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(20 * scale)),
-    fontWeight: '500',
-    letterSpacing: 0.75,
+    textAlign: 'left',
+    lineHeight: 22,
+  },
+  backText: {
+    fontFamily: 'DMSans_400Regular',
+    fontSize: 20,
+    textDecorationLine: 'underline',
+  },
+  backButtonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  svgContainer: {
+    width: 22,
+    height: 22,
+    aspectRatio: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });

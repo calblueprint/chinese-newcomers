@@ -53,5 +53,5 @@ export default StyleSheet.create({
     color: '#49260C',
     fontSize: 24,
     fontFamily: 'DMSans_700Bold',
-  }
+  },
 });
