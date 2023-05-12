@@ -1,16 +1,15 @@
-import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { Access } from '../../types/types';
 import { db } from '../firebaseApp';
-
-const accessCollection = collection(db, 'access');
+import { ACCESS_COLLECTION } from './constants';
 
 export const addAccess = async (phoneNumber: string, userType: string) => {
   const accessObject = { activated: false, access: userType };
-  await setDoc(doc(db, 'access', phoneNumber), accessObject);
+  await setDoc(doc(db, ACCESS_COLLECTION, phoneNumber), accessObject);
 };
 
 export const getAccess = async (id: string): Promise<Access | null> => {
-  const docRef = doc(db, 'access', id);
+  const docRef = doc(db, ACCESS_COLLECTION, id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     return docSnap.data() as Access;
@@ -19,7 +18,7 @@ export const getAccess = async (id: string): Promise<Access | null> => {
 };
 
 export const activateUser = async (phoneNumber: string): Promise<void> => {
-  const docRef = doc(db, 'access', phoneNumber);
+  const docRef = doc(db, ACCESS_COLLECTION, phoneNumber);
   const data = {
     activated: true,
   };
@@ -29,7 +28,7 @@ export const activateUser = async (phoneNumber: string): Promise<void> => {
 export const getActivationStatus = async (
   phoneNumber: string,
 ): Promise<boolean> => {
-  const docRef = doc(db, 'access', phoneNumber);
+  const docRef = doc(db, ACCESS_COLLECTION, phoneNumber);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     if (docSnap.data().activated) {

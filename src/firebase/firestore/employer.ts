@@ -3,6 +3,7 @@ import { Employer, Job } from '../../types/types';
 import { db } from '../config';
 import { objectToBooleanMap, mapToObject } from '../helpers';
 import { getJob } from './job';
+import { APPROVED_JOBS_COLLECTION, EMPLOYER_COLLECTION } from './constants';
 
 // TODO: find all use cases and ensure they are support for admins as well as employers
 // Create function to add single notApproved job
@@ -14,7 +15,7 @@ export const addCreatedJobs = async (
 ): Promise<void> => {
   try {
     const update: Record<string,boolean> = {};
-    const docRef = doc(db, 'employer', employerID);
+    const docRef = doc(db, EMPLOYER_COLLECTION, employerID);
     update[`createdJobs.${jobID}`] = status;
     await updateDoc(docRef, update);
   } catch (e) {
@@ -30,7 +31,7 @@ export const removeCreatedJobs = async (
   employerID: string,
 ): Promise<void> => {
     try {
-      const docRef = doc(db, 'employer', employerID);
+      const docRef = doc(db, EMPLOYER_COLLECTION, employerID);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const employer = docSnap.data() as Employer;
@@ -47,7 +48,7 @@ export const removeCreatedJobs = async (
 // Get all jobs from an employer's createdJobs map
 export const getAllCreatedJobs = async (employerID: string): Promise<Job[]> => {
   try {
-    const docRef = doc(db, 'employer', employerID);
+    const docRef = doc(db, EMPLOYER_COLLECTION, employerID);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const createdJobs = docSnap.data()?.createdJobs;
@@ -56,7 +57,7 @@ export const getAllCreatedJobs = async (employerID: string): Promise<Job[]> => {
         Object.entries(createdJobs).map(async pair => {
           const key = pair[0];
           const val = pair[1];
-          const collectionName = val ? 'approvedJobs' : 'notApprovedJobs';
+          const collectionName = val ? APPROVED_JOBS_COLLECTION : 'notApprovedJobs';
           promises.push(getJob(key, collectionName));
         });
       } else {
@@ -82,8 +83,8 @@ export const changeCreatedJobsStatus = async (
   try {
     const createdUpdate: Record<string,boolean> = {};
     const approvedUpdate: Record<string,boolean> = {};
-    const docRef = doc(db, 'employer', employerID);
-    const approvedRef = doc(db, 'approvedJobs', jobID);
+    const docRef = doc(db, EMPLOYER_COLLECTION, employerID);
+    const approvedRef = doc(db, APPROVED_JOBS_COLLECTION, jobID);
     createdUpdate[`createdJobs.${jobID}`] = true;
     await updateDoc(docRef, createdUpdate);
     // Not changing approved field

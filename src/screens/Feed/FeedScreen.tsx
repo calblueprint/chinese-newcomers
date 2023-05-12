@@ -8,6 +8,7 @@ import { updateUserBookmarks } from '../../firebase/firestore/user';
 import { FeedStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './styles';
+import { APPROVED_JOBS_COLLECTION } from '../../firebase/firestore/constants';
 
 function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   const { userObject } = useContext(AuthContext);
@@ -29,7 +30,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
 
   const [open, setOpen] = useState(false);
   const approvedJobs = useFirestoreListener<Job>({
-    collection: 'approvedJobs',
+    collection: APPROVED_JOBS_COLLECTION,
   });
   const [filteredApprovedJobs, setFilteredApprovedJobs] = useState([] as Job[]);
   const [category, setCategory] = useState('all');

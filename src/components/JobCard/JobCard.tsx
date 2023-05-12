@@ -23,6 +23,7 @@ import { objectToBooleanMap } from '../../firebase/helpers';
 import { Job } from '../../types/types';
 import StyledButton from '../StyledButton/StyledButton';
 import styles from './styles';
+import { APPROVED_JOBS_COLLECTION, NOT_APPROVED_JOBS_COLLECTION } from '../../firebase/firestore/constants';
 
 interface JobCardProps {
   job: Job;
@@ -62,12 +63,12 @@ function JobCard({
   async function handleAction(approve: boolean) {
     setModalVisible(false);
     try {
-      await deleteJob(job.id, 'notApprovedJobs');
+      await deleteJob(job.id, NOT_APPROVED_JOBS_COLLECTION);
       if (approve) {
         if (userObject === null) {
           console.log('No userObject found.');
         } else {
-          await createJob(job, 'approvedJobs', job.creator, userObject.access);
+          await createJob(job, APPROVED_JOBS_COLLECTION, job.creator, userObject.access);
         }
       } else {
         const creator = await getUser(job.creator);

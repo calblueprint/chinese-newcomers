@@ -11,6 +11,7 @@ import { createJob } from '../../firebase/firestore/job';
 import { DraftStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './styles';
+import { NOT_APPROVED_JOBS_COLLECTION } from '../../firebase/firestore/constants';
 
 function DraftScreen({
   navigation,
@@ -110,7 +111,7 @@ function DraftScreen({
       } else {
         await createJob(
           job,
-          'notApprovedJobs',
+          NOT_APPROVED_JOBS_COLLECTION,
           userObject?.id,
           userObject.access,
         );

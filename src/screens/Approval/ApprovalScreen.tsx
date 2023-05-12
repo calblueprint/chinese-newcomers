@@ -5,12 +5,13 @@ import JobCard from '../../components/JobCard/JobCard';
 import { ApprovalStackScreenProps } from '../../types/navigation';
 import { Job } from '../../types/types';
 import styles from './styles';
+import { NOT_APPROVED_JOBS_COLLECTION } from '../../firebase/firestore/constants';
 
 function ApprovalScreen({
   navigation,
 }: ApprovalStackScreenProps<'ApprovalScreen'>) {
   const notApprovedJobs = useFirestoreListener<Job>({
-    collection: 'notApprovedJobs',
+    collection: NOT_APPROVED_JOBS_COLLECTION,
   });
 
   return (

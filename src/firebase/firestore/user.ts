@@ -13,21 +13,18 @@ import {
 import { Admin, Employer, Job, RegularUser } from '../../types/types';
 import { db } from '../config';
 import { getJob } from './job';
-
-const REGULAR_USER_COLLECTION_NAME = 'regularUser';
-const ADMIN_COLLECTION_NAME = 'admin';
-const EMPLOYER_COLLECTION_NAME = 'employer';
+import { ADMIN_COLLECTION, APPROVED_JOBS_COLLECTION, EMPLOYER_COLLECTION, REGULAR_USER_COLLECTION } from './constants';
 
 const collectionNames: string[] = [
-  ADMIN_COLLECTION_NAME,
-  REGULAR_USER_COLLECTION_NAME,
-  EMPLOYER_COLLECTION_NAME,
+  ADMIN_COLLECTION,
+  REGULAR_USER_COLLECTION,
+  EMPLOYER_COLLECTION,
 ];
 
 const userCollectionRefs = (id: string) => [
-  doc(db, REGULAR_USER_COLLECTION_NAME, id),
-  doc(db, ADMIN_COLLECTION_NAME, id),
-  doc(db, EMPLOYER_COLLECTION_NAME, id),
+  doc(db, REGULAR_USER_COLLECTION, id),
+  doc(db, ADMIN_COLLECTION, id),
+  doc(db, EMPLOYER_COLLECTION, id),
 ];
 
 const parseUser = async (document: DocumentSnapshot<DocumentData>) => {
@@ -41,7 +38,7 @@ const parseUser = async (document: DocumentSnapshot<DocumentData>) => {
   if (type === 'admin') {
     return user as Admin;
   }
-  if (type === 'regularUser') {
+  if (type === REGULAR_USER_COLLECTION) {
     return user as RegularUser;
   }
   return user as Employer;
@@ -173,7 +170,7 @@ export const getBookmarkedJobs = async (
   try {
     const promises: Array<Promise<Job>> = [];
     userBookmarkedJobs?.forEach(job => {
-      promises.push(getJob(job, 'approvedJobs'));
+      promises.push(getJob(job, APPROVED_JOBS_COLLECTION));
     });
     const allJobs = await Promise.all(promises);
     return allJobs.filter(obj =>

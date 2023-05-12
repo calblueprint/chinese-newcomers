@@ -6,13 +6,14 @@ import { AuthContext } from '../../../context/AuthContext';
 import { AdminSettingsStackScreenProps } from '../../../types/navigation';
 import { EmployerRequest } from '../../../types/types';
 import styles from './styles';
+import { EMPLOYER_REQUESTS_COLLECTION } from '../../../firebase/firestore/constants';
 
 function EmployerApprovalScreen({
   navigation,
 }: AdminSettingsStackScreenProps<'EmployerApprovalScreen'>): ReactElement {
 
   const employerRequests = useFirestoreListener<EmployerRequest>({
-    collection: 'employerRequests',
+    collection: EMPLOYER_REQUESTS_COLLECTION,
   });
 
   return (    
