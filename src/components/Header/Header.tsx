@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import Logo from '../../assets/cnsc-logo.png';
-import SignoutIcon from '../../assets/sign-out.svg';
 import { AuthContext } from '../../context/AuthContext';
-import { signUserOut } from '../../firebase/auth';
 import styles from './styles';
 
 interface HeaderProps {
@@ -20,12 +18,12 @@ export default function Header({ title }: HeaderProps) {
         style={{ width: 42, height: 47, marginRight: '5%', marginLeft: '5%' }}
       />
       <Text style={styles.feedTitle}>{title}</Text>
-      <Pressable
+      {/* <Pressable
         style={{ marginLeft: 'auto' }}
         onPress={() => signUserOut(dispatch)}
-      >
-        <SignoutIcon />
-      </Pressable>
+      > */}
+        {/* <SignoutIcon /> */}
+      {/* </Pressable> */}
 
       <View
         style={{

@@ -16,7 +16,6 @@ function BookmarksScreen({
   const [bookmarkedList, setBookmarkedList] = useState([] as Job[]);
   const { userObject } = useContext(AuthContext);
   const userBookmarkedJobs = userObject?.bookmarkedJobs;
-  console.log('bookmarks userbookmarks: ', userBookmarkedJobs);
 
   useEffect(() => {
     const fetchBookmarkedJobs = async () => {
@@ -42,9 +41,6 @@ function BookmarksScreen({
 
   return (
     <View style={styles.container}>
-      <View style={styles.feedHeader}>
-        <Text style={styles.feedTitle}> Bookmarked Jobs </Text>
-      </View>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,

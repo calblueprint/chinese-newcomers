@@ -14,12 +14,6 @@ function AdminSettingsScreen({
   return (
     <View style={styles.container}>
       {userObject?.access === 'admin' && (
-        //   <StyledButton
-        //   text="Give Access"
-        //   onPress={() => navigation.navigate('AccessScreen')}
-        //   buttonStyle={{ width: '45%', height: '5%' }}
-        //   textStyle={{}}
-        // />
         <>
           <StyledButton
             text="Add Admin Account"
