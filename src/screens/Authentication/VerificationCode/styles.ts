@@ -34,6 +34,7 @@ export default StyleSheet.create({
   },
   headingText: {
     ...globalStyles.textVariants.body1,
+    lineHeight: 28,
     fontSize: 24,
     color: '#49260C',
     letterSpacing: 0.5,

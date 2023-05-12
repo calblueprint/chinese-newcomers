@@ -7,17 +7,12 @@ const input = {
   width: '100%',
   height: 40,
   paddingLeft: 5,
-  // marginTop: 10,
-  // marginBottom: 10,
 };
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    // flex: 1,
     height: 40,
-    // borderWidth: 2,
-    borderColor: 'pink',
     marginTop: 10,
     marginBottom: 10,
   },
