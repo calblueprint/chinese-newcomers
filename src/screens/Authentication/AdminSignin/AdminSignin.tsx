@@ -5,13 +5,16 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { Image, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { z } from 'zod';
 import logo from '../../../assets/cnsc-logo.png';
+import Back from '../../../assets/left-back.svg';
 import AuthInput from '../../../components/AuthInput/AuthInput';
 import StyledButton from '../../../components/StyledButton/StyledButton';
 import { AuthContext } from '../../../context/AuthContext';
 import { signInEmail } from '../../../firebase/auth';
+import globalstyles from '../../../styles/globalstyles';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
 
@@ -80,13 +83,13 @@ function AdminSigninScreen({
     console.log(errors);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
+    <SafeAreaView style={styles.container}>
+      <View style={globalstyles.logoContainer}>
+        <Image source={logo} />
       </View>
       <FormProvider {...methods}>
         <View style={styles.textContainer}>
-          <Text style={styles.headingText}>Sign in here. </Text>
+          <Text style={styles.headingText}>Log in here. </Text>
         </View>
 
         <View style={styles.inputContainer}>
@@ -119,23 +122,21 @@ function AdminSigninScreen({
           <StyledButton
             text="log in"
             onPress={methods.handleSubmit(onSubmit, onError)}
-            buttonStyle={{ height: '100%', width: '100%' }}
+            buttonStyle={{ height: 60, width: 310 }}
             textStyle={{}}
           />
-          <StyledButton
-            text="back"
+          <Pressable
             onPress={() => navigation.goBack()}
-            buttonStyle={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: '#FFFFFF',
-              borderColor: '#CC433C',
-            }}
-            textStyle={{ fontSize: 16, color: '#CC433C' }}
-          />
+            style={styles.backButtonContainer}
+          >
+            <View style={styles.svgContainer}>
+              <Back />
+            </View>
+            <Text style={styles.backText}> Back</Text>
+          </Pressable>
         </View>
       </FormProvider>
-    </View>
+    </SafeAreaView>
   );
 }
 
