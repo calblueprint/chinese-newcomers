@@ -1,32 +1,12 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import React, { ReactElement } from 'react';
 import { BottomTabParamList } from '../../types/navigation';
-import SignoutStackNavigator from '../stacks/AdminSettingsStackNavigator';
 import BookmarksStackNavigator from '../stacks/BookmarksStackNavigator';
+import SettingsStackNavigator from '../stacks/AdminSettingsStackNavigator';
 import FeedStackNavigator from '../stacks/FeedStackNavigator';
+import { HomeOutlineIcon, SettingsIcon, BookmarkOutlineIcon } from '../../assets/navicons';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
-
-type IconProps = {
-  color: string;
-};
-
-function HomeOutlineIcon({ color }: IconProps) {
-  return <MaterialCommunityIcons name="home-outline" color={color} size={26} />;
-}
-
-function LogoutVariantIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="logout-variant" color={color} size={26} />
-  );
-}
-
-function BookmarkOutlineIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="bookmark-outline" color={color} size={26} />
-  );
-}
 
 function UserStack(): ReactElement {
   return (
@@ -48,14 +28,14 @@ function UserStack(): ReactElement {
         name="Bookmarks"
         component={BookmarksStackNavigator}
         options={{
-          tabBarIcon: LogoutVariantIcon,
+          tabBarIcon: BookmarkOutlineIcon,
         }}
       />
       <Tab.Screen
-        name="Signout"
-        component={SignoutStackNavigator}
+        name="Settings"
+        component={SettingsStackNavigator}
         options={{
-          tabBarIcon: BookmarkOutlineIcon,
+          tabBarIcon: SettingsIcon,
         }}
       />
     </Tab.Navigator>
