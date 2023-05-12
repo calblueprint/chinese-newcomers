@@ -92,12 +92,13 @@ export const createJob = async (
   job: Partial<Job>,
   collectionName: string,
   creatorID: string,
+  creatorAccess: string,
 ): Promise<void> => {
   const docRef = collection(db, collectionName);
   try {
     if (collectionName === 'approvedJobs') {
       const oldID = job.id;
-      const employerRef = doc(db, 'employer', creatorID);
+      const employerRef = doc(db, creatorAccess, creatorID);
       const monthlyCounter = await getMonthlyCounter();
       const additionalZero = monthlyCounter < 9 ? '0' : '';
       const now = new Date();
@@ -111,8 +112,9 @@ export const createJob = async (
       await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
       await updateDoc(employerRef, `createdJobs.${oldID}`, deleteField());
-
-      changeCreatedJobsStatus(creatorID, jobId);
+      if (creatorAccess === "employer") {
+        changeCreatedJobsStatus(creatorID, jobId);
+      }   
     } else {
       const newDoc = await addDoc(docRef, job);
       const data = {
@@ -121,7 +123,9 @@ export const createJob = async (
         approved: false,
       };
       await updateDoc(newDoc, data);
-      addCreatedJobs(data.id, creatorID, false);
+      if (creatorAccess) { 
+        addCreatedJobs(data.id, creatorID, false); 
+      }
     }
   } catch (error) {
     console.log(error);
@@ -176,11 +180,9 @@ const removeBookmarkedJobFromUserType = async (
 
 export const removeBookmarkedJobFromAllUsers = async (
   jobId: string,
-  jobCreator: string,
 ): Promise<void> => {
   try {
     deleteJob(jobId, 'approvedJobs');
-    removeCreatedJobs(jobId, jobCreator);
     collectionNames.map(collectionName =>
       removeBookmarkedJobFromUserType(collectionName, jobId),
     );

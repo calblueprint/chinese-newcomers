@@ -109,7 +109,7 @@ function DraftScreen({
       if (userObject === null) {
         console.log('User not found');
       } else {
-        await createJob(job, 'notApprovedJobs', userObject?.id);
+        await createJob(job, 'notApprovedJobs', userObject?.id, userObject.access);
       }
       setModalJobText(data.jobPosition);
       setSuccessModalVisible(true);
