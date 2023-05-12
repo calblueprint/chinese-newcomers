@@ -2,11 +2,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import React, { ReactElement } from 'react';
 import { BottomTabParamList } from '../../types/navigation';
-import SignoutStackNavigator from '../stacks/AdminSettingsStackNavigator';
+import SettingsStackNavigator from '../stacks/AdminSettingsStackNavigator';
 import ApprovalStackNavigator from '../stacks/ApprovalStackNavigator';
 import BookmarksStackNavigator from '../stacks/BookmarksStackNavigator';
 import DraftStackNavigator from '../stacks/DraftStackNavigator';
 import FeedStackNavigator from '../stacks/FeedStackNavigator';
+import { AccountCheckIcon, BookmarkOutlineIcon, NoteTextOutlineIcon, SettingsIcon } from '../../assets/navicons';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
@@ -18,27 +19,6 @@ function HomeOutlineIcon({ color }: IconProps) {
   return <MaterialCommunityIcons name="home-outline" color={color} size={26} />;
 }
 
-function NoteTextOutlineIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="note-text-outline" color={color} size={26} />
-  );
-}
-
-function AccountCheckIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="account-check" color={color} size={26} />
-  );
-}
-
-function SettingsIcon({ color }: IconProps) {
-  return <MaterialCommunityIcons name="cog" color={color} size={26} />;
-}
-
-function BookmarkOutlineIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="bookmark-outline" color={color} size={26} />
-  );
-}
 
 function AdminStack(): ReactElement {
   return (
@@ -79,7 +59,7 @@ function AdminStack(): ReactElement {
       />
       <Tab.Screen
         name="Settings"
-        component={SignoutStackNavigator}
+        component={SettingsStackNavigator}
         options={{
           tabBarIcon: SettingsIcon,
         }}

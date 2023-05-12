@@ -13,18 +13,28 @@ function AdminSettingsScreen({
 
   return (
     <View style={styles.container}>
-      <StyledButton
-        text="Give Access"
-        onPress={() => navigation.navigate('AccessScreen')}
-        buttonStyle={{ width: '45%', height: '5%' }}
-        textStyle={{}}
-      />
-      <StyledButton
-        text="Sign Out"
-        onPress={() => signUserOut(dispatch)}
-        buttonStyle={{ width: '45%', height: '5%' }}
-        textStyle={{}}
-      />
+      { userObject?.access === "admin" && (
+      //   <StyledButton
+      //   text="Give Access"
+      //   onPress={() => navigation.navigate('AccessScreen')}
+      //   buttonStyle={{ width: '45%', height: '5%' }}
+      //   textStyle={{}}
+      // />
+        <>
+          <StyledButton
+          text="Give Access"
+          onPress={() => navigation.navigate('AccessScreen')}
+          buttonStyle={{ width: '45%', height: '5%' }}
+          textStyle={{}}
+        />
+        <StyledButton
+          text="Approve Employers"
+          onPress={() => navigation.navigate('EmployerApprovalScreen')}
+          buttonStyle={{ width: '45%', height: '5%' }}
+          textStyle={{}}
+        />
+      </>
+      )}
       <StyledButton
         text="English"
         onPress={() =>
@@ -32,8 +42,8 @@ function AdminSettingsScreen({
             dispatch,
             langUpdate,
             { language: 'english' },
-            userObject?.id,
-            userObject?.access,
+            userObject?.id as string,
+            userObject?.access as string,
           )
         }
         buttonStyle={{ width: '45%', height: '5%' }}
@@ -46,16 +56,16 @@ function AdminSettingsScreen({
             dispatch,
             langUpdate,
             { language: 'chinese' },
-            userObject?.id,
-            userObject?.access,
+            userObject?.id as string,
+            userObject?.access as string,
           )
         }
         buttonStyle={{ width: '45%', height: '5%' }}
         textStyle={{}}
       />
       <StyledButton
-        text="Approve Employers"
-        onPress={() => navigation.navigate('EmployerApprovalScreen')}
+        text="Sign Out"
+        onPress={() => signUserOut(dispatch)}
         buttonStyle={{ width: '45%', height: '5%' }}
         textStyle={{}}
       />

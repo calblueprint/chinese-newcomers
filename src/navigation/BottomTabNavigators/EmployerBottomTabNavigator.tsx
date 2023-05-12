@@ -1,32 +1,12 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import React, { ReactElement } from 'react';
 import { BottomTabParamList } from '../../types/navigation';
-import SignoutStackNavigator from '../stacks/AdminSettingsStackNavigator';
+import SettingsStackNavigator from '../stacks/AdminSettingsStackNavigator';
 import DraftStackNavigator from '../stacks/DraftStackNavigator';
 import EmployerHomeStackNavigator from '../stacks/EmployerHomeStackNavigator';
+import { HomeOutlineIcon, NoteTextOutlineIcon, SettingsIcon } from '../../assets/navicons';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
-
-type IconProps = {
-  color: string;
-};
-
-function HomeOutlineIcon({ color }: IconProps) {
-  return <MaterialCommunityIcons name="home-outline" color={color} size={26} />;
-}
-
-function NoteTextOutlineIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="note-text-outline" color={color} size={26} />
-  );
-}
-
-function LogoutVariantIcon({ color }: IconProps) {
-  return (
-    <MaterialCommunityIcons name="logout-variant" color={color} size={26} />
-  );
-}
 
 function EmployerStack(): ReactElement {
   return (
@@ -52,10 +32,10 @@ function EmployerStack(): ReactElement {
         }}
       />
       <Tab.Screen
-        name="Signout"
-        component={SignoutStackNavigator}
+        name="Settings"
+        component={SettingsStackNavigator}
         options={{
-          tabBarIcon: LogoutVariantIcon,
+          tabBarIcon: SettingsIcon,
         }}
       />
     </Tab.Navigator>
