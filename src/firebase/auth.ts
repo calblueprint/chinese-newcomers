@@ -156,10 +156,11 @@ export const updateLanguage = async (
   dispatch: AuthDispatch,
   langUpdate: React.Dispatch<React.SetStateAction<Dictionary>>,
   params: { language: string },
+  userId: string,
+  accessLevel: string,
 ) => {
-  const user = await getUser(auth.currentUser.uid);
   const map: Map<string, string> = new Map([['language', params.language]]);
-  updateUser(user?.id, map, user?.access);
+  await updateUser(userId, map, accessLevel);
   langUpdate(checkAndGetLang(params.language));
   dispatch({ type: 'UPDATE_LANGUAGE', language: params.language });
 };

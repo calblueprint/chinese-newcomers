@@ -9,7 +9,7 @@ import styles from './styles';
 function AdminSettingsScreen({
   navigation,
 }: AdminSettingsStackScreenProps<'AdminSettingsScreen'>): ReactElement {
-  const { dispatch, langUpdate } = useContext(AuthContext);
+  const { dispatch, langUpdate, userObject } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -28,7 +28,13 @@ function AdminSettingsScreen({
       <StyledButton
         text="English"
         onPress={() =>
-          updateLanguage(dispatch, langUpdate, { language: 'english' })
+          updateLanguage(
+            dispatch,
+            langUpdate,
+            { language: 'english' },
+            userObject?.id,
+            userObject?.access,
+          )
         }
         buttonStyle={{ width: '45%', height: '5%' }}
         textStyle={{}}
@@ -36,7 +42,13 @@ function AdminSettingsScreen({
       <StyledButton
         text="Chinese"
         onPress={() =>
-          updateLanguage(dispatch, langUpdate, { language: 'chinese' })
+          updateLanguage(
+            dispatch,
+            langUpdate,
+            { language: 'chinese' },
+            userObject?.id,
+            userObject?.access,
+          )
         }
         buttonStyle={{ width: '45%', height: '5%' }}
         textStyle={{}}
