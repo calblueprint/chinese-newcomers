@@ -19,6 +19,7 @@ import { getActivationStatus } from '../../../firebase/firestore/access';
 import globalstyles from '../../../styles/globalstyles';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
+import { errorTypes } from '../EmployerSignupError/AuthErrorScreen';
 
 function PhoneNumberScreen({
   route,
@@ -60,6 +61,8 @@ function PhoneNumberScreen({
           phoneNumber,
           userType,
         });
+      } else {
+        navigation.navigate("AuthErrorScreen", { errorText: errorTypes.employerAlreadyActivated} );
       }
     } catch (error) {
       console.log(error);

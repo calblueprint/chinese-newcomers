@@ -12,6 +12,7 @@ export type AuthStackParamList = {
     phoneNumber: string;
     userType: string;
   };
+  AuthErrorScreen: { errorText: string };
   UserTypeScreen: undefined;
   WelcomeScreen: undefined;
 };

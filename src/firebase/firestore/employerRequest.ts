@@ -1,4 +1,4 @@
-import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { EmployerRequest } from '../../types/types';
 import { db } from '../firebaseApp';
 
@@ -12,6 +12,16 @@ export const createEmployerRequest = async (
     employerRequest,
   );
 };
+
+// returns true if EmployerRequest with a given phone number exists
+export const checkEmployerRequest = async (
+  id: string,
+): Promise<boolean> => {
+  const docRef = doc(db, collectionName, id);
+  const docSnap = await getDoc(docRef);
+  return docSnap.exists();
+};
+
 
 // export const checkEmployerRequest = async (phoneNumber: string) => {
 //   await getDoc();

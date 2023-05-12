@@ -3,6 +3,7 @@ import React from 'react';
 import AdminSigninScreen from '../../screens/Authentication/AdminSignin/AdminSignin';
 import EmailPasswordRegisterScreen from '../../screens/Authentication/EmailPasswordRegister/EmailPasswordRegister';
 import EmployerRegisterScreen from '../../screens/Authentication/EmployerRegister/EmployerRegister';
+import AuthErrorScreen from '../../screens/Authentication/EmployerSignupError/AuthErrorScreen';
 import PhoneNumberScreen from '../../screens/Authentication/PhoneNumber/PhoneNumber';
 import SigninScreen from '../../screens/Authentication/Signin/Signin';
 import UserTypeScreen from '../../screens/Authentication/UserType/UserType';
@@ -41,6 +42,10 @@ export default function AuthStackNavigator() {
       <AuthStack.Screen
         name="EmployerRegisterScreen"
         component={EmployerRegisterScreen}
+      />
+      <AuthStack.Screen
+        name="AuthErrorScreen"
+        component={AuthErrorScreen}
       />
     </AuthStack.Navigator>
   );

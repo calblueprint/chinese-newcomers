@@ -17,6 +17,8 @@ import { getAccess } from '../../../firebase/firestore/access';
 import globalstyles from '../../../styles/globalstyles';
 import { AuthStackScreenProps } from '../../../types/navigation';
 import styles from './styles';
+import { checkEmployerRequest } from '../../../firebase/firestore/employerRequest';
+import { errorTypes } from '../EmployerSignupError/AuthErrorScreen';
 
 function VerificationScreen({
   route,
@@ -37,8 +39,12 @@ function VerificationScreen({
       if (!accessObject) {
         // nav to employer or user based on prop
         if (userType === 'employer') {
-          console.log('hello');
-          navigation.navigate('EmployerRegisterScreen', { phoneNumber });
+          // handle case here if we have already sent employer request 
+          if (!await checkEmployerRequest(phoneNumber)) {
+            navigation.navigate('EmployerRegisterScreen', { phoneNumber });
+          } else {
+            navigation.navigate("AuthErrorScreen", { errorText: errorTypes.employerRequestAlreadySent} );
+          }
         }
         if (userType === 'jobSeeker') {
           await signInPhone(dispatch, { verificationId, verificationCode });
@@ -47,26 +53,17 @@ function VerificationScreen({
         // check type of doc, if employer then nav to error
         // if admin: navigate to email password
         if (accessObject.access === 'admin') {
-          if (!accessObject.activated) {
-            await signUpPhoneAdmin(verificationId, verificationCode);
-            navigation.navigate('EmailPasswordRegisterScreen', {
-              phoneNumber,
-              userType: 'admin',
-            });
-          } else {
-            console.log('error state');
-          }
+          await signUpPhoneAdmin(verificationId, verificationCode);
+          navigation.navigate('EmailPasswordRegisterScreen', {
+            phoneNumber,
+            userType: 'admin',
+          });
         }
         if (accessObject.access === 'employer') {
-          // error state
-          if (!accessObject.activated) {
-            navigation.navigate('EmailPasswordRegisterScreen', {
-              phoneNumber,
-              userType: 'employer',
-            });
-          } else {
-            // error state
-          }
+          navigation.navigate('EmailPasswordRegisterScreen', {
+            phoneNumber,
+            userType: 'employer',
+          });
         }
       }
     } catch (e) {

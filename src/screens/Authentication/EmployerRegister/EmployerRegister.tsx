@@ -15,6 +15,7 @@ import { createEmployerRequest } from '../../../firebase/firestore/employerReque
 import { AuthStackScreenProps } from '../../../types/navigation';
 import { EmployerRequest } from '../../../types/types';
 import styles from './styles';
+import { errorTypes } from '../EmployerSignupError/AuthErrorScreen';
 
 function EmployerRegisterScreen({
   navigation,
@@ -32,7 +33,7 @@ function EmployerRegisterScreen({
       // send request
       const request: EmployerRequest = { ...data };
       await createEmployerRequest(request);
-      navigation.navigate('WelcomeScreen');
+      navigation.navigate('AuthErrorScreen', {errorText: errorTypes.employerRequestPending});
     } catch (e) {
       console.error(e);
     }
