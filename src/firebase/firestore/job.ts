@@ -19,11 +19,7 @@ import {
   EMPLOYER_COLLECTION,
   REGULAR_USER_COLLECTION,
 } from './constants';
-import {
-  addCreatedJobs,
-  changeCreatedJobsStatus,
-  removeCreatedJobs,
-} from './employer';
+import { addCreatedJobs, changeCreatedJobsStatus } from './employer';
 
 const collectionNames: string[] = [
   ADMIN_COLLECTION,
@@ -112,9 +108,9 @@ export const createJob = async (
       await setDoc(doc(db, collectionName, jobId), parsedJob);
       await updateMonthlyCounter(now, monthlyCounter + 1);
       await updateDoc(employerRef, `createdJobs.${oldID}`, deleteField());
-      if (creatorAccess === "employer") {
+      if (creatorAccess === 'employer') {
         changeCreatedJobsStatus(creatorID, jobId);
-      }   
+      }
     } else {
       const newDoc = await addDoc(docRef, job);
       const data = {
@@ -123,8 +119,8 @@ export const createJob = async (
         approved: false,
       };
       await updateDoc(newDoc, data);
-      if (creatorAccess) { 
-        addCreatedJobs(data.id, creatorID, false); 
+      if (creatorAccess === 'employer') {
+        addCreatedJobs(data.id, creatorID, false);
       }
     }
   } catch (error) {

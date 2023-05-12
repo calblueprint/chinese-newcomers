@@ -376,8 +376,8 @@ function DraftScreen({
 
             <StyledButton
               text="POST ANOTHER JOB"
-              textStyle={{ color: '#CC433C' }}
-              buttonStyle={{ backgroundColor: 'white', width: '100%' }}
+              textStyle={{ fontSize: 14 }}
+              buttonStyle={{ width: 230, height: 44, marginBottom: 10 }}
               onPress={() => {
                 navigation.goBack();
                 setSuccessModalVisible(false);
@@ -385,9 +385,9 @@ function DraftScreen({
               }}
             />
             <StyledButton
-              text="VIEW JOB FEED"
-              textStyle={{}}
-              buttonStyle={{ width: '100%' }}
+              text="SEE HOME SCREEN"
+              textStyle={{ color: '#CC433C', fontSize: 14 }}
+              buttonStyle={{ backgroundColor: 'white', width: 230, height: 44 }}
               onPress={() => {
                 navigation.goBack();
                 setSuccessModalVisible(false);

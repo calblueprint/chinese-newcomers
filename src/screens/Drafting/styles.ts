@@ -97,7 +97,7 @@ export default StyleSheet.create({
     elevation: 5,
   },
   modalText: {
-    marginBottom: 30,
+    // marginBottom: 30,
     ...theme.textVariants.h3,
     fontSize: 18,
     textAlign: 'center',
