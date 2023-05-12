@@ -13,27 +13,27 @@ function AdminSettingsScreen({
 
   return (
     <View style={styles.container}>
-      { userObject?.access === "admin" && (
-      //   <StyledButton
-      //   text="Give Access"
-      //   onPress={() => navigation.navigate('AccessScreen')}
-      //   buttonStyle={{ width: '45%', height: '5%' }}
-      //   textStyle={{}}
-      // />
+      {userObject?.access === 'admin' && (
+        //   <StyledButton
+        //   text="Give Access"
+        //   onPress={() => navigation.navigate('AccessScreen')}
+        //   buttonStyle={{ width: '45%', height: '5%' }}
+        //   textStyle={{}}
+        // />
         <>
           <StyledButton
-          text="Give Access"
-          onPress={() => navigation.navigate('AccessScreen')}
-          buttonStyle={{ width: '45%', height: '5%' }}
-          textStyle={{}}
-        />
-        <StyledButton
-          text="Approve Employers"
-          onPress={() => navigation.navigate('EmployerApprovalScreen')}
-          buttonStyle={{ width: '45%', height: '5%' }}
-          textStyle={{}}
-        />
-      </>
+            text="Add Admin Account"
+            onPress={() => navigation.navigate('AccessScreen')}
+            buttonStyle={styles.button}
+            textStyle={styles.buttonText}
+          />
+          <StyledButton
+            text="Approve Employers"
+            onPress={() => navigation.navigate('EmployerApprovalScreen')}
+            buttonStyle={styles.button}
+            textStyle={styles.buttonText}
+          />
+        </>
       )}
       <StyledButton
         text="English"
@@ -46,8 +46,8 @@ function AdminSettingsScreen({
             userObject?.access as string,
           )
         }
-        buttonStyle={{ width: '45%', height: '5%' }}
-        textStyle={{}}
+        buttonStyle={styles.button}
+        textStyle={styles.buttonText}
       />
       <StyledButton
         text="Chinese"
@@ -60,14 +60,14 @@ function AdminSettingsScreen({
             userObject?.access as string,
           )
         }
-        buttonStyle={{ width: '45%', height: '5%' }}
-        textStyle={{}}
+        buttonStyle={styles.button}
+        textStyle={styles.buttonText}
       />
       <StyledButton
         text="Sign Out"
         onPress={() => signUserOut(dispatch)}
-        buttonStyle={{ width: '45%', height: '5%' }}
-        textStyle={{}}
+        buttonStyle={styles.button}
+        textStyle={styles.buttonText}
       />
     </View>
   );

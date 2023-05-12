@@ -8,6 +8,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    marginTop: 10,
+    marginTop: 20,
+    height: 50,
+    width: 300,
+  },
+  buttonText: {
+    paddingHorizontal: 20,
+    textTransform: 'none',
+    fontFamily: 'DMSans_700Bold',
   },
 });
