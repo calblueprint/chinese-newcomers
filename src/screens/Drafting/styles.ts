@@ -12,7 +12,7 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   top: {
-    marginTop: '5%',
+    marginTop: 10,
   },
   refId: {
     fontSize: 14,
@@ -41,21 +41,30 @@ export default StyleSheet.create({
   formText: {
     fontSize: 18,
     marginLeft: 12,
-    fontFamily: 'DMSans_500Medium',
+    marginTop: 3,
+    fontFamily: 'DMSans_700Bold',
+  },
+  toggleText: {
+    fontSize: 16,
+    fontFamily: 'DMSans_700Bold',
+    color: '#94613D',
+    textAlign: 'center',
   },
   bottomButtons: {
     flexDirection: 'row',
     alignContent: 'space-around',
-    marginBottom: '10%',
+    // height: 80,
+    marginBottom: 30,
+    alignSelf: 'center',
   },
   buttons: {
-    width: '45%',
-    height: '22%',
+    width: 150,
+    height: 45,
     margin: 5,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '8%',
+    marginTop: 30,
   },
   buttonText: {
     fontSize: 17,
@@ -71,10 +80,9 @@ export default StyleSheet.create({
   },
   modal: {
     width: '80%',
-    height: '50%',
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 7,
     padding: 35,
     paddingHorizontal: 39,
     alignItems: 'center',
@@ -89,13 +97,28 @@ export default StyleSheet.create({
     elevation: 5,
   },
   modalText: {
-    marginBottom: 20,
+    marginBottom: 30,
     ...theme.textVariants.h3,
+    fontSize: 18,
+    textAlign: 'center',
+    lineHeight: 22,
   },
   modalX: {
     display: 'flex',
     position: 'absolute',
     top: '5%',
     right: '5%',
+  },
+  bottomText: {
+    fontSize: 14,
+    color: '#D82D1F',
+    fontFamily: 'DMSans_500Medium',
+    textAlign: 'center',
+    marginBottom: 30,
+    marginTop: 20,
+  },
+  errorText: {
+    color: '#D82D1F',
+    fontSize: 13,
   },
 });
