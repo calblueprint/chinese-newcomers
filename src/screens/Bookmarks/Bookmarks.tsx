@@ -56,6 +56,7 @@ function BookmarksScreen({
             pending
             bookmarkedJobs={bookmarkedList}
             setBookmarkedJobs={setBookmarkedList}
+            setOpen={null}
           />
         ))}
         {bookmarkedList.length === 0 && (

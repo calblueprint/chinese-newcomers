@@ -29,6 +29,7 @@ function ApprovalScreen({
             pending
             bookmarkedJobs={null}
             setBookmarkedJobs={null}
+            setOpen={null}
           />
         ))}
         {notApprovedJobs.length === 0 && (

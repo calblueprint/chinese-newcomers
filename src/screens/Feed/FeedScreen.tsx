@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import useFirestoreListener from 'react-firestore-listener';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import JobCard from '../../components/JobCard/JobCard';
 import { AuthContext } from '../../context/AuthContext';
@@ -28,6 +28,7 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   }, [navigation, userObject?.id, userBookmarkedJobs, userObject?.access]);
 
   const [open, setOpen] = useState(false);
+
   const approvedJobs = useFirestoreListener<Job>({
     collection: 'approvedJobs',
   });
@@ -59,40 +60,46 @@ function FeedScreen({ navigation }: FeedStackScreenProps<'FeedScreen'>) {
   }, [category, approvedJobs]);
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          alignItems: 'center',
-          width: '100%',
-          marginTop: '8%',
-          paddingBottom: 50,
-        }}
-      >
-        <Text style={styles.categoryText}> Filter By Category: </Text>
-
-        <DropDownPicker
-          open={open}
-          value={category}
-          items={categories.map(c => ({ label: c, value: c }))}
-          setOpen={setOpen}
-          setValue={setCategory}
-          listMode="SCROLLVIEW"
-          containerStyle={{ width: '85%', marginBottom: '8%' }}
-          textStyle={{ fontFamily: 'DMSans_500Medium' }}
-        />
-
-        {filteredApprovedJobs.map(job => (
-          <JobCard
-            job={job}
-            key={job.id}
-            pending={false}
-            bookmarkedJobs={null}
-            setBookmarkedJobs={null}
+    <TouchableWithoutFeedback onPress={() => setOpen(false)}>
+      <View style={styles.container}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            alignItems: 'center',
+            width: '100%',
+            marginTop: '8%',
+            paddingBottom: 50,
+          }}
+        >
+          <Text style={styles.categoryText}> Filter By Category: </Text>
+          <DropDownPicker
+            open={open}
+            value={category}
+            items={categories.map(c => ({ label: c, value: c }))}
+            setOpen={setOpen}
+            setValue={setCategory}
+            listMode="SCROLLVIEW"
+            containerStyle={{ width: '85%', marginBottom: '8%' }}
+            textStyle={{ fontFamily: 'DMSans_500Medium' }}
           />
-        ))}
-      </ScrollView>
-    </View>
+
+          {filteredApprovedJobs.map(job => (
+            <JobCard
+              job={job}
+              key={job.id}
+              pending={false}
+              bookmarkedJobs={null}
+              setBookmarkedJobs={null}
+              setOpen={setOpen}
+            />
+          ))}
+
+          {filteredApprovedJobs.length === 0 && (
+            <Text style={styles.noJobsText}>No jobs to show</Text>
+          )}
+        </ScrollView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
