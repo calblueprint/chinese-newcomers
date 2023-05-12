@@ -7,8 +7,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     flexDirection: 'column',
-    borderWidth: 3,
-    borderColor: 'red',
   },
   textContainer: {
     width: 310,
