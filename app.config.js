@@ -21,7 +21,7 @@ export default {
       supportsTablet: true,
       bundleIdentifier: 'org.calblueprint.cnsc',
       bitcode: 'Debug',
-      buildNumber: '2',
+      buildNumber: '4',
     },
     android: {
       adaptiveIcon: {
